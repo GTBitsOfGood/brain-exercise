@@ -5,6 +5,7 @@
 * Level 2: adding and subtracting numbers 1 - 10
 * Level 3: multiplication numbers 1 - 10
 * Level 4: adding and subtracting numbers 1-100
+* test here: https://jsbin.com/jedilijege/1/edit?js,console
 */
 function getProblem( difficulty ) {
   let a
