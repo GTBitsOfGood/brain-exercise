@@ -4,7 +4,7 @@
     "slug": "BrainExercise",
     "platforms": [
       "ios",
-      "android",
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
