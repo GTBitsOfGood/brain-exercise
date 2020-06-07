@@ -21,6 +21,5 @@ module.exports = {
   ],
   rules: {
     "prettier/prettier": ["error"],
-    "react-native/react-native": ["error"],
   },
 };
