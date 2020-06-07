@@ -10,6 +10,17 @@
     "format": "prettier --write App.js && prettier --write \"screens/**/*.{jsx,js}\"",
     "check-format": "prettier -l App.js && prettier -l \"screens/**/*.{jsx,js}\""
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint"
+    ]
+  },
   "dependencies": {
     "expo": "~37.0.3",
     "react": "~16.9.0",
@@ -29,6 +40,8 @@
     "eslint-plugin-react": "~7.20.0",
     "eslint-plugin-react-native": "~3.8.1",
     "eslint-plugin-react-native-a11y": "~2.0.0",
+    "husky": "~4.2.5",
+    "lint-staged": "~10.2.9",
     "prettier": "~2.0.5"
   },
   "private": true
