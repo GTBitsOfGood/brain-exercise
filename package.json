@@ -5,7 +5,10 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "lint": "eslint App.js && eslint \"screens/**/*.{jsx,js}\"",
+    "format": "prettier --write App.js && prettier --write \"screens/**/*.{jsx,js}\"",
+    "check-format": "prettier -l App.js && prettier -l \"screens/**/*.{jsx,js}\""
   },
   "dependencies": {
     "expo": "~37.0.3",
