@@ -20,6 +20,11 @@ module.exports = {
     "plugin:react-native-a11y/basic",
   ],
   rules: {
-    "prettier/prettier": ["error"],
+    "prettier/prettier": [
+      "error",
+      {
+        endofLine: "auto",
+      },
+    ],
   },
 };
