@@ -13,10 +13,10 @@ const styles = StyleSheet.create({
   title: {
     color: "black",
     fontSize: 30,
-    margin: 30,
+    padding: 30,
   },
   button: {
-    margin: 30,
+    padding: 30,
   },
 });
 
@@ -33,6 +33,11 @@ function HomeScreen({ navigation }) {
         title="Settings"
         style={styles.button}
         onPress={() => navigation.navigate("Settings")}
+      />
+      <Button
+        title="Notifications"
+        style={styles.button}
+        onPress={() => navigation.navigate("Notifications")}
       />
     </View>
   );
