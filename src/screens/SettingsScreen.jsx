@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: "#f5f5f5",
+    paddingVertical: 30,
   },
   intermediate: {
     width: "100%",
@@ -14,6 +15,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
+    marginBottom: 130,
+  },
+  notificationText: {
+    fontSize: 25,
   },
 });
 
@@ -31,7 +36,7 @@ function SettingsScreen() {
   return (
     <View style={styles.root}>
       <View style={styles.intermediate}>
-        <Text>Notifications</Text>
+        <Text style={styles.notificationText}>Notifications</Text>
         <Switch
           trackColor={{ false: "#767577", true: "#4169e1" }}
           ios_backgroundColor="#3e3e3e"
