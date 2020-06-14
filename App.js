@@ -5,7 +5,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./src/screens/HomeScreen.jsx";
 import GameScreen from "./src/screens/GameScreen.jsx";
 import SettingsScreen from "./src/screens/SettingsScreen.jsx";
-import NotificationScreen from "./src/screens/NotificationScreen.jsx";
 
 const Stack = createStackNavigator();
 
@@ -15,7 +14,6 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Games" component={GameScreen} />
-        <Stack.Screen name="Notifications" component={NotificationScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
