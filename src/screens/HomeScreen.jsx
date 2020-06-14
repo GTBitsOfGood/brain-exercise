@@ -13,10 +13,10 @@ const styles = StyleSheet.create({
   title: {
     color: "black",
     fontSize: 30,
-    margin: 30,
+    padding: 30,
   },
   button: {
-    margin: 30,
+    padding: 30,
   },
 });
 
