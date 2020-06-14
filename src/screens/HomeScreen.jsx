@@ -34,6 +34,11 @@ function HomeScreen({ navigation }) {
         style={styles.button}
         onPress={() => navigation.navigate("Settings")}
       />
+      <Button
+        title="Notification"
+        style={styles.button}
+        onPress={() => navigation.navigate("Notification")}
+      />
     </View>
   );
 }
