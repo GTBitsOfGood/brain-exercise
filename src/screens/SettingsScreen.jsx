@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { Notifications } from "expo";
+import { scheduleNotifications } from "./../scripts/notification-logic"
 // import SwitchToggle from "./Components/SwitchToggle.jsx";
 
 const styles = StyleSheet.create({
@@ -24,13 +26,28 @@ const styles = StyleSheet.create({
 
 function SettingsScreen() {
   const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode] = useState("time");
+
+  const toggleSwitch = () => {
+    if (isEnabled) { // going from enabled to unenabled
+      Notifications.cancelAllScheduledNotificationsAsync()
+      setIsEnabled(false)
+    } else {
+      setIsEnabled(true)
+    }
+  };
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
+    if (event.type === 'set') {
+      Notifications.cancelAllScheduledNotificationsAsync()
+      scheduleNotifications(currentDate);
+      setIsEnabled(false)
+    } else if (event.type === 'dismissed') {
+      setIsEnabled(false)
+    }
   };
 
   return (
