@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Switch } from "react-native";
+import { View, Text, StyleSheet, Switch, Button, AsyncStorage, PixelRatio } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-// import SwitchToggle from "./Components/SwitchToggle.jsx";
+import { Slider } from 'react-native-elements';
+
 
 const styles = StyleSheet.create({
   root: {
@@ -33,6 +34,41 @@ function SettingsScreen() {
     setDate(currentDate);
   };
 
+
+  /**
+   * font size is the slider state
+   * multiplier is the state that is saved when button is pressed
+   * scale font changes font size based on multiplier
+   * textStyles is storage for preset font sizes
+   */
+  const [fontSize, setFontSize] = useState(1)
+  const [multiplier, setMultiplier] = useState(1)
+  const changeSlider = (newSize) => {
+    setFontSize(newSize);
+  }
+
+  const saveFont = (event) => {
+    AsyncStorage.setItem("fontSize", fontSize.toString())
+    setMultiplier(fontSize)
+  }
+
+  const scaleFont = (originalSize) =>{
+    const size = multiplier * originalSize || originalSize
+    return Math.round(PixelRatio.roundToNearestPixel(size))
+  }
+
+  const textStyles = {
+    small: {
+      fontSize: scaleFont(16), // arbitrarily small font
+    },
+    medium: {
+      fontSize: scaleFont(24), // arbitrarily medium font
+    },
+    large: {
+      fontSize: scaleFont(40), // arbitrarily large font
+    },
+  }
+
   return (
     <View style={styles.root}>
       <View style={styles.intermediate}>
@@ -55,6 +91,21 @@ function SettingsScreen() {
             onChange={onChange}
           />
         )}
+      </View>
+      <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
+        <Slider
+          value={fontSize}
+          minimumValue={1}
+          maximumValue={2}
+          step={.2}
+          onValueChange={changeSlider}
+        />
+        <Text>Value: {fontSize}</Text>
+        <Button
+          title="Save Font"
+          onPress={saveFont}
+        />
+        <Text style={textStyles.small}>I am sample text</Text>
       </View>
     </View>
   );
