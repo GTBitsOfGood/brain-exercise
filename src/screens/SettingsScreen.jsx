@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Switch } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Notifications } from "expo";
 import { scheduleNotifications } from "./../scripts/notification-logic"
-// import SwitchToggle from "./Components/SwitchToggle.jsx";
 
 const styles = StyleSheet.create({
   root: {
@@ -25,16 +24,18 @@ const styles = StyleSheet.create({
 });
 
 function SettingsScreen() {
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [toggleOn, setToggleOn] = useState(false);
+  const [clockVisibility, setClockVisibility] = useState(false);
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode] = useState("time");
 
   const toggleSwitch = () => {
-    if (isEnabled) { // going from enabled to unenabled
+    if (toggleOn) { // going from enabled to unenabled
       Notifications.cancelAllScheduledNotificationsAsync()
-      setIsEnabled(false)
+      setToggleOn(false)
     } else {
-      setIsEnabled(true)
+      setToggleOn(true)
+      setClockVisibility(true)
     }
   };
 
@@ -44,9 +45,12 @@ function SettingsScreen() {
     if (event.type === 'set') {
       Notifications.cancelAllScheduledNotificationsAsync()
       scheduleNotifications(currentDate);
-      setIsEnabled(false)
+      setClockVisibility(false)
+      setToggleOn(true)
     } else if (event.type === 'dismissed') {
-      setIsEnabled(false)
+      Notifications.cancelAllScheduledNotificationsAsync()
+      setClockVisiblity(false)
+      setToggleOn(false)
     }
   };
 
@@ -58,11 +62,11 @@ function SettingsScreen() {
           trackColor={{ false: "#767577", true: "#4169e1" }}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleSwitch}
-          value={isEnabled}
+          value={toggleOn}
         />
       </View>
       <View>
-        {isEnabled && (
+        {clockVisibility && (
           <DateTimePicker
             testID="dateTimePicker"
             value={date}
