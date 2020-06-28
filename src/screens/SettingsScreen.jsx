@@ -1,3 +1,4 @@
+//This was from previous branch, please merge with NEW SettingsScreen
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
