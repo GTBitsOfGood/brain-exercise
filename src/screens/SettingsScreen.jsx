@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-// import SwitchToggle from "./Components/SwitchToggle.jsx";
+import { Notifications } from "expo";
+import { scheduleNotifications } from "./../scripts/notification-logic"
 
 const styles = StyleSheet.create({
   root: {
@@ -23,14 +24,34 @@ const styles = StyleSheet.create({
 });
 
 function SettingsScreen() {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const [toggleOn, setToggleOn] = useState(false);
+  const [clockVisibility, setClockVisibility] = useState(false);
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode] = useState("time");
+
+  const toggleSwitch = () => {
+    if (toggleOn) { // going from enabled to unenabled
+      Notifications.cancelAllScheduledNotificationsAsync()
+      setToggleOn(false)
+    } else {
+      setToggleOn(true)
+      setClockVisibility(true)
+    }
+  };
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
+    if (event.type === 'set') {
+      Notifications.cancelAllScheduledNotificationsAsync()
+      scheduleNotifications(currentDate);
+      setClockVisibility(false)
+      setToggleOn(true)
+    } else if (event.type === 'dismissed') {
+      Notifications.cancelAllScheduledNotificationsAsync()
+      setClockVisiblity(false)
+      setToggleOn(false)
+    }
   };
 
   return (
@@ -41,11 +62,11 @@ function SettingsScreen() {
           trackColor={{ false: "#767577", true: "#4169e1" }}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleSwitch}
-          value={isEnabled}
+          value={toggleOn}
         />
       </View>
       <View>
-        {isEnabled && (
+        {clockVisibility && (
           <DateTimePicker
             testID="dateTimePicker"
             value={date}

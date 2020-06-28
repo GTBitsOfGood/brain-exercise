@@ -6,54 +6,49 @@ import { Notifications } from "expo";
 import { AsyncStorage } from "react-native";
 
 /**
- * Call this method after changing times of notification popups.
- * Calculates difference between current time and time of next notification popup and stores it in AsyncStorage
- * @param dummy should take an array of Date objecs
- */
-const setTimes = () => {
-  const currDate = new Date();
-  const futureDate = new Date(currDate.getTime() + 2000); // hopefully is a date object, manipulate to be the very next monday/tuesday/wed/etc.
-  const timeDifference = futureDate - currDate;
-
-  AsyncStorage.setItem("Monday", timeDifference.toString());
-};
-
-/**
- * Returns the date of the next notification on a given day
- * @param day day to be checking for
+ * Returns the a number in Unix epoch time representing next notification
+ * @param date current day
+ * @param i number of days from current day to schedule notification
  * @return Promise for number that represents next scheduled notification
  */
-const getNotificationTimeDifference = async () => {
-  try {
-    const difference = await AsyncStorage.getItem("Monday");
-    return new Date().getTime() + parseFloat(difference);
-  } catch (error) {
-    return error;
-  }
+const getNotificationTimeDifference = (date, i) => {
+  return date.getTime() + i * 86400000;
 };
 
 /**
  * Schedules notifications for every day S/M/T/W/R/F/S
+ * Stores hour and minute of notification time in Async storage. All times are in UTC
+ * @param date Date object, the time to set all of the notifications to
  */
-const scheduleNotifications = () => {
-  setTimes();
-  // stick below in a for loop for every day
-  const localNotification = {
-    title: "INSERT_DAY_HERE",
-    text: "Reminder for Brain Games!", // some encouraging message
-  };
+export const scheduleNotifications = (inputDate) => {
+  AsyncStorage.setItem("notificationHours", inputDate.getHours().toString())
+  AsyncStorage.setItem("notificationMinutes", inputDate.getMinutes().toString())
+  const date = new Date();
+  date.setMinutes(inputDate.getMinutes())
+  date.setHours(inputDate.getHours())
+  date.setSeconds(0);
 
-  getNotificationTimeDifference().then((result) => {
-    const schedulingOptions = {
-      time: result,
-      repeat: "week",
-    };
+  if (typeof date === 'object') {
+    const days = ["Sunday (NEVER USED)", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
-    Notifications.scheduleLocalNotificationAsync(
-      localNotification,
-      schedulingOptions
-    );
-  });
+    for (let i = 0; i < 7; i++) { // for the next 7 days
+      const day = (date.getDay() + i) % 7;
+
+      if (!(day === 0 || day === 6)) { // skip saturday and sunday
+        const dayText = days[day]
+        const localNotification = {
+          title: dayText,
+          text: "Reminder for Brain Games!", // some encouraging message
+        };
+        const schedulingOptions = {
+          time: getNotificationTimeDifference(date, i),
+          repeat: "week",
+        };
+        Notifications.scheduleLocalNotificationAsync(
+          localNotification,
+          schedulingOptions
+        );
+      }
+    }
+  }
 };
-
-export default scheduleNotifications();
