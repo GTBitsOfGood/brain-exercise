@@ -1,7 +1,5 @@
 const {diff} = require("react-native-reanimated")
 
-
-
 /* generateProblem: 
 * Based on the difficulty level which is a number from 1-4, returns an object
 * representation of a math problem which consists of the string
@@ -11,8 +9,7 @@ const {diff} = require("react-native-reanimated")
 * Level 2: adding and subtracting numbers 1 - 10
 * Level 3: multiplication numbers 1 - 10
 * Level 4: adding and subtracting numbers 1-100
-* test here: https://jsbin.com/jedilijege/1/edit?js,console
-*/
+* test here: https://jsbin.com/jedilijege/1/edit?js,console */
 function generateProblem( difficulty ) {
   let a
   let b
@@ -47,23 +44,20 @@ function generateProblem( difficulty ) {
   };
 }
 
+/** getProblem:
+* Returns the full object representation of a math problem with
+* a random level of difficulty.*/
+function getProblem() {
+  let randomDifficulty = Math.floor((Math.random()* 4 + 1));
+  return getProblemObject(randomDifficulty);
+}
+
 /** generateChoices: 
 * @param {*} difficulty 
-* @param {*} solution 
-* Returns array of unique answer choices
-*  
-*  Including the solution,
-*  4 answer choices are returned when difficulty > 2.
-*  3 answer choices are returned when difficulty <= 2.
-* 
-*  The idea is to pick choices at random from either a range of
-*  numbers above the solution (hiRange), or from a range of 
-*  numbers below the solution (lowRange). 
-* 
-*  Through this method, we ensure that the array
-*  returned contains no duplicate choices, and there is just 
-*  one correct choice, regardless of the sign.
-*/
+* Based on the difficulty level which is a number from 1-4, returns 
+* the full object representation of a math problem which consists 
+* of the string expression of the problem, its answer choices,
+* and its solution. */
 function getProblemObject( difficulty ) {
   let problem = generateProblem(difficulty);
   let {expression, solution} = problem;
@@ -86,28 +80,27 @@ function getProblemObject( difficulty ) {
 *  3 answer choices are returned when difficulty <= 2.
 * 
 *  The idea is to pick choices at random from either a range of
-*  numbers above the solution (hiRange), or from a range of 
+*  numbers above the solution (upperRange), or from a range of 
 *  numbers below the solution (lowRange). 
 * 
 *  Through this method, we ensure that the array
 *  returned contains no duplicate choices, and there is just 
-*  one correct choice, regardless of the sign.
-*/
+*  one correct choice.*/
 function generateChoices(difficulty, solution) {
   let numWrongChoices = (difficulty > 2) ? 3 : 2;
-  let {hiRange, lowRange} = generateRanges(difficulty);
+  let {upperRange, lowRange} = generateRanges(difficulty, solution);
 
   let choicesArray = [];
   for (let i = 0; i < numWrongChoices; i++) {
-    let pickFromHi = (Math.floor(Math.random() * 2 + 1) % 2 === 0);
-    let hiRangeLength = hiRange.end - hiRange.start;
+    let pickFromUpper = (Math.floor(Math.random() * 2 + 1) % 2 === 0);
+    let upperRangeLength = upperRange.end - upperRange.start;
     let lowRangeLength = lowRange.end - lowRange.start;
 
     let range
-    if (hiRangeLength >  0 && lowRangeLength > 0) {
-      range = (pickFromHi) ? hiRange: lowRange;
+    if (upperRangeLength >  0 && lowRangeLength > 0) {
+      range = (pickFromUpper) ? upperRange: lowRange;
     } else {
-      range = (hiRangeLength > 0) ? hiRange: lowRange;
+      range = (upperRangeLength > 0) ? upperRange: lowRange;
     }
 
     let choice = randomChoiceFromRange(range);
@@ -125,27 +118,37 @@ function generateChoices(difficulty, solution) {
 
 /** generateRanges:
  * @param {*} difficulty 
- * Returns the proper upper range and lower range
- * for incorrect choices to be chosen from.
- */
-function generateRanges(difficulty) {
-  let hiRange
+ * @param {*} solution
+ * Based on the difficulty level, returns the widest upper  
+ * and lower ranges for incorrect choices to be chosen from.
+ * 
+ * The idea is to create upper and lower ranges that span all of
+ * the possible solutions to a problem of the given difficulty
+ * level.
+ * 
+ * For example, with a difficulty 2 problem, the highest possible
+ * solution is 20, and the lowest possible solution is -9.
+ * 
+ * Therefore, the upper range would be (solution + 1 thru 20)
+ * and the lower range would be (-9 thru solution).*/
+function generateRanges(difficulty, solution) {
+  let upperRange
   let lowRange
   if (difficulty === 1 ) {
-    hiRange = {start:solution + 1, end:20};
+    upperRange = {start:solution + 1, end:20};
     lowRange = {start:2, end:solution};
   } else if (difficulty === 2) {
-    hiRange = {start:solution + 1, end:20};
+    upperRange = {start:solution + 1, end:20};
     lowRange = {start:-9, end:solution};
   } else if (difficulty === 3) {
-    hiRange = {start:solution + 1, end:100};
+    upperRange = {start:solution + 1, end:100};
     lowRange = {start:1, end:solution};
   } else if (difficulty === 4) {
-    hiRange = {start:solution + 1, end:200};
+    upperRange = {start:solution + 1, end:200};
     lowRange = {start:-99, end:solution};
   }
   return {
-    hiRange: hiRange,
+    upperRange: upperRange,
     lowRange: lowRange
   };
 }
@@ -153,8 +156,7 @@ function generateRanges(difficulty) {
 /** randomChoiceFromRange:
  * @param {*} range 
  * Returns a random integer from within the range, 
- * exclusive of range.end
- */
+ * exclusive of range.end*/
 function randomChoiceFromRange(range) {
   let {start, end} = range;
   const choice = Math.floor(start + Math.random()*(end - start)) ;
@@ -170,11 +172,9 @@ function randomChoiceFromRange(range) {
  *  each element with a random one before it.
  * 
  *  Through this method, all possible arrangements
- *  will have equal probabilities of occurring. 
- */
+ *  will have equal probabilities of occurring. */
 function shuffleChoices(array) {
   for (let i = array.length - 1; i > 0; i--) {
-    // pick a random element between 0 and i, inclusive.
     let j = Math.floor(Math.random() * (i + 1));
     let temp = array[i]; 
     array[i] = array[j];  
