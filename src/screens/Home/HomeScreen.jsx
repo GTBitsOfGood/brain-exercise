@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
   },
 });
 
+//  Home Screen Navigation
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.root}>
@@ -28,7 +29,7 @@ function HomeScreen({ navigation }) {
       {/* Home Screen Navigation Buttons: */}
 
       <Button
-        title="Games"
+        title="Start Exercises"
         style={styles.button}
         onPress={() => navigation.navigate("GameOverview")}
       />
@@ -38,7 +39,7 @@ function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate("SettingsScreen")}
       />
       <Button
-        title="Go to Video"
+        title="Videos"
         style={styles.button}
         onPress={() => navigation.navigate("Video")}
       />
