@@ -9,10 +9,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function FontSize() {
+function FontSize() {
   return (
     <View style={styles.root}>
       <Text>Hello there</Text>
     </View>
   );
 }
+
+export default FontSize;

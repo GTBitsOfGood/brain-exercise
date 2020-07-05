@@ -10,11 +10,6 @@
     "format": "prettier --write App.js && prettier --write \"screens/**/*.{jsx,js}\"",
     "check-format": "prettier -l App.js && prettier -l \"screens/**/*.{jsx,js}\""
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx}": [
       "prettier --write",

@@ -19,12 +19,4 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:react-native-a11y/basic",
   ],
-  rules: {
-    "prettier/prettier": [
-      "error",
-      {
-        endofLine: "auto",
-      },
-    ],
-  },
 };

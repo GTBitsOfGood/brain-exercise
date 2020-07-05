@@ -24,6 +24,9 @@ function HomeScreen({ navigation }) {
   return (
     <View style={styles.root}>
       <Text style={styles.title}>Brain Gains</Text>
+
+      {/* Home Screen Navigation Buttons: */}
+
       <Button
         title="Games"
         style={styles.button}
