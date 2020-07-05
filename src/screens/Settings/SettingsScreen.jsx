@@ -1,5 +1,6 @@
 import React from "react"; // useState
-import { View, Text, StyleSheet, Button } from "react-native"; // Switch,
+import { View, Text, StyleSheet } from "react-native"; // Switch,
+import { Button } from "react-native-elements";
 // import DateTimePicker from "@react-native-community/datetimepicker";
 import PropTypes from "prop-types";
 // import SwitchToggle from "./Components/SwitchToggle.jsx";
