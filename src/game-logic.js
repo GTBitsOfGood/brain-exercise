@@ -1,15 +1,15 @@
 const {diff} = require("react-native-reanimated")
 
 /* generateProblem: 
-* Based on the difficulty level which is a number from 1-4, returns an object
-* representation of a math problem which consists of the string
-* expression of the problem, and its solution.
-* 
-* Level 1: adding numbers 1 - 10
-* Level 2: adding and subtracting numbers 1 - 10
-* Level 3: multiplication numbers 1 - 10
-* Level 4: adding and subtracting numbers 1-100
-* test here: https://jsbin.com/jedilijege/1/edit?js,console */
+ * Based on the difficulty level which is a number from 1-4, returns an object
+ * representation of a math problem which consists of the string
+ * expression of the problem, and its solution.
+ * 
+ * Level 1: adding numbers 1 - 10
+ * Level 2: adding and subtracting numbers 1 - 10
+ * Level 3: multiplication numbers 1 - 10
+ * Level 4: adding and subtracting numbers 1-100
+ * test here: https://jsbin.com/jedilijege/1/edit?js,console */
 function generateProblem( difficulty ) {
   let a
   let b
@@ -45,19 +45,19 @@ function generateProblem( difficulty ) {
 }
 
 /** getProblem:
-* Returns the full object representation of a math problem with
-* a random level of difficulty.*/
+ * Returns the object representation of a math problem with
+ * a random level of difficulty.*/
 function getProblem() {
   let randomDifficulty = Math.floor((Math.random()* 4 + 1));
   return getProblemObject(randomDifficulty);
 }
 
 /** generateChoices: 
-* @param {*} difficulty 
-* Based on the difficulty level which is a number from 1-4, returns 
-* the full object representation of a math problem which consists 
-* of the string expression of the problem, its answer choices,
-* and its solution. */
+ * @param {*} difficulty 
+ * Based on the difficulty level which is a number from 1-4, returns 
+ * the full object representation of a math problem which consists 
+ * of the string expression of the problem, its answer choices,
+ * and its solution. */
 function getProblemObject( difficulty ) {
   let problem = generateProblem(difficulty);
   let {expression, solution} = problem;
@@ -71,21 +71,21 @@ function getProblemObject( difficulty ) {
 }
 
 /** generateChoices: 
-* @param {*} difficulty 
-* @param {*} solution 
-* Returns array of unique answer choices
-*  
-*  Including the solution,
-*  4 answer choices are returned when difficulty > 2.
-*  3 answer choices are returned when difficulty <= 2.
-* 
-*  The idea is to pick choices at random from either a range of
-*  numbers above the solution (upperRange), or from a range of 
-*  numbers below the solution (lowRange). 
-* 
-*  Through this method, we ensure that the array
-*  returned contains no duplicate choices, and there is just 
-*  one correct choice.*/
+ * @param {*} difficulty 
+ * @param {*} solution 
+ * Returns array of unique answer choices
+ *  
+ *  Including the solution,
+ *  4 answer choices are returned when difficulty > 2.
+ *  3 answer choices are returned when difficulty <= 2.
+ * 
+ *  The idea is to pick choices at random from either a range of
+ *  numbers above the solution (upperRange), or from a range of 
+ *  numbers below the solution (lowRange). 
+ * 
+ *  Through this method, we ensure that the array
+ *  returned contains no duplicate choices and there is just 
+ *  one correct choice.*/
 function generateChoices(difficulty, solution) {
   let numWrongChoices = (difficulty > 2) ? 3 : 2;
   let {upperRange, lowRange} = generateRanges(difficulty, solution);
@@ -113,6 +113,7 @@ function generateChoices(difficulty, solution) {
     }
     choicesArray.push(choice);
   }
+  choicesArray.push(solution);
   return choicesArray;
 }
 
@@ -159,7 +160,7 @@ function generateRanges(difficulty, solution) {
  * exclusive of range.end*/
 function randomChoiceFromRange(range) {
   let {start, end} = range;
-  const choice = Math.floor(start + Math.random()*(end - start)) ;
+  const choice = Math.floor(start + Math.random()*(end - start));
   return choice;
 }
 
