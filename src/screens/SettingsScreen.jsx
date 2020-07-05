@@ -77,7 +77,7 @@ function SettingsScreen() {
           />
         )}
       </View>
-      <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center', marginLeft: 20, marginRight: 20}}>
+      <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center', marginLeft: 50, marginRight: 20, width: 300}}>
         <Slider
           value={fontSize}
           minimumValue={1}
