@@ -1,5 +1,3 @@
-// const { diff } = require("react-native-reanimated");
-
 /** getProblem:
  * Returns the object representation of a math problem with
  * a random level of difficulty. */
@@ -38,7 +36,7 @@ function generateProblem(difficulty) {
   } else if (difficulty === 3) {
     a = Math.floor(Math.random() * 10 + 1);
     b = Math.floor(Math.random() * 10 + 1);
-    operator = " * ";
+    operator = " x ";
     solution = a * b;
   } else if (difficulty === 4) {
     a = Math.floor(Math.random() * 100 + 1);
