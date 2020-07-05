@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Switch, Button, AsyncStorage, PixelRatio } from "react-native";
+import { View, Text, StyleSheet, Switch, Button, AsyncStorage } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Slider } from 'react-native-elements';
 
@@ -52,22 +52,7 @@ function SettingsScreen() {
     setMultiplier(fontSize)
   }
 
-  const scaleFont = (originalSize) =>{
-    const size = multiplier * originalSize || originalSize
-    return Math.round(PixelRatio.roundToNearestPixel(size))
-  }
-
-  const textStyles = {
-    small: {
-      fontSize: scaleFont(16), // arbitrarily small font
-    },
-    medium: {
-      fontSize: scaleFont(24), // arbitrarily medium font
-    },
-    large: {
-      fontSize: scaleFont(40), // arbitrarily large font
-    },
-  }
+  
 
   return (
     <View style={styles.root}>
@@ -92,7 +77,7 @@ function SettingsScreen() {
           />
         )}
       </View>
-      <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
+      <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center', marginLeft: 20, marginRight: 20}}>
         <Slider
           value={fontSize}
           minimumValue={1}
@@ -105,7 +90,7 @@ function SettingsScreen() {
           title="Save Font"
           onPress={saveFont}
         />
-        <Text style={textStyles.small}>I am sample text</Text>
+        <Text style={{fontSize: multiplier * 16}}>I am sample text</Text>
       </View>
     </View>
   );
