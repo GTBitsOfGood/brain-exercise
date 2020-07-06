@@ -1,7 +1,15 @@
 //  This was from previous branch, please merge with NEW SettingsScreen
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Switch } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Switch,
+  Button,
+  AsyncStorage,
+} from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import Slider from "react-native-slider";
 import { Notifications } from "expo";
 import scheduleNotifications from "../scripts/notification-logic";
 
@@ -56,6 +64,23 @@ function SettingsScreen() {
     }
   };
 
+  /**
+   * font size is the slider state
+   * multiplier is the state that is saved when button is pressed
+   * scale font changes font size based on multiplier
+   * textStyles is storage for preset font sizes
+   */
+  const [fontSize, setFontSize] = useState(1);
+  const [multiplier, setMultiplier] = useState(1);
+  const changeSlider = (newSize) => {
+    setFontSize(newSize);
+  };
+
+  const saveFont = () => {
+    AsyncStorage.setItem("fontSize", fontSize.toString());
+    setMultiplier(fontSize);
+  };
+
   return (
     <View style={styles.root}>
       <View style={styles.intermediate}>
@@ -78,6 +103,27 @@ function SettingsScreen() {
             onChange={onChange}
           />
         )}
+      </View>
+      <View
+        style={{
+          flex: 1,
+          alignItems: "stretch",
+          justifyContent: "center",
+          marginLeft: 50,
+          marginRight: 20,
+          width: 300,
+        }}
+      >
+        <Slider
+          value={fontSize}
+          minimumValue={1}
+          maximumValue={2}
+          step={0.2}
+          onValueChange={changeSlider}
+        />
+        <Text>Value: {fontSize}</Text>
+        <Button title="Save Font" onPress={saveFont} />
+        <Text style={{ fontSize: multiplier * 16 }}>I am sample text</Text>
       </View>
     </View>
   );
