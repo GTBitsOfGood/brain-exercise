@@ -5,17 +5,10 @@ import { StyleSheet, View, Text } from "react-native";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-<<<<<<< HEAD
     alignContent: "center",
     backgroundColor: "#f5f5f5",
     marginVertical: 30,
     marginHorizontal: 30,
-=======
-    flexDirection: "column",
-    padding: 10,
-    alignItems: "stretch",
-    justifyContent: "space-between",
->>>>>>> ac0b9645932ab802037ce32a66522615c09d13f7
   },
   saveButton: {
     backgroundColor: "#2a652c"
@@ -50,17 +43,10 @@ export default class FontSize extends React.Component {
             step={4}
             onValueChange={(value) => this.setState({ value })}
           />
-<<<<<<< HEAD
-          <Button
-            buttonStyle={styles.button}
-            title="Save Changes"
-          />
-=======
           <View style={styles.texts}>
             <Text style={{fontSize:16}}>T</Text>
             <Text style={{fontSize:34}}>T</Text>
           </View>
->>>>>>> ac0b9645932ab802037ce32a66522615c09d13f7
         </View>
         <Button
           buttonStyle={styles.saveButton}
