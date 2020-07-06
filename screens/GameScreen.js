@@ -29,19 +29,18 @@ class GameScreen extends React.Component {
     const choicesArray = this.state.problem.choices;
     const choices = choicesArray.map((choiceValue, choiceKey) => {
       return (
-        <View key={choiceKey}>
-          <Button
-            buttonStyle={styles.button}
-            title={`${choiceValue}`}
-            titleStyle={styles.buttonTitle}
-            onPress={() => this.checkAnswer(choiceValue)}
-          />
-        </View>
+        <Button
+          key={choiceKey}
+          buttonStyle={styles.button}
+          title={`${choiceValue}`}
+          titleStyle={styles.buttonTitle}
+          onPress={() => this.checkAnswer(choiceValue)}
+        />
       );
     });
     return (
-      <View>
-        <View style={styles.container}>
+      <View style={styles.root}>
+        <View style={styles.textContainer}>
           <Text style={styles.expressionText}>
             {this.state.problem.expression}
           </Text>
@@ -57,34 +56,51 @@ var styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
   expressionText: {
     fontSize: 50,
     fontWeight: "bold",
     paddingBottom: 40,
   },
-  container: {
-    paddingBottom: 20,
-    paddingLeft: 10,
-    paddingRight: 10,
-    justifyContent: "space-around",
+  textContainer: {
+    flex: 1,
+    paddingTop: 30,
+    justifyContent: "center",
     backgroundColor: "#eaeaea",
     flexDirection: "row",
     flexWrap: "wrap",
+    alignItems: "center",
+    textAlign: "center",
+  },
+  fourChoiceContainer: {
+    flexDirection: "column",
+  },
+  threeChoiceContainer: {
+    flexDirection: "row",
+  },
+  container: {
+    flex: 3,
+    paddingBottom: 50,
+    paddingLeft: 10,
+    paddingRight: 10,
+    justifyContent: "space-around",
+    flexDirection: "row",
+    backgroundColor: "#eaeaea",
+    flexWrap: "wrap",
+    alignContent: "stretch",
   },
   button: {
-    width: 91,
-    height: 88,
+    flex: 1,
+    width: "80%",
+    height: "80%",
     backgroundColor: "rgba(0, 138, 252, 0.2)",
     borderRadius: 25,
     marginTop: 20,
-    borderWidth: 1,
+    alignSelf: "center",
   },
   buttonTitle: {
     textAlign: "center",
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: "100",
     color: "#2f4f4f",
   },
