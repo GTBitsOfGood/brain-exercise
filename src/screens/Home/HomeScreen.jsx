@@ -27,12 +27,17 @@ function HomeScreen({ navigation }) {
       <Button
         title="Games"
         style={styles.button}
-        onPress={() => navigation.navigate("Games")}
+        onPress={() => navigation.navigate("GameOverview")}
       />
       <Button
         title="Settings"
         style={styles.button}
-        onPress={() => navigation.navigate("Settings")}
+        onPress={() => navigation.navigate("SettingsScreen")}
+      />
+      <Button
+        title="Go to Video"
+        style={styles.button}
+        onPress={() => navigation.navigate("Video")}
       />
     </View>
   );
