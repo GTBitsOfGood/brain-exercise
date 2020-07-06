@@ -1,42 +1,63 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { Button } from "react-native-elements"
 import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    alignContent: "center",
     backgroundColor: "#f5f5f5",
-    alignItems: "center",
-    justifyContent: "center",
+    marginVertical: 30,
+    marginHorizontal: 30,
   },
   title: {
-    color: "black",
+    textAlign: "center",
     fontSize: 30,
-    padding: 30,
+    marginVertical: 30,
   },
   button: {
-    padding: 30,
+    alignContent: "space-between",
+    borderRadius: 10,
+    marginTop: 20,
   },
+  videoButton: {
+    alignContent: "space-between",
+    borderRadius: 10,
+    marginTop: 20,
+    backgroundColor: "#ca0000",
+  },
+  settingsButton: {
+    alignContent: "space-between",
+    borderRadius: 10,
+    marginTop: 20,
+    backgroundColor: "#2a652c",
+  },
+  
 });
 
+//  Home Screen Navigation
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.root}>
       <Text style={styles.title}>Brain Gains</Text>
+
+      {/* Home Screen Navigation Buttons: */}
+
       <Button
-        title="Games"
-        style={styles.button}
+        title="Start Exercises"
+        buttonStyle={styles.button}
         onPress={() => navigation.navigate("GameOverview")}
       />
       <Button
         title="Settings"
-        style={styles.button}
+        buttonStyle={styles.settingsButton}
         onPress={() => navigation.navigate("SettingsScreen")}
       />
       <Button
-        title="Go to Video"
-        style={styles.button}
+        title="Videos"
+        buttonStyle={styles.videoButton}
         onPress={() => navigation.navigate("Video")}
       />
     </View>

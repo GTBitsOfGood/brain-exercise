@@ -10,11 +10,6 @@
     "format": "prettier --write App.js && prettier --write \"screens/**/*.{jsx,js}\"",
     "check-format": "prettier -l App.js && prettier -l \"screens/**/*.{jsx,js}\""
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx}": [
       "prettier --write",
@@ -24,6 +19,7 @@
   "dependencies": {
     "@react-native-community/datetimepicker": "^2.4.2",
     "@react-native-community/masked-view": "0.1.6",
+    "@react-native-community/slider": "^3.0.0",
     "@react-navigation/native": "^5.5.1",
     "@react-navigation/stack": "^5.4.2",
     "expo": "~37.0.3",
@@ -53,8 +49,8 @@
     "eslint-plugin-react": "~7.20.0",
     "eslint-plugin-react-native": "~3.8.1",
     "eslint-plugin-react-native-a11y": "~2.0.0",
-    "husky": "~4.2.5",
-    "lint-staged": "~10.2.9",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "prettier": "~2.0.5"
   },
   "private": true

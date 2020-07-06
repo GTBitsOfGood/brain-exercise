@@ -1,40 +1,106 @@
-import React from "react"; // useState
-import { View, Text, StyleSheet, Button } from "react-native"; // Switch,
-// import DateTimePicker from "@react-native-community/datetimepicker";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Switch,
+} from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Notifications } from "expo";
+import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
-// import SwitchToggle from "./Components/SwitchToggle.jsx";
+import scheduleNotifications from "../../scripts/notification-logic";
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    alignContent: "center",
     backgroundColor: "#f5f5f5",
-    alignItems: "center",
-    justifyContent: "center",
+    marginVertical: 30,
   },
-  title: {
-    color: "black",
-    fontSize: 30,
-    padding: 30,
+  reminder: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 30,
+    marginHorizontal: 30,
+  },
+  text: {
+    textAlign: "left",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginHorizontal: 30,
+  },
+  subtext: {
+    textAlign: "left",
+    alignSelf: "center",
+    fontSize: 18,
   },
   button: {
-    padding: 30,
+    borderRadius: 10,
+    borderColor: "gray",
+    borderWidth: 0.9,
   },
+  fontButton: {
+    alignContent: "space-between",
+    color: "gray",
+    borderRadius: 10,
+    marginTop: 20,
+  }
 });
 
 // Settings Navigation
 function SettingsScreen({ navigation }) {
+  const [toggleOn, setToggleOn] = useState(false);
+
+  const toggleSwitch = () => {
+    if (toggleOn) {
+      // going from enabled to unenabled
+      Notifications.cancelAllScheduledNotificationsAsync();
+      setToggleOn(false);
+    } else {
+      setToggleOn(true);
+    }
+  };
+
   return (
-    <View style={styles.root}>
-      <Text style={styles.title}>Settings</Text>
+     <View style={styles.root}>
+       <Text style={styles.text}>Notifications</Text>
+       <View style={styles.reminder}>
+        <Text style={styles.subtext}>Daily Reminder</Text>
+        <Switch
+          trackColor={{ false: "#ffffff", true: "#2a652c" }}
+          onValueChange={toggleSwitch}
+          value={toggleOn}
+          accessibilityRole="switch"
+        />
+      </View>
+      {
+        toggleOn &&
+          <View style={styles.reminder}>
+            <Text style={styles.subtext}>Set Reminder Time</Text>
+            <Button
+              title="10:00 am"
+              buttonStyle={styles.button}
+              titleStyle={{
+                fontSize: 18,
+                color: "black",
+              }}
+              type="outline"
+              onPress={() => navigation.navigate("TimePicker")}
+            />
+          </View>
+      }
       <Button
-        title="Time Picker"
-        style={styles.button}
-        onPress={() => navigation.navigate("TimePicker")}
-      />
-      <Button
-        title="Font Size"
-        style={styles.button}
-        onPress={() => navigation.navigate("Font Size")}
+        title="Font Size                                                 >"
+        buttonStyle={styles.fontButton}
+        titleStyle={{
+          fontSize: 20,
+          fontWeight: "bold",
+          color: "black",
+        }}
+        type="clear"
+        containerStyle={{ margin: 20 }}
+        onPress={() => navigation.navigate("FontSize")}
       />
     </View>
   );
@@ -45,64 +111,3 @@ SettingsScreen.propTypes = {
 };
 
 export default SettingsScreen;
-
-// Settings Screen Content
-
-// const styles02 = StyleSheet.create({
-//   root: {
-//     flex: 1,
-//     backgroundColor: "#f5f5f5",
-//     paddingVertical: 30,
-//   },
-//   intermediate: {
-//     width: "100%",
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//     paddingHorizontal: 20,
-//     marginBottom: 130,
-//   },
-//   notificationText: {
-//     fontSize: 25,
-//   },
-// });
-
-// function Settings() {
-//   const [isEnabled, setIsEnabled] = useState(false);
-//   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-//   const [date, setDate] = useState(new Date(1598051730000));
-//   const [mode] = useState("time");
-
-//   const onChange = (event, selectedDate) => {
-//     const currentDate = selectedDate || date;
-//     setDate(currentDate);
-//   };
-
-//   return (
-//     <View style={styles02.root}>
-//       <View style={styles02.intermediate}>
-//         <Text style={styles02.notificationText}>Notifications</Text>
-//         <Switch
-//           trackColor={{ false: "#767577", true: "#4169e1" }}
-//           ios_backgroundColor="#3e3e3e"
-//           onValueChange={toggleSwitch}
-//           value={isEnabled}
-//         />
-//       </View>
-//       <View>
-//         {isEnabled && (
-//           <DateTimePicker
-//             testID="dateTimePicker"
-//             value={date}
-//             mode={mode}
-//             is24Hour={true}
-//             display="default"
-//             onChange={onChange}
-//           />
-//         )}
-//       </View>
-//     </View>
-//   );
-// }
-
-// export default { SettingsScreen };
