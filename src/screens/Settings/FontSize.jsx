@@ -9,7 +9,14 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "center",
   },
-  sliderWithButton: {
+  slider: {
+    maxHeight: 100,
+  },
+  button: {
+    backgroundColor: "#2a652c",
+    borderRadius: 10,
+  },
+  notText: {
     marginVertical: 160,
   },
   saveButton: {
@@ -51,6 +58,11 @@ export default class FontSize extends React.Component {
               title="Save Changes"
             />
           </View>
+          <Button
+            buttonStyle={styles.button}
+            style={styles.saveButton}
+            title="Save Changes"
+          />
         </View>
       </View>
     );
