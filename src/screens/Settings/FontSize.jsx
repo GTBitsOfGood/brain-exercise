@@ -5,30 +5,21 @@ import { StyleSheet, View, Text } from "react-native";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    flexDirection: "column",
     padding: 10,
     alignItems: "stretch",
-    justifyContent: "center",
-  },
-  slider: {
-    maxHeight: 100,
-  },
-  button: {
-    backgroundColor: "#2a652c",
-    borderRadius: 10,
-  },
-  notText: {
-    marginVertical: 160,
+    justifyContent: "space-between",
   },
   saveButton: {
-    marginVertical: 40,
-    backgroundColor: "#2a652c",
-    borderRadius: 10,
+    backgroundColor: "#2a652c"
   },
-  // buttonStyle: {
-  //   flex: 0.01,
-  //   justifyContent: "flex-end",
-  //   marginBottom: 36,
-  // }
+  sliderWithButton: {
+    paddingVertical: 160,
+  },
+  texts: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+  },
 });
 
 export default class FontSize extends React.Component {
@@ -39,10 +30,10 @@ export default class FontSize extends React.Component {
   render() {
     return (
       <View style={styles.root}>
-        <Text style={StyleSheet.create({fontSize: this.state.value})}>
-          Drag the slider below to make the text on screen smaller or larger. Value: {this.state.value}
+        <Text style={StyleSheet.create({fontSize: this.state.value, height:125})}>
+          Drag the slider below to make the text on screen smaller or larger.
         </Text>
-        <View style={styles.sliderWithButton}>
+        <View>
           <Slider
             style={styles.slider}
             value={this.state.value}
@@ -52,18 +43,17 @@ export default class FontSize extends React.Component {
             step={4}
             onValueChange={(value) => this.setState({ value })}
           />
+          <View style={styles.texts}>
+            <Text style={{fontSize:16}}>T</Text>
+            <Text style={{fontSize:34}}>T</Text>
+          </View>
+        </View>
           <View style={styles.buttonStyle}>
             <Button
               buttonStyle={styles.saveButton}
               title="Save Changes"
             />
           </View>
-          <Button
-            buttonStyle={styles.button}
-            style={styles.saveButton}
-            title="Save Changes"
-          />
-        </View>
       </View>
     );
   }
