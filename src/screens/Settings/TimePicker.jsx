@@ -15,10 +15,12 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     fontSize: 20,
+    marginVertical: 30,
   },
   button: {
     backgroundColor: "#2a652c",
     borderRadius: 10,
+    marginTop: 20,
   }
 });
 

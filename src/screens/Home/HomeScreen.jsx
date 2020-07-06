@@ -7,18 +7,34 @@ import PropTypes from "prop-types";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    alignContent: "center",
     backgroundColor: "#f5f5f5",
-    alignItems: "center",
-    justifyContent: "center",
+    marginVertical: 30,
+    marginHorizontal: 30,
   },
   title: {
-    color: "black",
+    textAlign: "center",
     fontSize: 30,
-    padding: 30,
+    marginVertical: 30,
   },
   button: {
-    padding: 30,
+    alignContent: "space-between",
+    borderRadius: 10,
+    marginTop: 20,
   },
+  videoButton: {
+    alignContent: "space-between",
+    borderRadius: 10,
+    marginTop: 20,
+    backgroundColor: "#ca0000",
+  },
+  settingsButton: {
+    alignContent: "space-between",
+    borderRadius: 10,
+    marginTop: 20,
+    backgroundColor: "#2a652c",
+  },
+  
 });
 
 //  Home Screen Navigation
@@ -31,17 +47,17 @@ function HomeScreen({ navigation }) {
 
       <Button
         title="Start Exercises"
-        style={styles.button}
+        buttonStyle={styles.button}
         onPress={() => navigation.navigate("GameOverview")}
       />
       <Button
         title="Settings"
-        style={styles.button}
+        buttonStyle={styles.settingsButton}
         onPress={() => navigation.navigate("SettingsScreen")}
       />
       <Button
         title="Videos"
-        style={styles.button}
+        buttonStyle={styles.videoButton}
         onPress={() => navigation.navigate("Video")}
       />
     </View>

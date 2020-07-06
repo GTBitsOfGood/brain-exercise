@@ -5,9 +5,10 @@ import { StyleSheet, View, Text } from "react-native";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    padding: 10,
-    alignItems: "stretch",
-    justifyContent: "center"
+    alignContent: "center",
+    backgroundColor: "#f5f5f5",
+    marginVertical: 30,
+    marginHorizontal: 30,
   },
   slider: {
     maxHeight: 100,
@@ -43,7 +44,6 @@ export default class FontSize extends React.Component {
           />
           <Button
             buttonStyle={styles.button}
-            style={styles.saveButton}
             title="Save Changes"
           />
         </View>

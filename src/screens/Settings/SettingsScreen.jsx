@@ -24,13 +24,19 @@ const styles = StyleSheet.create({
   },
   subtext: {
     textAlign: "left",
-    fontSize: 20,
-    fontWeight: "bold",
-    marginHorizontal: 30,
+    alignSelf: "center",
+    fontSize: 18,
   },
   button: {
+    borderRadius: 10,
+    borderColor: "gray",
+    borderWidth: 0.9,
+  },
+  fontButton: {
     alignContent: "space-between",
-    color: "black",
+    color: "gray",
+    borderRadius: 10,
+    marginTop: 20,
   }
 });
 
@@ -42,7 +48,7 @@ function SettingsScreen({ navigation }) {
      <View style={styles.root}>
        <Text style={styles.text}>Notifications</Text>
        <View style={styles.reminder}>
-        <Text>Daily Reminder</Text>
+        <Text style={styles.subtext}>Daily Reminder</Text>
         <Switch
           trackColor={{ false: "#ffffff", true: "#2a652c" }}
           onValueChange={toggleSwitch}
@@ -51,21 +57,31 @@ function SettingsScreen({ navigation }) {
         />
       </View>
       <View style={styles.reminder}>
-        <Text>Set Reminder Time</Text>
+        <Text style={styles.subtext}>Set Reminder Time</Text>
         <Button
-        title="10:00 am"
-        type="outline"
-        onPress={() => navigation.navigate("TimePicker")}
-      />
+          title="10:00 am"
+          buttonStyle={styles.button}
+          titleStyle={{
+            fontSize: 18,
+            color: "black",
+          }}
+          type="outline"
+          onPress={() => navigation.navigate("TimePicker")}
+        />
       </View>
-      <Button
-        buttonStyle={styles.button}
-        title="Font Size                                                 >"
-        type="clear"
-        containerStyle={{ margin: 20 }}
-        onPress={() => navigation.navigate("FontSize")}
-      />
-    </View>
+        <Button
+          title="Font Size                                                 >"
+          buttonStyle={styles.fontButton}
+          titleStyle={{
+            fontSize: 20,
+            fontWeight: "bold",
+            color: "black",
+          }}
+          type="clear"
+          containerStyle={{ margin: 20 }}
+          onPress={() => navigation.navigate("FontSize")}
+        />
+      </View>
   );
 }
 

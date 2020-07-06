@@ -1,4 +1,6 @@
 import React from "react";
+import { Button } from 'react-native';
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 // Importing Home Screens
@@ -16,6 +18,18 @@ import GameplayIntermediate from "./src/screens/Game/GameplayIntermediate.jsx";
 import Pause from "./src/screens/Game/Pause.jsx";
 import FinishedScreen from "./src/screens/Game/FinishedScreen.jsx";
 import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
+
+const config = {
+  animation: 'spring',
+  config: {
+    stiffness: 1000,
+    damping: 500,
+    mass: 3,
+    overshootClamping: true,
+    restDisplacementThreshold: 0.01,
+    restSpeedThreshold: 0.01,
+  },
+};
 
 const Stack = createStackNavigator();
 
@@ -48,7 +62,9 @@ export default function App() {
           name="Video"
           component={Video}
           options={{
-            title: "Youtube Video"}}
+            title: "Youtube Videos",
+            headerStyle: {backgroundColor: '#ca0000'},
+          }}
         />
 
         {/* Game Screens */}
@@ -68,19 +84,14 @@ export default function App() {
           name="Gameplay"
           component={Gameplay}
           options={{
-            title: "Gameplay"}}
+            title: "Gameplay",
+            }}
         />
         <Stack.Screen
           name="GameplayIntermediate"
           component={GameplayIntermediate}
           options={{
             title: "Gameplay Intermediate"}}
-        />
-        <Stack.Screen
-          name="Pause"
-          component={Pause}
-          options={{
-            title: "Paused"}}
         />
         <Stack.Screen
           name="FinishedScreen"
@@ -93,6 +104,22 @@ export default function App() {
           component={ExtraPractice}
           options={{
             title: "More Exercises"}}
+        />
+
+      {/* Pause Screen */}
+        <Stack.Screen
+          name="Pause"
+          component={Pause}
+          options={{
+            title: "Paused",
+            animationTypeForReplace: "pop",
+            // headerShown: false,
+            headerStyle: {backgroundColor: '#3f3f3f'},
+            transitionSpec: {
+              open: config,
+              close: config,
+            },
+          }}
         />
 
         {/* Settings Screens: */}
