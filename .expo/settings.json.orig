@@ -1,0 +1,12 @@
+{
+  "hostType": "lan",
+  "lanType": "ip",
+  "dev": true,
+  "minify": false,
+<<<<<<< HEAD
+  "urlRandomness": "ve-r5g",
+=======
+  "urlRandomness": "bi-43y",
+>>>>>>> 67e44474cbd436f2fdb47b70b6033b6c38c544ae
+  "https": false
+}

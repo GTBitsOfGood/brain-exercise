@@ -1,0 +1,69 @@
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "lint": "eslint App.js && eslint \"screens/**/*.{jsx,js}\"",
+    "format": "prettier --write App.js && prettier --write \"screens/**/*.{jsx,js}\"",
+    "check-format": "prettier -l App.js && prettier -l \"screens/**/*.{jsx,js}\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint"
+    ]
+  },
+  "dependencies": {
+    "@react-native-community/datetimepicker": "^2.4.2",
+    "@react-native-community/masked-view": "0.1.6",
+    "@react-navigation/native": "^5.5.1",
+    "@react-navigation/stack": "^5.4.2",
+    "expo": "~37.0.3",
+<<<<<<< HEAD
+    "expo-cli": "^3.21.13",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
+    "react-native-elements": "^2.0.4",
+=======
+    "prop-types": "^15.7.2",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
+    "react-native-elements": "^2.0.2",
+>>>>>>> 67e44474cbd436f2fdb47b70b6033b6c38c544ae
+    "react-native-gesture-handler": "~1.6.0",
+    "react-native-progress": "^4.1.2",
+    "react-native-reanimated": "~1.7.0",
+    "react-native-safe-area-context": "0.7.3",
+    "react-native-screens": "~2.2.0",
+    "react-native-slider": "^0.11.0",
+    "react-native-web": "~0.11.7",
+    "yarn": "^1.22.4"
+  },
+  "devDependencies": {
+    "@babel/core": "~7.10.2",
+    "babel-eslint": "~10.1.0",
+    "babel-preset-expo": "~8.1.0",
+    "eslint": "~7.2.0",
+    "eslint-config-airbnb": "~18.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "~2.20.2",
+    "eslint-plugin-prettier": "~3.1.3",
+    "eslint-plugin-react": "~7.20.0",
+    "eslint-plugin-react-native": "~3.8.1",
+    "eslint-plugin-react-native-a11y": "~2.0.0",
+    "husky": "~4.2.5",
+    "lint-staged": "~10.2.9",
+    "prettier": "~2.0.5"
+  },
+  "private": true
+}
