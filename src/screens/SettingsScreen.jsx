@@ -1,9 +1,9 @@
-//This was from previous branch, please merge with NEW SettingsScreen
+//  This was from previous branch, please merge with NEW SettingsScreen
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Notifications } from "expo";
-import { scheduleNotifications } from "./../scripts/notification-logic"
+import scheduleNotifications from "../scripts/notification-logic";
 
 const styles = StyleSheet.create({
   root: {
@@ -31,27 +31,28 @@ function SettingsScreen() {
   const [mode] = useState("time");
 
   const toggleSwitch = () => {
-    if (toggleOn) { // going from enabled to unenabled
-      Notifications.cancelAllScheduledNotificationsAsync()
-      setToggleOn(false)
+    if (toggleOn) {
+      // going from enabled to unenabled
+      Notifications.cancelAllScheduledNotificationsAsync();
+      setToggleOn(false);
     } else {
-      setToggleOn(true)
-      setClockVisibility(true)
+      setToggleOn(true);
+      setClockVisibility(true);
     }
   };
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
-    if (event.type === 'set') {
-      Notifications.cancelAllScheduledNotificationsAsync()
+    if (event.type === "set") {
+      Notifications.cancelAllScheduledNotificationsAsync();
       scheduleNotifications(currentDate);
-      setClockVisibility(false)
-      setToggleOn(true)
-    } else if (event.type === 'dismissed') {
-      Notifications.cancelAllScheduledNotificationsAsync()
-      setClockVisiblity(false)
-      setToggleOn(false)
+      setClockVisibility(false);
+      setToggleOn(true);
+    } else if (event.type === "dismissed") {
+      Notifications.cancelAllScheduledNotificationsAsync();
+      setClockVisibility(false);
+      setToggleOn(false);
     }
   };
 
