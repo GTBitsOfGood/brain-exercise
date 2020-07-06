@@ -5,7 +5,7 @@ import { View, Text } from "react-native";
 function Video() {
   return (
     <View>
-      <Text>Insert Cool Vid Here!!</Text>
+      <Text>Note: You will be redirected to Brain Exercise&apos;s Youtube Channel</Text>
     </View>
   );
 }

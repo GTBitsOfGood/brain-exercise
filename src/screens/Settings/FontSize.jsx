@@ -18,7 +18,7 @@ function FontSize() {
     <View style={Styles.root}>
       <Slider
         style={Styles.slider}
-        minimumValue={16}
+        minimumValue={20}
         maximumValue={34}
         minimumTrackTintColor="#FFFFFF"
         maximumTrackTintColor="#000000"
