@@ -53,7 +53,7 @@ export default function App() {
         />
 
         <Stack.Screen
-          name="Game Overview"
+          name="GameOverview"
           component={GameOverview}
           options={{
             title: "Today's Exercises",
@@ -67,7 +67,7 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="Game Materials"
+          name="GameMaterials"
           component={GameMaterials}
           options={{
             title: "Game Materials",
@@ -123,7 +123,7 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="Finished Screen"
+          name="FinishedScreen"
           component={FinishedScreen}
           options={{
             title: "Exercises Completed",
@@ -137,7 +137,7 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="Extra Practice"
+          name="ExtraPractice"
           component={ExtraPractice}
           options={{
             title: "More Exercises",

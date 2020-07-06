@@ -1,31 +1,49 @@
 import React from "react";
-import Slider from "react-native-slider";
-import { View, Text, StyleSheet } from "react-native";
+// import Slider from "react-native-slider";
+import { Button, Slider } from "react-native-elements";
+import { StyleSheet, View, Text } from "react-native";
 
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
   root: {
     flex: 1,
+    padding: 10,
     alignItems: "stretch",
+    justifyContent: "center"
   },
   slider: {
-    width: 200,
-    height: 40,
+    maxHeight: 100,
   },
+  notText: {
+    marginVertical: 160,
+  }
 });
 
-function FontSize() {
-  return (
-    <View style={Styles.root}>
-      <Slider
-        style={Styles.slider}
-        minimumValue={20}
-        maximumValue={34}
-        minimumTrackTintColor="#FFFFFF"
-        maximumTrackTintColor="#000000"
-      />
-      <Text>Slider for font FontSize</Text>
-    </View>
-  );
-}
+export default class FontSize extends React.Component {
+  state = {
+    value: 20,
+  };
 
-export default FontSize;
+  render() {
+    return (
+      <View style={styles.root}>
+        <Text style={StyleSheet.create({fontSize: this.state.value})}>
+          Drag the slider below to make the text on screen smaller or larger. Value: {this.state.value}
+        </Text>
+        <View style={styles.notText}>
+          <Slider
+            style={styles.slider}
+            value={this.state.value}
+            minimumValue={16}
+            maximumValue={34}
+            step={1}
+            onValueChange={(value) => this.setState({ value })}
+          />
+          <Button
+            style={styles.saveButton}
+            title="Save Changes"
+          />
+        </View>
+      </View>
+    );
+  }
+}
