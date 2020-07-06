@@ -147,3 +147,9 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+// options={{
+//   headerRight: (
+//     <PauseButton onPress={() => console.log("Stop timer")} />
+//   ),
+// }}

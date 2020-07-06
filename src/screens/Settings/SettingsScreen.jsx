@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Switch, Text } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Switch,
+} from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
+import scheduleNotifications from "../../scripts/notification-logic";
 
 const styles = StyleSheet.create({
   root: {
@@ -42,8 +50,18 @@ const styles = StyleSheet.create({
 
 // Settings Navigation
 function SettingsScreen({ navigation }) {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [toggleOn, setToggleOn] = useState(false);
+
+  const toggleSwitch = () => {
+    if (toggleOn) {
+      // going from enabled to unenabled
+      Notifications.cancelAllScheduledNotificationsAsync();
+      setToggleOn(false);
+    } else {
+      setToggleOn(true);
+    }
+  };
+
   return (
      <View style={styles.root}>
        <Text style={styles.text}>Notifications</Text>
@@ -52,36 +70,39 @@ function SettingsScreen({ navigation }) {
         <Switch
           trackColor={{ false: "#ffffff", true: "#2a652c" }}
           onValueChange={toggleSwitch}
-          value={isEnabled}
+          value={toggleOn}
           accessibilityRole="switch"
         />
       </View>
-      <View style={styles.reminder}>
-        <Text style={styles.subtext}>Set Reminder Time</Text>
-        <Button
-          title="10:00 am"
-          buttonStyle={styles.button}
-          titleStyle={{
-            fontSize: 18,
-            color: "black",
-          }}
-          type="outline"
-          onPress={() => navigation.navigate("TimePicker")}
-        />
-      </View>
-        <Button
-          title="Font Size                                                 >"
-          buttonStyle={styles.fontButton}
-          titleStyle={{
-            fontSize: 20,
-            fontWeight: "bold",
-            color: "black",
-          }}
-          type="clear"
-          containerStyle={{ margin: 20 }}
-          onPress={() => navigation.navigate("FontSize")}
-        />
-      </View>
+      {
+        toggleOn &&
+          <View style={styles.reminder}>
+            <Text style={styles.subtext}>Set Reminder Time</Text>
+            <Button
+              title="10:00 am"
+              buttonStyle={styles.button}
+              titleStyle={{
+                fontSize: 18,
+                color: "black",
+              }}
+              type="outline"
+              onPress={() => navigation.navigate("TimePicker")}
+            />
+          </View>
+      }
+      <Button
+        title="Font Size                                                 >"
+        buttonStyle={styles.fontButton}
+        titleStyle={{
+          fontSize: 20,
+          fontWeight: "bold",
+          color: "black",
+        }}
+        type="clear"
+        containerStyle={{ margin: 20 }}
+        onPress={() => navigation.navigate("FontSize")}
+      />
+    </View>
   );
 }
 

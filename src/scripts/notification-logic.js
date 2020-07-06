@@ -20,22 +20,34 @@ const getNotificationTimeDifference = (date, i) => {
  * Stores hour and minute of notification time in Async storage. All times are in UTC
  * @param date Date object, the time to set all of the notifications to
  */
-function scheduleNotifications (inputDate) {
-  AsyncStorage.setItem("notificationHours", inputDate.getHours().toString())
-  AsyncStorage.setItem("notificationMinutes", inputDate.getMinutes().toString())
+const scheduleNotifications = (inputDate) => {
+  AsyncStorage.setItem("notificationHours", inputDate.getHours().toString());
+  AsyncStorage.setItem(
+    "notificationMinutes",
+    inputDate.getMinutes().toString()
+  );
   const date = new Date();
-  date.setMinutes(inputDate.getMinutes())
-  date.setHours(inputDate.getHours())
+  date.setMinutes(inputDate.getMinutes());
+  date.setHours(inputDate.getHours());
   date.setSeconds(0);
 
-  if (typeof date === 'object') {
-    const days = ["Sunday (NEVER USED)", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+  if (typeof date === "object") {
+    const days = [
+      "Sunday (NEVER USED)",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+    ];
 
-    for (let i = 0; i < 7; i+=1) { // for the next 7 days
+    for (let i = 0; i < 7; i += 1) {
+      // for the next 7 days
       const day = (date.getDay() + i) % 7;
 
-      if (!(day === 0 || day === 6)) { // skip saturday and sunday
-        const dayText = days[day]
+      if (!(day === 0 || day === 6)) {
+        // skip saturday and sunday
+        const dayText = days[day];
         const localNotification = {
           title: dayText,
           text: "Reminder for Brain Games!", // some encouraging message

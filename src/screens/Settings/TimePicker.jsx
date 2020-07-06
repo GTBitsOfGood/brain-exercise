@@ -3,6 +3,8 @@ import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import PropTypes from "prop-types";
+import { Notifications } from "expo";
+import scheduleNotifications from "../../scripts/notification-logic";
 
 const styles = StyleSheet.create({
   root: {
@@ -26,10 +28,17 @@ const styles = StyleSheet.create({
 
 function TimePicker({ navigation }) {
   const [date, setDate] = useState(new Date(1598051730000));
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
   };
+
+  function confirmTime() {
+    Notifications.cancelAllScheduledNotificationsAsync();
+    scheduleNotifications(date);
+    navigation.goBack()
+  }
 
   return (
     <View style={styles.root}>
@@ -46,7 +55,7 @@ function TimePicker({ navigation }) {
         buttonStyle={styles.button}
         title="Confirm Time"
         type="solid"
-        onPress={() => navigation.goBack()}
+        onPress={confirmTime}
       />
     </View>
   );
