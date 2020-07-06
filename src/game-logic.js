@@ -86,7 +86,7 @@ function getProblemObject(difficulty) {
  *  returned contains no duplicate choices and there is just
  *  one correct choice. */
 function generateChoices(difficulty, solution) {
-  let numWrongChoices = difficulty > 2 ? 3 : 2;
+  let numWrongChoices = 2;
   let { upperRange, lowRange } = generateRanges(difficulty, solution);
 
   let choicesArray = [];

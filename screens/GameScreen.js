@@ -72,12 +72,6 @@ var styles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
   },
-  fourChoiceContainer: {
-    flexDirection: "column",
-  },
-  threeChoiceContainer: {
-    flexDirection: "row",
-  },
   container: {
     flex: 3,
     paddingBottom: 50,
@@ -90,9 +84,8 @@ var styles = StyleSheet.create({
     alignContent: "stretch",
   },
   button: {
-    flex: 1,
-    width: "80%",
-    height: "80%",
+    width: 99,
+    height: 99,
     backgroundColor: "rgba(0, 138, 252, 0.2)",
     borderRadius: 25,
     marginTop: 20,
@@ -104,8 +97,6 @@ var styles = StyleSheet.create({
     fontWeight: "100",
     color: "#2f4f4f",
   },
-  incorrectChoice: {},
-  correctChoice: {},
 });
 
 export default GameScreen;
