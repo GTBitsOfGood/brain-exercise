@@ -27,7 +27,7 @@ function Pause({ navigation }) {
       <Button
         title="Play On!"
         style={styles.button}
-        onPress={() => navigation.navigate("Gameplay")}
+        onPress={() => navigation.goBack()}
       />
     </View>
   );

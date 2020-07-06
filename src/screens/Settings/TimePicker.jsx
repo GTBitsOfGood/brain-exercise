@@ -1,28 +1,57 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { Button } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import PropTypes from "prop-types";
 
-export default function TimePicker() {
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    alignContent: "center",
+    backgroundColor: "#f5f5f5",
+    marginVertical: 30,
+    marginHorizontal: 30,
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 20,
+  },
+  button: {
+    backgroundColor: "#2a652c",
+    borderRadius: 10,
+  }
+});
+
+function TimePicker({ navigation }) {
   const [date, setDate] = useState(new Date(1598051730000));
-
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
   };
 
   return (
-    <View>
-      <View>
-        {
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          />
-        }
-      </View>
+    <View style={styles.root}>
+      <Text style={styles.text}>You will receive a notification at this time on Monday through Friday</Text>
+      <DateTimePicker 
+        testID="dateTimePicker"
+        value={date}
+        mode="time"
+        is24Hour={false}
+        display="default"
+        onChange={onChange}
+      />
+      <Button
+        buttonStyle={styles.button}
+        title="Confirm Time"
+        type="solid"
+        onPress={() => navigation.goBack()}
+      />
     </View>
   );
 }
+
+TimePicker.propTypes = {
+  navigation: PropTypes.object,
+};
+
+export default TimePicker;
