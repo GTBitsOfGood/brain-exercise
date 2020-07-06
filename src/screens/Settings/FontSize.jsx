@@ -48,12 +48,10 @@ export default class FontSize extends React.Component {
             <Text style={{fontSize:34}}>T</Text>
           </View>
         </View>
-          <View style={styles.buttonStyle}>
-            <Button
-              buttonStyle={styles.saveButton}
-              title="Save Changes"
-            />
-          </View>
+        <Button
+          buttonStyle={styles.saveButton}
+          title="Save Changes"
+        />
       </View>
     );
   }
