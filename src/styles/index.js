@@ -3,16 +3,18 @@
 
 import { AsyncStorage, PixelRatio } from "react-native";
 
-const scaleFont = (originalSize) =>{
-  const size = parseInt(AsyncStorage.getItem("fontSize")) * originalSize || originalSize
-  return Math.round(PixelRatio.roundToNearestPixel(size))
-}
+const scaleFont = (originalSize) => {
+  const size =
+    // eslint-disable-next-line radix
+    parseInt(AsyncStorage.getItem("fontSize")) * originalSize || originalSize;
+  return Math.round(PixelRatio.roundToNearestPixel(size));
+};
 
 const textStyles = {
   small: scaleFont(16), // arbitrarily small font
   medium: scaleFont(24), // arbitrarily medium font
   large: scaleFont(40), // arbitrarily large font
-}
+};
 
 // Also font size
 function getStyles(isDark, fontSize) {
