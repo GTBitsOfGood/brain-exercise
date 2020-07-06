@@ -1,18 +1,31 @@
 import React from "react";
-//  import { Slider } from "react-native-elements";
+import Slider from "react-native-slider";
 import { View, Text, StyleSheet } from "react-native";
 
-const styles = StyleSheet.create({
+const Styles = StyleSheet.create({
   root: {
     flex: 1,
     alignItems: "stretch",
   },
+  slider: {
+    width: 200,
+    height: 40,
+  },
 });
 
-export default function FontSize() {
+function FontSize() {
   return (
-    <View style={styles.root}>
-      <Text>Hello there</Text>
+    <View style={Styles.root}>
+      <Slider
+        style={Styles.slider}
+        minimumValue={16}
+        maximumValue={34}
+        minimumTrackTintColor="#FFFFFF"
+        maximumTrackTintColor="#000000"
+      />
+      <Text>Slider for font FontSize</Text>
     </View>
   );
 }
+
+export default FontSize;
