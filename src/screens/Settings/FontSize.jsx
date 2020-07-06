@@ -1,5 +1,5 @@
 import React from "react";
-import Slider from "react-native-slider";
+import Slider from "react-native-communitu";
 import { View, Text, StyleSheet } from "react-native";
 
 const Styles = StyleSheet.create({
