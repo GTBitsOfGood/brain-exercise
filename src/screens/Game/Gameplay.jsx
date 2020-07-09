@@ -111,7 +111,7 @@ function Gameplay( {navigation} ) {
 
   return (
     <View style={styles.root}>
-      <View /*style={{opacity: 0}}*/>
+      <View style={{opacity: 0}}>
         <ProgressBar seconds = {300} red = {60} func = {() => {navigation.navigate("FinishedScreen")}} ref = {pBar}/>
       </View>
       
