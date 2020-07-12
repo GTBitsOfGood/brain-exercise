@@ -22,6 +22,8 @@ const styles = StyleSheet.create({
   texts: {
     justifyContent: "space-between",
     flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
   },
 });
 
@@ -38,7 +40,7 @@ function FontSize ({ route }) {
 
   return (
     <View style={styles.root}>
-      <Text style={StyleSheet.create({fontSize: value, height:125})}>
+      <Text style={StyleSheet.create({fontSize: value, minHeight:200})}>
         Drag the slider below to make the text on screen smaller or larger.
       </Text>
       <View>
