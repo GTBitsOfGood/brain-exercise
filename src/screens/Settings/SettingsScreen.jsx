@@ -5,10 +5,10 @@ import {
   StyleSheet,
   Switch,
 } from "react-native";
-// import DateTimePicker from "@react-native-community/datetimepicker";
 import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
+import AsyncStorage from "@react-native-community/async-storage";
 // import scheduleNotifications from "../../scripts/notification-logic";
 
 const styles = StyleSheet.create({
@@ -48,6 +48,35 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Takes in a settings object and stores it in Async Storage.
+ * @param {Object} settingsObj A settings object
+ */
+const storeSettings = async (settingsObj) => {
+  const jsonSettings = JSON.stringify(settingsObj)
+  await AsyncStorage.setItem("SETTINGS", jsonSettings)
+}
+
+/**
+ * Pulls an object containing the app settings from Async Storage and returns it.
+ * If no settings exist in Async Storage, default settings are pushed and returned.
+ */
+const pullSettings = async () => {
+  const jsonSettings = await AsyncStorage.getItem("SETTINGS")
+  if (jsonSettings !== null) {
+    return JSON.parse(jsonSettings)
+  } 
+  const defaultSettings = {
+    notificationsActive: false,
+    scheduledTime: new Date(),
+    fontSize: 20,
+    soundEffectsOn: false,
+    backgroundMusicOn: false,
+  }
+  storeSettings(defaultSettings)
+  return defaultSettings
+}
+
 // Settings Navigation
 function SettingsScreen({ navigation }) {
   const [toggleOn, setToggleOn] = useState(false);
@@ -69,7 +98,7 @@ function SettingsScreen({ navigation }) {
         <Text style={styles.subtext}>Daily Reminder</Text>
         <Switch
           trackColor={{ false: "#ffffff", true: "#2a652c" }}
-          onValueChange={toggleSwitch}
+          onValueChange={toggleSwitch} // and change the notificationsActive setting to true
           value={toggleOn}
           accessibilityRole="switch"
         />
@@ -86,7 +115,7 @@ function SettingsScreen({ navigation }) {
                 color: "black",
               }}
               type="outline"
-              onPress={() => navigation.navigate("TimePicker")}
+              onPress={() => navigation.navigate("TimePicker", pullSettings)}
             />
           </View>
       }
@@ -100,7 +129,7 @@ function SettingsScreen({ navigation }) {
         }}
         type="clear"
         containerStyle={{ margin: 20 }}
-        onPress={() => navigation.navigate("FontSize")}
+        onPress={() => navigation.navigate("FontSize", pullSettings)}
       />
     </View>
   );

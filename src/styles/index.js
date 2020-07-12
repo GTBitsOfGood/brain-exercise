@@ -1,7 +1,8 @@
 // Global style variables, such as brand colors and common font sizes go here
 // Styles can change whether or not the project is dark mode or light mode
 
-import { AsyncStorage, PixelRatio } from "react-native";
+import { PixelRatio } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage"
 
 const scaleFont = (originalSize) => {
   const size =
