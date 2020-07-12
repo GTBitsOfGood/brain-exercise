@@ -5,11 +5,11 @@ import {
   StyleSheet,
   Switch,
 } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
+// import DateTimePicker from "@react-native-community/datetimepicker";
 import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
-import scheduleNotifications from "../../scripts/notification-logic";
+// import scheduleNotifications from "../../scripts/notification-logic";
 
 const styles = StyleSheet.create({
   root: {
