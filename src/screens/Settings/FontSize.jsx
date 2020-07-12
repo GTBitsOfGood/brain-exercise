@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Slider } from "react-native-elements";
 import { StyleSheet, View, Text } from "react-native";
-// import AsyncStorage from "@react-native-community/async-storage"
+import PropTypes from 'prop-types';
+import AsyncStorage from "@react-native-community/async-storage";
+import { defaultSettings } from './SettingsScreen.jsx';
 
 const styles = StyleSheet.create({
   root: {
@@ -23,37 +25,48 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class FontSize extends React.Component {
-  state = {
-    value: 20,
-  };
+function FontSize ({ route }) {
+  const [value, setValue] = useState(route.params.fontSize 
+    || defaultSettings.fontSize);
 
-  render() {
-    return (
-      <View style={styles.root}>
-        <Text style={StyleSheet.create({fontSize: this.state.value, height:125})}>
-          Drag the slider below to make the text on screen smaller or larger.
-        </Text>
-        <View>
-          <Slider
-            style={styles.slider}
-            value={this.state.value}
-            thumbTintColor={"#2a652c"}
-            minimumValue={16}
-            maximumValue={34}
-            step={4}
-            onValueChange={(value) => this.setState({ value })}
-          />
-          <View style={styles.texts}>
-            <Text style={{fontSize:16}}>T</Text>
-            <Text style={{fontSize:34}}>T</Text>
-          </View>
-        </View>
-        <Button
-          buttonStyle={styles.saveButton}
-          title="Save Changes"
-        />
-      </View>
-    );
+  const storeSettings = async () => {
+    const settingsObj = route.params;
+    settingsObj.fontSize = value;
+    const jsonSettings = JSON.stringify(settingsObj);
+    await AsyncStorage.setItem("SETTINGS", jsonSettings);
   }
+
+  return (
+    <View style={styles.root}>
+      <Text style={StyleSheet.create({fontSize: value, height:125})}>
+        Drag the slider below to make the text on screen smaller or larger.
+      </Text>
+      <View>
+        <Slider
+          style={styles.slider}
+          value={value}
+          thumbTintColor={"#2a652c"}
+          minimumValue={16}
+          maximumValue={34}
+          step={4}
+          onValueChange={(v) => setValue(v)}
+        />
+        <View style={styles.texts}>
+          <Text style={{fontSize:16}}>T</Text>
+          <Text style={{fontSize:34}}>T</Text>
+        </View>
+      </View>
+      <Button
+        buttonStyle={styles.saveButton}
+        title="Save Changes"
+        onPress={storeSettings}
+      />
+    </View>
+  );
 }
+
+FontSize.propTypes = {
+  route: PropTypes.any
+}
+
+export default FontSize;

@@ -9,7 +9,7 @@ import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import AsyncStorage from "@react-native-community/async-storage";
-// import scheduleNotifications from "../../scripts/notification-logic";
+import { useFocusEffect } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   root: {
@@ -48,11 +48,20 @@ const styles = StyleSheet.create({
   }
 });
 
+export const defaultSettings = {
+  notificationsActive: false,
+  scheduledTime: new Date(),
+  fontSize: 20,
+  soundEffectsOn: false,
+  backgroundMusicOn: false,
+}
+
 /**
  * Takes in a settings object and stores it in Async Storage.
  * @param {Object} settingsObj A settings object
  */
 const storeSettings = async (settingsObj) => {
+  // console.log(JSON.parse(settingsObj))
   const jsonSettings = JSON.stringify(settingsObj)
   await AsyncStorage.setItem("SETTINGS", jsonSettings)
 }
@@ -64,31 +73,43 @@ const storeSettings = async (settingsObj) => {
 const pullSettings = async () => {
   const jsonSettings = await AsyncStorage.getItem("SETTINGS")
   if (jsonSettings !== null) {
-    return JSON.parse(jsonSettings)
+     const result = await JSON.parse(jsonSettings);
+     return result;
   } 
-  const defaultSettings = {
-    notificationsActive: false,
-    scheduledTime: new Date(),
-    fontSize: 20,
-    soundEffectsOn: false,
-    backgroundMusicOn: false,
-  }
-  storeSettings(defaultSettings)
   return defaultSettings
 }
 
 // Settings Navigation
 function SettingsScreen({ navigation }) {
-  const [toggleOn, setToggleOn] = useState(false);
+  const [settings, setSettings] = useState(defaultSettings);
+  const [toggleOn, setToggleOn] = useState(settings.notificationsActive);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      pullSettings()
+      .then((item) => setSettings(item));
+    }, [])
+  );
+
+  function getDate() {
+    const dateObj = new Date(settings.scheduledTime);
+    const date = dateObj.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'}).replace(/^(?:00:)?0?/, '');
+    return date;
+  }
 
   const toggleSwitch = () => {
     if (toggleOn) {
       // going from enabled to unenabled
       Notifications.cancelAllScheduledNotificationsAsync();
       setToggleOn(false);
+      settings.notificationsActive = false
     } else {
+      // going from unenabled to enabled
       setToggleOn(true);
+      settings.notificationsActive = true
     }
+    storeSettings(settings)
   };
 
   return (
@@ -98,7 +119,7 @@ function SettingsScreen({ navigation }) {
         <Text style={styles.subtext}>Daily Reminder</Text>
         <Switch
           trackColor={{ false: "#ffffff", true: "#2a652c" }}
-          onValueChange={toggleSwitch} // and change the notificationsActive setting to true
+          onValueChange={toggleSwitch}
           value={toggleOn}
           accessibilityRole="switch"
         />
@@ -108,14 +129,9 @@ function SettingsScreen({ navigation }) {
           <View style={styles.reminder}>
             <Text style={styles.subtext}>Set Reminder Time</Text>
             <Button
-              title="10:00 am"
-              buttonStyle={styles.button}
-              titleStyle={{
-                fontSize: 18,
-                color: "black",
-              }}
+              title={getDate()}
               type="outline"
-              onPress={() => navigation.navigate("TimePicker", pullSettings)}
+              onPress={() => navigation.navigate("TimePicker", settings)}
             />
           </View>
       }
@@ -129,7 +145,7 @@ function SettingsScreen({ navigation }) {
         }}
         type="clear"
         containerStyle={{ margin: 20 }}
-        onPress={() => navigation.navigate("FontSize", pullSettings)}
+        onPress={() => navigation.navigate("FontSize", settings)}
       />
     </View>
   );

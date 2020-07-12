@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import AsyncStorage from "@react-native-community/async-storage"
 import PropTypes from "prop-types";
 import { Notifications } from "expo";
 import scheduleNotifications from "../../scripts/notification-logic";
+import { defaultSettings } from "./SettingsScreen.jsx";
 
 const styles = StyleSheet.create({
   root: {
@@ -26,8 +28,16 @@ const styles = StyleSheet.create({
   }
 });
 
-function TimePicker({ navigation }) {
-  const [date, setDate] = useState(new Date(1598051730000));
+function TimePicker({ navigation, route }) {
+
+  const [date, setDate] = useState(route.params.scheduledTime || defaultSettings.scheduledTime);
+
+  const storeSettings = async () => {
+    const settingsObj = route.params;
+    settingsObj.scheduledTime = date;
+    const jsonSettings = JSON.stringify(settingsObj);
+    await AsyncStorage.setItem("SETTINGS", jsonSettings);
+  }
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -37,6 +47,7 @@ function TimePicker({ navigation }) {
   function confirmTime() {
     Notifications.cancelAllScheduledNotificationsAsync();
     scheduleNotifications(date);
+    storeSettings();
     navigation.goBack()
   }
 
@@ -63,6 +74,7 @@ function TimePicker({ navigation }) {
 
 TimePicker.propTypes = {
   navigation: PropTypes.object,
+  route: PropTypes.object,
 };
 
 export default TimePicker;
