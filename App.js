@@ -9,6 +9,7 @@ import Video from "./src/screens/Home/Video.jsx";
 import SettingsScreen from "./src/screens/Settings/SettingsScreen.jsx";
 import TimePicker from "./src/screens/Settings/TimePicker.jsx";
 import FontSize from "./src/screens/Settings/FontSize.jsx";
+import SoundScreen from "./src/screens/Settings/SoundScreen.jsx";
 // Importing Game Screens
 import GameOverview from "./src/screens/Game/GameOverview.jsx";
 import GameMaterials from "./src/screens/Game/GameMaterials.jsx";
@@ -134,6 +135,13 @@ export default function App() {
           component={TimePicker}
           options={{
             title: "Set Time Reminder",
+            headerStyle: {backgroundColor: '#2a652c'}}}
+        />
+        <Stack.Screen
+          name="SoundScreen"
+          component={SoundScreen}
+          options={{
+            title: "Sound",
             headerStyle: {backgroundColor: '#2a652c'}}}
         />
         <Stack.Screen

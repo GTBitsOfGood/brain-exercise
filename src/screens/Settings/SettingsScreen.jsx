@@ -54,6 +54,7 @@ export const defaultSettings = {
   fontSize: 20,
   soundEffectsOn: false,
   backgroundMusicOn: false,
+  voiceOverOn: false,
 }
 
 /**
@@ -61,7 +62,6 @@ export const defaultSettings = {
  * @param {Object} settingsObj A settings object
  */
 const storeSettings = async (settingsObj) => {
-  // console.log(JSON.parse(settingsObj))
   const jsonSettings = JSON.stringify(settingsObj)
   await AsyncStorage.setItem("SETTINGS", jsonSettings)
 }
@@ -110,7 +110,7 @@ function SettingsScreen({ navigation }) {
       settings.notificationsActive = true
     }
     storeSettings(settings)
-  };
+  }
 
   return (
      <View style={styles.root}>
@@ -146,6 +146,18 @@ function SettingsScreen({ navigation }) {
         type="clear"
         containerStyle={{ margin: 20 }}
         onPress={() => navigation.navigate("FontSize", settings)}
+      />
+      <Button
+        title="Sounds                                                    >"
+        buttonStyle={styles.fontButton}
+        titleStyle={{
+          fontSize: 20,
+          fontWeight: "bold",
+          color: "black",
+        }}
+        type="clear"
+        containerStyle={{ margin: 20 }}
+        onPress={() => navigation.navigate("SoundScreen", settings)}
       />
     </View>
   );
