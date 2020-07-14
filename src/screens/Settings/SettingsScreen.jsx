@@ -45,6 +45,11 @@ const styles = StyleSheet.create({
     color: "gray",
     borderRadius: 10,
     marginTop: 20,
+  },
+  animation: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 30,
   }
 });
 
@@ -84,6 +89,7 @@ const pullSettings = async () => {
 function SettingsScreen({ navigation }) {
   const [settings, setSettings] = useState(defaultSettings);
   const [toggleOn, setToggleOn] = useState(settings.notificationsActive);
+  const [animationToggleOn, setAnimationToggleOn] = useState(settings.animationOn)
 
   useFocusEffect(
     React.useCallback(() => {
@@ -109,6 +115,18 @@ function SettingsScreen({ navigation }) {
       // going from unenabled to enabled
       setToggleOn(true);
       settings.notificationsActive = true
+    }
+    storeSettings(settings)
+  }
+
+  const toggleAnimations = () => {
+    if (animationToggleOn) {
+      // going from enabled to unenabled
+      setAnimationToggleOn(false)
+      settings.animationOn = false
+    } else {
+      setAnimationToggleOn(true)
+      settings.animationOn = true
     }
     storeSettings(settings)
   }
@@ -160,6 +178,15 @@ function SettingsScreen({ navigation }) {
         containerStyle={{ margin: 20 }}
         onPress={() => navigation.navigate("SoundScreen", settings)}
       />
+      <View style={styles.animation}>
+        <Text style={{marginHorizontal: 0, fontSize: 20, fontWeight: "bold"}}>Animation</Text>
+        <Switch
+          trackColor={{ false: "#ffffff", true: "#2a652c" }}
+          onValueChange={() => toggleAnimations()}
+          value={animationToggleOn}
+          accessibilityRole="switch"
+        />
+      </View>
     </View>
   );
 }
