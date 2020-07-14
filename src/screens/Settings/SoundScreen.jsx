@@ -11,10 +11,25 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         margin: 25,
     },
+
+    settingsBlock: {
+        flex: 1,
+        justifyContent: "space-between",
+        maxHeight: 70,
+    }, 
+
+    settingAndSwitch: {
+        justifyContent: "space-between",
+        flexDirection: "row",
+        alignItems: "center",
+        paddingVertical: 20,
+    },
+
     saveButton: {
         backgroundColor: "#2a652c",
         borderRadius: 10,
-        marginTop: 20,  
+        marginTop: 20,
+        height: 45,
     },
 })
 
@@ -30,7 +45,7 @@ function SoundScreen({ route }) {
     const settingsObj = route.params;
     /**
      * Takes in the setting type and updates the setting in async storage
-     * @param {String} switchType the type of setting to be updated
+     * @param {String} switchType the type of setting to be updated, leave blank to push changes
      */
     const storeSettings = async (switchType = "saving") => {
         if (switchType === "soundEffects") {
@@ -72,9 +87,11 @@ function SoundScreen({ route }) {
 
     return (
         <View style={styles.root}>
-            <View>
-                <View>
-                    <Text>Sound Effects</Text>
+            <View style={styles.settingsBlock}>
+                <View style={styles.settingAndSwitch}>
+                    <Text style={{fontSize: route.params.fontSize}}>
+                        Sound Effects
+                    </Text>
                     <Switch
                      trackColor={{ false: "#ffffff", true: "#2a652c" }}
                      onValueChange={() => storeSettings("soundEffects")}
@@ -82,8 +99,8 @@ function SoundScreen({ route }) {
                      accessibilityRole="switch"
                      />
                 </View>
-                <View>
-                    <Text>Background Music</Text>
+                <View style={styles.settingAndSwitch}>
+                    <Text style={{fontSize: route.params.fontSize,}}>Background Music</Text>
                     <Switch
                      trackColor={{ false: "#ffffff", true: "#2a652c" }}
                      onValueChange={() => storeSettings("backgroundMusic")}
@@ -91,8 +108,8 @@ function SoundScreen({ route }) {
                      accessibilityRole="switch"
                      />
                 </View>
-                <View>
-                    <Text>Voice Over</Text>
+                <View style={styles.settingAndSwitch}>
+                    <Text style={{fontSize: route.params.fontSize}}>Voice Over</Text>
                     <Switch
                      trackColor={{ false: "#ffffff", true: "#2a652c" }}
                      onValueChange={() => storeSettings("voiceOver")}

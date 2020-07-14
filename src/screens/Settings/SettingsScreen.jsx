@@ -55,6 +55,7 @@ export const defaultSettings = {
   soundEffectsOn: false,
   backgroundMusicOn: false,
   voiceOverOn: false,
+  animationOn: false,
 }
 
 /**
