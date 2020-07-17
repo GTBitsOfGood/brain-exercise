@@ -32,6 +32,11 @@ function GameMaterials({ navigation }) {
         buttonStyle={styles.button}
         onPress={() => navigation.navigate("Gameplay")}
       />
+      <Button
+        title="Trivia!"
+        buttonStyle={styles.button}
+        onPress={() => navigation.navigate("TriviaScreen")}
+      />
     </View>
   );
 }
