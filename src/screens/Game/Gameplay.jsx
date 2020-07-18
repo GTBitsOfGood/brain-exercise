@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
-import PauseButton from "../../components/ProgressBar";
 import getProblem from "../../scripts/game-logic";
 
 const styles = StyleSheet.create({
@@ -54,8 +53,27 @@ const styles = StyleSheet.create({
   },
 });
 
-function Gameplay() {
+function Gameplay({ navigation }) {
   const [problem, setProblem] = useState(getProblem());
+  const right = () => (
+    <Button
+      titleStyle={{
+        color: "white",
+        fontSize: 16,
+      }}
+      buttonStyle={{
+        backgroundColor: 'transparent',
+        marginRight: 10,
+      }}
+      onPress={() => navigation.navigate("Pause")} title="Pause"
+    />
+  )
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: right,
+    });
+  }, [navigation]);
 
   function getNewProblem() {
     setProblem(getProblem());
@@ -92,10 +110,6 @@ function Gameplay() {
     </View>
   );
 }
-
-Gameplay.navigationOptions = ({ navigation }) => ({
-  headerRight: <PauseButton onPress={() => navigation.navigate("Pause")} />,
-});
 
 Gameplay.propTypes = {
   navigation: PropTypes.object,
