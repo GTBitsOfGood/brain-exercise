@@ -20,39 +20,41 @@ class ProgressBar extends Component {
       red: false,
     };
     this.intervals = [];
+    this.time = props.seconds;
   }
 
   /**
    * Starts the timer
    */
   componentDidMount = () => {
-    let time = this.props.seconds;
     this.intervals.push(
       setInterval(() => {
-        if (time % 60 > 0) {
+        if (this.time % 60 > 0) {
           this.setState(() => ({
-            seconds: time % 60,
+            seconds: this.time % 60,
           }));
         }
-        if (time % 60 === 0) {
-          if (Math.floor(time / 60) === 0) {
-            clearInterval(this.intervals.pop);
+        if (this.time % 60 === 0) {
+          if (Math.floor(this.time / 60) === 0) {
+            this.intervals.forEach((interval) => {
+              clearInterval(interval);
+            });
             this.setState(() => ({
               seconds: 0,
             }));
             this.props.func();
           } else {
             this.setState(() => ({
-              minutes: Math.floor(time / 60) - 1,
+              minutes: Math.floor(this.time / 60) - 1,
               seconds: 59,
             }));
           }
         }
-        time -= 1;
+        this.time -= 1;
         this.setState(() => ({
-          progress: 1.0 - time / this.props.seconds,
+          progress: 1.0 - this.time / this.props.seconds,
         }));
-        if (time < this.props.red) {
+        if (this.state.red != "red" && this.time < this.props.red) {
           this.setState(() => ({
             red: true,
           }));
@@ -70,6 +72,10 @@ class ProgressBar extends Component {
     });
   };
 
+  getCurrentTime = () => {
+    return this.props.seconds - this.time
+  }
+
   render() {
     return (
       <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -81,7 +87,7 @@ class ProgressBar extends Component {
           width={375}
           height={20}
           borderRadius={10}
-          color={this.state.red ? "red" : "purple"}
+          color={this.state.red ? "red" : "blue"}
         />
       </View>
     );
