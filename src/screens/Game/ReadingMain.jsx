@@ -33,33 +33,25 @@ const styles = StyleSheet.create({
         backgroundColor: "#005AA3",
     },
 });
-/*
-        <View style={styles.root}>
-            <ProgressBar
-             seconds={600}
-             red={30}
-             func={() => setTimeUp(true)}
-             />
-            <Text style={styles.instructions}>Read the passage aloud.</Text>
-            <Text style={styles.article}>{paragraph}</Text>
-            <Button
-             title="Next"
-             style={styles.nextButton}
-             onPress={() => buttonFunction()}
-             />
-        </View>
-*/ 
 
 export default function ReadingMain({ navigation, route }) {
     const [stories, setStories] = useState(route.params);
     const [timeUp, setTimeUp] = useState(false);
 
+    /**
+     * Takes in a stories object and updates the status of each story in async.
+     * @param {Object} storiesObj 
+     */
     const updateStories = async (storiesObj) => {
         setStories(storiesObj);
         const storiesJsonString = JSON.stringify(storiesObj)
         await AsyncStorage.setItem("STORIES", storiesJsonString)
     }
 
+    /**
+     * Once all stories have been read, the readAlready status of the
+     * stories are set to false to allow recycling of stories.
+     */
     function resetStoryReadStatus() {
         const myStories = stories;
         const storyKeys = Object.keys(stories);
@@ -105,6 +97,11 @@ export default function ReadingMain({ navigation, route }) {
         setParagraph(initialStory[0]);
     }, [])
 
+    /**
+     * If the 10 minutes alloted for reading are up, this will take the user to next section.
+     * If not, this button will pull up the next paragraph of the current article or move on
+     * to the next one once the user is finished.
+     */
     const buttonFunction = () => {
         if (timeUp) {
             navigation.navigate("GameOverview")
