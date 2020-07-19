@@ -15,9 +15,11 @@ import GameOverview from "./src/screens/Game/GameOverview.jsx";
 import GameMaterials from "./src/screens/Game/GameMaterials.jsx";
 import Gameplay from "./src/screens/Game/Gameplay.jsx";
 import GameplayIntermediate from "./src/screens/Game/GameplayIntermediate.jsx";
+import ReadingIntro from "./src/screens/Game/ReadingIntro.jsx";
 import Pause from "./src/screens/Game/Pause.jsx";
 import FinishedScreen from "./src/screens/Game/FinishedScreen.jsx";
 import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
+import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
 
 const config = {
   animation: 'spring',
@@ -105,7 +107,18 @@ export default function App() {
           options={{
             title: "More Exercises"}}
         />
-
+        <Stack.Screen
+          name="ReadingIntro"
+          component={ReadingIntro}
+          options={{
+            title: "Reading"}}
+        />
+        <Stack.Screen
+          name="ReadingMain"
+          component={ReadingMain}
+          options={{
+            title: "Reading"}}
+        />
       {/* Pause Screen */}
         <Stack.Screen
           name="Pause"
