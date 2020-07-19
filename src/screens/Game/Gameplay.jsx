@@ -72,6 +72,26 @@ function Gameplay( {navigation} ) {
   const [remainingTime, setRemainingTime] = useState(300)
   const [answered, setAnswered] = useState(false)
   let pBar = React.createRef()
+  
+  const right = () => (
+    <Button
+      titleStyle={{
+        color: "white",
+        fontSize: 16,
+      }}
+      buttonStyle={{
+        backgroundColor: 'transparent',
+        marginRight: 10,
+      }}
+      onPress={() => navigation.navigate("Pause")} title="Pause"
+    />
+  )
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: right,
+    });
+  }, [navigation]);
 
   function getNewProblem() {
     setMessage("")
@@ -125,10 +145,6 @@ function Gameplay( {navigation} ) {
     </View>
   );
 }
-
-/*Gameplay.navigationOptions = ({ navigation }) => ({
-  headerRight: <PauseButton onPress={() => navigation.navigate("Pause")} />,
-});*/
 
 Gameplay.propTypes = {
   navigation: PropTypes.object,

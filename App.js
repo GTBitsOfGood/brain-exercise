@@ -9,14 +9,17 @@ import Video from "./src/screens/Home/Video.jsx";
 import SettingsScreen from "./src/screens/Settings/SettingsScreen.jsx";
 import TimePicker from "./src/screens/Settings/TimePicker.jsx";
 import FontSize from "./src/screens/Settings/FontSize.jsx";
+import SoundScreen from "./src/screens/Settings/SoundScreen.jsx";
 // Importing Game Screens
 import GameOverview from "./src/screens/Game/GameOverview.jsx";
 import GameMaterials from "./src/screens/Game/GameMaterials.jsx";
 import Gameplay from "./src/screens/Game/Gameplay.jsx";
 import GameplayIntermediate from "./src/screens/Game/GameplayIntermediate.jsx";
+import ReadingIntro from "./src/screens/Game/ReadingIntro.jsx";
 import Pause from "./src/screens/Game/Pause.jsx";
 import FinishedScreen from "./src/screens/Game/FinishedScreen.jsx";
 import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
+import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
 
 const config = {
   animation: 'spring',
@@ -104,7 +107,18 @@ export default function App() {
           options={{
             title: "More Exercises"}}
         />
-
+        <Stack.Screen
+          name="ReadingIntro"
+          component={ReadingIntro}
+          options={{
+            title: "Reading"}}
+        />
+        <Stack.Screen
+          name="ReadingMain"
+          component={ReadingMain}
+          options={{
+            title: "Reading"}}
+        />
       {/* Pause Screen */}
         <Stack.Screen
           name="Pause"
@@ -134,6 +148,13 @@ export default function App() {
           component={TimePicker}
           options={{
             title: "Set Time Reminder",
+            headerStyle: {backgroundColor: '#2a652c'}}}
+        />
+        <Stack.Screen
+          name="SoundScreen"
+          component={SoundScreen}
+          options={{
+            title: "Sound",
             headerStyle: {backgroundColor: '#2a652c'}}}
         />
         <Stack.Screen
