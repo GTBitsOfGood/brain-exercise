@@ -40,7 +40,7 @@ class ProgressBar extends Component {
             this.setState(() => ({
               seconds: 0,
             }));
-            // ** Call func here**
+            this.props.func();
           } else {
             this.setState(() => ({
               minutes: Math.floor(time / 60) - 1,

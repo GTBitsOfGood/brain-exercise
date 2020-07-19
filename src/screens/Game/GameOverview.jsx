@@ -29,7 +29,7 @@ function GameOverview({ navigation }) {
       <Button
         title="GameMaterials"
         buttonStyle={styles.button}
-        onPress={() => navigation.navigate("GameMaterials")}
+        onPress={() => navigation.navigate("ReadingIntro")}
       />
     </View>
   );
