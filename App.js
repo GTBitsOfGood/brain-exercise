@@ -14,6 +14,7 @@ import SoundScreen from "./src/screens/Settings/SoundScreen.jsx";
 import GameOverview from "./src/screens/Game/GameOverview.jsx";
 import GameMaterials from "./src/screens/Game/GameMaterials.jsx";
 import Gameplay from "./src/screens/Game/Gameplay.jsx";
+import TriviaScreen from "./src/screens/Game/TriviaScreen.jsx";
 import GameplayIntermediate from "./src/screens/Game/GameplayIntermediate.jsx";
 import ReadingIntro from "./src/screens/Game/ReadingIntro.jsx";
 import Pause from "./src/screens/Game/Pause.jsx";
@@ -94,6 +95,12 @@ export default function App() {
           component={GameplayIntermediate}
           options={{
             title: "Gameplay Intermediate"}}
+        />
+        <Stack.Screen
+          name="TriviaScreen"
+          component={TriviaScreen}
+          options={{
+            title: "Trivia"}}
         />
         <Stack.Screen
           name="FinishedScreen"
