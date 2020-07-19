@@ -5,11 +5,11 @@ import {
   StyleSheet,
   Switch,
 } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
-import scheduleNotifications from "../../scripts/notification-logic";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useFocusEffect } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   root: {
@@ -45,22 +45,91 @@ const styles = StyleSheet.create({
     color: "gray",
     borderRadius: 10,
     marginTop: 20,
+  },
+  animation: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 30,
   }
 });
 
+export const defaultSettings = {
+  notificationsActive: false,
+  scheduledTime: new Date(),
+  fontSize: 20,
+  soundEffectsOn: false,
+  backgroundMusicOn: false,
+  voiceOverOn: false,
+  animationOn: false,
+}
+
+/**
+ * Takes in a settings object and stores it in Async Storage.
+ * @param {Object} settingsObj A settings object
+ */
+const storeSettings = async (settingsObj) => {
+  const jsonSettings = JSON.stringify(settingsObj)
+  await AsyncStorage.setItem("SETTINGS", jsonSettings)
+}
+
+/**
+ * Pulls an object containing the app settings from Async Storage and returns it.
+ * If no settings exist in Async Storage, default settings are pushed and returned.
+ */
+const pullSettings = async () => {
+  const jsonSettings = await AsyncStorage.getItem("SETTINGS")
+  if (jsonSettings !== null) {
+     const result = await JSON.parse(jsonSettings);
+     return result;
+  } 
+  return defaultSettings
+}
+
 // Settings Navigation
 function SettingsScreen({ navigation }) {
-  const [toggleOn, setToggleOn] = useState(false);
+  const [settings, setSettings] = useState(defaultSettings);
+  const [toggleOn, setToggleOn] = useState(settings.notificationsActive);
+  const [animationToggleOn, setAnimationToggleOn] = useState(settings.animationOn)
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      pullSettings()
+      .then((item) => setSettings(item));
+    }, [])
+  );
+
+  function getDate() {
+    const dateObj = new Date(settings.scheduledTime);
+    const date = dateObj.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'}).replace(/^(?:00:)?0?/, '');
+    return date;
+  }
 
   const toggleSwitch = () => {
     if (toggleOn) {
       // going from enabled to unenabled
       Notifications.cancelAllScheduledNotificationsAsync();
       setToggleOn(false);
+      settings.notificationsActive = false
     } else {
+      // going from unenabled to enabled
       setToggleOn(true);
+      settings.notificationsActive = true
     }
-  };
+    storeSettings(settings)
+  }
+
+  const toggleAnimations = () => {
+    if (animationToggleOn) {
+      // going from enabled to unenabled
+      setAnimationToggleOn(false)
+      settings.animationOn = false
+    } else {
+      setAnimationToggleOn(true)
+      settings.animationOn = true
+    }
+    storeSettings(settings)
+  }
 
   return (
      <View style={styles.root}>
@@ -79,14 +148,9 @@ function SettingsScreen({ navigation }) {
           <View style={styles.reminder}>
             <Text style={styles.subtext}>Set Reminder Time</Text>
             <Button
-              title="10:00 am"
-              buttonStyle={styles.button}
-              titleStyle={{
-                fontSize: 18,
-                color: "black",
-              }}
+              title={getDate()}
               type="outline"
-              onPress={() => navigation.navigate("TimePicker")}
+              onPress={() => navigation.navigate("TimePicker", settings)}
             />
           </View>
       }
@@ -100,8 +164,29 @@ function SettingsScreen({ navigation }) {
         }}
         type="clear"
         containerStyle={{ margin: 20 }}
-        onPress={() => navigation.navigate("FontSize")}
+        onPress={() => navigation.navigate("FontSize", settings)}
       />
+      <Button
+        title="Sounds                                                    >"
+        buttonStyle={styles.fontButton}
+        titleStyle={{
+          fontSize: 20,
+          fontWeight: "bold",
+          color: "black",
+        }}
+        type="clear"
+        containerStyle={{ margin: 20 }}
+        onPress={() => navigation.navigate("SoundScreen", settings)}
+      />
+      <View style={styles.animation}>
+        <Text style={{marginHorizontal: 0, fontSize: 20, fontWeight: "bold"}}>Animation</Text>
+        <Switch
+          trackColor={{ false: "#ffffff", true: "#2a652c" }}
+          onValueChange={() => toggleAnimations()}
+          value={animationToggleOn}
+          accessibilityRole="switch"
+        />
+      </View>
     </View>
   );
 }
