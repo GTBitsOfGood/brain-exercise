@@ -60,18 +60,33 @@ const styles = StyleSheet.create({
   },
   buttonTitle: {
     textAlign: "center",
-    fontSize: 40,
+    fontSize: 36,
     fontWeight: "100",
     color: "#2f4f4f",
   },
 });
 
 function Gameplay( {navigation} ) {
-  const [problem, setProblem] = useState(getProblem());
+  const [problem, setProblem] = useState(firstQ());
   const [message, setMessage] = useState("")
   const [remainingTime, setRemainingTime] = useState(300)
   const [answered, setAnswered] = useState(false)
   let pBar = React.createRef()
+
+  function firstQ() {
+    const a = Math.floor(Math.random() * 10 + 1);
+    const b = Math.floor(Math.random() * 10 + 1);
+    const choosePlus = Math.floor(Math.random() * 2 + 1) % 2 === 0;
+    const operator = choosePlus ? " + " : " - ";
+    const solution = choosePlus ? a + b : a - b;
+    let choices = [solution, solution + Math.floor(Math.random() * 15), solution -  Math.floor(Math.random() * 15)]
+    choices.sort(() => Math.random() - 0.5);
+    return {
+      expression: a + operator + b,
+      solution,
+      choices,
+    }
+  }
   
   const right = () => (
     <Button
@@ -96,7 +111,7 @@ function Gameplay( {navigation} ) {
   function getNewProblem() {
     setMessage("")
     setAnswered(false)
-    setProblem(getProblem());
+    setProblem(getProblem(problem));
   }
 
   function checkAnswer(choiceValue) {
