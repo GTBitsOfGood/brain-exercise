@@ -3,6 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements"
 import PropTypes from "prop-types";
+import StepIndicator from "react-native-step-indicator";
 
 const styles = StyleSheet.create({
   root: {
@@ -34,14 +35,43 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: "#2a652c",
   },
-  
 });
+
+const customStyles = {
+  stepIndicatorSize: 30,
+  currentStepIndicatorSize: 30,
+  separatorStrokeWidth: 8,
+  separatorStrokeUnfinishedWidth: 8,
+  separatorStrokeFinishedWidth: 8,
+  stepStrokeWidth: 0,
+  currentStepStrokeWidth: 5,
+  stepStrokeCurrentColor: "#0363f5",
+  stepStrokeFinishedColor: "#0363f5",
+  stepStrokeUnfinishedColor: "#0363f5",
+  separatorFinishedColor: "#0363f5",
+  separatorUnFinishedColor: "#dbdbdb",
+  stepIndicatorFinishedColor: "#0363f5",
+  stepIndicatorUnFinishedColor: "#dbdbdb",
+  stepIndicatorCurrentColor: "#ffffff",
+  stepIndicatorLabelFontSize: 15,
+  currentStepIndicatorLabelFontSize: 15,
+  stepIndicatorLabelCurrentColor: "#000000",
+  stepIndicatorLabelFinishedColor: "#ffffff",
+  stepIndicatorLabelUnfinishedColor: "#000000",  
+}
 
 //  Home Screen Navigation
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.root}>
       <Text style={styles.title}>Brain Gains</Text>
+
+      {/* Home Screen Step Indicator */}
+      
+      <StepIndicator
+        customStyles={customStyles}
+        currentPosition={0}
+      />      
 
       {/* Home Screen Navigation Buttons: */}
 
