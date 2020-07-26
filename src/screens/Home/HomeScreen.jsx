@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: 25,
     marginVertical: 8,
   },
 
@@ -106,9 +106,13 @@ const logo = require("../../assets/bei_edited.png");
 //  Home Screen Navigation
 function HomeScreen({ navigation }) {
   return (
+
     <View style={styles.root}>
+
       <Text style={styles.title}>X of X Days</Text>
+
       <StepIndicator customStyles={customStyles} currentPosition={2} />
+
       <Text style={styles.title}>Keep Going!</Text>
       {/* Home Screen Step Indicator */}
 
