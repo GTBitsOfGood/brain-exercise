@@ -181,7 +181,7 @@ function generateChoices(difficulty, solution) {
  * Based on the difficulty level which is a number from 1-4, returns
  * the full object representation of a math problem which consists
  * of the string expression of the problem, its answer choices,
- * and its solution. */s
+ * and its solution. */
 function getProblemObject(difficulty, oldProblem = null) {
   let problem;
   if (oldProblem === null) {
