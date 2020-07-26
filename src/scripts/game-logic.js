@@ -181,20 +181,27 @@ function generateChoices(difficulty, solution) {
  * Based on the difficulty level which is a number from 1-4, returns
  * the full object representation of a math problem which consists
  * of the string expression of the problem, its answer choices,
- * and its solution. */
+ * and its solution. */s
 function getProblemObject(difficulty, oldProblem = null) {
   let problem;
   if (oldProblem === null) {
-    problem = generateProblem(difficulty);
-  } else if (oldProblem.expresson.includes("_")){
-    problem = generateProblem(difficulty);
+    problem = generateProblem(difficulty)
   } else {
-    if (Math.random() * 20 < 3) {
-      problem = generateProblem(difficulty)
-    } else {
+    if (oldProblem.expression.length >= 17 || oldProblem.expression.includes("_")) { // if the cascade has reached max number of times
+      problem = generateProblem(Math.floor(Math.random() * 4 + 1));
+    } else if (oldProblem.expression.length >= 9) { // if it has cascaded before
+      if (Math.random() * 5 < 1) { // high chance of cascading again
+        problem = generateProblem(difficulty)
+      } else {
+        problem = cascade(oldProblem);
+      }
+    } else if (difficulty === 5) { // if the difficulty is 5 then cascade
       problem = cascade(oldProblem);
+    } else { // just get a new problem
+      problem = generateProblem(difficulty);
     }
   }
+
   const { expression, solution } = problem;
   const choicesArray = generateChoices(difficulty, solution);
   shuffleChoices(choicesArray);
@@ -208,17 +215,7 @@ function getProblemObject(difficulty, oldProblem = null) {
 /** getProblem:
  * Returns the object representation of a math problem with
  * a random level of difficulty. */
-export default function getProblem(problem = null) {  
-  if (problem === null) {
-    return getProblemObject(1);
-  } else {
-    const randomDifficulty = Math.floor(Math.random() * 5 + 1);
-    if (randomDifficulty != 5 || problem.expression.length === 17) {
-      return getProblemObject(randomDifficulty);
-    } else {
-      return getProblemObject(randomDifficulty, problem);
-    }
-  }
+export default function getProblem(problem = null) {
+  const randomDifficulty = Math.floor(Math.random() * 5 + 1);
+  return getProblemObject(randomDifficulty, problem)
 }
-
-// console.log(getProblem());
