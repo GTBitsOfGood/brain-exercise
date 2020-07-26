@@ -16,8 +16,9 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 30,
-    marginVertical: 30,
+    marginVertical: 25,
   },
+
   button: {
     alignContent: "space-between",
     borderRadius: 10,
@@ -64,14 +65,16 @@ const customStyles = {
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>Brain Gains</Text>
+      <Text style={styles.title}>X of X Days</Text>
 
       {/* Home Screen Step Indicator */}
-      
+
       <StepIndicator
         customStyles={customStyles}
-        currentPosition={0}
-      />      
+        currentPosition={2}
+      />
+
+      <Text style={styles.title}>Keep Going!</Text>      
 
       {/* Home Screen Navigation Buttons: */}
 
