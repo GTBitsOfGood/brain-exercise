@@ -28,7 +28,12 @@ function GameMaterials({ navigation }) {
     <View style={styles.root}>
       <Text style={styles.text}>Before you start, make sure you have the required materials!</Text>
       <Button
-        title="Start!"
+        title="Reading!"
+        buttonStyle={styles.button}
+        onPress={() => navigation.navigate("ReadingIntro")}
+      />
+      <Button
+        title="Math!"
         buttonStyle={styles.button}
         onPress={() => navigation.navigate("Gameplay")}
       />

@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Linking } from "react-native";
 import { Button } from "react-native-elements"
 import PropTypes from "prop-types";
 
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
 
 //  Home Screen Navigation
 function HomeScreen({ navigation }) {
+  const youtubeChannelURL = 'https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA'
   return (
     <View style={styles.root}>
       <Text style={styles.title}>Brain Gains</Text>
@@ -48,7 +49,7 @@ function HomeScreen({ navigation }) {
       <Button
         title="Start Exercises"
         buttonStyle={styles.button}
-        onPress={() => navigation.navigate("GameOverview")}
+        onPress={() => navigation.navigate("ExercisesCompleted")}
       />
       <Button
         title="Settings"
@@ -58,7 +59,7 @@ function HomeScreen({ navigation }) {
       <Button
         title="Videos"
         buttonStyle={styles.videoButton}
-        onPress={() => navigation.navigate("Video")}
+        onPress={() => Linking.openURL(youtubeChannelURL)}
       />
     </View>
   );

@@ -27,7 +27,7 @@ function GameOverview({ navigation }) {
     <View style={styles.root}>
       <Text style={styles.text}>Game Overview Screen</Text>
       <Button
-        title="GameMaterials"
+        title="GameMaterials" // change back to game materials
         buttonStyle={styles.button}
         onPress={() => navigation.navigate("GameMaterials")}
       />
