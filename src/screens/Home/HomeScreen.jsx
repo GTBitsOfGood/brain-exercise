@@ -9,23 +9,23 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    marginVertical: 30,
+    marginVertical: 10,
     marginHorizontal: 30,
   },
   title: {
     textAlign: "center",
-    fontSize: 30,
-    marginVertical: 25,
+    fontSize: 20,
+    marginVertical: 8,
   },
 
   button: {
     alignContent: "space-between",
     borderRadius: 10,
-    padding: 20,
+    padding: 15,
     marginTop: 20,
     marginBottom: 20,
     fontWeight: "100",
-    fontSize: 40,
+    fontSize: 30,
     backgroundColor: "#005AA3",
     margin: 20,
   },
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonsContainer: {
-    flex: 3,
+    flex: 2,
     paddingBottom: 50,
     paddingLeft: 10,
     paddingRight: 10,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   buttonTitle: {
     alignSelf: "center",
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
     color: "white",
   },
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     fontWeight: "100",
   },
   imageContainer: {
+    flex: 2,
     width: "100%",
     height: 150,
     borderRadius: 2,
@@ -97,30 +98,22 @@ const customStyles = {
   currentStepIndicatorLabelFontSize: 15,
   stepIndicatorLabelCurrentColor: "#000000",
   stepIndicatorLabelFinishedColor: "#ffffff",
-  stepIndicatorLabelUnfinishedColor: "#000000",  
-}
+  stepIndicatorLabelUnfinishedColor: "#000000",
+};
 
-const logo = require("../../assets/bei_edited.png")
+const logo = require("../../assets/bei_edited.png");
 
 //  Home Screen Navigation
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.root}>
       <Text style={styles.title}>X of X Days</Text>
-
+      <StepIndicator customStyles={customStyles} currentPosition={2} />
+      <Text style={styles.title}>Keep Going!</Text>
       {/* Home Screen Step Indicator */}
 
-      <StepIndicator
-        customStyles={customStyles}
-        currentPosition={2}
-      />
-
-      <Text style={styles.title}>Keep Going!</Text>      
       <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={logo}
-        />
+        <Image style={styles.image} source={logo} />
       </View>
 
       {/* Home Screen Navigation Buttons: */}
