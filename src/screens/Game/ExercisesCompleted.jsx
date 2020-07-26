@@ -7,44 +7,46 @@ import PropTypes from "prop-types";
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        justifyContent: "space-between",
-        alignItems: "center"
-    },
-    finishButton: {
-        borderRadius: 5,
-        marginTop: 20,
-        height: 55,
-        width: 320,
-        backgroundColor: "#005AA3",
-        flexDirection: "column"
+        alignContent: "center",
+        marginVertical: 30,
     },
     goodWork: {
-        fontWeight: "bold",
         fontSize: 42,
-        textAlign: "center"
+        fontWeight: "bold",
+        textAlign: "center",
+        marginBottom: 15,
+        marginTop: 20,
     },
     message: {
         fontSize: 23,
-        textAlign: "center"
-    }
+        textAlign: "center",
+        marginVertical: 15,
+    },
+    button: {
+        marginTop: 20,
+        marginHorizontal: 30,
+        borderRadius: 10,
+    },
 })
 
 function ExercisesCompleted({ navigation }) {
     return (
-        <View>
+        <View style={styles.root}>
             <ConfettiCannon
                 count={200}
-                origin={{x: -10, y: 0}}
+                origin={{x: -10, y: 1000}}
                 autoStart={true}
-                fadeOut={true}
+                fadeOut={false}
             />
-            <Text style={styles.goodWork}>Good work!</Text>
-            <Text style={styles.message}>You have completed all of today&apos;s exercises</Text>
-            <Button
-                title="Finish"
-                buttonStyle={styles.finishButton}
-                onPress={() => navigation.navigate("FinishedScreen")}
-            />
+            <View>
+                <Text style={styles.goodWork}>Good work!</Text>
+                <Text style={styles.message}>You have completed all of today&apos;s exercises</Text>
+                <Button
+                    title="Finish"
+                    buttonStyle={styles.button}
+                    onPress={() => navigation.navigate("FinishedScreen")}
+                />
+            </View>
         </View>
     )
 }

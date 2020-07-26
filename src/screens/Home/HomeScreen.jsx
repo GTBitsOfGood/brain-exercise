@@ -8,30 +8,30 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    backgroundColor: "#f5f5f5",
     marginVertical: 30,
     marginHorizontal: 30,
   },
   title: {
+    fontSize: 42,
+    fontWeight: "bold",
     textAlign: "center",
-    fontSize: 30,
     marginVertical: 30,
   },
   button: {
     alignContent: "space-between",
-    borderRadius: 10,
     marginTop: 20,
+    borderRadius: 10,
   },
   videoButton: {
     alignContent: "space-between",
-    borderRadius: 10,
     marginTop: 20,
+    borderRadius: 10,
     backgroundColor: "#ca0000",
   },
   settingsButton: {
     alignContent: "space-between",
-    borderRadius: 10,
     marginTop: 20,
+    borderRadius: 10,
     backgroundColor: "#2a652c",
   },
   

@@ -55,11 +55,11 @@ export default function App() {
         },
       }}>
 
-        {/* Home Screens: */}
+        {/* Home Screens */}
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{title: "Brain Gains"}}
+          options={{title: "1 of 5 Days"}}
         />
         <Stack.Screen
           name="Video"
@@ -148,7 +148,7 @@ export default function App() {
           }}
         />
 
-        {/* Settings Screens: */}
+        {/* Settings Screens */}
         <Stack.Screen
           name="SettingsScreen"
           component={SettingsScreen}
