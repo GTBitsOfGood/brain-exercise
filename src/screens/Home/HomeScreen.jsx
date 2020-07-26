@@ -1,65 +1,155 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Button } from "react-native-elements"
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
+import StepIndicator from "react-native-step-indicator";
+import FeatherIcon from "react-native-vector-icons/Feather";
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    backgroundColor: "#f5f5f5",
-    marginVertical: 30,
+    marginVertical: 10,
     marginHorizontal: 30,
   },
   title: {
     textAlign: "center",
-    fontSize: 30,
-    marginVertical: 30,
+    fontSize: 25,
+    marginVertical: 8,
   },
+
   button: {
     alignContent: "space-between",
     borderRadius: 10,
+    padding: 15,
     marginTop: 20,
+    marginBottom: 20,
+    fontWeight: "100",
+    fontSize: 30,
+    backgroundColor: "#005AA3",
+    margin: 20,
   },
-  videoButton: {
-    alignContent: "space-between",
-    borderRadius: 10,
+  squareButton: {
+    width: 99,
+    height: 99,
+    backgroundColor: "white",
+    borderColor: "#005AA3",
+    borderWidth: 5,
+    borderRadius: 25,
     marginTop: 20,
-    backgroundColor: "#ca0000",
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  settingsButton: {
-    alignContent: "space-between",
-    borderRadius: 10,
-    marginTop: 20,
-    backgroundColor: "#2a652c",
+  buttonsContainer: {
+    flex: 2,
+    paddingBottom: 50,
+    paddingLeft: 10,
+    paddingRight: 10,
+    justifyContent: "space-around",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignContent: "stretch",
   },
-  
+  buttonTitle: {
+    alignSelf: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "white",
+  },
+  squareButtonTitle: {
+    alignSelf: "center",
+    fontSize: 20,
+    fontWeight: "100",
+  },
+  imageContainer: {
+    flex: 2,
+    width: "100%",
+    height: 150,
+    borderRadius: 2,
+    flexDirection: "column",
+    padding: 8,
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    width: undefined,
+    height: undefined,
+    resizeMode: "contain",
+  },
 });
+
+const customStyles = {
+  stepIndicatorSize: 30,
+  currentStepIndicatorSize: 30,
+  separatorStrokeWidth: 8,
+  separatorStrokeUnfinishedWidth: 8,
+  separatorStrokeFinishedWidth: 8,
+  stepStrokeWidth: 0,
+  currentStepStrokeWidth: 5,
+  stepStrokeCurrentColor: "#0363f5",
+  stepStrokeFinishedColor: "#0363f5",
+  stepStrokeUnfinishedColor: "#0363f5",
+  separatorFinishedColor: "#0363f5",
+  separatorUnFinishedColor: "#dbdbdb",
+  stepIndicatorFinishedColor: "#0363f5",
+  stepIndicatorUnFinishedColor: "#dbdbdb",
+  stepIndicatorCurrentColor: "#ffffff",
+  stepIndicatorLabelFontSize: 15,
+  currentStepIndicatorLabelFontSize: 15,
+  stepIndicatorLabelCurrentColor: "#000000",
+  stepIndicatorLabelFinishedColor: "#ffffff",
+  stepIndicatorLabelUnfinishedColor: "#000000",
+};
+
+const logo = require("../../assets/bei_edited.png");
 
 //  Home Screen Navigation
 function HomeScreen({ navigation }) {
   return (
+
     <View style={styles.root}>
-      <Text style={styles.title}>Brain Gains</Text>
+
+      <Text style={styles.title}>X of X Days</Text>
+
+      <StepIndicator customStyles={customStyles} currentPosition={2} />
+
+      <Text style={styles.title}>Keep Going!</Text>
+      {/* Home Screen Step Indicator */}
+
+      <View style={styles.imageContainer}>
+        <Image style={styles.image} source={logo} />
+      </View>
 
       {/* Home Screen Navigation Buttons: */}
 
-      <Button
-        title="Start Exercises"
-        buttonStyle={styles.button}
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => navigation.navigate("GameOverview")}
-      />
-      <Button
-        title="Settings"
-        buttonStyle={styles.settingsButton}
-        onPress={() => navigation.navigate("SettingsScreen")}
-      />
-      <Button
-        title="Videos"
-        buttonStyle={styles.videoButton}
-        onPress={() => navigation.navigate("Video")}
-      />
+      >
+        <Text style={styles.buttonTitle}>{"Start Exercises"}</Text>
+      </TouchableOpacity>
+
+      <View style={styles.buttonsContainer}>
+        <View>
+          <TouchableOpacity
+            style={styles.squareButton}
+            onPress={() => navigation.navigate("SettingsScreen")}
+          >
+            <FeatherIcon size={45} name="settings" />
+          </TouchableOpacity>
+          <Text style={styles.squareButtonTitle}>{"Settings"}</Text>
+        </View>
+
+        <View>
+          <TouchableOpacity
+            style={styles.squareButton}
+            onPress={() => navigation.navigate("Video")}
+          >
+            <FeatherIcon size={45} name="youtube" />
+          </TouchableOpacity>
+          <Text style={styles.squareButtonTitle}>{"Video"}</Text>
+        </View>
+      </View>
     </View>
   );
 }
