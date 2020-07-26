@@ -84,14 +84,15 @@ function TriviaScreen( {navigation} ) {
       
       <View style={styles.textContainer}>
         <Text style={styles.instructionText}>Write down both the question and answer to: </Text>
-        <Text style = {styles.questionText}>{problem["question"]}</Text>
+        <Text style = {styles.questionText}>{problem.question}</Text>
         <View>
           <Text style = {styles.answerText}>{answered ? "Answer:" : ""}</Text>
-          <Text style = {styles.actualAnswerText}>{answered ? problem["answer"] : ""}</Text>
+          <Text style = {styles.actualAnswerText}>{answered ? problem.answer : ""}</Text>
         </View>
       </View>
       <View>
         <Button
+          // eslint-disable-next-line no-nested-ternary
           title={finished ? "Finish Writing Section" : (answered ? "Next" : "Show Answer")}
           buttonStyle={styles.button}
           titleStyle = {styles.buttonTitle}

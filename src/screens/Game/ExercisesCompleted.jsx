@@ -16,6 +16,16 @@ const styles = StyleSheet.create({
         height: 55,
         width: 320,
         backgroundColor: "#005AA3",
+        flexDirection: "column"
+    },
+    goodWork: {
+        fontWeight: "bold",
+        fontSize: 42,
+        textAlign: "center"
+    },
+    message: {
+        fontSize: 23,
+        textAlign: "center"
     }
 })
 
