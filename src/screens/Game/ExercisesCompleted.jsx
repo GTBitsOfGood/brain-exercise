@@ -34,7 +34,7 @@ function ExercisesCompleted({ navigation }) {
         <View style={styles.root}>
             <ConfettiCannon
                 count={200}
-                origin={{x: -10, y: 1000}}
+                origin={{x: -10, y: 0}}
                 autoStart={true}
                 fadeOut={false}
             />
