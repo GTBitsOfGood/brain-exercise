@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, Linking } from "react-native";
 import PropTypes from "prop-types";
 import StepIndicator from "react-native-step-indicator";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -13,6 +13,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   title: {
+    fontSize: 42,
+    fontWeight: "bold",
     textAlign: "center",
     fontSize: 25,
     marginVertical: 8,
@@ -105,6 +107,7 @@ const logo = require("../../assets/bei_edited.png");
 
 //  Home Screen Navigation
 function HomeScreen({ navigation }) {
+  const youtubeChannelURL = 'https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA'
   return (
 
     <View style={styles.root}>
@@ -143,7 +146,7 @@ function HomeScreen({ navigation }) {
         <View>
           <TouchableOpacity
             style={styles.squareButton}
-            onPress={() => navigation.navigate("Video")}
+            onPress={() => Linking.openURL(youtubeChannelURL)}
           >
             <FeatherIcon size={45} name="youtube" />
           </TouchableOpacity>

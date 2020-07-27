@@ -19,22 +19,22 @@ const styles = StyleSheet.create({
     }, 
 
     settingAndSwitch: {
-        justifyContent: "space-between",
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: "space-between",
         paddingVertical: 20,
     },
 
     saveButton: {
-        backgroundColor: "#2a652c",
-        borderRadius: 10,
         marginTop: 20,
         height: 45,
+        borderRadius: 10,
+        backgroundColor: "#2a652c",
     },
 })
 
 
-function SoundScreen({ route }) {
+function SoundScreen({ route, navigation }) {
     // Setting up states and state modifiers for the sound effects, background music, and voice over settings
     const [soundEffectsToggleOn, setSoundEffectsToggleOn] = useState(route.params.soundEffectsOn
         || defaultSettings.soundEffectsOn)
@@ -117,13 +117,14 @@ function SoundScreen({ route }) {
                      accessibilityRole="switch"
                      />
                 </View>
-            </View>
-            <View>
+                <View>
                 <Button
-                  buttonStyle={styles.saveButton}
                   title="Save Changes"
-                  onPress={() => storeSettings()}
+                  buttonStyle={styles.saveButton}
+                  onPressIn={() => storeSettings()}
+                  onPress={() => navigation.goBack()}
                 />
+                </View>
             </View>
         </View>
     )

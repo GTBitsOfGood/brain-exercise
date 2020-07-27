@@ -7,18 +7,18 @@ import ProgressBar from "../../components/ProgressBar";
 
 const styles = StyleSheet.create({
     root: {
-        justifyContent: "space-between",
         flex: 1,
-        margin: 25,
         alignItems: "center",
+        justifyContent: "space-between",
+        margin: 25,
         marginHorizontal: 15,
     },
     instructions: {
-        marginTop: 20,
         flex: 0.4,
-        fontWeight: "bold",
         fontSize: 30,
+        fontWeight: "bold",
         textAlign: "center",
+        marginTop: 20,
     },
     article: {
         flex: 1.8,
@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     nextButton: {
-        borderRadius: 10,
         marginTop: 20,
-        height: 55,
         width: 320,
+        height: 55,
+        borderRadius: 10,
         backgroundColor: "#005AA3",
     },
 });

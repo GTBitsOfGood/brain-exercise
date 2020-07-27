@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-alert */
 import "react-native-gesture-handler";
 import React, { useState } from "react";
@@ -10,7 +12,6 @@ import getProblem from "../../scripts/game-logic";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#eaeaea",
   },
   expressionText: {
     fontSize: 50,
@@ -19,49 +20,49 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    paddingTop: 30,
-    justifyContent: "center",
-    backgroundColor: "#eaeaea",
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "center",
     textAlign: "center",
+    justifyContent: "center",
+    paddingTop: 30,
+    backgroundColor: "#eaeaea",
   },
   container: {
     flex: 3,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignContent: "stretch",
     paddingBottom: 50,
     paddingLeft: 10,
     paddingRight: 10,
     justifyContent: "space-around",
-    flexDirection: "row",
     backgroundColor: "#eaeaea",
-    flexWrap: "wrap",
-    alignContent: "stretch",
   },
   button: {
+    alignSelf: "center",
+    marginTop: 20,
     width: 99,
     height: 99,
-    backgroundColor: "#eaeaea",
     borderRadius: 25,
-    borderColor: "rgba(0, 138, 252, 0.2)",
     borderWidth: 5,
-    marginTop: 20,
-    alignSelf: "center",
+    borderColor: "rgba(0, 138, 252, 0.2)",
+    backgroundColor: "#eaeaea",
   },
   selectedButton: {
+    alignSelf: "center",
+    marginTop: 20,
     width: 99,
     height: 99,
-    backgroundColor: "rgba(0, 138, 252, 0.2)",
     borderRadius: 25,
-    borderColor: "rgba(0, 138, 252, 0.2)",
     borderWidth: 5,
-    marginTop: 20,
-    alignSelf: "center",
+    borderColor: "rgba(0, 138, 252, 0.2)",
+    backgroundColor: "rgba(0, 138, 252, 0.2)",
   },
   buttonTitle: {
-    textAlign: "center",
     fontSize: 40,
     fontWeight: "100",
+    textAlign: "center",
     color: "#2f4f4f",
   },
 });
@@ -75,6 +76,7 @@ function Gameplay( {navigation} ) {
   
   const right = () => (
     <Button
+      title="⏸"
       titleStyle={{
         color: "white",
         fontSize: 16,
@@ -83,7 +85,8 @@ function Gameplay( {navigation} ) {
         backgroundColor: 'transparent',
         marginRight: 10,
       }}
-      onPress={() => navigation.navigate("Pause")} title="Pause"
+      type="clear"
+      onPress={() => navigation.navigate("Pause")}
     />
   )
 
@@ -117,14 +120,14 @@ function Gameplay( {navigation} ) {
   const choices = choicesArray.map((choiceValue, choiceKey) => {
     return (
       <Button
+        title={`${choiceValue}`}
+        titleStyle={styles.buttonTitle}
+        buttonStyle={answered && choiceKey === picked ? styles.selectedButton : styles.button}
         key={choiceKey}
         onPress={() => {
           setPicked(choiceKey)
           checkAnswer(choiceValue)
         }}
-        buttonStyle={answered && choiceKey === picked ? styles.selectedButton : styles.button}
-        title={`${choiceValue}`}
-        titleStyle={styles.buttonTitle}
       />
     );
   });
