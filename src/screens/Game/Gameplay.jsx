@@ -127,7 +127,6 @@ function Gameplay( {navigation} ) {
 
     AsyncStorage.getItem("difficultyScore").then(difficultyScore => {
       const score = parseInt(difficultyScore)
-      console.log(score)
       if (score < 200) {
         setProblem(getProblem(problem, 1));
       } else if (score < 300) {
