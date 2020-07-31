@@ -79,11 +79,29 @@ function generateProblem(difficulty) {
   }
 }
 
-const cascade = (oldProblem) => {
-  const newVar = Math.floor(Math.random() * 10 + 1);
-  const choosePlus = Math.floor(Math.random() * 2 + 1) % 2 === 0;
-  const operator = choosePlus ? " + " : " - ";
-  const solution = choosePlus ? oldProblem["solution"] + newVar : oldProblem["solution"] - newVar;
+const cascade = (oldProblem, difficulty) => {
+  let newVar
+  
+  if (difficulty === 4) {
+    newVar = Math.floor(Math.random() * 100 + 1);
+  } else {
+    newVar = Math.floor(Math.random() * 10 + 1);
+  }
+
+  let operator
+  let solution
+  if (difficulty === 3) {
+    operator = " x "
+    solution = oldProblem["solution"] * newVar
+  } else if (difficulty === 1) {
+    operator = " + "
+    solution = oldProblem["solution"] + newVar
+  } else {
+    const choosePlus = Math.floor(Math.random() * 2 + 1) % 2 === 0;
+    operator = choosePlus ? " + " : " - ";
+    solution = choosePlus ? oldProblem["solution"] + newVar : oldProblem["solution"] - newVar;
+  }
+
   const expression = oldProblem["expression"] + operator + newVar
 
   return {
@@ -181,24 +199,26 @@ function generateChoices(difficulty, solution) {
  * Based on the difficulty level which is a number from 1-4, returns
  * the full object representation of a math problem which consists
  * of the string expression of the problem, its answer choices,
- * and its solution. */s
+ * and its solution. */
 function getProblemObject(difficulty, oldProblem = null) {
   let problem;
   if (oldProblem === null) {
     problem = generateProblem(difficulty)
   } else {
     if (oldProblem.expression.length >= 17 || oldProblem.expression.includes("_")) { // if the cascade has reached max number of times
-      problem = generateProblem(Math.floor(Math.random() * 4 + 1));
+      problem = generateProblem(difficulty);
     } else if (oldProblem.expression.length >= 9) { // if it has cascaded before
-      if (Math.random() * 5 < 1) { // high chance of cascading again
+      if (Math.random() * 10 < 3) { // high chance of cascading again
         problem = generateProblem(difficulty)
       } else {
-        problem = cascade(oldProblem);
+        problem = cascade(oldProblem, difficulty);
       }
-    } else if (difficulty === 5) { // if the difficulty is 5 then cascade
-      problem = cascade(oldProblem);
     } else { // just get a new problem
-      problem = generateProblem(difficulty);
+      if (Math.random() * 5 < 1) {
+        problem = cascade(oldProblem, difficulty)
+      } else {
+        problem = generateProblem(difficulty);
+      }
     }
   }
 
@@ -215,7 +235,6 @@ function getProblemObject(difficulty, oldProblem = null) {
 /** getProblem:
  * Returns the object representation of a math problem with
  * a random level of difficulty. */
-export default function getProblem(problem = null) {
-  const randomDifficulty = Math.floor(Math.random() * 5 + 1);
-  return getProblemObject(randomDifficulty, problem)
+export default function getProblem(problem = null, difficulty = Math.floor(Math.random() * 5 + 1)) {
+  return getProblemObject(difficulty, problem)
 }

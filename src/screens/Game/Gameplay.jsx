@@ -6,6 +6,7 @@ import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../scripts/game-logic";
+import { AsyncStorage } from "react-native";
 
 const styles = StyleSheet.create({
   root: {
@@ -66,6 +67,18 @@ const styles = StyleSheet.create({
   },
 });
 
+const storeDifficultyScore = async(score) => {
+  await AsyncStorage.setItem("difficultyScore", score)
+}
+
+const pullDifficultyScore = async () => {
+  const score = await AsyncStorage.getItem("difficultyScore")
+  if (score !== null) {
+     return score;
+  } 
+  return 100
+}
+
 function Gameplay( {navigation} ) {
   const [problem, setProblem] = useState(firstQ());
   const [message, setMessage] = useState("")
@@ -111,18 +124,57 @@ function Gameplay( {navigation} ) {
   function getNewProblem() {
     setMessage("")
     setAnswered(false)
-    setProblem(getProblem(problem));
+
+    AsyncStorage.getItem("difficultyScore").then(difficultyScore => {
+      const score = parseInt(difficultyScore)
+      console.log(score)
+      if (score < 200) {
+        setProblem(getProblem(problem, 1));
+      } else if (score < 300) {
+        setProblem(getProblem(problem, 2));
+      } else if  (score < 400) {
+        setProblem(getProblem(problem, 3));
+      } else if (score < 500) {
+        setProblem(getProblem(problem, 4));
+      } else {
+        setProblem(getProblem(problem));
+      }
+    })
   }
 
   function checkAnswer(choiceValue) {
     if (!answered) {
+      const timeToAnswer = pBar.current.getCurrentTime() - remainingTime
+
+      pullDifficultyScore().then(score => {
+        
+        let difficultyScore = parseInt(score)
+        if (timeToAnswer > 60) {
+          difficultyScore = Math.max(difficultyScore - 10, 100)
+        }
+        if (timeToAnswer < 30) {
+          if (timeToAnswer < 10) {
+            difficultyScore = Math.min(difficultyScore + 5, 499)
+          } else {
+            difficultyScore = Math.min(difficultyScore + 2, 499)
+          }
+        }
+        
+        
+        if (choiceValue === problem.solution) {
+          setMessage(`Correct! Great job!`);
+          difficultyScore = Math.min(difficultyScore + 10, 499)
+        } else {
+          setMessage('You’re so quick! Keep going!');
+        }
+
+        storeDifficultyScore(difficultyScore.toString())
+      });
+
       setRemainingTime(pBar.current.getCurrentTime())
-      if (choiceValue === problem.solution) {
-        setMessage(`Correct! Great job!`);
-      } else {
-        setMessage('You’re so quick! Keep going!');
-      }
+      
       setAnswered(true)
+
       setTimeout(() => {getNewProblem()}, 5000)
     }
   }
