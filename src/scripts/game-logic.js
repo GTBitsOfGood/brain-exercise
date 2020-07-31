@@ -235,6 +235,13 @@ function getProblemObject(difficulty, oldProblem = null) {
 /** getProblem:
  * Returns the object representation of a math problem with
  * a random level of difficulty. */
+<<<<<<< HEAD
 export default function getProblem(problem = null, difficulty = Math.floor(Math.random() * 5 + 1)) {
   return getProblemObject(difficulty, problem)
 }
+=======
+export default function getProblem(problem = null) {
+  const randomDifficulty = Math.floor(Math.random() * 5 + 1);
+  return getProblemObject(randomDifficulty, problem)
+}
+>>>>>>> 67fac361a74909e83fdc27f26cee07ed83d94de9
