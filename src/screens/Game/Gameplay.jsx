@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../scripts/game-logic";
 import Text from "../../components/Text";
+import { AsyncStorage } from "react-native";
 
 const styles = StyleSheet.create({
   root: {
@@ -68,12 +69,39 @@ const styles = StyleSheet.create({
   },
 });
 
+const storeDifficultyScore = async(score) => {
+  await AsyncStorage.setItem("difficultyScore", score)
+}
+
+const pullDifficultyScore = async () => {
+  const score = await AsyncStorage.getItem("difficultyScore")
+  if (score !== null) {
+     return score;
+  } 
+  return 100
+}
+
 function Gameplay( {navigation} ) {
-  const [problem, setProblem] = useState(getProblem());
+  const [problem, setProblem] = useState(firstQ());
   const [message, setMessage] = useState("")
   const [remainingTime, setRemainingTime] = useState(300)
   const [answered, setAnswered] = useState(false)
   let pBar = React.createRef()
+
+  function firstQ() {
+    const a = Math.floor(Math.random() * 10 + 1);
+    const b = Math.floor(Math.random() * 10 + 1);
+    const choosePlus = Math.floor(Math.random() * 2 + 1) % 2 === 0;
+    const operator = choosePlus ? " + " : " - ";
+    const solution = choosePlus ? a + b : a - b;
+    let choices = [solution, solution + Math.floor(Math.random() * 15), solution -  Math.floor(Math.random() * 15)]
+    choices.sort(() => Math.random() - 0.5);
+    return {
+      expression: a + operator + b,
+      solution,
+      choices,
+    }
+  }
   
   const right = () => (
     <Button
@@ -100,11 +128,52 @@ function Gameplay( {navigation} ) {
   function getNewProblem() {
     setMessage("")
     setAnswered(false)
-    setProblem(getProblem());
+
+    AsyncStorage.getItem("difficultyScore").then(difficultyScore => {
+      const score = parseInt(difficultyScore)
+      if (score < 200) {
+        setProblem(getProblem(problem, 1));
+      } else if (score < 300) {
+        setProblem(getProblem(problem, 2));
+      } else if  (score < 400) {
+        setProblem(getProblem(problem, 3));
+      } else if (score < 500) {
+        setProblem(getProblem(problem, 4));
+      } else {
+        setProblem(getProblem(problem));
+      }
+    })
   }
 
   function checkAnswer(choiceValue) {
     if (!answered) {
+      const timeToAnswer = pBar.current.getCurrentTime() - remainingTime
+
+      pullDifficultyScore().then(score => {
+        
+        let difficultyScore = parseInt(score)
+        if (timeToAnswer > 60) {
+          difficultyScore = Math.max(difficultyScore - 10, 100)
+        }
+        if (timeToAnswer < 30) {
+          if (timeToAnswer < 10) {
+            difficultyScore = Math.min(difficultyScore + 5, 499)
+          } else {
+            difficultyScore = Math.min(difficultyScore + 2, 499)
+          }
+        }
+        
+        
+        if (choiceValue === problem.solution) {
+          setMessage(`Correct! Great job!`);
+          difficultyScore = Math.min(difficultyScore + 10, 499)
+        } else {
+          setMessage('You’re so quick! Keep going!');
+        }
+
+        storeDifficultyScore(difficultyScore.toString())
+      });
+
       setRemainingTime(pBar.current.getCurrentTime())
       if (choiceValue === problem.solution) {
         setMessage(`Correct! Great job!`);
@@ -112,6 +181,7 @@ function Gameplay( {navigation} ) {
         setMessage('You’re so quick! Keep going!');
       }
       setAnswered(true)
+
       setTimeout(() => {getNewProblem()}, 5000)
     }
   }

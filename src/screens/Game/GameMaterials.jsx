@@ -43,6 +43,11 @@ function GameMaterials({ navigation }) {
         onPress={() => navigation.navigate("TriviaScreen")}
       />
       <Button
+        title="Prompts!"
+        buttonStyle={styles.button}
+        onPress={() => navigation.navigate("PromptScreen")}
+      />
+      <Button
         title="Complete!"
         buttonStyle={styles.button}
         onPress={() => navigation.navigate("ExercisesCompleted")}

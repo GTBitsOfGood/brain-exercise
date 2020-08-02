@@ -73,6 +73,12 @@ class ProgressBar extends Component {
     });
   };
 
+  /**
+   * seconds always equals 300
+   * time goes from 300 to 0
+   * returns 0 at start
+   * returns 300 when no time is left
+   */
   getCurrentTime = () => {
     return this.props.seconds - this.time
   }
