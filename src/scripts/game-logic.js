@@ -68,15 +68,15 @@ function generateProblem(difficulty) {
   }
   if (Math.random() * 3 < 1){
     return {
-      expression: a + operator + "__ = " + solution,
+      expression: `${a + operator  }__ = ${  solution}`,
       solution: b,
     };
-  } else{
+  } 
     return {
       expression: a + operator + b,
       solution,
     };
-  }
+  
 }
 
 const cascade = (oldProblem, difficulty) => {
@@ -92,17 +92,17 @@ const cascade = (oldProblem, difficulty) => {
   let solution
   if (difficulty === 3) {
     operator = " x "
-    solution = oldProblem["solution"] * newVar
+    solution = oldProblem.solution * newVar
   } else if (difficulty === 1) {
     operator = " + "
-    solution = oldProblem["solution"] + newVar
+    solution = oldProblem.solution + newVar
   } else {
     const choosePlus = Math.floor(Math.random() * 2 + 1) % 2 === 0;
     operator = choosePlus ? " + " : " - ";
-    solution = choosePlus ? oldProblem["solution"] + newVar : oldProblem["solution"] - newVar;
+    solution = choosePlus ? oldProblem.solution + newVar : oldProblem.solution - newVar;
   }
 
-  const expression = oldProblem["expression"] + operator + newVar
+  const expression = oldProblem.expression + operator + newVar
 
   return {
     expression,
@@ -202,10 +202,9 @@ function generateChoices(difficulty, solution) {
  * and its solution. */
 function getProblemObject(difficulty, oldProblem = null) {
   let problem;
-  if (oldProblem === null) {
+  if (oldProblem === null || oldProblem === undefined) {
     problem = generateProblem(difficulty)
-  } else {
-    if (oldProblem.expression.length >= 17 || oldProblem.expression.includes("_")) { // if the cascade has reached max number of times
+  } else if (oldProblem.expression.length >= 17 || oldProblem.expression.includes("_")) { // if the cascade has reached max number of times
       problem = generateProblem(difficulty);
     } else if (oldProblem.expression.length >= 9) { // if it has cascaded before
       if (Math.random() * 10 < 3) { // high chance of cascading again
@@ -213,15 +212,11 @@ function getProblemObject(difficulty, oldProblem = null) {
       } else {
         problem = cascade(oldProblem, difficulty);
       }
-    } else { // just get a new problem
-      if (Math.random() * 5 < 1) {
-        problem = cascade(oldProblem, difficulty)
-      } else {
-        problem = generateProblem(difficulty);
-      }
+    } else if (Math.random() * 5 < 1) {
+      problem = cascade(oldProblem, difficulty)
+    } else {
+      problem = generateProblem(difficulty);
     }
-  }
-
   const { expression, solution } = problem;
   const choicesArray = generateChoices(difficulty, solution);
   shuffleChoices(choicesArray);
