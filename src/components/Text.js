@@ -20,7 +20,3 @@ Text.propTypes = {
 
 export default Text;
 
-// import line for all screens that have scalable text components is below...
-// ...(make sure to remove react-native Text imports and replace them with the following):
-
-// import Text from ‘./components/Text’;
