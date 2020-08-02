@@ -3,7 +3,7 @@ import { Button, Slider } from "react-native-elements";
 import { StyleSheet, View, Text } from "react-native";
 import PropTypes from 'prop-types';
 import AsyncStorage from "@react-native-community/async-storage";
-import { defaultSettings } from './SettingsScreen.jsx';
+import defaultSettings from "../../components/DefaultSettings"
 
 const styles = StyleSheet.create({
   root: {
@@ -51,7 +51,7 @@ function FontSize ({ route, navigation }) {
           value={value}
           thumbTintColor={"#2a652c"}
           minimumValue={16}
-          maximumValue={34}
+          maximumValue={32}
           step={4}
           onValueChange={(v) => setValue(v)}
         />

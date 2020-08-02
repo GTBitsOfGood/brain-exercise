@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet } from "react-native";
+import PropTypes from "prop-types";
+import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import ConfettiCannon from "react-native-confetti-cannon";
-import PropTypes from "prop-types";
+import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
     root: {
@@ -34,7 +35,7 @@ function ExercisesCompleted({ navigation }) {
         <View style={styles.root}>
             <ConfettiCannon
                 count={200}
-                origin={{x: -10, y: 0}}
+                origin={{x: -100, y: 1000}}
                 autoStart={true}
                 fadeOut={false}
             />

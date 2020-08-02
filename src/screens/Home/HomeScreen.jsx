@@ -1,9 +1,10 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, Linking } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity, Linking } from "react-native";
 import PropTypes from "prop-types";
 import StepIndicator from "react-native-step-indicator";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
   root: {
@@ -16,7 +17,6 @@ const styles = StyleSheet.create({
     fontSize: 42,
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 25,
     marginVertical: 8,
   },
 

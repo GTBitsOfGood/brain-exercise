@@ -1,9 +1,10 @@
 /* eslint-disable react/display-name */
-import "react-native-gesture-handler";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
+import { View, StyleSheet } from "react-native";
+import { Button } from "react-native-elements";
+import Text from "../../components/Text";
+import "react-native-gesture-handler";
 
 const styles = StyleSheet.create({
   root: {
