@@ -20,7 +20,8 @@ import Pause from "./src/screens/Game/Pause.jsx";
 import FinishedScreen from "./src/screens/Game/FinishedScreen.jsx";
 import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
 import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
-import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted.jsx"
+import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted.jsx";
+import PromptScreen from './src/screens/Game/PromptScreen.jsx';
 
 const config = {
   animation: 'spring',
@@ -125,6 +126,12 @@ export default function App() {
           component={ReadingMain}
           options={{
             title: "Reading"}}
+        />
+        <Stack.Screen
+          name="PromptScreen"
+          component={PromptScreen}
+          options={{
+            title: "Writing Prompts"}}
         />
         <Stack.Screen
           name="ExercisesCompleted"
