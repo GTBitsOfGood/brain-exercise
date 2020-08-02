@@ -8,27 +8,27 @@ import { sampleArticle, otherInterestingText } from "../../assets/stories";
 
 const styles = StyleSheet.create({
     root: {
-        justifyContent: "space-between",
         flex: 1,
+        alignItems: "center",
+        justifyContent: "space-between",
         margin: 25,
         marginVertical: 60,
-        alignItems: "center"
     },
     instructions: {
         fontSize: 22,
-        marginVertical: 20,
         textAlign: "center",
+        marginVertical: 20,
     },
     headInstruction: {
-        textAlign: "center",
-        fontWeight: "bold",
         fontSize: 30,
+        fontWeight: "bold",
+        textAlign: "center",
     },
     nextButton: {
-        borderRadius: 10,
         marginTop: 20,
-        height: 55,
         width: 320,
+        height: 55,
+        borderRadius: 5,
         backgroundColor: "#005AA3",
     },
 });
@@ -37,7 +37,6 @@ const image = require("../../assets/books.png");
 
 // Each article has a readAlready field to check if it should be presented again
 // The text is a text array where the text is split up by \n characters
-// eslint-disable-next-line import/prefer-default-export
 export const defaultStories = {
     article1: {
         text: otherInterestingText,

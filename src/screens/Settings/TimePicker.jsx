@@ -12,19 +12,18 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    backgroundColor: "#f5f5f5",
     marginVertical: 30,
     marginHorizontal: 30,
   },
   text: {
-    textAlign: "center",
     fontSize: 20,
+    textAlign: "center",
     marginVertical: 30,
   },
   button: {
-    backgroundColor: "#2a652c",
-    borderRadius: 10,
     marginTop: 20,
+    borderRadius: 10,
+    backgroundColor: "#2a652c",
   }
 });
 

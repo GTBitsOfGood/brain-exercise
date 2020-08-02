@@ -9,25 +9,27 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    backgroundColor: "#f5f5f5",
     marginVertical: 30,
     marginHorizontal: 30,
   },
   saveButton: {
-    backgroundColor: "#2a652c"
+    marginTop: 20,
+    height: 45,
+    borderRadius: 10,
+    backgroundColor: "#2a652c",
   },
   sliderWithButton: {
     paddingVertical: 160,
   },
   texts: {
-    justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 20,
   },
 });
 
-function FontSize ({ route }) {
+function FontSize ({ route, navigation }) {
   const [value, setValue] = useState(route.params.fontSize 
     || defaultSettings.fontSize);
 
@@ -59,15 +61,17 @@ function FontSize ({ route }) {
         </View>
       </View>
       <Button
-        buttonStyle={styles.saveButton}
         title="Save Changes"
-        onPress={storeSettings}
+        buttonStyle={styles.saveButton}
+        onPressIn={storeSettings}
+        onPress={() => navigation.goBack()}
       />
     </View>
   );
 }
 
 FontSize.propTypes = {
+  navigation: PropTypes.object,
   route: PropTypes.any
 }
 

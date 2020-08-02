@@ -9,7 +9,6 @@ import getProblem from "../../assets/trivia";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#eaeaea",
   },
   instructionText: {
     fontSize: 32,
@@ -31,37 +30,37 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingBottom: 30,
-    justifyContent: "space-between",
-    backgroundColor: "#eaeaea",
     flexDirection: "column",
     flexWrap: "wrap",
     alignItems: "center",
+    justifyContent: "space-between",
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 30,
+    backgroundColor: "#eaeaea",
   },
   container: {
     flex: 3,
-    paddingBottom: 50,
-    paddingLeft: 10,
-    paddingRight: 10,
-    justifyContent: "space-around",
     flexDirection: "row",
-    backgroundColor: "#eaeaea",
     flexWrap: "wrap",
     alignContent: "stretch",
+    justifyContent: "space-around",
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 50,
+    backgroundColor: "#eaeaea",
   },
   button: {
+    alignSelf: "center",
     width: 300,
     height: 50,
     marginTop: 20,
     marginBottom: 50,
-    alignSelf: "center",
   },
   buttonTitle: {
-    textAlign: "center",
     fontSize: 20,
     fontWeight: "100",
+    textAlign: "center",
     color: "white",
   },
 });
@@ -84,17 +83,18 @@ function TriviaScreen( {navigation} ) {
       
       <View style={styles.textContainer}>
         <Text style={styles.instructionText}>Write down both the question and answer to: </Text>
-        <Text style = {styles.questionText}>{problem["question"]}</Text>
+        <Text style = {styles.questionText}>{problem.question}</Text>
         <View>
           <Text style = {styles.answerText}>{answered ? "Answer:" : ""}</Text>
-          <Text style = {styles.actualAnswerText}>{answered ? problem["answer"] : ""}</Text>
+          <Text style = {styles.actualAnswerText}>{answered ? problem.answer : ""}</Text>
         </View>
       </View>
       <View>
         <Button
+          // eslint-disable-next-line no-nested-ternary
           title={finished ? "Finish Writing Section" : (answered ? "Next" : "Show Answer")}
-          buttonStyle={styles.button}
           titleStyle = {styles.buttonTitle}
+          buttonStyle={styles.button}
           onPress={() => {
             if (!finished) {
               if (!answered) {
