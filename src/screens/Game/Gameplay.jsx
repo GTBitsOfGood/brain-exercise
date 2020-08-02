@@ -3,11 +3,12 @@
 /* eslint-disable no-alert */
 import "react-native-gesture-handler";
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../scripts/game-logic";
+import Text from "../../components/Text";
 import { AsyncStorage } from "react-native";
 
 const styles = StyleSheet.create({
@@ -174,7 +175,11 @@ function Gameplay( {navigation} ) {
       });
 
       setRemainingTime(pBar.current.getCurrentTime())
-      
+      if (choiceValue === problem.solution) {
+        setMessage(`Correct! Great job!`);
+      } else {
+        setMessage('You’re so quick! Keep going!');
+      }
       setAnswered(true)
 
       setTimeout(() => {getNewProblem()}, 5000)
@@ -200,10 +205,7 @@ function Gameplay( {navigation} ) {
 
   return (
     <View style={styles.root}>
-      <View style={{opacity: 0}}>
-        <ProgressBar seconds = {300} red = {60} func = {() => {navigation.navigate("FinishedScreen")}} ref = {pBar}/>
-      </View>
-      
+      <ProgressBar seconds = {300} red = {60} func = {() => {navigation.navigate("FinishedScreen")}} ref = {pBar} shouldNotRender/>
       <View style={styles.textContainer}>
         <Text style={styles.expressionText}>{problem.expression}</Text>
       </View>
