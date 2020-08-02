@@ -1,10 +1,11 @@
 import "react-native-gesture-handler";
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../assets/trivia";
+import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
   root: {
@@ -37,7 +38,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 30,
-    backgroundColor: "#eaeaea",
   },
   container: {
     flex: 3,
@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 50,
-    backgroundColor: "#eaeaea",
   },
   button: {
     alignSelf: "center",
@@ -77,10 +76,7 @@ function TriviaScreen( {navigation} ) {
 
   return (
     <View style={styles.root}>
-      <View style={{opacity: 0}}>
-        <ProgressBar seconds = {300} red = {60} func = {() => {setFinished(true)}}/>
-      </View>
-      
+      <ProgressBar seconds = {300} red = {60} func = {() => {setFinished(true)}} shouldNotRender/>
       <View style={styles.textContainer}>
         <Text style={styles.instructionText}>Write down both the question and answer to: </Text>
         <Text style = {styles.questionText}>{problem.question}</Text>

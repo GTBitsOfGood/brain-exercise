@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Switch,
-} from "react-native";
+import { View, StyleSheet, Switch } from "react-native";
 import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useFocusEffect } from '@react-navigation/native';
+import Text from "../../components/Text";
+import defaultSettings from "../../components/DefaultSettings"
 
 const styles = StyleSheet.create({
   root: {
@@ -53,16 +50,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-
-export const defaultSettings = {
-  notificationsActive: false,
-  scheduledTime: new Date(),
-  fontSize: 20,
-  soundEffectsOn: false,
-  backgroundMusicOn: false,
-  voiceOverOn: false,
-  animationOn: false,
-}
 
 /**
  * Takes in a settings object and stores it in Async Storage.

@@ -38,6 +38,7 @@
     "react-native-screens": "~2.2.0",
     "react-native-slider": "^0.11.0",
     "react-native-step-indicator": "^1.0.3",
+    "react-native-vector-icons": "^7.0.0",
     "react-native-web": "~0.11.7",
     "yarn": "^1.22.4"
   },

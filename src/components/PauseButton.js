@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 
-export function PauseButton(props) {
+export default function PauseButton() {
   return (
     <View style={{ flexDirection: "row" }}>
       <TouchableOpacity>
