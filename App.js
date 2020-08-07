@@ -22,7 +22,7 @@ import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
 import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
 import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted.jsx";
 import PromptScreen from './src/screens/Game/PromptScreen.jsx';
-
+import WritingIntro from './src/screens/Game/WritingIntro'
 const config = {
   animation: 'spring',
   config: {
@@ -41,6 +41,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
+      initialRouteName ="WritingIntro"
       // Consistent styling across all stacked screens
       screenOptions={{
         headerTitleAllowFontScaling: true,
@@ -108,6 +109,12 @@ export default function App() {
           component={FinishedScreen}
           options={{
             title: "Exercises Completed"}}
+        />
+        <Stack.Screen
+          name="WritingIntro"
+          component={WritingIntro}
+          options={{
+            title: "Writing (Trivia)"}}
         />
         <Stack.Screen
           name="ExtraPractice"
