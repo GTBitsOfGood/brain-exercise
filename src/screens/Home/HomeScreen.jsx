@@ -1,6 +1,13 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import PropTypes from "prop-types";
 import StepIndicator from "react-native-step-indicator";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -105,13 +112,29 @@ const logo = require("../../assets/bei_edited.png");
 
 //  Home Screen Navigation
 function HomeScreen({ navigation }) {
+  const [streak, setStreak] = useState(0);
+
+  useEffect(() => {
+    async function getStreak() {
+      try {
+        const streak = await AsyncStorage.getItem("streak");
+        if (streak !== null) {
+          setStreak(streak);
+        }
+      } catch (error) {
+        console.log("Error HomeScreen", error);
+      }
+    }
+    getStreak();
+  }, []);
+
+  const youtubeChannelURL =
+    "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
   return (
-
     <View style={styles.root}>
-
       <Text style={styles.title}>X of X Days</Text>
 
-      <StepIndicator customStyles={customStyles} currentPosition={2} />
+      <StepIndicator customStyles={customStyles} currentPosition={streak} />
 
       <Text style={styles.title}>Keep Going!</Text>
       {/* Home Screen Step Indicator */}
