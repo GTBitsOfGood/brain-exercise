@@ -39,14 +39,20 @@ function ExercisesCompleted({ navigation }) {
     try {
       const streak = await AsyncStorage.getItem("streak");
       const streakObject = JSON.parse(streak);
-      if (streakObject !== null) {
+      const now = new Date();
+      const dayOfWeek = now.getDay();
+      const dayOfMonth = now.getDate();
+      if (streakObject === null || !streakObject.hasOwnProperty(date)) {
+        await AsyncStorage.setItem(
+          "streak",
+          JSON.stringify({ streak: 1, date: new Date() })
+        );
+      } else {
         console.log("ExercisesCompleted ", streakObject.streak);
         await AsyncStorage.setItem(
           "streak",
           JSON.stringify({ streak: (streakObject.streak + 1) % 5 })
         );
-      } else if (streakObject === null) {
-        await AsyncStorage.setItem("streak", JSON.stringify({ streak: 1 }));
       }
     } catch (error) {
       console.log("Error ExercisesCompleted Screen", error);
