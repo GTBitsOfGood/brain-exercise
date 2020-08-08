@@ -41,7 +41,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-      initialRouteName ="WritingIntro"
+      initialRouteName ="MathIntro"
       // Consistent styling across all stacked screens
       screenOptions={{
         headerTitleAllowFontScaling: true,
@@ -115,6 +115,12 @@ export default function App() {
           component={WritingIntro}
           options={{
             title: "Writing (Trivia)"}}
+        />
+        <Stack.Screen
+          name="MathIntro"
+          component={MathIntro}
+          options={{
+            title: "Math"}}
         />
         <Stack.Screen
           name="ExtraPractice"
