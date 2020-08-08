@@ -21,9 +21,10 @@ import Pause from "./src/screens/Game/Pause.jsx";
 import FinishedScreen from "./src/screens/Game/FinishedScreen.jsx";
 import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
 import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
+import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted";
 
 const config = {
-  animation: 'spring',
+  animation: "spring",
   config: {
     stiffness: 1000,
     damping: 500,
@@ -40,33 +41,33 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-      // Consistent styling across all stacked screens
-      screenOptions={{
-        headerTitleAllowFontScaling: true,
-        headerBackTitleVisible: false,
+        // Consistent styling across all stacked screens
+        screenOptions={{
+          headerTitleAllowFontScaling: true,
+          headerBackTitleVisible: false,
 
-        headerStyle: {
-          backgroundColor: '#005AA3',
-        },
+          headerStyle: {
+            backgroundColor: "#005AA3",
+          },
 
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      }}>
-
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      >
         {/* Home Screens: */}
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{title: "Brain Gains"}}
+          options={{ title: "Brain Gains" }}
         />
         <Stack.Screen
           name="Video"
           component={Video}
           options={{
             title: "Youtube Videos",
-            headerStyle: {backgroundColor: '#ca0000'},
+            headerStyle: { backgroundColor: "#ca0000" },
           }}
         />
 
@@ -75,58 +76,73 @@ export default function App() {
           name="GameOverview"
           component={GameOverview}
           options={{
-            title: "Today's Exercises"}}
+            title: "Today's Exercises",
+          }}
         />
         <Stack.Screen
           name="GameMaterials"
           component={GameMaterials}
           options={{
-            title: "Game Materials",}}
+            title: "Game Materials",
+          }}
+        />
+        <Stack.Screen
+          name="ExercisesCompleted"
+          component={ExercisesCompleted}
+          options={{
+            title: "Exercises Complete",
+          }}
         />
         <Stack.Screen
           name="Gameplay"
           component={Gameplay}
           options={{
             title: "Gameplay",
-            }}
+          }}
         />
         <Stack.Screen
           name="GameplayIntermediate"
           component={GameplayIntermediate}
           options={{
-            title: "Gameplay Intermediate"}}
+            title: "Gameplay Intermediate",
+          }}
         />
         <Stack.Screen
           name="TriviaScreen"
           component={TriviaScreen}
           options={{
-            title: "Trivia"}}
+            title: "Trivia",
+          }}
         />
         <Stack.Screen
           name="FinishedScreen"
           component={FinishedScreen}
           options={{
-            title: "Exercises Completed"}}
+            title: "Exercises Completed",
+          }}
         />
         <Stack.Screen
           name="ExtraPractice"
           component={ExtraPractice}
           options={{
-            title: "More Exercises"}}
+            title: "More Exercises",
+          }}
         />
         <Stack.Screen
           name="ReadingIntro"
           component={ReadingIntro}
           options={{
-            title: "Reading"}}
+            title: "Reading",
+          }}
         />
         <Stack.Screen
           name="ReadingMain"
           component={ReadingMain}
           options={{
-            title: "Reading"}}
+            title: "Reading",
+          }}
         />
-      {/* Pause Screen */}
+        {/* Pause Screen */}
         <Stack.Screen
           name="Pause"
           component={Pause}
@@ -134,7 +150,7 @@ export default function App() {
             title: "Paused",
             animationTypeForReplace: "pop",
             // headerShown: false,
-            headerStyle: {backgroundColor: '#3f3f3f'},
+            headerStyle: { backgroundColor: "#3f3f3f" },
             transitionSpec: {
               open: config,
               close: config,
@@ -148,28 +164,32 @@ export default function App() {
           component={SettingsScreen}
           options={{
             title: "Settings",
-            headerStyle: {backgroundColor: '#2a652c'}}}
+            headerStyle: { backgroundColor: "#2a652c" },
+          }}
         />
         <Stack.Screen
           name="TimePicker"
           component={TimePicker}
           options={{
             title: "Set Time Reminder",
-            headerStyle: {backgroundColor: '#2a652c'}}}
+            headerStyle: { backgroundColor: "#2a652c" },
+          }}
         />
         <Stack.Screen
           name="SoundScreen"
           component={SoundScreen}
           options={{
             title: "Sound",
-            headerStyle: {backgroundColor: '#2a652c'}}}
+            headerStyle: { backgroundColor: "#2a652c" },
+          }}
         />
         <Stack.Screen
           name="FontSize"
           component={FontSize}
           options={{
             title: "Font Size",
-            headerStyle: {backgroundColor: '#2a652c'}}}
+            headerStyle: { backgroundColor: "#2a652c" },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

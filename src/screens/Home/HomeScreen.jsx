@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,8 @@ import {
 import PropTypes from "prop-types";
 import StepIndicator from "react-native-step-indicator";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
   root: {
@@ -114,25 +116,28 @@ const logo = require("../../assets/bei_edited.png");
 function HomeScreen({ navigation }) {
   const [streak, setStreak] = useState(0);
 
-  useEffect(() => {
-    async function getStreak() {
-      try {
-        const streak = await AsyncStorage.getItem("streak");
-        if (streak !== null) {
-          setStreak(streak);
-        }
-      } catch (error) {
-        console.log("Error HomeScreen", error);
-      }
-    }
+  useFocusEffect(() => {
     getStreak();
   }, []);
+
+  async function getStreak() {
+    try {
+      const retrieveStreak = await AsyncStorage.getItem("streak");
+      const streakObject = JSON.parse(retrieveStreak);
+      if (streakObject !== null) {
+        setStreak(streakObject.streak);
+        console.log("Homescreen ", streak);
+      }
+    } catch (error) {
+      console.log("Error HomeScreen", error);
+    }
+  }
 
   const youtubeChannelURL =
     "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>X of X Days</Text>
+      <Text style={styles.title}>{`${streak} of 5 Days`}</Text>
 
       <StepIndicator customStyles={customStyles} currentPosition={streak} />
 
@@ -156,7 +161,7 @@ function HomeScreen({ navigation }) {
         <View>
           <TouchableOpacity
             style={styles.squareButton}
-            onPress={() => navigation.navigate("SettingsScreen")}
+            onPress={() => navigation.navigate("ExercisesCompleted")}
           >
             <FeatherIcon size={45} name="settings" />
           </TouchableOpacity>

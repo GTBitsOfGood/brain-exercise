@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, AsyncStorage } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import ConfettiCannon from "react-native-confetti-cannon";
 import PropTypes from "prop-types";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const styles = StyleSheet.create({
   root: {
@@ -31,16 +32,26 @@ const styles = StyleSheet.create({
 
 function ExercisesCompleted({ navigation }) {
   useEffect(() => {
-    async function incrementStreak() {
-      try {
-        const streak = await AsyncStorage.getItem("streak");
-        if (streak !== null && streak < 5) {
-          await AsyncStorage.setItem("streak", streak + 1);
-        }
-      } catch (error) {}
-    }
+    incrementStreak();
   }, []);
 
+  async function incrementStreak() {
+    try {
+      const streak = await AsyncStorage.getItem("streak");
+      const streakObject = JSON.parse(streak);
+      if (streakObject !== null) {
+        console.log("ExercisesCompleted ", streakObject.streak);
+        await AsyncStorage.setItem(
+          "streak",
+          JSON.stringify({ streak: (streakObject.streak + 1) % 5 })
+        );
+      } else if (streakObject === null) {
+        await AsyncStorage.setItem("streak", JSON.stringify({ streak: 1 }));
+      }
+    } catch (error) {
+      console.log("Error ExercisesCompleted Screen", error);
+    }
+  }
   return (
     <View style={styles.root}>
       <ConfettiCannon
