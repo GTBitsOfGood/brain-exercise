@@ -43,17 +43,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   reminderContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 30,
     marginVertical: 15,
-    
   },
   text: {
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: "bold",
     textAlign: "left",
     marginHorizontal: 30,
   },
   subtext: {
-    fontSize: 12,
+    fontSize: 16,
     textAlign: "left",
     alignSelf: "center",
     marginVertical: 15,
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
   },
   lines: {
     marginHorizontal: 30,
-    fontSize: 12,
+    fontSize: 16,
   }
 });
 
@@ -188,7 +190,7 @@ function SettingsScreen({ navigation }) {
 
   return (
     <View style={styles.root}>
-      <View style={styles.reminderContainer}>
+      <View>
        <Text style={styles.text}>Notifications</Text>
        <View style={styles.reminder}>
         <Text style={styles.subtext}>Daily Reminder</Text>
