@@ -66,8 +66,46 @@ function generateProblem(difficulty) {
     operator = choosePlus ? " + " : " - ";
     solution = choosePlus ? a + b : a - b;
   }
+  if (Math.random() * 3 < 1){
+    return {
+      expression: `${a + operator  }__ = ${  solution}`,
+      solution: b,
+    };
+  } 
+    return {
+      expression: a + operator + b,
+      solution,
+    };
+  
+}
+
+const cascade = (oldProblem, difficulty) => {
+  let newVar
+  
+  if (difficulty === 4) {
+    newVar = Math.floor(Math.random() * 100 + 1);
+  } else {
+    newVar = Math.floor(Math.random() * 10 + 1);
+  }
+
+  let operator
+  let solution
+  if (difficulty === 3) {
+    operator = " x "
+    solution = oldProblem.solution * newVar
+  } else if (difficulty === 1) {
+    operator = " + "
+    solution = oldProblem.solution + newVar
+  } else {
+    const choosePlus = Math.floor(Math.random() * 2 + 1) % 2 === 0;
+    operator = choosePlus ? " + " : " - ";
+    solution = choosePlus ? oldProblem.solution + newVar : oldProblem.solution - newVar;
+  }
+
+  const expression = oldProblem.expression + operator + newVar
+
   return {
-    expression: a + operator + b,
+    expression,
     solution,
   };
 }
@@ -88,24 +126,24 @@ function generateProblem(difficulty) {
  * Therefore, the upper range would be (solution + 1 thru 20)
  * and the lower range would be (-9 thru solution). */
 function generateRanges(difficulty, solution) {
-  let upperRange;
-  let lowRange;
-  if (difficulty === 1) {
-    upperRange = { start: solution + 1, end: 20 };
-    lowRange = { start: 2, end: solution };
-  } else if (difficulty === 2) {
-    upperRange = { start: solution + 1, end: 20 };
-    lowRange = { start: -9, end: solution };
-  } else if (difficulty === 3) {
-    upperRange = { start: solution + 1, end: 100 };
-    lowRange = { start: 1, end: solution };
-  } else if (difficulty === 4) {
-    upperRange = { start: solution + 1, end: 200 };
-    lowRange = { start: -99, end: solution };
-  }
+  // let upperRange;
+  // let lowRange;
+  // if (difficulty === 1) {
+  //   upperRange = { start: solution + 1, end: 20 };
+  //   lowRange = { start: 2, end: solution };
+  // } else if (difficulty === 2 || difficulty === 5) {
+  //   upperRange = { start: solution + 1, end: 20 };
+  //   lowRange = { start: -9, end: solution };
+  // } else if (difficulty === 3) {
+  //   upperRange = { start: solution + 1, end: 100 };
+  //   lowRange = { start: 1, end: solution };
+  // } else if (difficulty === 4) {
+  //   upperRange = { start: solution + 1, end: 200 };
+  //   lowRange = { start: -99, end: solution };
+  // }
   return {
-    upperRange,
-    lowRange,
+    upperRange: { start: solution + 1, end: solution + 1 + 15 },
+    lowRange: { start: solution - 15, end: solution },
   };
 }
 
@@ -162,8 +200,23 @@ function generateChoices(difficulty, solution) {
  * the full object representation of a math problem which consists
  * of the string expression of the problem, its answer choices,
  * and its solution. */
-function getProblemObject(difficulty) {
-  const problem = generateProblem(difficulty);
+function getProblemObject(difficulty, oldProblem = null) {
+  let problem;
+  if (oldProblem === null || oldProblem === undefined) {
+    problem = generateProblem(difficulty)
+  } else if (oldProblem.expression.length >= 17 || oldProblem.expression.includes("_")) { // if the cascade has reached max number of times
+      problem = generateProblem(difficulty);
+    } else if (oldProblem.expression.length >= 9) { // if it has cascaded before
+      if (Math.random() * 10 < 3) { // high chance of cascading again
+        problem = generateProblem(difficulty)
+      } else {
+        problem = cascade(oldProblem, difficulty);
+      }
+    } else if (Math.random() * 5 < 1) {
+      problem = cascade(oldProblem, difficulty)
+    } else {
+      problem = generateProblem(difficulty);
+    }
   const { expression, solution } = problem;
   const choicesArray = generateChoices(difficulty, solution);
   shuffleChoices(choicesArray);
@@ -177,10 +230,6 @@ function getProblemObject(difficulty) {
 /** getProblem:
  * Returns the object representation of a math problem with
  * a random level of difficulty. */
-export default function getProblem() {
-  const randomDifficulty = Math.floor(Math.random() * 4 + 1);
-  const problemObject = getProblemObject(randomDifficulty);
-  return problemObject;
+export default function getProblem(problem = null, difficulty = Math.floor(Math.random() * 5 + 1)) {
+  return getProblemObject(difficulty, problem)
 }
-
-// console.log(getProblem());

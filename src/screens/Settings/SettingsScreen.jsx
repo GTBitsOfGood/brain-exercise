@@ -1,21 +1,17 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Switch,
-} from "react-native";
+import { View, StyleSheet, Switch } from "react-native";
 import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useFocusEffect } from '@react-navigation/native';
+import Text from "../../components/Text";
+import defaultSettings from "../../components/DefaultSettings"
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    backgroundColor: "#f5f5f5",
     marginVertical: 30,
   },
   reminder: {
@@ -25,43 +21,35 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   text: {
-    textAlign: "left",
     fontSize: 20,
     fontWeight: "bold",
+    textAlign: "left",
     marginHorizontal: 30,
   },
   subtext: {
+    fontSize: 18,
     textAlign: "left",
     alignSelf: "center",
-    fontSize: 18,
   },
   button: {
     borderRadius: 10,
-    borderColor: "gray",
     borderWidth: 0.9,
+    borderColor: "gray",
   },
   fontButton: {
     alignContent: "space-between",
-    color: "gray",
-    borderRadius: 10,
     marginTop: 20,
+    backgroundColor: "#e0e0e0",
   },
   animation: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginHorizontal: 30,
-  }
+  },
+  timeButton: {
+    borderRadius: 10,
+  },
 });
-
-export const defaultSettings = {
-  notificationsActive: false,
-  scheduledTime: new Date(),
-  fontSize: 20,
-  soundEffectsOn: false,
-  backgroundMusicOn: false,
-  voiceOverOn: false,
-  animationOn: false,
-}
 
 /**
  * Takes in a settings object and stores it in Async Storage.
@@ -150,6 +138,7 @@ function SettingsScreen({ navigation }) {
             <Button
               title={getDate()}
               type="outline"
+              buttonStyle={styles.timeButton}
               onPress={() => navigation.navigate("TimePicker", settings)}
             />
           </View>

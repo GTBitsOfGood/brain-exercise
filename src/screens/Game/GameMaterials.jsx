@@ -1,25 +1,25 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
+import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    backgroundColor: "#f5f5f5",
     marginVertical: 30,
     marginHorizontal: 30,
   },
   text: {
-    textAlign: "center",
     fontSize: 20,
+    textAlign: "center",
     marginVertical: 30,
   },
   button: {
-    borderRadius: 10,
     marginTop: 20,
+    borderRadius: 10,
   }
 });
 
@@ -28,7 +28,12 @@ function GameMaterials({ navigation }) {
     <View style={styles.root}>
       <Text style={styles.text}>Before you start, make sure you have the required materials!</Text>
       <Button
-        title="Start!"
+        title="Reading!"
+        buttonStyle={styles.button}
+        onPress={() => navigation.navigate("ReadingIntro")}
+      />
+      <Button
+        title="Math!"
         buttonStyle={styles.button}
         onPress={() => navigation.navigate("Gameplay")}
       />
@@ -36,6 +41,16 @@ function GameMaterials({ navigation }) {
         title="Trivia!"
         buttonStyle={styles.button}
         onPress={() => navigation.navigate("TriviaScreen")}
+      />
+      <Button
+        title="Prompts!"
+        buttonStyle={styles.button}
+        onPress={() => navigation.navigate("PromptScreen")}
+      />
+      <Button
+        title="Complete!"
+        buttonStyle={styles.button}
+        onPress={() => navigation.navigate("ExercisesCompleted")}
       />
     </View>
   );
