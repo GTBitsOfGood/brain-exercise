@@ -148,12 +148,6 @@ export default function App() {
           options={{
             title: "Writing Prompts"}}
         />
-        <Stack.Screen
-          name="ExercisesCompleted"
-          component={ExercisesCompleted}
-          options={{
-            title: "Exercises"}}
-        />
       {/* Pause Screen */}
         <Stack.Screen
           name="Pause"
