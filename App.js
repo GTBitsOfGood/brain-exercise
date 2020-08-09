@@ -24,6 +24,7 @@ import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted.jsx";
 import PromptScreen from "./src/screens/Game/PromptScreen.jsx";
 import WritingIntro from "./src/screens/Game/WritingIntro";
 import MathIntro from "./src/screens/Game/MathIntro";
+import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
 const config = {
   animation: "spring",
   config: {
@@ -42,7 +43,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="MathIntro"
+        initialRouteName="HomeScreen"
         // Consistent styling across all stacked screens
         screenOptions={{
           headerTitleAllowFontScaling: true,
@@ -120,7 +121,7 @@ export default function App() {
           name="WritingIntro"
           component={WritingIntro}
           options={{
-            title: "Writing (Trivia)",
+            title: "Writing",
           }}
         />
         <Stack.Screen
@@ -128,6 +129,13 @@ export default function App() {
           component={MathIntro}
           options={{
             title: "Math",
+          }}
+        />
+        <Stack.Screen
+          name="TriviaIntro"
+          component={TriviaIntro}
+          options={{
+            title: "Trivia",
           }}
         />
         <Stack.Screen

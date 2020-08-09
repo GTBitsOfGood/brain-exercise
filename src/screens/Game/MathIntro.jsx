@@ -52,12 +52,11 @@ const image = require("../../assets/math_icon.png");
 // Each article has a readAlready field to check if it should be presented again
 // The text is a text array where the text is split up by \n characters
 
-function MathIntro({ navigation }) {
+function MathIntro({ route, navigation }) {
   // Update stories when page is loaded
 
   return (
     <View style={styles.root}>
-
       <View style={styles.imageContainer}>
         <Image source={image} style={styles.image} />
       </View>
@@ -70,7 +69,7 @@ function MathIntro({ navigation }) {
       <Button
         title="Start Math"
         buttonStyle={styles.nextButton}
-        onPress={() => navigation.navigate("ReadingMain")}
+        onPress={() => navigation.navigate("Gameplay", route.params)}
       />
     </View>
   );
@@ -78,6 +77,7 @@ function MathIntro({ navigation }) {
 
 MathIntro.propTypes = {
   navigation: PropTypes.object,
+  route: PropTypes.object,
 };
 
 export default MathIntro;

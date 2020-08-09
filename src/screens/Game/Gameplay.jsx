@@ -69,24 +69,24 @@ const styles = StyleSheet.create({
   },
 });
 
-const storeDifficultyScore = async(score) => {
-  await AsyncStorage.setItem("difficultyScore", score)
-}
+const storeDifficultyScore = async (score) => {
+  await AsyncStorage.setItem("difficultyScore", score);
+};
 
 const pullDifficultyScore = async () => {
-  const score = await AsyncStorage.getItem("difficultyScore")
+  const score = await AsyncStorage.getItem("difficultyScore");
   if (score !== null) {
-     return score;
-  } 
-  return 100
-}
+    return score;
+  }
+  return 100;
+};
 
-function Gameplay( {navigation} ) {
+function Gameplay({ route, navigation }) {
   const [problem, setProblem] = useState(firstQ());
-  const [message, setMessage] = useState("")
-  const [remainingTime, setRemainingTime] = useState(300)
-  const [answered, setAnswered] = useState(false)
-  let pBar = React.createRef()
+  const [message, setMessage] = useState("");
+  const [remainingTime, setRemainingTime] = useState(300);
+  const [answered, setAnswered] = useState(false);
+  let pBar = React.createRef();
 
   function firstQ() {
     const a = Math.floor(Math.random() * 10 + 1);
@@ -94,15 +94,19 @@ function Gameplay( {navigation} ) {
     const choosePlus = Math.floor(Math.random() * 2 + 1) % 2 === 0;
     const operator = choosePlus ? " + " : " - ";
     const solution = choosePlus ? a + b : a - b;
-    let choices = [solution, solution + Math.floor(Math.random() * 15), solution -  Math.floor(Math.random() * 15)]
+    let choices = [
+      solution,
+      solution + Math.floor(Math.random() * 15),
+      solution - Math.floor(Math.random() * 15),
+    ];
     choices.sort(() => Math.random() - 0.5);
     return {
       expression: a + operator + b,
       solution,
       choices,
-    }
+    };
   }
-  
+
   const right = () => (
     <Button
       title="⏸"
@@ -111,13 +115,13 @@ function Gameplay( {navigation} ) {
         fontSize: 16,
       }}
       buttonStyle={{
-        backgroundColor: 'transparent',
+        backgroundColor: "transparent",
         marginRight: 10,
       }}
       type="clear"
       onPress={() => navigation.navigate("Pause")}
     />
-  )
+  );
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -126,78 +130,82 @@ function Gameplay( {navigation} ) {
   }, [navigation]);
 
   function getNewProblem() {
-    setMessage("")
-    setAnswered(false)
+    setMessage("");
+    setAnswered(false);
 
-    AsyncStorage.getItem("difficultyScore").then(difficultyScore => {
-      const score = parseInt(difficultyScore)
+    AsyncStorage.getItem("difficultyScore").then((difficultyScore) => {
+      const score = parseInt(difficultyScore);
       if (score < 200) {
         setProblem(getProblem(problem, 1));
       } else if (score < 300) {
         setProblem(getProblem(problem, 2));
-      } else if  (score < 400) {
+      } else if (score < 400) {
         setProblem(getProblem(problem, 3));
       } else if (score < 500) {
         setProblem(getProblem(problem, 4));
       } else {
         setProblem(getProblem(problem));
       }
-    })
+    });
   }
 
   function checkAnswer(choiceValue) {
     if (!answered) {
-      const timeToAnswer = pBar.current.getCurrentTime() - remainingTime
+      const timeToAnswer = pBar.current.getCurrentTime() - remainingTime;
 
-      pullDifficultyScore().then(score => {
-        
-        let difficultyScore = parseInt(score)
+      pullDifficultyScore().then((score) => {
+        let difficultyScore = parseInt(score);
         if (timeToAnswer > 60) {
-          difficultyScore = Math.max(difficultyScore - 10, 100)
+          difficultyScore = Math.max(difficultyScore - 10, 100);
         }
         if (timeToAnswer < 30) {
           if (timeToAnswer < 10) {
-            difficultyScore = Math.min(difficultyScore + 5, 499)
+            difficultyScore = Math.min(difficultyScore + 5, 499);
           } else {
-            difficultyScore = Math.min(difficultyScore + 2, 499)
+            difficultyScore = Math.min(difficultyScore + 2, 499);
           }
         }
-        
-        
+
         if (choiceValue === problem.solution) {
           setMessage(`Correct! Great job!`);
-          difficultyScore = Math.min(difficultyScore + 10, 499)
+          difficultyScore = Math.min(difficultyScore + 10, 499);
         } else {
-          setMessage('You’re so quick! Keep going!');
+          setMessage("You’re so quick! Keep going!");
         }
 
-        storeDifficultyScore(difficultyScore.toString())
+        storeDifficultyScore(difficultyScore.toString());
       });
 
-      setRemainingTime(pBar.current.getCurrentTime())
+      setRemainingTime(pBar.current.getCurrentTime());
       if (choiceValue === problem.solution) {
         setMessage(`Correct! Great job!`);
       } else {
-        setMessage('You’re so quick! Keep going!');
+        setMessage("You’re so quick! Keep going!");
       }
-      setAnswered(true)
+      setAnswered(true);
 
-      setTimeout(() => {getNewProblem()}, 5000)
+      setTimeout(() => {
+        getNewProblem();
+      }, 5000);
     }
   }
 
   const choicesArray = problem.choices;
-  const [picked, setPicked] = React.useState(0)
+  const [picked, setPicked] = React.useState(0);
   const choices = choicesArray.map((choiceValue, choiceKey) => {
     return (
       <Button
         title={`${choiceValue}`}
         titleStyle={styles.buttonTitle}
-        buttonStyle={answered && choiceKey === picked ? styles.selectedButton : styles.button}
+        buttonStyle={
+          answered && choiceKey === picked
+            ? styles.selectedButton
+            : styles.button
+        }
         key={choiceKey}
         onPress={() => {
-          setPicked(choiceKey)
-          checkAnswer(choiceValue)
+          setPicked(choiceKey);
+          checkAnswer(choiceValue);
         }}
       />
     );
@@ -205,20 +213,27 @@ function Gameplay( {navigation} ) {
 
   return (
     <View style={styles.root}>
-      <ProgressBar seconds = {300} red = {60} func = {() => {navigation.navigate("FinishedScreen")}} ref = {pBar} shouldNotRender/>
+      <ProgressBar
+        seconds={300}
+        red={60}
+        func={() => {
+          navigation.navigate(route.params.nextScreen);
+        }}
+        ref={pBar}
+        shouldNotRender
+      />
       <View style={styles.textContainer}>
         <Text style={styles.expressionText}>{problem.expression}</Text>
       </View>
-      <Text style={{backgroundColor: "#eaeaea"}}>{message}</Text>
-      <View style={styles.container}>
-        {choices}
-      </View>
+      <Text style={{ backgroundColor: "#eaeaea" }}>{message}</Text>
+      <View style={styles.container}>{choices}</View>
     </View>
   );
 }
 
 Gameplay.propTypes = {
   navigation: PropTypes.object,
+  route: PropTypes.object,
 };
 
 export default Gameplay;

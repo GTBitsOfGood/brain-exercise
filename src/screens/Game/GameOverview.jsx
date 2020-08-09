@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 10,
-  }
+  },
 });
 
 function GameOverview({ navigation }) {
@@ -29,7 +29,9 @@ function GameOverview({ navigation }) {
       <Button
         title="GameMaterials" // change back to game materials
         buttonStyle={styles.button}
-        onPress={() => navigation.navigate("GameMaterials")}
+        onPress={() =>
+          navigation.navigate("MathIntro", { nextScreen: "TriviaIntro" })
+        }
       />
     </View>
   );

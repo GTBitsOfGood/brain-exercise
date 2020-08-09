@@ -64,42 +64,61 @@ const styles = StyleSheet.create({
   },
 });
 
-function TriviaScreen( {navigation} ) {
+function TriviaScreen({ navigation }) {
   const [problem, setProblem] = useState(getProblem());
-  const [answered, setAnswered] = useState(false)
-  const [finished, setFinished] = useState(false)
+  const [answered, setAnswered] = useState(false);
+  const [finished, setFinished] = useState(false);
 
   function getNewProblem() {
     setProblem(getProblem());
-    setAnswered(false)
+    setAnswered(false);
   }
 
   return (
     <View style={styles.root}>
-      <ProgressBar seconds = {300} red = {60} func = {() => {setFinished(true)}} shouldNotRender/>
+      <ProgressBar
+        seconds={300}
+        red={60}
+        func={() => {
+          setFinished(true);
+        }}
+        shouldNotRender
+      />
       <View style={styles.textContainer}>
-        <Text style={styles.instructionText}>Write down both the question and answer to: </Text>
-        <Text style = {styles.questionText}>{problem.question}</Text>
+        <Text style={styles.instructionText}>
+          Write down both the question and answer to:{" "}
+        </Text>
+        <Text style={styles.questionText}>{problem.question}</Text>
         <View>
-          <Text style = {styles.answerText}>{answered ? "Answer:" : ""}</Text>
-          <Text style = {styles.actualAnswerText}>{answered ? problem.answer : ""}</Text>
+          <Text style={styles.answerText}>{answered ? "Answer:" : ""}</Text>
+          <Text style={styles.actualAnswerText}>
+            {answered ? problem.answer : ""}
+          </Text>
         </View>
       </View>
       <View>
         <Button
           // eslint-disable-next-line no-nested-ternary
-          title={finished ? "Finish Writing Section" : (answered ? "Next" : "Show Answer")}
-          titleStyle = {styles.buttonTitle}
+          title={
+            finished
+              ? "Finish Writing Section"
+              : answered
+              ? "Next"
+              : "Show Answer"
+          }
+          titleStyle={styles.buttonTitle}
           buttonStyle={styles.button}
           onPress={() => {
             if (!finished) {
               if (!answered) {
-                setAnswered(true)
+                setAnswered(true);
               } else {
-                getNewProblem()
+                getNewProblem();
               }
             } else {
-              navigation.navigate("FinishedScreen")
+              navigation.navigate("MathIntro", {
+                nextScreen: "WritingIntro",
+              });
             }
           }}
         />

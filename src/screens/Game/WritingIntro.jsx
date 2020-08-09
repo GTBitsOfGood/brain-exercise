@@ -57,7 +57,6 @@ function WritingIntro({ navigation }) {
 
   return (
     <View style={styles.root}>
-
       <View style={styles.imageContainer}>
         <Image source={image} style={styles.image} />
       </View>
@@ -70,7 +69,7 @@ function WritingIntro({ navigation }) {
       <Button
         title="Start Writing"
         buttonStyle={styles.nextButton}
-        onPress={() => navigation.navigate("ReadingMain")}
+        onPress={() => navigation.navigate("PromptScreen")} //Todo change to PromptScreen
       />
     </View>
   );
