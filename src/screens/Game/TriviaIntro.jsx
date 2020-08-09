@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const image = require("../../assets/books.png");
+const image = require("../../assets/writing_icon.png");
 
 // Each article has a readAlready field to check if it should be presented again
 // The text is a text array where the text is split up by \n characters
@@ -61,7 +61,9 @@ function TriviaIntro({ navigation }) {
         <Image source={image} style={styles.image} />
       </View>
       <View style={styles.instructions}>
-        <Text style={styles.headInstruction}>Trivia Time!</Text>
+        <Text style={styles.headInstruction}>
+          Grab a pencil and some paper. Write the answer to the questions.
+        </Text>
         <Text style={styles.instructions}>Total time: 5 minutes</Text>
       </View>
       <Button

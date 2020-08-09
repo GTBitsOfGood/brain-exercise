@@ -62,7 +62,7 @@ function WritingIntro({ navigation }) {
       </View>
       <View style={styles.instructions}>
         <Text style={styles.headInstruction}>
-          Grab a pencil and some paper. Write the answer to the questions.
+          Grab some paper and a pencil and write what you see
         </Text>
         <Text style={styles.instructions}>Total time: 5 minutes</Text>
       </View>

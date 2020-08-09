@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     color: "#2f4f4f",
   },
 });
+const totalTime = 300;
 
 const storeDifficultyScore = async (score) => {
   await AsyncStorage.setItem("difficultyScore", score);
@@ -84,7 +85,7 @@ const pullDifficultyScore = async () => {
 function Gameplay({ route, navigation }) {
   const [problem, setProblem] = useState(firstQ());
   const [message, setMessage] = useState("");
-  const [remainingTime, setRemainingTime] = useState(300);
+  const [remainingTime, setRemainingTime] = useState(totalTime);
   const [answered, setAnswered] = useState(false);
   let pBar = React.createRef();
 
@@ -214,7 +215,7 @@ function Gameplay({ route, navigation }) {
   return (
     <View style={styles.root}>
       <ProgressBar
-        seconds={300}
+        seconds={totalTime}
         red={60}
         func={() => {
           navigation.navigate(route.params.nextScreen);

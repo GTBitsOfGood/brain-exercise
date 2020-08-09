@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
+const totalTime = 300;
 
 function TriviaScreen({ navigation }) {
   const [problem, setProblem] = useState(getProblem());
@@ -77,7 +78,7 @@ function TriviaScreen({ navigation }) {
   return (
     <View style={styles.root}>
       <ProgressBar
-        seconds={300}
+        seconds={totalTime}
         red={60}
         func={() => {
           setFinished(true);

@@ -35,6 +35,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const totalTime = 600;
+
 export default function ReadingMain({ navigation, route }) {
   const [stories, setStories] = useState(route.params);
   const [timeUp, setTimeUp] = useState(false);
@@ -122,7 +124,7 @@ export default function ReadingMain({ navigation, route }) {
 
   return (
     <View style={styles.root}>
-      <ProgressBar seconds={600} red={30} func={() => setTimeUp(true)} />
+      <ProgressBar seconds={totalTime} red={30} func={() => setTimeUp(true)} />
       <Text style={styles.instructions}>Read the passage aloud.</Text>
       <ScrollView>
         <Text style={styles.article}>{paragraph}</Text>

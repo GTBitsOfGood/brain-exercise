@@ -51,7 +51,7 @@ function PromptScreen({ route, navigation }) {
   return (
     <View style={styles.root}>
       <Button
-        title="Complete Writing"
+        title="Finish Writing"
         buttonStyle={styles.nextButton}
         onPress={() => navigation.navigate("ReadingIntro")} //Todo change to PromptScreen
       />

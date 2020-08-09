@@ -107,7 +107,7 @@ export default function App() {
           name="TriviaScreen"
           component={TriviaScreen}
           options={{
-            title: "Trivia",
+            title: "Writing (Trivia)",
           }}
         />
         <Stack.Screen
@@ -135,7 +135,7 @@ export default function App() {
           name="TriviaIntro"
           component={TriviaIntro}
           options={{
-            title: "Trivia",
+            title: "Writing (Trivia)",
           }}
         />
         <Stack.Screen
