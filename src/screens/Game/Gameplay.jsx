@@ -3,13 +3,12 @@
 /* eslint-disable no-alert */
 import "react-native-gesture-handler";
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
+import { View, StyleSheet, AsyncStorage } from "react-native";
 import PropTypes from "prop-types";
+import Button from "../../components/Button";
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../scripts/game-logic";
 import Text from "../../components/Text";
-import { AsyncStorage } from "react-native";
 
 const styles = StyleSheet.create({
   root: {

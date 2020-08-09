@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const Button = (props) => {
     return (
-    <BaseButton buttonStyle={StyleSheet.create({borderRadius: 10, marginTop: 20, height: 45})}>
+    <BaseButton buttonStyle={StyleSheet.create({borderRadius: 10, marginTop: 20, height: 45, alignSelf: "center"})}>
         {props.children}
     </BaseButton>
 )};

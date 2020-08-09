@@ -47,12 +47,13 @@ export default function App() {
         headerBackTitleVisible: false,
 
         headerStyle: {
-          backgroundColor: '#005AA3',
+          backgroundColor: '#fff',
         },
 
         headerTintColor: '#fff',
         headerTitleStyle: {
           fontWeight: 'bold',
+          color: '#000000',
         },
       }}>
 
@@ -67,7 +68,6 @@ export default function App() {
           component={Video}
           options={{
             title: "Youtube Videos",
-            headerStyle: {backgroundColor: '#ca0000'},
           }}
         />
 
@@ -147,7 +147,6 @@ export default function App() {
             title: "Paused",
             animationTypeForReplace: "pop",
             // headerShown: false,
-            headerStyle: {backgroundColor: '#3f3f3f'},
             transitionSpec: {
               open: config,
               close: config,
@@ -161,28 +160,28 @@ export default function App() {
           component={SettingsScreen}
           options={{
             title: "Settings",
-            headerStyle: {backgroundColor: '#2a652c'}}}
-        />
+            }}
+          />
         <Stack.Screen
           name="TimePicker"
           component={TimePicker}
           options={{
             title: "Set Time Reminder",
-            headerStyle: {backgroundColor: '#2a652c'}}}
+            }}
         />
         <Stack.Screen
           name="SoundScreen"
           component={SoundScreen}
           options={{
             title: "Sound",
-            headerStyle: {backgroundColor: '#2a652c'}}}
+            }}
         />
         <Stack.Screen
           name="FontSize"
           component={FontSize}
           options={{
             title: "Font Size",
-            headerStyle: {backgroundColor: '#2a652c'}}}
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

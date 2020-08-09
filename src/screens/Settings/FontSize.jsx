@@ -50,7 +50,9 @@ function FontSize ({ route, navigation }) {
           // style={styles.slider}
           value={value}
           thumbTintColor={"#2a652c"}
+
           allowTouchTrack={true}
+          
           minimumValue={16}
           maximumValue={32}
           step={4}
