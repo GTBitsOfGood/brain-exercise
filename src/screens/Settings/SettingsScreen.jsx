@@ -49,6 +49,9 @@ const styles = StyleSheet.create({
   timeButton: {
     borderRadius: 10,
   },
+  fontSizeNavigator: {
+    flexDirection: "row",
+  },
 });
 
 /**
@@ -143,6 +146,10 @@ function SettingsScreen({ navigation }) {
             />
           </View>
       }
+      <View style={styles.fontSizeNavigator}>
+        <Text>Font Size</Text>
+        <Text>{">"}</Text>
+      </View>
       <Button
         title="Font Size                                                 >"
         buttonStyle={styles.fontButton}

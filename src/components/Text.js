@@ -13,7 +13,7 @@ const Text = (props) => {
 
 Text.propTypes = {
     children: PropTypes.string,
-    style: PropTypes.object,
+    style: PropTypes.any,
 };
 
 export default Text;
