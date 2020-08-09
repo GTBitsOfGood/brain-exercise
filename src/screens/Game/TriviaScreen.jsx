@@ -1,15 +1,15 @@
 import "react-native-gesture-handler";
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../assets/trivia";
 import Text from "../../components/Text";
+import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1,
+    flex: .8,
   },
   instructionText: {
     fontSize: 32,
@@ -49,13 +49,6 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 50,
   },
-  button: {
-    alignSelf: "center",
-    width: 300,
-    height: 50,
-    marginTop: 20,
-    marginBottom: 50,
-  },
   buttonTitle: {
     fontSize: 20,
     fontWeight: "100",
@@ -81,16 +74,14 @@ function TriviaScreen( {navigation} ) {
         <Text style={styles.instructionText}>Write down both the question and answer to: </Text>
         <Text style = {styles.questionText}>{problem.question}</Text>
         <View>
-          <Text style = {styles.answerText}>{answered ? "Answer:" : ""}</Text>
-          <Text style = {styles.actualAnswerText}>{answered ? problem.answer : ""}</Text>
+          <Text style={styles.answerText}>{answered ? "Answer:" : ""}</Text>
+          <Text style={styles.actualAnswerText}>{answered ? problem.answer : ""}</Text>
         </View>
       </View>
       <View>
         <Button
           // eslint-disable-next-line no-nested-ternary
           title={finished ? "Finish Writing Section" : (answered ? "Next" : "Show Answer")}
-          titleStyle = {styles.buttonTitle}
-          buttonStyle={styles.button}
           onPress={() => {
             if (!finished) {
               if (!answered) {
@@ -106,7 +97,7 @@ function TriviaScreen( {navigation} ) {
       </View>
     </View>
   );
-}
+};
 
 TriviaScreen.propTypes = {
   navigation: PropTypes.object,

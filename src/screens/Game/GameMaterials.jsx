@@ -1,8 +1,8 @@
 import "react-native-gesture-handler";
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
+import Button from "../../components/Button";
 import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
@@ -17,10 +17,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 30,
   },
-  button: {
-    marginTop: 20,
-    borderRadius: 10,
-  }
 });
 
 function GameMaterials({ navigation }) {
@@ -29,27 +25,22 @@ function GameMaterials({ navigation }) {
       <Text style={styles.text}>Before you start, make sure you have the required materials!</Text>
       <Button
         title="Reading!"
-        buttonStyle={styles.button}
         onPress={() => navigation.navigate("ReadingIntro")}
       />
       <Button
         title="Math!"
-        buttonStyle={styles.button}
         onPress={() => navigation.navigate("Gameplay")}
       />
       <Button
         title="Trivia!"
-        buttonStyle={styles.button}
         onPress={() => navigation.navigate("TriviaScreen")}
       />
       <Button
         title="Prompts!"
-        buttonStyle={styles.button}
         onPress={() => navigation.navigate("PromptScreen")}
       />
       <Button
         title="Complete!"
-        buttonStyle={styles.button}
         onPress={() => navigation.navigate("ExercisesCompleted")}
       />
     </View>

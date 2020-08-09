@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
+import Button from "../../components/Button";
 import Text from "../../components/Text";
 import "react-native-gesture-handler";
 

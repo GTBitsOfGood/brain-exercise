@@ -30,11 +30,12 @@ const styles = StyleSheet.create({
 });
 
 function FontSize ({ route, navigation }) {
+  const settingsObj = route.params;
   const [value, setValue] = useState(route.params.fontSize 
     || defaultSettings.fontSize);
+  settingsObj.fontSize = value
 
   const storeSettings = async () => {
-    const settingsObj = route.params;
     settingsObj.fontSize = value;
     const jsonSettings = JSON.stringify(settingsObj);
     await AsyncStorage.setItem("SETTINGS", jsonSettings);
@@ -67,7 +68,7 @@ function FontSize ({ route, navigation }) {
         title="Save Changes"
         buttonStyle={styles.saveButton}
         onPressIn={storeSettings}
-        onPress={() => navigation.goBack()}
+        onPress={() => navigation.goBack(settingsObj)}
       />
     </View>
   );

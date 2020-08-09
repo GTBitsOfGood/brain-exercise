@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { Button } from "react-native-elements";
 import propTypes from "prop-types";
 import AsyncStorage from "@react-native-community/async-storage"
 import ProgressBar from "../../components/ProgressBar";
 import Text from "../../components/Text";
+import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
     root: {
@@ -25,13 +25,6 @@ const styles = StyleSheet.create({
         flex: 1.8,
         fontSize: 20,
         textAlign: "center",
-    },
-    nextButton: {
-        marginTop: 20,
-        width: 320,
-        height: 55,
-        borderRadius: 10,
-        backgroundColor: "#005AA3",
     },
 });
 

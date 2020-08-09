@@ -43,17 +43,15 @@ export default function App() {
       <Stack.Navigator
       // Consistent styling across all stacked screens
       screenOptions={{
-        headerTitleAllowFontScaling: true,
         headerBackTitleVisible: false,
-
+        headerTitleAllowFontScaling: true,
+        headerTintColor: '#fff',
         headerStyle: {
           backgroundColor: '#fff',
         },
-
-        headerTintColor: '#fff',
         headerTitleStyle: {
           fontWeight: 'bold',
-          color: '#000000',
+          color: 'black',
         },
       }}>
 
@@ -82,13 +80,13 @@ export default function App() {
           name="GameMaterials"
           component={GameMaterials}
           options={{
-            title: "Game Materials",}}
+            title: "Choose your game!",}}
         />
         <Stack.Screen
           name="Gameplay"
           component={Gameplay}
           options={{
-            title: "Gameplay",
+            title: "Math",
             }}
         />
         <Stack.Screen
@@ -119,7 +117,7 @@ export default function App() {
           name="ReadingIntro"
           component={ReadingIntro}
           options={{
-            title: "Reading"}}
+            title: "Get ready to read!"}}
         />
         <Stack.Screen
           name="ReadingMain"
@@ -137,7 +135,7 @@ export default function App() {
           name="ExercisesCompleted"
           component={ExercisesCompleted}
           options={{
-            title: "Exercises"}}
+            title: "Exercises done!"}}
         />
       {/* Pause Screen */}
         <Stack.Screen

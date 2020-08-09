@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
 import ConfettiCannon from "react-native-confetti-cannon";
+import Button from "../../components/Button";
 import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
