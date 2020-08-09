@@ -1,9 +1,9 @@
-import "react-native-gesture-handler";
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import Text from "../../components/Text";
+import "react-native-gesture-handler";
 
 const styles = StyleSheet.create({
   root: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 10,
   }
-});
+})
 
 function GameOverview({ navigation }) {
   return (
@@ -37,6 +37,6 @@ function GameOverview({ navigation }) {
 
 GameOverview.propTypes = {
   navigation: PropTypes.object,
-};
+}
 
 export default GameOverview;

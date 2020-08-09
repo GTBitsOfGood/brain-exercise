@@ -12,20 +12,17 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         margin: 25,
     },
-
     settingsBlock: {
         flex: 1,
         justifyContent: "space-between",
         maxHeight: 70,
     }, 
-
     settingAndSwitch: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
         paddingVertical: 20,
     },
-
     saveButton: {
         marginTop: 20,
         height: 45,

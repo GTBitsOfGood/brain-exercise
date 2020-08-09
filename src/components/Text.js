@@ -6,9 +6,7 @@ import useFontSize from "../scripts/useFontSize";
 const Text = (props) => {
     const fontSize = useFontSize(props.style.fontSize);
     return (
-    <BaseText style={[props.style, {
-        fontSize
-    }]}>
+    <BaseText style={[props.style, {fontSize}]}>
         {props.children}
     </BaseText>
 )};
@@ -19,4 +17,3 @@ Text.propTypes = {
 };
 
 export default Text;
-
