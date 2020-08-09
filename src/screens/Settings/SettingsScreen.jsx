@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center",
     paddingVertical: 40,
+    justifyContent: "space-around",
   },
   reminder: {
     flexDirection: "row",
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   subtext: {
-    fontSize: 18,
+    fontSize: 12,
     textAlign: "left",
     alignSelf: "center",
   },
@@ -68,6 +69,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     borderBottomColor: "black",
   },
+  lines: {
+    marginHorizontal: 30,
+    fontSize: 12,
+  }
 });
 
 // {/* <View style={styles.root}>
@@ -178,6 +183,7 @@ function SettingsScreen({ navigation }) {
 
   return (
     <View style={styles.root}>
+      <View>
        <Text style={styles.text}>Notifications</Text>
        <View style={styles.reminder}>
         <Text style={styles.subtext}>Daily Reminder</Text>
@@ -200,6 +206,7 @@ function SettingsScreen({ navigation }) {
             />
           </View>
       }
+      </View>
       {/* <Button
         title="Font Size                                                 >"
         buttonStyle={styles.fontButton}
@@ -212,6 +219,7 @@ function SettingsScreen({ navigation }) {
         containerStyle={{ margin: 20 }}
         onPress={() => navigation.navigate("FontSize", settings)}
       /> */}
+      <Text style={styles.lines}>____________________________________________</Text>
       <TouchableOpacity 
         style={styles.fontSizeNavigator}
         onPress={() => navigation.navigate("FontSize", settings)}
