@@ -4,7 +4,7 @@ import { Button } from "react-native-elements";
 import ConfettiCannon from "react-native-confetti-cannon";
 import PropTypes from "prop-types";
 import AsyncStorage from "@react-native-community/async-storage";
-
+import { incrementStreak } from "../../scripts/progressbar-logic";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
@@ -35,29 +35,6 @@ function ExercisesCompleted({ navigation }) {
     incrementStreak();
   }, []);
 
-  async function incrementStreak() {
-    try {
-      const streak = await AsyncStorage.getItem("streak");
-      const streakObject = JSON.parse(streak);
-      const now = new Date();
-      const dayOfWeek = now.getDay();
-      const dayOfMonth = now.getDate();
-      if (streakObject === null || !streakObject.hasOwnProperty(date)) {
-        await AsyncStorage.setItem(
-          "streak",
-          JSON.stringify({ streak: 1, date: new Date() })
-        );
-      } else {
-        console.log("ExercisesCompleted ", streakObject.streak);
-        await AsyncStorage.setItem(
-          "streak",
-          JSON.stringify({ streak: (streakObject.streak + 1) % 5 })
-        );
-      }
-    } catch (error) {
-      console.log("Error ExercisesCompleted Screen", error);
-    }
-  }
   return (
     <View style={styles.root}>
       <ConfettiCannon

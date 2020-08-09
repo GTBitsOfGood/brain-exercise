@@ -13,6 +13,7 @@ import StepIndicator from "react-native-step-indicator";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import { getStreak } from "../../scripts/progressbar-logic";
 
 const styles = StyleSheet.create({
   root: {
@@ -115,24 +116,23 @@ const logo = require("../../assets/bei_edited.png");
 //  Home Screen Navigation
 function HomeScreen({ navigation }) {
   const [streak, setStreak] = useState(0);
-
+  const [message, setMessage] = useState("");
   useFocusEffect(() => {
-    getStreak();
+    getStreak(onGetStreakComplete);
   }, []);
 
-  async function getStreak() {
-    try {
-      const retrieveStreak = await AsyncStorage.getItem("streak");
-      const streakObject = JSON.parse(retrieveStreak);
-      if (streakObject !== null) {
-        setStreak(streakObject.streak);
-        console.log("Homescreen ", streak);
-      }
-    } catch (error) {
-      console.log("Error HomeScreen", error);
+  const onGetStreakComplete = (retrievedStreak) => {
+    let message;
+    if (retrievedStreak === 0) {
+      message = "Let's Get Started!";
+    } else if (retrievedStreak < 5) {
+      message = "Keep Going!";
+    } else if (retrievedStreak === 5) {
+      message = "Well Done!";
     }
-  }
-
+    setStreak(retrievedStreak);
+    setMessage(message);
+  };
   const youtubeChannelURL =
     "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
   return (
@@ -141,7 +141,7 @@ function HomeScreen({ navigation }) {
 
       <StepIndicator customStyles={customStyles} currentPosition={streak} />
 
-      <Text style={styles.title}>Keep Going!</Text>
+      <Text style={styles.title}>{message}</Text>
       {/* Home Screen Step Indicator */}
 
       <View style={styles.imageContainer}>
