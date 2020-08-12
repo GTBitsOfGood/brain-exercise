@@ -125,9 +125,9 @@ export default function ReadingMain({ navigation, route }) {
                 <Text style={styles.article}>{paragraph}</Text>
             </ScrollView>
             <Button
-             title="Next"
-             buttonStyle={styles.nextButton}
-             onPress={() => buttonFunction()}
+                title="Next"
+                buttonStyle={styles.nextButton}
+                onPress={() => buttonFunction()}
              />
         </View>
     )

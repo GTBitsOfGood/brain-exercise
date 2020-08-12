@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   title: {
-    fontSize: 42,
-    fontWeight: "bold",
+    fontSize: 34,
     textAlign: "center",
     marginVertical: 8,
+    color:"#4A4B57",
   },
 
   button: {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   squareButtonTitle: {
     alignSelf: "center",
     fontSize: 20,
-    fontWeight: "100",
+    fontWeight: "400",
   },
   imageContainer: {
     flex: 2,

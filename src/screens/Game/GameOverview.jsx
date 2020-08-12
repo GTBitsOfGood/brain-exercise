@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
     flex: .9,
     alignContent: "center",
     justifyContent: "space-between",
-    marginVertical: 150,
+    marginBottom: 30,
+    marginTop: 100,
     marginHorizontal: 30,
   },
   text: {

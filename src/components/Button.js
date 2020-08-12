@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 
 const Button = (props) => {
     return (
-    <BaseButton {...props} buttonStyle={{
+    <BaseButton {...props}
+        buttonStyle={{
             alignSelf: "center",
-            marginTop: 20,
-            width: 400,
+            marginVertical: 10,
+            width: 300,
             height: 60, 
             borderRadius: 5,
             backgroundColor: "#005AA3",

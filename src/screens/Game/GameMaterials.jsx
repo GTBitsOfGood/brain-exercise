@@ -7,8 +7,6 @@ import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1,
-    alignContent: "center",
     marginVertical: 30,
     marginHorizontal: 30,
   },

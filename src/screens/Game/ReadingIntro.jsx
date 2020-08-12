@@ -10,20 +10,21 @@ import Button from "../../components/Button";
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        alignItems: "center",
+        alignContent: "center",
         justifyContent: "space-between",
-        margin: 25,
-        marginVertical: 60,
-    },
-    instructions: {
-        fontSize: 22,
-        textAlign: "center",
-        marginVertical: 20,
+        marginBottom: 50,
+        marginTop: 100,
+        marginHorizontal: 30,
     },
     headInstruction: {
         fontSize: 30,
         fontWeight: "bold",
         textAlign: "center",
+    },
+    instructions: {
+        fontSize: 22,
+        textAlign: "center",
+        marginVertical: 20,
     },
 });
 
@@ -65,16 +66,15 @@ function ReadingIntro({ navigation }) {
         <View style={styles.root}>
             <Image 
              source={image}
-             style={styles.Image}
             />
             <View style={styles.instructions}>
                 <Text style={styles.headInstruction}>Read the following passage aloud</Text>
                 <Text style={styles.instructions}>Total time: 10 minutes</Text>
             </View>
             <Button
-            title="Start Reading"
-            buttonStyle={styles.nextButton}
-            onPress={() => navigation.navigate("ReadingMain", stories)}
+                title="Start Reading"
+                buttonStyle={styles.nextButton}
+                onPress={() => navigation.navigate("ReadingMain", stories)}
             />
         </View>
     )
