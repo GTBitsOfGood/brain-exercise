@@ -9,7 +9,10 @@ export async function getStreak(onGetStreakComplete) {
     }
     const now = new Date();
     const lastStreakDate = new Date(streakObject.date);
-    if (now.getDay() == 0 && now.getDate() !== lastStreakDate.getDate()) {
+    if (
+      (now.getDay() == 0 && now.getDate() !== lastStreakDate.getDate()) ||
+      Math.abs(now.getDate() - lastStreakDate.getDate()) > 5
+    ) {
       // It' sunday and no work has been done today
       onGetStreakComplete(0);
       await AsyncStorage.setItem(
