@@ -30,15 +30,26 @@ const styles = StyleSheet.create({
   },
 });
 
+const getCount = async () => {
+  const storedSettings = await AsyncStorage.getItem("SETTINGS")
+  const settings = await JSON.parse(storedSettings)
+  return settings.animationOn ? 200 : 0
+}
+
 function ExercisesCompleted({ navigation }) {
   useEffect(() => {
     incrementStreak();
   }, []);
 
+  const [count, setCount] = React.useState(200)
+  getCount().then(ct => {
+    setCount(ct)
+  })
+
   return (
     <View style={styles.root}>
       <ConfettiCannon
-        count={200}
+        count={count}
         origin={{ x: -10, y: 0 }}
         autoStart={true}
         fadeOut={false}
