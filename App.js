@@ -1,8 +1,7 @@
 import React from "react";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-// Importing Home Screens
+// Importing Home and VideoPopup Screens
 import HomeScreen from "./src/screens/Home/HomeScreen.jsx";
 import Video from "./src/screens/Home/Video.jsx";
 // Importing Settings Screens
@@ -21,7 +20,8 @@ import Pause from "./src/screens/Game/Pause.jsx";
 import FinishedScreen from "./src/screens/Game/FinishedScreen.jsx";
 import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
 import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
-import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted";
+import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted.jsx";
+import PromptScreen from './src/screens/Game/PromptScreen.jsx';
 
 const config = {
   animation: "spring",
@@ -142,7 +142,19 @@ export default function App() {
             title: "Reading",
           }}
         />
-        {/* Pause Screen */}
+        <Stack.Screen
+          name="PromptScreen"
+          component={PromptScreen}
+          options={{
+            title: "Writing Prompts"}}
+        />
+        <Stack.Screen
+          name="ExercisesCompleted"
+          component={ExercisesCompleted}
+          options={{
+            title: "Exercises"}}
+        />
+      {/* Pause Screen */}
         <Stack.Screen
           name="Pause"
           component={Pause}
@@ -158,7 +170,7 @@ export default function App() {
           }}
         />
 
-        {/* Settings Screens: */}
+        {/* Settings Screens */}
         <Stack.Screen
           name="SettingsScreen"
           component={SettingsScreen}

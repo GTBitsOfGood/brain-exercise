@@ -2,7 +2,6 @@ import "react-native-gesture-handler";
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   Image,
   TouchableOpacity,
@@ -14,6 +13,7 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { getStreak } from "../../scripts/progressbar-logic";
+import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
   root: {
@@ -23,8 +23,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   title: {
+    fontSize: 42,
+    fontWeight: "bold",
     textAlign: "center",
-    fontSize: 25,
     marginVertical: 8,
   },
 
@@ -171,7 +172,7 @@ function HomeScreen({ navigation }) {
         <View>
           <TouchableOpacity
             style={styles.squareButton}
-            onPress={() => navigation.navigate("Video")}
+            onPress={() => Linking.openURL(youtubeChannelURL)}
           >
             <FeatherIcon size={45} name="youtube" />
           </TouchableOpacity>

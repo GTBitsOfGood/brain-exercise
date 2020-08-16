@@ -10,6 +10,7 @@ class ProgressBar extends Component {
    * seconds: time of problem in seconds
    * red: in seconds when the bar should turn red
    * func: function to be called after the timer completes. call at line 41
+   * shouldNotRender: boolean if progress bar should render
    */
   constructor(props) {
     super(props);
@@ -54,7 +55,7 @@ class ProgressBar extends Component {
         this.setState(() => ({
           progress: 1.0 - this.time / this.props.seconds,
         }));
-        if (this.state.red != "red" && this.time < this.props.red) {
+        if (this.state.red !== "red" && this.time < this.props.red) {
           this.setState(() => ({
             red: true,
           }));
@@ -72,11 +73,20 @@ class ProgressBar extends Component {
     });
   };
 
+  /**
+   * seconds always equals 300
+   * time goes from 300 to 0
+   * returns 0 at start
+   * returns 300 when no time is left
+   */
   getCurrentTime = () => {
     return this.props.seconds - this.time
   }
 
   render() {
+    if (this.props.shouldNotRender) {
+      return (<View />);
+    }
     return (
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <Text style={{ fontSize: 40 }}>
@@ -98,6 +108,7 @@ ProgressBar.propTypes = {
   seconds: PropTypes.number,
   red: PropTypes.number,
   func: PropTypes.func,
+  shouldNotRender: PropTypes.bool,
 };
 
 export default ProgressBar;

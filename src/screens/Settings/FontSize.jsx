@@ -3,31 +3,33 @@ import { Button, Slider } from "react-native-elements";
 import { StyleSheet, View, Text } from "react-native";
 import PropTypes from 'prop-types';
 import AsyncStorage from "@react-native-community/async-storage";
-import { defaultSettings } from './SettingsScreen.jsx';
+import defaultSettings from "../../components/DefaultSettings"
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    backgroundColor: "#f5f5f5",
     marginVertical: 30,
     marginHorizontal: 30,
   },
   saveButton: {
-    backgroundColor: "#2a652c"
+    marginTop: 20,
+    height: 45,
+    borderRadius: 10,
+    backgroundColor: "#2a652c",
   },
   sliderWithButton: {
     paddingVertical: 160,
   },
   texts: {
-    justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 20,
   },
 });
 
-function FontSize ({ route }) {
+function FontSize ({ route, navigation }) {
   const [value, setValue] = useState(route.params.fontSize 
     || defaultSettings.fontSize);
 
@@ -49,7 +51,7 @@ function FontSize ({ route }) {
           value={value}
           thumbTintColor={"#2a652c"}
           minimumValue={16}
-          maximumValue={34}
+          maximumValue={32}
           step={4}
           onValueChange={(v) => setValue(v)}
         />
@@ -59,15 +61,17 @@ function FontSize ({ route }) {
         </View>
       </View>
       <Button
-        buttonStyle={styles.saveButton}
         title="Save Changes"
-        onPress={storeSettings}
+        buttonStyle={styles.saveButton}
+        onPressIn={storeSettings}
+        onPress={() => navigation.goBack()}
       />
     </View>
   );
 }
 
 FontSize.propTypes = {
+  navigation: PropTypes.object,
   route: PropTypes.any
 }
 

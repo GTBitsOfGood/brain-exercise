@@ -1,30 +1,30 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import AsyncStorage from "@react-native-community/async-storage"
 import PropTypes from "prop-types";
 import { Notifications } from "expo";
 import scheduleNotifications from "../../scripts/notification-logic";
-import { defaultSettings } from "./SettingsScreen.jsx";
+import defaultSettings from "../../components/DefaultSettings"
+import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    backgroundColor: "#f5f5f5",
     marginVertical: 30,
     marginHorizontal: 30,
   },
   text: {
-    textAlign: "center",
     fontSize: 20,
+    textAlign: "center",
     marginVertical: 30,
   },
   button: {
-    backgroundColor: "#2a652c",
-    borderRadius: 10,
     marginTop: 20,
+    borderRadius: 10,
+    backgroundColor: "#2a652c",
   }
 });
 
