@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-community/async-storage";
-
-const msPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds per day
+// Number of milliseconds per day
+const msPerDay = 24 * 60 * 60 * 1000;
 
 export async function getStreak(onGetStreakComplete) {
   try {
@@ -13,11 +13,12 @@ export async function getStreak(onGetStreakComplete) {
     const now = new Date();
     const lastStreakDate = new Date(streakObject.date);
     const today = now.getTime() / msPerDay;
-    const lastStreakDay = lastStreakDate.getTime() / msPerDay;
+    const lastStreakDay = Math.floor(lastStreakDate.getTime() / msPerDay);
 
     // gets the sunday before the last Exercise session
     const lastResetDay = lastStreakDay - lastStreakDate.getDay();
-    const daysSinceLastReset = Math.round(today - lastResetDay);
+    const daysSinceLastReset = Math.ceil(today - lastResetDay);
+    console.log(daysSinceLastReset);
 
     if (daysSinceLastReset % 7 < daysSinceLastReset) {
       // It's sunday and no work has been done today
@@ -50,8 +51,8 @@ export async function incrementStreak() {
       return;
     }
     const lastStreakDate = new Date(streakObject.date);
-    const today = Math.round(now.getTime() / msPerDay);
-    const lastStreakDay = Math.round(lastStreakDate.getTime() / msPerDay);
+    const today = Math.ceil(now.getTime() / msPerDay);
+    const lastStreakDay = Math.ceil(lastStreakDate.getTime() / msPerDay);
     if (streakObject.streak < 5 && today !== lastStreakDay) {
       // streak is less than 5 and it's a new day
       await AsyncStorage.setItem(
