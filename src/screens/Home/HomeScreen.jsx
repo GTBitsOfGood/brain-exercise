@@ -161,7 +161,7 @@ function HomeScreen({ navigation }) {
         <View>
           <TouchableOpacity
             style={styles.squareButton}
-            onPress={() => navigation.navigate("SettingsScreen")}
+            onPress={() => navigation.navigate("ExercisesCompleted")}
           >
             <FeatherIcon size={45} name="settings" />
           </TouchableOpacity>

@@ -1,4 +1,7 @@
 import AsyncStorage from "@react-native-community/async-storage";
+
+const msPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds per day
+
 export async function getStreak(onGetStreakComplete) {
   try {
     const retrieveStreak = await AsyncStorage.getItem("streak");
@@ -9,11 +12,16 @@ export async function getStreak(onGetStreakComplete) {
     }
     const now = new Date();
     const lastStreakDate = new Date(streakObject.date);
+    const today = now.getTime() / msPerDay;
+    const lastStreakDay = lastStreakDate.getTime() / msPerDay;
+    const daysElapsed = Math.round(today - lastStreakDay);
+
     if (
-      (now.getDay() == 0 && now.getDate() !== lastStreakDate.getDate()) ||
-      Math.abs(now.getDate() - lastStreakDate.getDate()) > 5
+      daysElapsed % 7 < daysElapsed ||
+      (now.getDay() == 0 && today !== lastStreakDay)
     ) {
-      // It' sunday and no work has been done today
+      // It's sunday and no work has been done today
+      // or, it's been over a week since last Exercise session
       onGetStreakComplete(0);
       await AsyncStorage.setItem(
         "streak",
@@ -33,8 +41,7 @@ export async function incrementStreak() {
     const streak = await AsyncStorage.getItem("streak");
     const streakObject = JSON.parse(streak);
     const now = new Date();
-    const dayOfWeek = now.getDay();
-    const dayOfMonth = now.getDate();
+
     if (streakObject === null || !streakObject.hasOwnProperty("date")) {
       await AsyncStorage.setItem(
         "streak",
@@ -43,7 +50,9 @@ export async function incrementStreak() {
       return;
     }
     const lastStreakDate = new Date(streakObject.date);
-    if (streakObject.streak < 5 && lastStreakDate.getDate() !== now.getDate()) {
+    const today = Math.round(now.getTime() / msPerDay);
+    const lastStreakDay = Math.round(lastStreakDate.getTime() / msPerDay);
+    if (streakObject.streak < 5 && today > lastStreakDay) {
       // streak is less than 5 and it's a new day
       await AsyncStorage.setItem(
         "streak",
