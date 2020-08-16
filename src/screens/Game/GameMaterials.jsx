@@ -20,13 +20,15 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 20,
     borderRadius: 10,
-  }
+  },
 });
 
 function GameMaterials({ navigation }) {
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>Before you start, make sure you have the required materials!</Text>
+      <Text style={styles.text}>
+        Before you start, make sure you have the required materials!
+      </Text>
       <Button
         title="Reading!"
         buttonStyle={styles.button}
@@ -35,7 +37,7 @@ function GameMaterials({ navigation }) {
       <Button
         title="Math!"
         buttonStyle={styles.button}
-        onPress={() => navigation.navigate("Gameplay")}
+        onPress={() => navigation.navigate("MathIntro")}
       />
       <Button
         title="Trivia!"
@@ -45,7 +47,7 @@ function GameMaterials({ navigation }) {
       <Button
         title="Prompts!"
         buttonStyle={styles.button}
-        onPress={() => navigation.navigate("PromptScreen")}
+        onPress={() => navigation.navigate("WritingIntro")}
       />
       <Button
         title="Complete!"
