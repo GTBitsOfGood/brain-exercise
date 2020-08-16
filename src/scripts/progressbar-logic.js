@@ -14,14 +14,14 @@ export async function getStreak(onGetStreakComplete) {
     const lastStreakDate = new Date(streakObject.date);
     const today = now.getTime() / msPerDay;
     const lastStreakDay = lastStreakDate.getTime() / msPerDay;
-    const daysElapsed = Math.round(today - lastStreakDay);
 
-    if (
-      daysElapsed % 7 < daysElapsed ||
-      (now.getDay() == 0 && today !== lastStreakDay)
-    ) {
+    // gets the sunday before the last Exercise session
+    const lastResetDay = lastStreakDay - lastStreakDate.getDay();
+    const daysSinceLastReset = Math.round(today - lastResetDay);
+
+    if (daysSinceLastReset % 7 < daysSinceLastReset) {
       // It's sunday and no work has been done today
-      // or, it's been over a week since last Exercise session
+      // or, it's been over a week since last Exercise reset
       onGetStreakComplete(0);
       await AsyncStorage.setItem(
         "streak",
@@ -52,7 +52,7 @@ export async function incrementStreak() {
     const lastStreakDate = new Date(streakObject.date);
     const today = Math.round(now.getTime() / msPerDay);
     const lastStreakDay = Math.round(lastStreakDate.getTime() / msPerDay);
-    if (streakObject.streak < 5 && today > lastStreakDay) {
+    if (streakObject.streak < 5 && today !== lastStreakDay) {
       // streak is less than 5 and it's a new day
       await AsyncStorage.setItem(
         "streak",
