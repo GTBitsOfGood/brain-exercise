@@ -48,11 +48,9 @@ export default function App() {
         screenOptions={{
           headerTitleAllowFontScaling: true,
           headerBackTitleVisible: false,
-
           headerStyle: {
             backgroundColor: "#005AA3",
           },
-
           headerTintColor: "#fff",
           headerTitleStyle: {
             fontWeight: "bold",
