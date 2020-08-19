@@ -152,7 +152,11 @@ function SettingsScreen({ navigation }) {
     React.useCallback(() => {
       // Do something when the screen is focused
       pullSettings()
-      .then((item) => setSettings(item));
+      .then((item) => {
+        setSettings(item)
+        setToggleOn(item.notificationsActive)
+        setAnimationToggleOn(item.animationOn)
+      });
     }, [])
   );
 

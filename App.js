@@ -21,10 +21,12 @@ import FinishedScreen from "./src/screens/Game/FinishedScreen.jsx";
 import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
 import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
 import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted.jsx";
-import PromptScreen from './src/screens/Game/PromptScreen.jsx';
-
+import PromptScreen from "./src/screens/Game/PromptScreen.jsx";
+import WritingIntro from "./src/screens/Game/WritingIntro";
+import MathIntro from "./src/screens/Game/MathIntro";
+import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
 const config = {
-  animation: 'spring',
+  animation: "spring",
   config: {
     stiffness: 1000,
     damping: 500,
@@ -54,12 +56,11 @@ export default function App() {
           color: 'black',
         },
       }}>
-
         {/* Home Screens */}
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{title: "1 of 5 Days"}}
+          options={{ title: "1 of 5 Days" }}
         />
         <Stack.Screen
           name="Video"
@@ -74,7 +75,8 @@ export default function App() {
           name="GameOverview"
           component={GameOverview}
           options={{
-            title: "Today's Exercises"}}
+            title: "Today's Exercises",
+          }}
         />
         <Stack.Screen
           name="GameMaterials"
@@ -93,25 +95,50 @@ export default function App() {
           name="GameplayIntermediate"
           component={GameplayIntermediate}
           options={{
-            title: "Gameplay Intermediate"}}
+            title: "Gameplay Intermediate",
+          }}
         />
         <Stack.Screen
           name="TriviaScreen"
           component={TriviaScreen}
           options={{
-            title: "Trivia"}}
+            title: "Writing (Trivia)",
+          }}
         />
         <Stack.Screen
           name="FinishedScreen"
           component={FinishedScreen}
           options={{
-            title: "Exercises Completed"}}
+            title: "Exercises Completed",
+          }}
+        />
+        <Stack.Screen
+          name="WritingIntro"
+          component={WritingIntro}
+          options={{
+            title: "Writing",
+          }}
+        />
+        <Stack.Screen
+          name="MathIntro"
+          component={MathIntro}
+          options={{
+            title: "Math",
+          }}
+        />
+        <Stack.Screen
+          name="TriviaIntro"
+          component={TriviaIntro}
+          options={{
+            title: "Writing (Trivia)",
+          }}
         />
         <Stack.Screen
           name="ExtraPractice"
           component={ExtraPractice}
           options={{
-            title: "More Exercises"}}
+            title: "More Exercises",
+          }}
         />
         <Stack.Screen
           name="ReadingIntro"
@@ -123,13 +150,16 @@ export default function App() {
           name="ReadingMain"
           component={ReadingMain}
           options={{
-            title: "Reading"}}
+            title: "Reading",
+          }}
         />
         <Stack.Screen
           name="PromptScreen"
           component={PromptScreen}
           options={{
-            title: "Writing Prompts"}}
+            title: "Writing Prompts",
+          }}
+
         />
         <Stack.Screen
           name="ExercisesCompleted"
@@ -137,7 +167,7 @@ export default function App() {
           options={{
             title: "Exercises done!"}}
         />
-      {/* Pause Screen */}
+        {/* Pause Screen */}
         <Stack.Screen
           name="Pause"
           component={Pause}

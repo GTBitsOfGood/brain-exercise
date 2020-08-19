@@ -1,9 +1,18 @@
 import "react-native-gesture-handler";
-import React from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Linking } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import PropTypes from "prop-types";
 import StepIndicator from "react-native-step-indicator";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import { getStreak } from "../../scripts/progressbar-logic";
 import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
@@ -107,16 +116,33 @@ const logo = require("../../assets/bei_edited.png");
 
 //  Home Screen Navigation
 function HomeScreen({ navigation }) {
-  const youtubeChannelURL = 'https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA'
+  const [streak, setStreak] = useState(0);
+  const [message, setMessage] = useState("");
+  useFocusEffect(() => {
+    getStreak(onGetStreakComplete);
+  }, []);
+
+  const onGetStreakComplete = (retrievedStreak) => {
+    let message;
+    if (retrievedStreak === 0) {
+      message = "Let's Get Started!";
+    } else if (retrievedStreak < 5) {
+      message = "Keep Going!";
+    } else if (retrievedStreak === 5) {
+      message = "Well Done!";
+    }
+    setStreak(retrievedStreak);
+    setMessage(message);
+  };
+  const youtubeChannelURL =
+    "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
   return (
-
     <View style={styles.root}>
+      <Text style={styles.title}>{`${streak} of 5 Days`}</Text>
 
-      <Text style={styles.title}>X of X Days</Text>
+      <StepIndicator customStyles={customStyles} currentPosition={streak} />
 
-      <StepIndicator customStyles={customStyles} currentPosition={2} />
-
-      <Text style={styles.title}>Keep Going!</Text>
+      <Text style={styles.title}>{message}</Text>
       {/* Home Screen Step Indicator */}
 
       <View style={styles.imageContainer}>

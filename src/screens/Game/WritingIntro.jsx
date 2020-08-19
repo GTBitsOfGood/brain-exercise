@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Image } from "react-native";
+import { Button } from "react-native-elements";
 import AsyncStorage from "@react-native-community/async-storage";
 import PropTypes from "prop-types";
 import { useFocusEffect } from "@react-navigation/native";
-import { sampleArticle, otherInterestingText } from "../../assets/stories";
 import Text from "../../components/Text";
-import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
   root: {
@@ -48,38 +47,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const image = require("../../assets/books.png");
+const image = require("../../assets/writing_icon.png");
 
 // Each article has a readAlready field to check if it should be presented again
 // The text is a text array where the text is split up by \n characters
-export const defaultStories = {
-  article1: {
-    text: otherInterestingText,
-    readAlready: false,
-  },
-  article2: {
-    text: sampleArticle,
-    readAlready: false,
-  },
-};
 
-const pullStories = async () => {
-  const jsonStories = await AsyncStorage.getItem("STORIES");
-  if (jsonStories !== null) {
-    const parsedStories = await JSON.parse(jsonStories);
-    return parsedStories;
-  }
-  return defaultStories;
-};
-
-function ReadingIntro({ navigation }) {
-  const [stories, setStories] = useState(defaultStories);
+function WritingIntro({ navigation }) {
   // Update stories when page is loaded
-  useFocusEffect(
-    React.useCallback(() => {
-      pullStories().then((item) => setStories(item));
-    })
-  );
+
   return (
     <View style={styles.root}>
       <View style={styles.imageContainer}>
@@ -87,21 +62,21 @@ function ReadingIntro({ navigation }) {
       </View>
       <View style={styles.instructions}>
         <Text style={styles.headInstruction}>
-          Read the following passage aloud
+          Grab some paper and a pencil and write what you see
         </Text>
-        <Text style={styles.instructions}>Total time: 10 minutes</Text>
+        <Text style={styles.instructions}>Total time: 5 minutes</Text>
       </View>
       <Button
-        title="Start Reading"
+        title="Start Writing"
         buttonStyle={styles.nextButton}
-        onPress={() => navigation.navigate("ReadingMain", stories)}
+        onPress={() => navigation.navigate("PromptScreen")} //Todo change to PromptScreen
       />
     </View>
   );
 }
 
-ReadingIntro.propTypes = {
+WritingIntro.propTypes = {
   navigation: PropTypes.object,
 };
 
-export default ReadingIntro;
+export default WritingIntro;

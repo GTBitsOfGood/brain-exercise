@@ -27,8 +27,10 @@ function GameOverview({ navigation }) {
     <View style={styles.root}>
       <Text style={styles.text}>You will be completing a mixture of Math, Reading, and Writing exercises.</Text>
       <Button
-        title="Game Materials" // change back to game materials
-        onPress={() => navigation.navigate("GameMaterials")}
+        title="Begin"
+        onPress={() =>
+          navigation.navigate("MathIntro", { nextScreen: "TriviaIntro" })
+        }
       />
     </View>
   );

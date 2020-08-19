@@ -14,8 +14,6 @@ const styles = StyleSheet.create({
     },
     settingsBlock: {
         flex: 1,
-        justifyContent: "space-between",
-        maxHeight: 70,
     }, 
     settingAndSwitch: {
         flexDirection: "row",
@@ -36,8 +34,6 @@ function SoundScreen({ route, navigation }) {
     // Setting up states and state modifiers for the sound effects, background music, and voice over settings
     const [soundEffectsToggleOn, setSoundEffectsToggleOn] = useState(route.params.soundEffectsOn
         || defaultSettings.soundEffectsOn)
-    const [backgroundMusicToggleOn, setBackgroundMusicToggleOn] = useState(route.params.backgroundMusicOn
-        || defaultSettings.backgroundMusicOn)
     const [voiceOverToggleOn, setVoiceOverToggleOn] = useState(route.params.voiceOverOn
         || defaultSettings.voiceOverOn)
     const settingsObj = route.params;
@@ -55,16 +51,6 @@ function SoundScreen({ route, navigation }) {
                 // going from unenabled to enabled
                 setSoundEffectsToggleOn(true)
                 settingsObj.soundEffectsOn = true
-            }
-        } else if (switchType === "backgroundMusic") {
-            if (backgroundMusicToggleOn) {
-                // going from enabled to unenabled
-                setBackgroundMusicToggleOn(false)
-                settingsObj.backgroundMusicOn = false
-            } else {
-                // going from unenabled to enabled
-                setBackgroundMusicToggleOn(true)
-                settingsObj.backgroundMusicOn= true
             }
         } else if (switchType === "voiceOver") {
             if (voiceOverToggleOn) {
@@ -94,15 +80,6 @@ function SoundScreen({ route, navigation }) {
                      trackColor={{ false: "#ffffff", true: "#2a652c" }}
                      onValueChange={() => storeSettings("soundEffects")}
                      value={soundEffectsToggleOn}
-                     accessibilityRole="switch"
-                     />
-                </View>
-                <View style={styles.settingAndSwitch}>
-                    <Text style={{fontSize: route.params.fontSize,}}>Background Music</Text>
-                    <Switch
-                     trackColor={{ false: "#ffffff", true: "#2a652c" }}
-                     onValueChange={() => storeSettings("backgroundMusic")}
-                     value={backgroundMusicToggleOn}
                      accessibilityRole="switch"
                      />
                 </View>
