@@ -163,6 +163,7 @@ export default function App() {
           options={{
             title: "Writing Prompts",
           }}
+
         />
         <Stack.Screen
           name="ExercisesCompleted"
