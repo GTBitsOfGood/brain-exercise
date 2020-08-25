@@ -6,9 +6,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "eslint App.js && eslint \"screens/**/*.{jsx,js}\"",
-    "format": "prettier --write App.js && prettier --write \"screens/**/*.{jsx,js}\"",
-    "check-format": "prettier -l App.js && prettier -l \"screens/**/*.{jsx,js}\""
+    "lint": "eslint App.js && eslint \"src/**/*.{jsx,js}\"",
+    "format": "prettier --write App.js && prettier --write \"src/**/*.{jsx,js}\"",
+    "check-format": "prettier -l App.js && prettier -l \"src/**/*.{jsx,js}\""
   },
   "lint-staged": {
     "*.{js,jsx}": [
