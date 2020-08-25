@@ -96,6 +96,7 @@ function TriviaScreen({ navigation }) {
       </View>
       <View>
         <Button
+          // eslint-disable-next-line no-nested-ternary
           title={
             finished
               ? "Finish Writing Section"
