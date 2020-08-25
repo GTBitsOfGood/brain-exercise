@@ -3,13 +3,12 @@
 /* eslint-disable no-alert */
 import "react-native-gesture-handler";
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, AsyncStorage } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../scripts/game-logic";
 import Text from "../../components/Text";
-import { AsyncStorage } from "react-native";
 
 const styles = StyleSheet.create({
   root: {
@@ -18,17 +17,21 @@ const styles = StyleSheet.create({
   expressionText: {
     fontSize: 50,
     fontWeight: "bold",
-    paddingBottom: 40,
+    paddingBottom: 80,
+  },
+  title :{
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 40,
+    paddingTop: 80,
   },
   textContainer: {
     flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: "column",
     alignItems: "center",
     textAlign: "center",
     justifyContent: "center",
-    paddingTop: 30,
-    backgroundColor: "#eaeaea",
   },
   container: {
     flex: 3,
@@ -39,7 +42,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     justifyContent: "space-around",
-    backgroundColor: "#eaeaea",
   },
   button: {
     alignSelf: "center",
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
     height: 99,
     borderRadius: 25,
     borderWidth: 5,
-    borderColor: "rgba(0, 138, 252, 0.2)",
+    borderColor: "#005AA3",
     backgroundColor: "#eaeaea",
   },
   selectedButton: {
@@ -58,14 +60,12 @@ const styles = StyleSheet.create({
     height: 99,
     borderRadius: 25,
     borderWidth: 5,
-    borderColor: "rgba(0, 138, 252, 0.2)",
-    backgroundColor: "rgba(0, 138, 252, 0.2)",
   },
   buttonTitle: {
     fontSize: 40,
-    fontWeight: "100",
+    fontWeight: "bold",
     textAlign: "center",
-    color: "#2f4f4f",
+    color: "#000",
   },
 });
 const totalTime = 300;
@@ -118,6 +118,7 @@ function Gameplay({ route, navigation }) {
       buttonStyle={{
         backgroundColor: "transparent",
         marginRight: 10,
+        borderColor: "#005AA3",
       }}
       type="clear"
       onPress={() => navigation.navigate("Pause")}
@@ -224,10 +225,13 @@ function Gameplay({ route, navigation }) {
         shouldNotRender
       />
       <View style={styles.textContainer}>
+        <Text style={styles.title}>Tap the answer to the math problem.</Text>
         <Text style={styles.expressionText}>{problem.expression}</Text>
       </View>
-      <Text style={{ backgroundColor: "#eaeaea" }}>{message}</Text>
-      <View style={styles.container}>{choices}</View>
+      <Text>{message}</Text>
+      <View style={styles.container}>
+        {choices}
+      </View>
     </View>
   );
 }

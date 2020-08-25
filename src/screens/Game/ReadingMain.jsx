@@ -1,38 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { Button } from "react-native-elements";
 import propTypes from "prop-types";
 import AsyncStorage from "@react-native-community/async-storage";
 import ProgressBar from "../../components/ProgressBar";
 import Text from "../../components/Text";
+import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-between",
-    margin: 25,
-    marginHorizontal: 15,
-  },
-  instructions: {
-    flex: 0.4,
-    fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 20,
-  },
-  article: {
-    flex: 1.8,
-    fontSize: 20,
-    textAlign: "center",
-  },
-  nextButton: {
-    marginTop: 20,
-    width: 320,
-    height: 55,
-    borderRadius: 10,
-    backgroundColor: "#005AA3",
-  },
+    root: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "space-between",
+        margin: 25,
+        marginHorizontal: 15,
+    },
+    instructions: {
+        flex: 0.4,
+        fontSize: 30,
+        fontWeight: "bold",
+        textAlign: "center",
+        marginTop: 20,
+    },
+    article: {
+        flex: 1.8,
+        fontSize: 20,
+        textAlign: "center",
+    },
 });
 
 const totalTime = 600;
@@ -123,19 +116,23 @@ export default function ReadingMain({ navigation, route }) {
   };
 
   return (
-    <View style={styles.root}>
-      <ProgressBar seconds={totalTime} red={30} func={() => setTimeUp(true)} />
-      <Text style={styles.instructions}>Read the passage aloud.</Text>
-      <ScrollView>
-        <Text style={styles.article}>{paragraph}</Text>
-      </ScrollView>
-      <Button
-        title="Next"
-        buttonStyle={styles.nextButton}
-        onPress={() => buttonFunction()}
-      />
-    </View>
-  );
+      <View style={styles.root}>
+          <ProgressBar
+           seconds={600}
+           red={30}
+           func={() => setTimeUp(true)}
+           />
+          <Text style={styles.instructions}>Read the passage aloud.</Text>
+          <ScrollView>
+              <Text style={styles.article}>{paragraph}</Text>
+          </ScrollView>
+          <Button
+              title="Next"
+              buttonStyle={styles.nextButton}
+              onPress={() => buttonFunction()}
+           />
+      </View>
+  )
 }
 
 ReadingMain.propTypes = {

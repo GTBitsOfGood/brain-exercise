@@ -1,34 +1,33 @@
-import "react-native-gesture-handler";
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
+import Button from "../../components/Button";
 import Text from "../../components/Text";
+import "react-native-gesture-handler";
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1,
+    flex: .9,
     alignContent: "center",
-    marginVertical: 30,
+    justifyContent: "space-between",
+    marginBottom: 30,
+    marginTop: 100,
     marginHorizontal: 30,
   },
   text: {
     fontSize: 20,
+    fontWeight: "bold",
     textAlign: "center",
     marginVertical: 30,
   },
-  button: {
-    borderRadius: 10,
-  },
-});
+})
 
 function GameOverview({ navigation }) {
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>Game Overview Screen</Text>
+      <Text style={styles.text}>You will be completing a mixture of Math, Reading, and Writing exercises.</Text>
       <Button
         title="Begin"
-        buttonStyle={styles.button}
         onPress={() =>
           navigation.navigate("MathIntro", { nextScreen: "TriviaIntro" })
         }
@@ -39,6 +38,6 @@ function GameOverview({ navigation }) {
 
 GameOverview.propTypes = {
   navigation: PropTypes.object,
-};
+}
 
 export default GameOverview;

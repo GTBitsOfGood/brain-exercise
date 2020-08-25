@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Image } from "react-native";
-import { Button } from "react-native-elements";
 import AsyncStorage from "@react-native-community/async-storage";
 import PropTypes from "prop-types";
 import { useFocusEffect } from "@react-navigation/native";
 import { sampleArticle, otherInterestingText } from "../../assets/stories";
 import Text from "../../components/Text";
+import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
   root: {
@@ -80,7 +80,6 @@ function ReadingIntro({ navigation }) {
       pullStories().then((item) => setStories(item));
     })
   );
-
   return (
     <View style={styles.root}>
       <View style={styles.imageContainer}>

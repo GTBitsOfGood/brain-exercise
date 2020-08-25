@@ -1,15 +1,15 @@
 import "react-native-gesture-handler";
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../assets/trivia";
 import Text from "../../components/Text";
+import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1,
+    flex: .8,
   },
   instructionText: {
     fontSize: 32,
@@ -49,13 +49,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 50,
-  },
-  button: {
-    alignSelf: "center",
-    width: 300,
-    height: 50,
-    marginTop: 20,
-    marginBottom: 50,
   },
   buttonTitle: {
     fontSize: 20,
@@ -127,7 +120,7 @@ function TriviaScreen({ navigation }) {
       </View>
     </View>
   );
-}
+};
 
 TriviaScreen.propTypes = {
   navigation: PropTypes.object,
