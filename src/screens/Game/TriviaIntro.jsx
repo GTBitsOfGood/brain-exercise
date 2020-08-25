@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 import { Button } from "react-native-elements";
-import AsyncStorage from "@react-native-community/async-storage";
 import PropTypes from "prop-types";
-import { useFocusEffect } from "@react-navigation/native";
 import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
@@ -50,12 +48,7 @@ const styles = StyleSheet.create({
 
 const image = require("../../assets/writing_icon.png");
 
-// Each article has a readAlready field to check if it should be presented again
-// The text is a text array where the text is split up by \n characters
-
 function TriviaIntro({ navigation }) {
-  // Update stories when page is loaded
-
   return (
     <View style={styles.root}>
       <View style={styles.imageContainer}>
