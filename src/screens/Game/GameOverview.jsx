@@ -7,12 +7,12 @@ import "react-native-gesture-handler";
 
 const styles = StyleSheet.create({
   root: {
-    flex: .9,
+    flex: 1,
     alignContent: "center",
     justifyContent: "space-between",
-    marginBottom: 30,
-    marginTop: 100,
-    marginHorizontal: 30,
+    padding: 30,
+    paddingTop: 100,
+    backgroundColor: "white"
   },
   text: {
     fontSize: 20,

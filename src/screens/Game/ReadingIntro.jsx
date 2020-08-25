@@ -12,8 +12,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
-    margin: 25,
-    marginVertical: 60,
+    padding: 25,
+    paddingVertical: 60,
+    backgroundColor: "white"
   },
   instructions: {
     fontSize: 18,

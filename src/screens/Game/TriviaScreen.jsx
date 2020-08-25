@@ -9,7 +9,10 @@ import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
   root: {
-    flex: .8,
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 25,
+    backgroundColor: "white"
   },
   instructionText: {
     fontSize: 32,
@@ -52,7 +55,7 @@ const styles = StyleSheet.create({
   },
   buttonTitle: {
     fontSize: 20,
-    fontWeight: "100",
+    fontWeight: "bold",
     textAlign: "center",
     color: "white",
   },

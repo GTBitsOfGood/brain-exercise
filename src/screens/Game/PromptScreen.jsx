@@ -1,18 +1,16 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Image } from "react-native";
+import React from "react";
+import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
-import AsyncStorage from "@react-native-community/async-storage";
 import PropTypes from "prop-types";
-import { useFocusEffect } from "@react-navigation/native";
-import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
-    margin: 25,
-    marginVertical: 60,
+    padding: 25,
+    paddingVertical: 60,
+    backgroundColor: "white"
   },
   instructions: {
     fontSize: 18,
@@ -47,13 +45,13 @@ const styles = StyleSheet.create({
   },
 });
 
-function PromptScreen({ route, navigation }) {
+function PromptScreen({ navigation }) {
   return (
     <View style={styles.root}>
       <Button
         title="Finish Writing"
         buttonStyle={styles.nextButton}
-        onPress={() => navigation.navigate("ReadingIntro")} //Todo change to PromptScreen
+        onPress={() => navigation.navigate("ReadingIntro")}
       />
     </View>
   );

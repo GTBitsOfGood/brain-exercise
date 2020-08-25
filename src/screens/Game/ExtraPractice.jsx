@@ -40,7 +40,7 @@ function ExtraPractice({ navigation }) {
           }}
           buttonStyle={styles.pause}
           onPress={() => navigation.navigate("Pause")}
-          title="⏸"
+          title="Pause"
           type="clear"
         />
       ),

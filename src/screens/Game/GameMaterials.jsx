@@ -7,8 +7,9 @@ import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
   root: {
-    marginVertical: 30,
-    marginHorizontal: 30,
+    paddingVertical: 30,
+    paddingHorizontal: 30,
+    backgroundColor: "white"
   },
   text: {
     fontSize: 20,

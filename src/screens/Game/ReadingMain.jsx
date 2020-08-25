@@ -11,8 +11,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "space-between",
-        margin: 25,
-        marginHorizontal: 15,
+        padding: 25,
+        paddingHorizontal: 15,
+        backgroundColor: "white"
     },
     instructions: {
         flex: 0.4,

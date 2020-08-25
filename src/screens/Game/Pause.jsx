@@ -8,36 +8,35 @@ import Text from "../../components/Text";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    alignContent: "center",
-    marginVertical: 30,
-    marginHorizontal: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
   },
   text: {
+    fontWeight: "bold",
     fontSize: 20,
+    marginBottom: 20,
     textAlign: "center",
   },
   button: {
     alignContent: "space-between",
     marginTop: 20,
     borderRadius: 10,
-    color: "black",
   },
 });
 
 function Pause({ navigation }) {
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>Pause screen</Text>
+      <Text style={styles.text}>{`You're just getting started. Keep going!`}</Text>
       <Button
-        title="Unpause"
+        title="Resume"
         buttonStyle={styles.button}
-        type="outline"
         onPress={() => navigation.goBack()}
       />
       <Button
         title="Return to Home"
         buttonStyle={styles.button}
-        type="outline"
         onPress={() => navigation.navigate("HomeScreen")}
       />
     </View>

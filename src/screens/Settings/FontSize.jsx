@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    marginVertical: 30,
-    marginHorizontal: 30,
+    padding: 30,
+    backgroundColor: "white"
   },
   saveButton: {
     marginTop: 20,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 
 function FontSize ({ route, navigation }) {
   const settingsObj = route.params;
-  const [value, setValue] = useState(route.params.fontSize 
+  const [value, setValue] = useState(route.params.fontSize
     || defaultSettings.fontSize);
   settingsObj.fontSize = value
 
@@ -53,7 +53,7 @@ function FontSize ({ route, navigation }) {
           thumbTintColor={"#2a652c"}
 
           allowTouchTrack={true}
-          
+
           minimumValue={16}
           maximumValue={32}
           step={4}

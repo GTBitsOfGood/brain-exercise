@@ -13,6 +13,7 @@ import Text from "../../components/Text";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: "white"
   },
   expressionText: {
     fontSize: 50,
@@ -51,7 +52,12 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderWidth: 5,
     borderColor: "#005AA3",
-    backgroundColor: "#eaeaea",
+    backgroundColor: "#fff",
+  },
+  gameMessage: {
+    fontSize: 22,
+    textAlign: "center",
+    color: "black"
   },
   selectedButton: {
     alignSelf: "center",
@@ -60,12 +66,20 @@ const styles = StyleSheet.create({
     height: 99,
     borderRadius: 25,
     borderWidth: 5,
+    borderColor: "#005AA3",
+    backgroundColor: "#005AA3",
+  },
+  selectedButtonTitle: {
+    fontSize: 40,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "white",
   },
   buttonTitle: {
     fontSize: 40,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#000",
+    color: "black",
   },
 });
 const totalTime = 300;
@@ -110,9 +124,9 @@ function Gameplay({ route, navigation }) {
 
   const right = () => (
     <Button
-      title="⏸"
+      title="Pause"
       titleStyle={{
-        color: "white",
+        color: "black",
         fontSize: 16,
       }}
       buttonStyle={{
@@ -198,7 +212,7 @@ function Gameplay({ route, navigation }) {
     return (
       <Button
         title={`${choiceValue}`}
-        titleStyle={styles.buttonTitle}
+        titleStyle={answered && choiceKey === picked ? styles.selectedButtonTitle : styles.buttonTitle}
         buttonStyle={
           answered && choiceKey === picked
             ? styles.selectedButton
@@ -228,7 +242,7 @@ function Gameplay({ route, navigation }) {
         <Text style={styles.title}>Tap the answer to the math problem.</Text>
         <Text style={styles.expressionText}>{problem.expression}</Text>
       </View>
-      <Text>{message}</Text>
+      <Text style={styles.gameMessage}>{message}</Text>
       <View style={styles.container}>
         {choices}
       </View>

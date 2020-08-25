@@ -32,9 +32,9 @@ function GameplayIntermediate({ navigation }) {
     navigation.setOptions({
       headerRight: () => (
         <Button
-          title="⏸"
+          title="Pause"
           titleStyle={{
-            color: "white",
+            color: "black",
             fontSize: 16,
           }}
           buttonStyle={styles.pause}

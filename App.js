@@ -1,14 +1,16 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-// Importing Home and VideoPopup Screens
+
+// Importing Home Screen
 import HomeScreen from "./src/screens/Home/HomeScreen.jsx";
-import Video from "./src/screens/Home/Video.jsx";
+
 // Importing Settings Screens
 import SettingsScreen from "./src/screens/Settings/SettingsScreen.jsx";
 import TimePicker from "./src/screens/Settings/TimePicker.jsx";
 import FontSize from "./src/screens/Settings/FontSize.jsx";
 import SoundScreen from "./src/screens/Settings/SoundScreen.jsx";
+
 // Importing Game Screens
 import GameOverview from "./src/screens/Game/GameOverview.jsx";
 import GameMaterials from "./src/screens/Game/GameMaterials.jsx";
@@ -22,9 +24,10 @@ import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
 import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
 import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted.jsx";
 import PromptScreen from "./src/screens/Game/PromptScreen.jsx";
-import WritingIntro from "./src/screens/Game/WritingIntro";
-import MathIntro from "./src/screens/Game/MathIntro";
+import WritingIntro from "./src/screens/Game/WritingIntro.jsx";
+import MathIntro from "./src/screens/Game/MathIntro.jsx";
 import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
+
 const config = {
   animation: "spring",
   config: {
@@ -47,9 +50,9 @@ export default function App() {
       screenOptions={{
         headerBackTitleVisible: false,
         headerTitleAllowFontScaling: true,
-        headerTintColor: '#fff',
+        headerTintColor: 'black',
         headerStyle: {
-          backgroundColor: '#fff',
+          backgroundColor: 'white',
         },
         headerTitleStyle: {
           fontWeight: 'bold',
@@ -61,13 +64,6 @@ export default function App() {
           name="HomeScreen"
           component={HomeScreen}
           options={{ title: "1 of 5 Days" }}
-        />
-        <Stack.Screen
-          name="Video"
-          component={Video}
-          options={{
-            title: "Youtube Videos",
-          }}
         />
 
         {/* Game Screens */}
@@ -174,7 +170,6 @@ export default function App() {
           options={{
             title: "Paused",
             animationTypeForReplace: "pop",
-            // headerShown: false,
             transitionSpec: {
               open: config,
               close: config,
@@ -215,9 +210,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-// options={{
-//   headerRight: (
-//     <PauseButton onPress={() => console.log("Stop timer")} />
-//   ),
-// }}

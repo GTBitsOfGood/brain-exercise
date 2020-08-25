@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 import { Button } from "react-native-elements";
-import AsyncStorage from "@react-native-community/async-storage";
 import PropTypes from "prop-types";
-import { useFocusEffect } from "@react-navigation/native";
 import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
@@ -69,7 +67,7 @@ function WritingIntro({ navigation }) {
       <Button
         title="Start Writing"
         buttonStyle={styles.nextButton}
-        onPress={() => navigation.navigate("PromptScreen")} //Todo change to PromptScreen
+        onPress={() => navigation.navigate("PromptScreen")}
       />
     </View>
   );
