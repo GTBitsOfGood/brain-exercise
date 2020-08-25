@@ -183,26 +183,18 @@ function Gameplay({ route, navigation }) {
         }
 
         if (choiceValue === problem.solution) {
-          setMessage(`Correct! Great job!`);
           difficultyScore = Math.min(difficultyScore + 10, 499);
-        } else {
-          setMessage("You’re so quick! Keep going!");
         }
 
         storeDifficultyScore(difficultyScore.toString());
       });
 
       setRemainingTime(pBar.current.getCurrentTime());
-      if (choiceValue === problem.solution) {
-        setMessage(`Correct! Great job!`);
-      } else {
-        setMessage("You’re so quick! Keep going!");
-      }
       setAnswered(true);
 
       setTimeout(() => {
         getNewProblem();
-      }, 5000);
+      }, 500);
     }
   }
 
