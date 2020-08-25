@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
+import { View, StyleSheet } from "react-native";
 import ConfettiCannon from "react-native-confetti-cannon";
 import PropTypes from "prop-types";
 import AsyncStorage from "@react-native-community/async-storage";
 import { incrementStreak } from "../../scripts/progressbar-logic";
+import Button from "../../components/Button";
+import Text from "../../components/Text";
+
 const styles = StyleSheet.create({
   root: {
     flex: 1,

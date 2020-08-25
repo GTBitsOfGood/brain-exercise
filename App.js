@@ -1,14 +1,16 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-// Importing Home and VideoPopup Screens
+
+// Importing Home Screen
 import HomeScreen from "./src/screens/Home/HomeScreen.jsx";
-import Video from "./src/screens/Home/Video.jsx";
+
 // Importing Settings Screens
 import SettingsScreen from "./src/screens/Settings/SettingsScreen.jsx";
 import TimePicker from "./src/screens/Settings/TimePicker.jsx";
 import FontSize from "./src/screens/Settings/FontSize.jsx";
 import SoundScreen from "./src/screens/Settings/SoundScreen.jsx";
+
 // Importing Game Screens
 import GameOverview from "./src/screens/Game/GameOverview.jsx";
 import GameMaterials from "./src/screens/Game/GameMaterials.jsx";
@@ -22,9 +24,10 @@ import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
 import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
 import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted.jsx";
 import PromptScreen from "./src/screens/Game/PromptScreen.jsx";
-import WritingIntro from "./src/screens/Game/WritingIntro";
-import MathIntro from "./src/screens/Game/MathIntro";
+import WritingIntro from "./src/screens/Game/WritingIntro.jsx";
+import MathIntro from "./src/screens/Game/MathIntro.jsx";
 import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
+
 const config = {
   animation: "spring",
   config: {
@@ -43,33 +46,24 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="HomeScreen"
-        // Consistent styling across all stacked screens
-        screenOptions={{
-          headerTitleAllowFontScaling: true,
-          headerBackTitleVisible: false,
-          headerStyle: {
-            backgroundColor: "#005AA3",
-          },
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}
-      >
+      // Consistent styling across all stacked screens
+      screenOptions={{
+        headerBackTitleVisible: false,
+        headerTitleAllowFontScaling: true,
+        headerTintColor: 'black',
+        headerStyle: {
+          backgroundColor: 'white',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          color: 'black',
+        },
+      }}>
         {/* Home Screens */}
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
           options={{ title: "1 of 5 Days" }}
-        />
-        <Stack.Screen
-          name="Video"
-          component={Video}
-          options={{
-            title: "Youtube Videos",
-            headerStyle: { backgroundColor: "#ca0000" },
-          }}
         />
 
         {/* Game Screens */}
@@ -84,15 +78,14 @@ export default function App() {
           name="GameMaterials"
           component={GameMaterials}
           options={{
-            title: "Game Materials",
-          }}
+            title: "Choose your game!",}}
         />
         <Stack.Screen
           name="Gameplay"
           component={Gameplay}
           options={{
-            title: "Gameplay",
-          }}
+            title: "Math",
+            }}
         />
         <Stack.Screen
           name="GameplayIntermediate"
@@ -147,8 +140,7 @@ export default function App() {
           name="ReadingIntro"
           component={ReadingIntro}
           options={{
-            title: "Reading",
-          }}
+            title: "Get ready to read!"}}
         />
         <Stack.Screen
           name="ReadingMain"
@@ -163,13 +155,13 @@ export default function App() {
           options={{
             title: "Writing Prompts",
           }}
+
         />
         <Stack.Screen
           name="ExercisesCompleted"
           component={ExercisesCompleted}
           options={{
-            title: "Exercises",
-          }}
+            title: "Exercises done!"}}
         />
         {/* Pause Screen */}
         <Stack.Screen
@@ -178,8 +170,6 @@ export default function App() {
           options={{
             title: "Paused",
             animationTypeForReplace: "pop",
-            // headerShown: false,
-            headerStyle: { backgroundColor: "#3f3f3f" },
             transitionSpec: {
               open: config,
               close: config,
@@ -193,40 +183,30 @@ export default function App() {
           component={SettingsScreen}
           options={{
             title: "Settings",
-            headerStyle: { backgroundColor: "#2a652c" },
-          }}
-        />
+            }}
+          />
         <Stack.Screen
           name="TimePicker"
           component={TimePicker}
           options={{
             title: "Set Time Reminder",
-            headerStyle: { backgroundColor: "#2a652c" },
-          }}
+            }}
         />
         <Stack.Screen
           name="SoundScreen"
           component={SoundScreen}
           options={{
             title: "Sound",
-            headerStyle: { backgroundColor: "#2a652c" },
-          }}
+            }}
         />
         <Stack.Screen
           name="FontSize"
           component={FontSize}
           options={{
             title: "Font Size",
-            headerStyle: { backgroundColor: "#2a652c" },
           }}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-// options={{
-//   headerRight: (
-//     <PauseButton onPress={() => console.log("Stop timer")} />
-//   ),
-// }}

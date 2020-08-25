@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Switch } from "react-native";
+import { View, StyleSheet, Switch, TouchableOpacity } from "react-native";
 import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
@@ -7,49 +7,6 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { useFocusEffect } from '@react-navigation/native';
 import Text from "../../components/Text";
 import defaultSettings from "../../components/DefaultSettings"
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    alignContent: "center",
-    marginVertical: 30,
-  },
-  reminder: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 30,
-    marginHorizontal: 30,
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "left",
-    marginHorizontal: 30,
-  },
-  subtext: {
-    fontSize: 18,
-    textAlign: "left",
-    alignSelf: "center",
-  },
-  button: {
-    borderRadius: 10,
-    borderWidth: 0.9,
-    borderColor: "gray",
-  },
-  fontButton: {
-    alignContent: "space-between",
-    marginTop: 20,
-    backgroundColor: "#e0e0e0",
-  },
-  animation: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginHorizontal: 30,
-  },
-  timeButton: {
-    borderRadius: 10,
-  },
-});
 
 /**
  * Takes in a settings object and stores it in Async Storage.
@@ -69,9 +26,66 @@ const pullSettings = async () => {
   if (jsonSettings !== null) {
      const result = await JSON.parse(jsonSettings);
      return result;
-  } 
+  }
   return defaultSettings
 }
+
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    alignContent: "center",
+    paddingVertical: 20,
+    backgroundColor: "white"
+  },
+  reminder: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 30,
+  },
+  reminderContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 30,
+    marginVertical: 15,
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "left",
+    marginHorizontal: 30,
+  },
+  subtext: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "left",
+    alignSelf: "center",
+    marginVertical: 15,
+  },
+  animation: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 30,
+    marginVertical: 15,
+  },
+  timeButton: {
+    borderRadius: 10,
+  },
+  fontSizeNavigator: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 30,
+    borderBottomColor: "black",
+    marginVertical: 15,
+  },
+  lines: {
+    marginHorizontal: 30,
+    fontSize: 16,
+  }
+});
 
 // Settings Navigation
 function SettingsScreen({ navigation }) {
@@ -99,12 +113,12 @@ function SettingsScreen({ navigation }) {
 
   const toggleSwitch = () => {
     if (toggleOn) {
-      // going from enabled to unenabled
+      // going from enabled to disabled
       Notifications.cancelAllScheduledNotificationsAsync();
       setToggleOn(false);
       settings.notificationsActive = false
     } else {
-      // going from unenabled to enabled
+      // going from disabled to enabled
       setToggleOn(true);
       settings.notificationsActive = true
     }
@@ -113,7 +127,7 @@ function SettingsScreen({ navigation }) {
 
   const toggleAnimations = () => {
     if (animationToggleOn) {
-      // going from enabled to unenabled
+      // going from enabled to disabled
       setAnimationToggleOn(false)
       settings.animationOn = false
     } else {
@@ -124,7 +138,8 @@ function SettingsScreen({ navigation }) {
   }
 
   return (
-     <View style={styles.root}>
+    <View style={styles.root}>
+      <View>
        <Text style={styles.text}>Notifications</Text>
        <View style={styles.reminder}>
         <Text style={styles.subtext}>Daily Reminder</Text>
@@ -147,32 +162,27 @@ function SettingsScreen({ navigation }) {
             />
           </View>
       }
-      <Button
-        title="Font Size                                                 >"
-        buttonStyle={styles.fontButton}
-        titleStyle={{
-          fontSize: 20,
-          fontWeight: "bold",
-          color: "black",
-        }}
-        type="clear"
-        containerStyle={{ margin: 20 }}
-        onPress={() => navigation.navigate("FontSize", settings)}
-      />
-      <Button
-        title="Sounds                                                    >"
-        buttonStyle={styles.fontButton}
-        titleStyle={{
-          fontSize: 20,
-          fontWeight: "bold",
-          color: "black",
-        }}
-        type="clear"
-        containerStyle={{ margin: 20 }}
+      </View>
+      <View>
+        <TouchableOpacity
+          style={styles.fontSizeNavigator}
+          onPress={() => navigation.navigate("FontSize", settings)}
+          >
+          <Text style={styles.subtext}>Font Size</Text>
+          <Text style={styles.subtext}>{">"}</Text>
+        </TouchableOpacity>
+      </View>
+      <View>
+      <TouchableOpacity
+        style={styles.fontSizeNavigator}
         onPress={() => navigation.navigate("SoundScreen", settings)}
-      />
+        >
+        <Text style={styles.subtext}>Sounds</Text>
+        <Text style={styles.subtext}>{">"}</Text>
+      </TouchableOpacity>
+      </View>
       <View style={styles.animation}>
-        <Text style={{marginHorizontal: 0, fontSize: 20, fontWeight: "bold"}}>Animation</Text>
+        <Text style={styles.subtext}>Animation</Text>
         <Switch
           trackColor={{ false: "#ffffff", true: "#2a652c" }}
           onValueChange={() => toggleAnimations()}

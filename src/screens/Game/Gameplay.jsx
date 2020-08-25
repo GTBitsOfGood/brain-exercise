@@ -3,32 +3,36 @@
 /* eslint-disable no-alert */
 import "react-native-gesture-handler";
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, AsyncStorage } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../scripts/game-logic";
 import Text from "../../components/Text";
-import { AsyncStorage } from "react-native";
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: "white"
   },
   expressionText: {
     fontSize: 50,
     fontWeight: "bold",
-    paddingBottom: 40,
+    paddingBottom: 80,
+  },
+  title :{
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 40,
+    paddingTop: 80,
   },
   textContainer: {
     flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: "column",
     alignItems: "center",
     textAlign: "center",
     justifyContent: "center",
-    paddingTop: 30,
-    backgroundColor: "#eaeaea",
   },
   container: {
     flex: 3,
@@ -39,7 +43,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     justifyContent: "space-around",
-    backgroundColor: "#eaeaea",
   },
   button: {
     alignSelf: "center",
@@ -48,8 +51,13 @@ const styles = StyleSheet.create({
     height: 99,
     borderRadius: 25,
     borderWidth: 5,
-    borderColor: "rgba(0, 138, 252, 0.2)",
-    backgroundColor: "#eaeaea",
+    borderColor: "#005AA3",
+    backgroundColor: "#fff",
+  },
+  gameMessage: {
+    fontSize: 22,
+    textAlign: "center",
+    color: "black"
   },
   selectedButton: {
     alignSelf: "center",
@@ -58,14 +66,20 @@ const styles = StyleSheet.create({
     height: 99,
     borderRadius: 25,
     borderWidth: 5,
-    borderColor: "rgba(0, 138, 252, 0.2)",
-    backgroundColor: "rgba(0, 138, 252, 0.2)",
+    borderColor: "#005AA3",
+    backgroundColor: "#005AA3",
+  },
+  selectedButtonTitle: {
+    fontSize: 40,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "white",
   },
   buttonTitle: {
     fontSize: 40,
-    fontWeight: "100",
+    fontWeight: "bold",
     textAlign: "center",
-    color: "#2f4f4f",
+    color: "black",
   },
 });
 const totalTime = 300;
@@ -110,14 +124,15 @@ function Gameplay({ route, navigation }) {
 
   const right = () => (
     <Button
-      title="⏸"
+      title="Pause"
       titleStyle={{
-        color: "white",
+        color: "black",
         fontSize: 16,
       }}
       buttonStyle={{
         backgroundColor: "transparent",
         marginRight: 10,
+        borderColor: "#005AA3",
       }}
       type="clear"
       onPress={() => navigation.navigate("Pause")}
@@ -168,26 +183,18 @@ function Gameplay({ route, navigation }) {
         }
 
         if (choiceValue === problem.solution) {
-          setMessage(`Correct! Great job!`);
           difficultyScore = Math.min(difficultyScore + 10, 499);
-        } else {
-          setMessage("You’re so quick! Keep going!");
         }
 
         storeDifficultyScore(difficultyScore.toString());
       });
 
       setRemainingTime(pBar.current.getCurrentTime());
-      if (choiceValue === problem.solution) {
-        setMessage(`Correct! Great job!`);
-      } else {
-        setMessage("You’re so quick! Keep going!");
-      }
       setAnswered(true);
 
       setTimeout(() => {
         getNewProblem();
-      }, 5000);
+      }, 500);
     }
   }
 
@@ -197,7 +204,7 @@ function Gameplay({ route, navigation }) {
     return (
       <Button
         title={`${choiceValue}`}
-        titleStyle={styles.buttonTitle}
+        titleStyle={answered && choiceKey === picked ? styles.selectedButtonTitle : styles.buttonTitle}
         buttonStyle={
           answered && choiceKey === picked
             ? styles.selectedButton
@@ -224,10 +231,13 @@ function Gameplay({ route, navigation }) {
         shouldNotRender
       />
       <View style={styles.textContainer}>
+        <Text style={styles.title}>Tap the answer to the math problem.</Text>
         <Text style={styles.expressionText}>{problem.expression}</Text>
       </View>
-      <Text style={{ backgroundColor: "#eaeaea" }}>{message}</Text>
-      <View style={styles.container}>{choices}</View>
+      <Text style={styles.gameMessage}>{message}</Text>
+      <View style={styles.container}>
+        {choices}
+      </View>
     </View>
   );
 }

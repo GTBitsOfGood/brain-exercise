@@ -2,8 +2,8 @@
 import "react-native-gesture-handler";
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
+import Button from "../../components/Button";
 import Text from "../../components/Text";
 
 const styles = StyleSheet.create({
@@ -32,9 +32,9 @@ function GameplayIntermediate({ navigation }) {
     navigation.setOptions({
       headerRight: () => (
         <Button
-          title="⏸"
+          title="Pause"
           titleStyle={{
-            color: "white",
+            color: "black",
             fontSize: 16,
           }}
           buttonStyle={styles.pause}

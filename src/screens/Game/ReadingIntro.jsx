@@ -3,14 +3,16 @@ import { View, StyleSheet, Image } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import Text from "../../components/Text";
+import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
-    margin: 25,
-    marginVertical: 60,
+    padding: 25,
+    paddingVertical: 60,
+    backgroundColor: "white"
   },
   instructions: {
     fontSize: 18,
