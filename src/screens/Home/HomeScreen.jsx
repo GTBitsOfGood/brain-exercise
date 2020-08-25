@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -10,7 +10,6 @@ import {
 import PropTypes from "prop-types";
 import StepIndicator from "react-native-step-indicator";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import AsyncStorage from "@react-native-community/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { getStreak } from "../../scripts/progressbar-logic";
 import Text from "../../components/Text";
@@ -19,8 +18,9 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    marginVertical: 10,
-    marginHorizontal: 30,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    backgroundColor: "white"
   },
   title: {
     fontSize: 34,
@@ -136,6 +136,7 @@ function HomeScreen({ navigation }) {
   };
   const youtubeChannelURL =
     "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
+
   return (
     <View style={styles.root}>
       <Text style={styles.title}>{`${streak} of 5 Days`}</Text>

@@ -26,7 +26,7 @@ const pullSettings = async () => {
   if (jsonSettings !== null) {
      const result = await JSON.parse(jsonSettings);
      return result;
-  } 
+  }
   return defaultSettings
 }
 
@@ -36,15 +36,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center",
     paddingVertical: 20,
+    backgroundColor: "white"
   },
   reminder: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     marginHorizontal: 30,
   },
   reminderContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     marginHorizontal: 30,
     marginVertical: 15,
   },
@@ -56,6 +59,7 @@ const styles = StyleSheet.create({
   },
   subtext: {
     fontSize: 16,
+    fontWeight: "bold",
     textAlign: "left",
     alignSelf: "center",
     marginVertical: 15,
@@ -63,6 +67,7 @@ const styles = StyleSheet.create({
   animation: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     marginHorizontal: 30,
     marginVertical: 15,
   },
@@ -81,66 +86,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   }
 });
-
-// {/* <View style={styles.root}>
-//        <Text style={styles.text}>Notifications</Text>
-//        <View style={styles.reminder}>
-//         <Text style={styles.subtext}>Daily Reminder</Text>
-//         <Switch
-//           trackColor={{ false: "#ffffff", true: "#2a652c" }}
-//           onValueChange={toggleSwitch}
-//           value={toggleOn}
-//           accessibilityRole="switch"
-//         />
-//       </View>
-//       {
-//         toggleOn &&
-//           <View style={styles.reminder}>
-//             <Text style={styles.subtext}>Set Reminder Time</Text>
-//             <Button
-//               title={getDate()}
-//               type="outline"
-//               buttonStyle={styles.timeButton}
-//               onPress={() => navigation.navigate("TimePicker", settings)}
-//             />
-//           </View>
-//       }
-//       {/* <Button
-//         title="Font Size                                                 >"
-//         buttonStyle={styles.fontButton}
-//         titleStyle={{
-//           fontSize: 20,
-//           fontWeight: "bold",
-//           color: "black",
-//         }}
-//         type="clear"
-//         containerStyle={{ margin: 20 }}
-//         onPress={() => navigation.navigate("FontSize", settings)}
-//       /> */}
-//       <TouchableOpacity 
-//         style={styles.fontSizeNavigator}
-//         onPress={() => navigation.navigate("FontSize", settings)}
-//         >
-//         <Text>Font Size</Text>
-//         <Text>{">"}</Text>
-//       </TouchableOpacity>
-//       <TouchableOpacity 
-//         style={styles.fontSizeNavigator}
-//         onPress={() => navigation.navigate("SoundScreen", settings)}
-//         >
-//         <Text>Sounds</Text>
-//         <Text>{">"}</Text>
-//       </TouchableOpacity>
-//       <View style={styles.animation}>
-//         <Text style={{marginHorizontal: 0, fontSize: 20, fontWeight: "bold"}}>Animation</Text>
-//         <Switch
-//           trackColor={{ false: "#ffffff", true: "#2a652c" }}
-//           onValueChange={() => toggleAnimations()}
-//           value={animationToggleOn}
-//           accessibilityRole="switch"
-//         />
-//       </View>
-//     </View> */}
 
 // Settings Navigation
 function SettingsScreen({ navigation }) {
@@ -168,12 +113,12 @@ function SettingsScreen({ navigation }) {
 
   const toggleSwitch = () => {
     if (toggleOn) {
-      // going from enabled to unenabled
+      // going from enabled to disabled
       Notifications.cancelAllScheduledNotificationsAsync();
       setToggleOn(false);
       settings.notificationsActive = false
     } else {
-      // going from unenabled to enabled
+      // going from disabled to enabled
       setToggleOn(true);
       settings.notificationsActive = true
     }
@@ -182,7 +127,7 @@ function SettingsScreen({ navigation }) {
 
   const toggleAnimations = () => {
     if (animationToggleOn) {
-      // going from enabled to unenabled
+      // going from enabled to disabled
       setAnimationToggleOn(false)
       settings.animationOn = false
     } else {
@@ -219,25 +164,25 @@ function SettingsScreen({ navigation }) {
       }
       </View>
       <View>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.fontSizeNavigator}
           onPress={() => navigation.navigate("FontSize", settings)}
           >
-          <Text>Font Size</Text>
-          <Text>{">"}</Text>
+          <Text style={styles.subtext}>Font Size</Text>
+          <Text style={styles.subtext}>{">"}</Text>
         </TouchableOpacity>
       </View>
       <View>
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.fontSizeNavigator}
         onPress={() => navigation.navigate("SoundScreen", settings)}
         >
-        <Text>Sounds</Text>
-        <Text>{">"}</Text>
+        <Text style={styles.subtext}>Sounds</Text>
+        <Text style={styles.subtext}>{">"}</Text>
       </TouchableOpacity>
       </View>
       <View style={styles.animation}>
-        <Text style={{marginHorizontal: 0, fontSize: 15, fontWeight: "bold",}}>Animation</Text>
+        <Text style={styles.subtext}>Animation</Text>
         <Switch
           trackColor={{ false: "#ffffff", true: "#2a652c" }}
           onValueChange={() => toggleAnimations()}

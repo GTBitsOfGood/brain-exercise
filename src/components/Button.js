@@ -9,7 +9,7 @@ const Button = (props) => {
             alignSelf: "center",
             marginVertical: 10,
             width: 300,
-            height: 60, 
+            height: 60,
             borderRadius: 5,
             backgroundColor: "#005AA3",
     }}>

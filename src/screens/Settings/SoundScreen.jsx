@@ -10,11 +10,12 @@ const styles = StyleSheet.create({
     root: {
         flex: 1,
         justifyContent: "space-between",
-        margin: 25,
+        padding: 25,
+        backgroundColor: "white"
     },
     settingsBlock: {
         flex: 1,
-    }, 
+    },
     settingAndSwitch: {
         flexDirection: "row",
         alignItems: "center",
