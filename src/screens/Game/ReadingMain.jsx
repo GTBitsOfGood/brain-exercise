@@ -29,20 +29,15 @@ const styles = StyleSheet.create({
     },
 });
 
-const totalTime = 600;
-
 export default function ReadingMain({ navigation }) {
   const [timeUp, setTimeUp] = useState(false);
-  const [storyArray] = useState(getStoryArray());
+  const [storyArray, setStoryArray] = useState(getStoryArray());
   const [paragraph, setParagraph] = useState("");
-  const [paragraphs, setParagraphs] = useState([]);
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    const initialStory = getStoryArray();
-    setParagraphs(initialStory);
-    setParagraph(initialStory[0]);
-  }, []);
+    setParagraph(storyArray[0])
+  }, [storyArray]);
 
   /**
    * If the 10 minutes alloted for reading are up, this will take the user to next section.
@@ -51,22 +46,21 @@ export default function ReadingMain({ navigation }) {
    */
   const buttonFunction = () => {
     if (timeUp) {
-      navigation.navigate("ExercisesCompleted");
-    } else if (page === storyArray.length - 1) {
-      navigation.navigate("ExercisesCompleted");
+      navigation.navigate("MathIntro", {
+        nextScreen: "WritingIntro",
+      });
+    } else if (storyArray.length - 1 == page) {
+      setStoryArray(getStoryArray());
+      setPage(0);
     } else {
-      setParagraph(paragraphs[page + 1]);
+      setParagraph(storyArray[page + 1]);
       setPage(page + 1);
     }
   };
 
   return (
       <View style={styles.root}>
-          <ProgressBar
-           seconds={600}
-           red={30}
-           func={() => setTimeUp(true)}
-           />
+          <ProgressBar seconds={600} red={30} func={() => setTimeUp(true)} shouldNotRender/>
           <Text style={styles.instructions}>Read the passage aloud.</Text>
           <ScrollView>
               <Text style={styles.article}>{paragraph}</Text>
