@@ -56,7 +56,7 @@ function TriviaIntro({ navigation }) {
       </View>
       <View style={styles.instructions}>
         <Text style={styles.headInstruction}>
-          Grab a pencil and some paper. Write the answer to the questions.
+        Grab a pencil and some paper. Writing is a great way to exercise your brain so please write each trivia question first before answering.
         </Text>
         <Text style={styles.instructions}>Total time: 5 minutes</Text>
       </View>
