@@ -84,7 +84,7 @@ function TriviaScreen({ navigation }) {
       />
       <View style={styles.textContainer}>
         <Text style={styles.instructionText}>
-          Write down both the question and answer to:{" "}
+          Write down both the question and answer to:
         </Text>
         <Text style={styles.questionText}>{problem.question}</Text>
         <View>
@@ -114,9 +114,7 @@ function TriviaScreen({ navigation }) {
                 getNewProblem();
               }
             } else {
-              navigation.navigate("MathIntro", {
-                nextScreen: "WritingIntro",
-              });
+              navigation.navigate("ReadingIntro");
             }
           }}
         />
