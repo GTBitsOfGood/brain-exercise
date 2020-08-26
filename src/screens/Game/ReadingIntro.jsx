@@ -1,6 +1,5 @@
 import React from "react";
 import { View, StyleSheet, Image } from "react-native";
-import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
