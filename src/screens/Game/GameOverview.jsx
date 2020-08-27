@@ -29,7 +29,7 @@ function GameOverview({ navigation }) {
       <Button
         title="Begin"
         onPress={() =>
-          navigation.navigate("TriviaIntro", { nextScreen: "TriviaIntro" })
+          navigation.navigate("MathIntro", { nextScreen: "TriviaIntro" })
         }
       />
     </View>
