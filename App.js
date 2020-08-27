@@ -64,7 +64,7 @@ export default function App() {
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{ title: "1 of 5 Days" }}
+          options={{ title: null }}
         />
 
         {/* Game Screens */}
