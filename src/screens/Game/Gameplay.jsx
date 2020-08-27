@@ -83,6 +83,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "black",
   },
+  disabledButtonTitle: {
+    fontSize: 40,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "dimgrey",
+  }
 });
 const totalTime = 300;
 
@@ -187,8 +193,15 @@ function Gameplay({ route, navigation }) {
     return (
       <Button
         title={`${choiceValue}`}
-        titleStyle={answered && choiceKey === picked ? styles.selectedButtonTitle : styles.buttonTitle}
-        buttonStyle={
+        titleStyle={styles.buttonTitle}
+        disabledTitleStyle={
+          answered && choiceKey === picked 
+            ? styles.selectedButtonTitle 
+            : styles.disabledButtonTitle
+        }
+        buttonStyle={styles.button}
+        disabled = {answered}
+        disabledStyle={
           answered && choiceKey === picked
             ? styles.selectedButton
             : styles.button
