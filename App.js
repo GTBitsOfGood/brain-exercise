@@ -27,6 +27,7 @@ import PromptScreen from "./src/screens/Game/PromptScreen.jsx";
 import WritingIntro from "./src/screens/Game/WritingIntro.jsx";
 import MathIntro from "./src/screens/Game/MathIntro.jsx";
 import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
+import PauseButton from "./src/components/PauseButton.js";
 
 const config = {
   animation: "spring",
@@ -86,9 +87,14 @@ export default function App() {
         <Stack.Screen
           name="Gameplay"
           component={Gameplay}
-          options={{
+          options={({navigation}) => ({
+            headerRight: () => (
+              <PauseButton
+                onPress={() => navigation.navigate('Pause')}
+              />
+            ),
             title: "Math",
-            }}
+            })}
         />
         <Stack.Screen
           name="GameplayIntermediate"
@@ -100,9 +106,14 @@ export default function App() {
         <Stack.Screen
           name="TriviaScreen"
           component={TriviaScreen}
-          options={{
+          options={({navigation}) => ({
+            headerRight: () => (
+              <PauseButton
+                onPress={() => navigation.navigate('Pause')}
+              />
+            ),
             title: "Writing (Trivia)",
-          }}
+          })}
         />
         <Stack.Screen
           name="FinishedScreen"
@@ -148,16 +159,26 @@ export default function App() {
         <Stack.Screen
           name="ReadingMain"
           component={ReadingMain}
-          options={{
+          options={({navigation}) => ({
+            headerRight: () => (
+              <PauseButton
+                onPress={() => navigation.navigate('Pause')}
+              />
+            ),
             title: "Reading",
-          }}
+          })}
         />
         <Stack.Screen
           name="PromptScreen"
           component={PromptScreen}
-          options={{
+          options={({navigation}) => ({
+            headerRight: () => (
+              <PauseButton
+                onPress={() => navigation.navigate('Pause')}
+              />
+            ),
             title: "Writing Prompts",
-          }}
+          })}
 
         />
         <Stack.Screen

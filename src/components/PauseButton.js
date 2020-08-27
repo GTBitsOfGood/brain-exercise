@@ -1,18 +1,23 @@
 import React from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import { Button } from "react-native-elements";
 
-export default function PauseButton() {
+const PauseButton = (props) => {
   return (
-    <View style={{ flexDirection: "row" }}>
-      <TouchableOpacity>
-        <Image
-          source={{
-            uri:
-              "https://i7.pngguru.com/preview/101/918/437/brand-pattern-pause-button-png-image.jpg",
-          }}
-          style={{ width: 40, height: 40, marginRight: 10 }}
-        />
-      </TouchableOpacity>
-    </View>
+    <Button
+      {...props}
+      title="Pause"
+      titleStyle={{
+        color: "black",
+        fontSize: 16,
+      }}
+      buttonStyle={{
+        backgroundColor: "transparent",
+        marginRight: 10,
+        borderColor: "#005AA3",
+      }}
+      type="clear"
+    />
   );
 }
+
+export default PauseButton;
