@@ -50,6 +50,7 @@ export default function App() {
       screenOptions={{
         headerBackTitleVisible: false,
         headerTitleAllowFontScaling: true,
+        gestureEnabled: false,
         headerTintColor: 'black',
         headerLeft: null,
         headerStyle: {
@@ -210,7 +211,6 @@ export default function App() {
           options={({navigation}) => ({
             headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
             title: "Font Size",
-            gestureEnabled: false,
           })}
         />
       </Stack.Navigator>
