@@ -97,30 +97,30 @@ const pullDifficultyScore = async () => {
 };
 
 function Gameplay({ route, navigation }) {
-  const [problem, setProblem] = useState(firstQ());
+  const [problem, setProblem] = useState(getProblem());
   const [message, setMessage] = useState("");
   const [remainingTime, setRemainingTime] = useState(totalTime);
   const [answered, setAnswered] = useState(false);
   let pBar = React.createRef();
 
-  function firstQ() {
-    const a = Math.floor(Math.random() * 10 + 1);
-    const b = Math.floor(Math.random() * 10 + 1);
-    const choosePlus = Math.floor(Math.random() * 2 + 1) % 2 === 0;
-    const operator = choosePlus ? " + " : " - ";
-    const solution = choosePlus ? a + b : a - b;
-    let choices = [
-      solution,
-      solution + Math.floor(Math.random() * 15),
-      solution - Math.floor(Math.random() * 15),
-    ];
-    choices.sort(() => Math.random() - 0.5);
-    return {
-      expression: a + operator + b,
-      solution,
-      choices,
-    };
-  }
+  // function firstQ() {
+  //   const a = Math.floor(Math.random() * 10 + 1);
+  //   const b = Math.floor(Math.random() * 10 + 1);
+  //   const choosePlus = Math.floor(Math.random() * 2 + 1) % 2 === 0;
+  //   const operator = choosePlus ? " + " : " - ";
+  //   const solution = choosePlus ? a + b : a - b;
+  //   let choices = [
+  //     solution,
+  //     solution + Math.floor(Math.random() * 15),
+  //     solution - Math.floor(Math.random() * 15),
+  //   ];
+  //   choices.sort(() => Math.random() - 0.5);
+  //   return {
+  //     expression: a + operator + b,
+  //     solution,
+  //     choices,
+  //   };
+  // }
 
   const right = () => (
     <Button
@@ -152,15 +152,15 @@ function Gameplay({ route, navigation }) {
     AsyncStorage.getItem("difficultyScore").then((difficultyScore) => {
       const score = parseInt(difficultyScore);
       if (score < 200) {
-        setProblem(getProblem(problem, 1));
+        setProblem(getProblem(1));
       } else if (score < 300) {
-        setProblem(getProblem(problem, 2));
+        setProblem(getProblem(2));
       } else if (score < 400) {
-        setProblem(getProblem(problem, 3));
+        setProblem(getProblem(3));
       } else if (score < 500) {
-        setProblem(getProblem(problem, 4));
+        setProblem(getProblem(4));
       } else {
-        setProblem(getProblem(problem));
+        setProblem(getProblem());
       }
     });
   }
@@ -194,7 +194,7 @@ function Gameplay({ route, navigation }) {
 
       setTimeout(() => {
         getNewProblem();
-      }, 500);
+      }, 5000);
     }
   }
 
