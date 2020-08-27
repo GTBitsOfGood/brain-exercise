@@ -1,6 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator, HeaderBackButton } from "@react-navigation/stack";
 
 // Importing Home Screen
 import HomeScreen from "./src/screens/Home/HomeScreen.jsx";
@@ -51,7 +51,9 @@ export default function App() {
       screenOptions={{
         headerBackTitleVisible: false,
         headerTitleAllowFontScaling: true,
+        gestureEnabled: false,
         headerTintColor: 'black',
+        headerLeft: null,
         headerStyle: {
           backgroundColor: 'white',
         },
@@ -64,16 +66,17 @@ export default function App() {
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{ title: "1 of 5 Days" }}
+          options={{ title: null }}
         />
 
         {/* Game Screens */}
         <Stack.Screen
           name="GameOverview"
           component={GameOverview}
-          options={{
+          options={({navigation}) => ({
+            headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/> ),
             title: "Today's Exercises",
-          }}
+          })}
         />
         <Stack.Screen
           name="GameMaterials"
@@ -202,30 +205,34 @@ export default function App() {
         <Stack.Screen
           name="SettingsScreen"
           component={SettingsScreen}
-          options={{
+          options={({navigation}) => ({
+            headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
             title: "Settings",
-            }}
+            })}
           />
         <Stack.Screen
           name="TimePicker"
           component={TimePicker}
-          options={{
+          options={({navigation}) => ({
+            headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
             title: "Set Time Reminder",
-            }}
+            })}
         />
         <Stack.Screen
           name="SoundScreen"
           component={SoundScreen}
-          options={{
+          options={({navigation}) => ({
+            headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
             title: "Sound",
-            }}
+            })}
         />
         <Stack.Screen
           name="FontSize"
           component={FontSize}
-          options={{
+          options={({navigation}) => ({
+            headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
             title: "Font Size",
-          }}
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
