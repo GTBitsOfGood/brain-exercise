@@ -122,29 +122,6 @@ function Gameplay({ route, navigation }) {
     };
   }
 
-  const right = () => (
-    <Button
-      title="Pause"
-      titleStyle={{
-        color: "black",
-        fontSize: 16,
-      }}
-      buttonStyle={{
-        backgroundColor: "transparent",
-        marginRight: 10,
-        borderColor: "#005AA3",
-      }}
-      type="clear"
-      onPress={() => navigation.navigate("Pause")}
-    />
-  );
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: right,
-    });
-  }, [navigation]);
-
   function getNewProblem() {
     setMessage("");
     setAnswered(false);
