@@ -107,12 +107,10 @@ function TriviaScreen({ navigation }) {
           titleStyle={styles.buttonTitle}
           buttonStyle={styles.button}
           onPress={() => {
-            if (!finished) {
-              if (!answered) {
-                setAnswered(true);
-              } else {
-                getNewProblem();
-              }
+            if (!answered) {
+              setAnswered(true);
+            } else if (!finished) {
+              getNewProblem();
             } else {
               navigation.navigate("ReadingIntro");
             }
