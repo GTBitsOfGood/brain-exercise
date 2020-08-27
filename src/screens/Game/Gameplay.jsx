@@ -13,7 +13,8 @@ import Text from "../../components/Text";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    justifyContent: "flex-end",
   },
   expressionText: {
     fontSize: 50,
@@ -33,16 +34,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
     justifyContent: "center",
+    paddingTop: 20,
   },
   container: {
-    flex: 3,
+    flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-    alignContent: "stretch",
-    paddingBottom: 50,
     paddingLeft: 10,
     paddingRight: 10,
+    paddingTop: 20,
     justifyContent: "space-around",
+    alignItems: "center",
   },
   button: {
     alignSelf: "center",
@@ -102,25 +104,6 @@ function Gameplay({ route, navigation }) {
   const [remainingTime, setRemainingTime] = useState(totalTime);
   const [answered, setAnswered] = useState(false);
   let pBar = React.createRef();
-
-  // function firstQ() {
-  //   const a = Math.floor(Math.random() * 10 + 1);
-  //   const b = Math.floor(Math.random() * 10 + 1);
-  //   const choosePlus = Math.floor(Math.random() * 2 + 1) % 2 === 0;
-  //   const operator = choosePlus ? " + " : " - ";
-  //   const solution = choosePlus ? a + b : a - b;
-  //   let choices = [
-  //     solution,
-  //     solution + Math.floor(Math.random() * 15),
-  //     solution - Math.floor(Math.random() * 15),
-  //   ];
-  //   choices.sort(() => Math.random() - 0.5);
-  //   return {
-  //     expression: a + operator + b,
-  //     solution,
-  //     choices,
-  //   };
-  // }
 
   const right = () => (
     <Button
@@ -194,7 +177,7 @@ function Gameplay({ route, navigation }) {
 
       setTimeout(() => {
         getNewProblem();
-      }, 5000);
+      }, 500);
     }
   }
 
@@ -231,8 +214,8 @@ function Gameplay({ route, navigation }) {
         shouldNotRender
       />
       <View style={styles.textContainer}>
-        <Text style={styles.title}>Tap the answer to the math problem.</Text>
-        <Text style={styles.expressionText}>{problem.expression}</Text>
+          <Text style={styles.title}>Tap the answer to the math problem.</Text>
+          <Text style={styles.expressionText}>{problem.expression}</Text>
       </View>
       <Text style={styles.gameMessage}>{message}</Text>
       <View style={styles.container}>
