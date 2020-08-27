@@ -1,6 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator, HeaderBackButton } from "@react-navigation/stack";
 
 // Importing Home Screen
 import HomeScreen from "./src/screens/Home/HomeScreen.jsx";
@@ -51,6 +51,7 @@ export default function App() {
         headerBackTitleVisible: false,
         headerTitleAllowFontScaling: true,
         headerTintColor: 'black',
+        headerLeft: null,
         headerStyle: {
           backgroundColor: 'white',
         },
@@ -70,9 +71,10 @@ export default function App() {
         <Stack.Screen
           name="GameOverview"
           component={GameOverview}
-          options={{
+          options={({navigation}) => ({
+            headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/> ),
             title: "Today's Exercises",
-          }}
+          })}
         />
         <Stack.Screen
           name="GameMaterials"
@@ -181,9 +183,10 @@ export default function App() {
         <Stack.Screen
           name="SettingsScreen"
           component={SettingsScreen}
-          options={{
+          options={({navigation}) => ({
+            headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
             title: "Settings",
-            }}
+            })}
           />
         <Stack.Screen
           name="TimePicker"
