@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Switch, TouchableOpacity } from "react-native";
+import { View, Switch, TouchableOpacity } from "react-native";
 import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
@@ -7,6 +7,8 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { useFocusEffect } from '@react-navigation/native';
 import Text from "../../components/Text";
 import defaultSettings from "../../components/DefaultSettings"
+import SettingsStyle from "../../styles/settings";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 /**
  * Takes in a settings object and stores it in Async Storage.
@@ -30,62 +32,20 @@ const pullSettings = async () => {
   return defaultSettings
 }
 
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    alignContent: "center",
-    paddingVertical: 20,
-    backgroundColor: "white"
-  },
-  reminder: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginHorizontal: 30,
-  },
-  reminderContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginHorizontal: 30,
-    marginVertical: 15,
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "left",
-    marginHorizontal: 30,
-  },
-  subtext: {
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "left",
-    alignSelf: "center",
-    marginVertical: 15,
-  },
-  animation: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginHorizontal: 30,
-    marginVertical: 15,
-  },
-  timeButton: {
-    borderRadius: 10,
-  },
-  fontSizeNavigator: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginHorizontal: 30,
-    borderBottomColor: "black",
-    marginVertical: 15,
-  },
-  lines: {
-    marginHorizontal: 30,
-    fontSize: 16,
-  }
-});
+const {
+  root,
+  notifications,
+  notificationChildren,
+  text,
+  section,
+  subtext,
+  animationRow,
+  timeButton,
+  icon,
+  rowInfo,
+  firstSection,
+  touchableRow
+} = SettingsStyle
 
 // Settings Navigation
 function SettingsScreen({ navigation }) {
@@ -138,57 +98,71 @@ function SettingsScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.root}>
-      <View>
-       <Text style={styles.text}>Notifications</Text>
-       <View style={styles.reminder}>
-        <Text style={styles.subtext}>Daily Reminder</Text>
-        <Switch
-          trackColor={{ false: "#ffffff", true: "#2a652c" }}
-          onValueChange={toggleSwitch}
-          value={toggleOn}
-          accessibilityRole="switch"
-        />
+    <View style={root}>
+      <View style={[section, firstSection]}>
+        <View style={notifications}>
+          <Icon size={30} style={icon} name="notifications-none" />
+          <Text style={text}>Notifications</Text>
+        </View>
       </View>
-      {
-        toggleOn &&
-          <View style={styles.reminder}>
-            <Text style={styles.subtext}>Set Reminder Time</Text>
+      <View style={section}>
+        <View style={notificationChildren}>
+          <Text style={subtext}>Daily Reminder</Text>
+          <Switch
+            trackColor={{ false: "#ffffff", true: "#2a652c" }}
+            onValueChange={toggleSwitch}
+            value={toggleOn}
+            accessibilityRole="switch"
+          />
+        </View>
+        { toggleOn &&
+          <View style={notificationChildren}>
+            <Text style={subtext}>Set Reminder Time</Text>
             <Button
               title={getDate()}
               type="outline"
-              buttonStyle={styles.timeButton}
+              buttonStyle={timeButton}
               onPress={() => navigation.navigate("TimePicker", settings)}
             />
-          </View>
-      }
+          </View> }
       </View>
-      <View>
+      <View style={section}>
         <TouchableOpacity
-          style={styles.fontSizeNavigator}
+          style={touchableRow}
           onPress={() => navigation.navigate("FontSize", settings)}
-          >
-          <Text style={styles.subtext}>Font Size</Text>
-          <Text style={styles.subtext}>{">"}</Text>
+        >
+          <View style={rowInfo}>
+            <Icon size={30} style={icon} name="format-size" />
+            <Text style={text}>Font Size</Text>
+          </View>
+          <Icon size={42} style={icon} name="chevron-right" />
         </TouchableOpacity>
       </View>
-      <View>
-      <TouchableOpacity
-        style={styles.fontSizeNavigator}
-        onPress={() => navigation.navigate("SoundScreen", settings)}
+      <View style={section}>
+        <TouchableOpacity
+          style={touchableRow}
+          onPress={() => navigation.navigate("SoundScreen", settings)}
         >
-        <Text style={styles.subtext}>Sounds</Text>
-        <Text style={styles.subtext}>{">"}</Text>
-      </TouchableOpacity>
+          <View style={rowInfo}>
+            <Icon size={30} style={icon} name="volume-up" />
+            <Text style={text}>Sound</Text>
+          </View>
+          <Icon size={42} style={icon} name="chevron-right" />
+        </TouchableOpacity>
       </View>
-      <View style={styles.animation}>
-        <Text style={styles.subtext}>Animation</Text>
-        <Switch
-          trackColor={{ false: "#ffffff", true: "#2a652c" }}
-          onValueChange={() => toggleAnimations()}
-          value={animationToggleOn}
-          accessibilityRole="switch"
-        />
+      <View style={section}>
+        <View style={animationRow}>
+          <View style={rowInfo}>
+            <Icon size={30} style={icon} name="play-arrow" />
+            <Text style={text}>Animation</Text>
+          </View>
+          <Switch
+            trackColor={{ false: "#ffffff", true: "#2a652c" }}
+            onValueChange={() => toggleAnimations()}
+            value={animationToggleOn}
+            accessibilityRole="switch"
+          />
+        </View>
       </View>
     </View>
   );
