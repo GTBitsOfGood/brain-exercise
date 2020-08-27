@@ -191,23 +191,27 @@ export default function App() {
         <Stack.Screen
           name="TimePicker"
           component={TimePicker}
-          options={{
+          options={({navigation}) => ({
+            headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
             title: "Set Time Reminder",
-            }}
+            })}
         />
         <Stack.Screen
           name="SoundScreen"
           component={SoundScreen}
-          options={{
+          options={({navigation}) => ({
+            headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
             title: "Sound",
-            }}
+            })}
         />
         <Stack.Screen
           name="FontSize"
           component={FontSize}
-          options={{
+          options={({navigation}) => ({
+            headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
             title: "Font Size",
-          }}
+            gestureEnabled: false,
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
