@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator, HeaderBackButton } from "@react-navigation/stack";
+import { Text } from "react-native";
 
 // Importing Home Screen
 import HomeScreen from "./src/screens/Home/HomeScreen.jsx";
@@ -29,6 +30,10 @@ import MathIntro from "./src/screens/Game/MathIntro.jsx";
 import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
 import PauseButton from "./src/components/PauseButton.js";
 
+// Disabling dynamic type
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
+
 const config = {
   animation: "spring",
   config: {
@@ -50,7 +55,7 @@ export default function App() {
       // Consistent styling across all stacked screens
       screenOptions={{
         headerBackTitleVisible: false,
-        headerTitleAllowFontScaling: true,
+        headerTitleAllowFontScaling: false,
         gestureEnabled: false,
         headerTintColor: 'black',
         headerLeft: null,
@@ -59,6 +64,7 @@ export default function App() {
         },
         headerTitleStyle: {
           fontWeight: 'bold',
+          fontSize: 22,
           color: 'black',
         },
       }}>
