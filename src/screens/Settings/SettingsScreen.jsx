@@ -3,12 +3,12 @@ import { View, Switch, TouchableOpacity } from "react-native";
 import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useFocusEffect } from '@react-navigation/native';
 import Text from "../../components/Text";
 import defaultSettings from "../../components/DefaultSettings"
 import SettingsStyle from "../../styles/settings";
-import Icon from "react-native-vector-icons/MaterialIcons";
 
 /**
  * Takes in a settings object and stores it in Async Storage.
@@ -107,7 +107,7 @@ function SettingsScreen({ navigation }) {
       </View>
       <View style={section}>
         <View style={notificationChildren}>
-          <Text style={subtext}>Daily Reminder</Text>
+          <Text style={subtext}>Daily Reminders</Text>
           <Switch
             trackColor={{ false: "#ffffff", true: "#2a652c" }}
             onValueChange={toggleSwitch}
@@ -117,7 +117,7 @@ function SettingsScreen({ navigation }) {
         </View>
         { toggleOn &&
           <View style={notificationChildren}>
-            <Text style={subtext}>Set Reminder Time</Text>
+            <Text style={subtext}>Reminder Time</Text>
             <Button
               title={getDate()}
               type="outline"
