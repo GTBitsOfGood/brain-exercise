@@ -22,6 +22,9 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 20,
   },
+  quit: {
+    backgroundColor: '#EEE'
+  },
 });
 
 function Pause({ navigation }) {
@@ -35,7 +38,8 @@ function Pause({ navigation }) {
       />
       <Button
         title="Quit"
-        buttonStyle={styles.button}
+        buttonStyle={styles.quit}
+        titleStyle={{ color: 'red' }}
         onPress={() => Alert.alert(
           "Quit the Game",
           "Are you sure? This will delete ALL of your progress.",

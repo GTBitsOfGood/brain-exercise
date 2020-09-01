@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 const Button = (props) => {
     return (
     <BaseButton {...props}
-        buttonStyle={{
+        buttonStyle={[{
             alignSelf: "center",
             marginVertical: 10,
             width: 300,
             height: 60,
             borderRadius: 5,
             backgroundColor: "#005AA3",
-    }}>
+    }, props.buttonStyle]}>
         {props.children}
     </BaseButton>
 )};
