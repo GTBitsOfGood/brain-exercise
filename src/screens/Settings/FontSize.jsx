@@ -1,33 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { Button, Slider } from "react-native-elements";
+import { Slider } from "react-native-elements";
 import { CommonActions } from '@react-navigation/native';
 import { StyleSheet, View, Text } from "react-native";
 import PropTypes from 'prop-types';
 import AsyncStorage from "@react-native-community/async-storage";
-import defaultSettings from "../../components/DefaultSettings"
+import defaultSettings from "../../components/DefaultSettings";
+import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    padding: 30,
+    justifyContent: 'space-between',
+    padding: 20,
     backgroundColor: "white"
-  },
-  saveButton: {
-    marginTop: 20,
-    height: 45,
-    borderRadius: 10,
-    backgroundColor: "#2a652c",
-  },
-  sliderWithButton: {
-    paddingVertical: 160,
   },
   texts: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 20,
+    textAlign: "center"
   },
+  textWrapper: {
+    justifyContent: 'center',
+    minHeight:200, 
+  }
 });
 
 function FontSize ({ route, navigation }) {
@@ -52,9 +50,11 @@ function FontSize ({ route, navigation }) {
 
   return (
     <View style={styles.root}>
-      <Text style={StyleSheet.create({fontSize: value, minHeight:200})}>
-        Drag the slider below to make the text on screen smaller or larger.
-      </Text>
+      <View style={styles.textWrapper}>
+        <Text style={{fontSize: value,textAlign: "center"}}>
+          Drag the slider below to make the text on screen smaller or larger.
+        </Text> 
+      </View>
       <View>
         <Slider
           // style={styles.slider}
