@@ -61,14 +61,14 @@ function FontSize ({ route, navigation }) {
           thumbTintColor={"#2a652c"}
           allowTouchTrack={true}
           minimumValue={16}
-          maximumValue={32}
-          step={4}
+          maximumValue={28}
+          step={3}
           onValueChange={(v) => setValue(v)}
           value={value}
         />
         <View style={styles.texts}>
           <Text style={{fontSize:16}}>T</Text>
-          <Text style={{fontSize:34}}>T</Text>
+          <Text style={{fontSize:28}}>T</Text>
         </View>
       </View>
       <Button
