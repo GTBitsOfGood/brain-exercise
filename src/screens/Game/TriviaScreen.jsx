@@ -33,12 +33,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: "center",
   },
-  buttonTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "white",
-  },
 });
 const totalTime = 300;
 
@@ -85,7 +79,6 @@ function TriviaScreen({ navigation }) {
               ? "Next"
               : "Show Answer"
           }
-          titleStyle={styles.buttonTitle}
           buttonStyle={styles.button}
           onPress={() => {
             if (!answered) {
