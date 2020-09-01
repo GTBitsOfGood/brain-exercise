@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import AsyncStorage from "@react-native-community/async-storage"
 import PropTypes from "prop-types";
@@ -8,24 +7,21 @@ import { Notifications } from "expo";
 import scheduleNotifications from "../../scripts/notification-logic";
 import defaultSettings from "../../components/DefaultSettings"
 import Text from "../../components/Text";
+import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    marginVertical: 30,
-    marginHorizontal: 30,
+    justifyContent: "space-between",
+    padding: 20,
+    backgroundColor: 'white',
   },
   text: {
     fontSize: 20,
     textAlign: "center",
-    marginVertical: 30,
+    marginBottom: 20,
   },
-  button: {
-    marginTop: 20,
-    borderRadius: 10,
-    backgroundColor: "#2a652c",
-  }
 });
 
 function TimePicker({ navigation, route }) {
@@ -63,7 +59,6 @@ function TimePicker({ navigation, route }) {
         onChange={onChange}
       />
       <Button
-        buttonStyle={styles.button}
         title="Confirm Time"
         type="solid"
         onPress={confirmTime}
