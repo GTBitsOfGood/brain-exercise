@@ -72,7 +72,7 @@ export default function App() {
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{ title: null }}
+          options={{ title: "Home" }}
         />
 
         {/* Game Screens */}
