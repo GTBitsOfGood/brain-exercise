@@ -11,12 +11,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
+    padding: 20,
   },
   text: {
     fontWeight: "bold",
     fontSize: 20,
     marginBottom: 20,
-    marginHorizontal: 12,
     textAlign: "center",
   },
   button: {
