@@ -32,7 +32,7 @@ function FinishedScreen({ navigation }) {
       <Button
         title="More Practice"
         buttonStyle={styles.button}
-        onPress={() => navigation.navigate("GameMaterials")}
+        onPress={() => navigation.navigate("ExtraPractice")}
       />
     </View>
   );
