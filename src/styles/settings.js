@@ -5,7 +5,7 @@ const SettingsStyle = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    paddingVertical: 20,
+    padding: 20,
     backgroundColor: "white"
   },
   notifications: {
@@ -17,7 +17,7 @@ const SettingsStyle = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginLeft: 12,
+    marginLeft: 20,
   },
   text: {
     fontSize: 16,
@@ -55,7 +55,6 @@ const SettingsStyle = StyleSheet.create({
   section: {
     borderBottomColor: 'lightgray',
     borderBottomWidth: 1,
-    marginHorizontal: 30,
   },
   icon: {
     marginRight: 10,
