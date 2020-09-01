@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Slider } from "react-native-elements";
+import { CommonActions } from '@react-navigation/native';
 import { StyleSheet, View, Text } from "react-native";
 import PropTypes from 'prop-types';
 import AsyncStorage from "@react-native-community/async-storage";
@@ -31,14 +32,22 @@ const styles = StyleSheet.create({
 
 function FontSize ({ route, navigation }) {
   const settingsObj = route.params;
-  const [value, setValue] = useState(route.params.fontSize
-    || defaultSettings.fontSize);
-  settingsObj.fontSize = value
+  const [value, setValue] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    settingsObj.fontSize = route.params.fontSize
+    || defaultSettings.fontSize;
+    setTimeout(() => setValue(route.params.fontSize
+      || defaultSettings.fontSize), 50);
+  }, [])
 
   const storeSettings = async () => {
+    setIsLoading(true);
     settingsObj.fontSize = value;
     const jsonSettings = JSON.stringify(settingsObj);
     await AsyncStorage.setItem("SETTINGS", jsonSettings);
+    setIsLoading(false);
   }
 
   return (
@@ -49,15 +58,13 @@ function FontSize ({ route, navigation }) {
       <View>
         <Slider
           // style={styles.slider}
-          value={value}
           thumbTintColor={"#2a652c"}
-
           allowTouchTrack={true}
-
           minimumValue={16}
           maximumValue={32}
           step={4}
           onValueChange={(v) => setValue(v)}
+          value={value}
         />
         <View style={styles.texts}>
           <Text style={{fontSize:16}}>T</Text>
@@ -67,8 +74,18 @@ function FontSize ({ route, navigation }) {
       <Button
         title="Save Changes"
         buttonStyle={styles.saveButton}
-        onPressIn={storeSettings}
-        onPress={() => navigation.goBack(settingsObj)}
+        onPress={async () => {
+          await storeSettings();
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                { name: 'HomeScreen' },
+              ],
+            })
+          );
+        }}
+        loading={isLoading}
       />
     </View>
   );
