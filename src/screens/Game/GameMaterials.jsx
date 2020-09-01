@@ -11,19 +11,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     backgroundColor: "white"
   },
-  text: {
-    fontSize: 20,
-    textAlign: "center",
-    marginVertical: 30,
-  },
 });
 
 function GameMaterials({ navigation }) {
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>
-        Before you start, make sure you have the required materials!
-      </Text>
       <Button
         title="Reading!"
         onPress={() => navigation.navigate("ReadingIntro")}
@@ -34,7 +26,7 @@ function GameMaterials({ navigation }) {
       />
       <Button
         title="Trivia!"
-        onPress={() => navigation.navigate("TriviaScreen")}
+        onPress={() => navigation.navigate("TriviaIntro")}
       />
       <Button
         title="Prompts!"
@@ -44,6 +36,10 @@ function GameMaterials({ navigation }) {
       <Button
         title="Complete!"
         onPress={() => navigation.navigate("ExercisesCompleted")}
+      />
+      <Button
+        title="Extra Practice"
+        onPress={() => navigation.navigate("ExtraPractice")}
       />
     </View>
   );
