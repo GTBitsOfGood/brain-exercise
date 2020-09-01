@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center",
     justifyContent: "space-between",
-    padding: 30,
+    padding: 20,
     paddingTop: 100,
     backgroundColor: "white"
   },
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 30,
+    marginVertical: 20,
   },
 })
 
