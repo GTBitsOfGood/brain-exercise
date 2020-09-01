@@ -9,18 +9,15 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    padding: 30,
+    justifyContent: 'center',
+    padding: 20,
     backgroundColor: "white"
   },
   text: {
     fontSize: 20,
     textAlign: "center",
-    marginVertical: 30,
+    marginBottom: 20,
   },
-  button: {
-    marginTop: 20,
-    borderRadius: 10,
-  }
 });
 
 function FinishedScreen({ navigation }) {
@@ -33,7 +30,7 @@ function FinishedScreen({ navigation }) {
         onPress={() => navigation.navigate("HomeScreen")}
       />
       <Button
-        title="Extra Practice"
+        title="More Practice"
         buttonStyle={styles.button}
         onPress={() => navigation.navigate("GameMaterials")}
       />
