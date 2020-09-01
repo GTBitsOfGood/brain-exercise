@@ -10,8 +10,9 @@ import Button from "../../components/Button";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 25,
+    justifyContent: "space-around",
+    alignItems: 'center',
+    paddingHorizontal: 20,
     backgroundColor: "white"
   },
   instructionText: {
@@ -24,34 +25,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   answerText: {
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
   },
   actualAnswerText: {
-    fontSize: 28,
+    fontSize: 25,
     textAlign: "center",
-  },
-  textContainer: {
-    flex: 1,
-    flexDirection: "column",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "space-around",
-    paddingTop: 30,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingBottom: 30,
-  },
-  container: {
-    flex: 3,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignContent: "stretch",
-    justifyContent: "space-around",
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 50,
   },
   buttonTitle: {
     fontSize: 20,
@@ -82,17 +62,18 @@ function TriviaScreen({ navigation }) {
         }}
         shouldNotRender
       />
-      <View style={styles.textContainer}>
+      {
+        !answered &&
         <Text style={styles.instructionText}>
-          Write down both the question and answer to:
+          Write the question, then your answer
         </Text>
-        <Text style={styles.questionText}>{problem.question}</Text>
-        <View>
-          <Text style={styles.answerText}>{answered ? "Answer:" : ""}</Text>
-          <Text style={styles.actualAnswerText}>
-            {answered ? problem.answer : ""}
-          </Text>
-        </View>
+      }
+      <Text style={styles.questionText}>{problem.question}</Text>
+      <View>
+        <Text style={styles.answerText}>{answered ? "Answer:" : ""}</Text>
+        <Text style={styles.actualAnswerText}>
+          {answered ? problem.answer : ""}
+        </Text>
       </View>
       <View>
         <Button
