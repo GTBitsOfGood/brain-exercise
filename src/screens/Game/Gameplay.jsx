@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: "center",
     marginTop: 20,
-    width: 99,
+    minWidth: 99,
     height: 99,
     borderRadius: 25,
     borderWidth: 5,
