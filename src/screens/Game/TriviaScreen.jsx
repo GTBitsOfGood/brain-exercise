@@ -10,9 +10,9 @@ import Button from "../../components/Button";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: 'center',
-    paddingHorizontal: 20,
+    padding: 20,
     backgroundColor: "white"
   },
   instructionText: {
@@ -48,20 +48,22 @@ function TriviaScreen({ navigation }) {
 
   return (
     <View style={styles.root}>
-      <ProgressBar
-        seconds={totalTime}
-        red={60}
-        func={() => {
-          setFinished(true);
-        }}
-        shouldNotRender
-      />
-      {
-        !answered &&
-        <Text style={styles.instructionText}>
-          Write the question, then your answer
-        </Text>
-      }
+      <View>
+        <ProgressBar
+          seconds={totalTime}
+          red={60}
+          func={() => {
+            setFinished(true);
+          }}
+          shouldNotRender
+        />
+        {
+          !answered &&
+          <Text style={styles.instructionText}>
+            Write the question, then your answer
+          </Text>
+        }
+      </View>
       <Text style={styles.questionText}>{problem.question}</Text>
       <View>
         <Text style={styles.answerText}>{answered ? "Answer:" : ""}</Text>

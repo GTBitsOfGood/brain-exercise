@@ -11,16 +11,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "space-between",
-        padding: 25,
-        paddingHorizontal: 15,
+        padding: 20,
         backgroundColor: "white"
     },
     instructions: {
         fontSize: 30,
         fontWeight: "bold",
         textAlign: "center",
-        marginTop: 20,
-        paddingBottom: 12,
     },
     article: {
         fontSize: 20,

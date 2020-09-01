@@ -9,9 +9,9 @@ import Text from "../../components/Text";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: 'center',
-    paddingHorizontal: 20,
+    padding: 20,
     backgroundColor: "white"
   },
   instructionText: {
@@ -44,8 +44,10 @@ function PromptScreen({ navigation }) {
 
   return (
     <View style={styles.root}>
-      <ProgressBar seconds = {300} red = {60} func = {() => {setFinished(true)}} shouldNotRender/>
-      <Text style={styles.instructionText}>Write the question, then you answer</Text>
+      <View>
+        <ProgressBar seconds = {300} red = {60} func = {() => {setFinished(true)}} shouldNotRender/>
+        <Text style={styles.instructionText}>Write the question, then you answer</Text>
+      </View>
       <Text style = {styles.questionText}>{problem}</Text>
       <Button
         // eslint-disable-next-line no-nested-ternary
