@@ -9,6 +9,10 @@ import Text from "../../components/Text";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    justifyContent: "space-around",
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    backgroundColor: "white"
   },
   instructionText: {
     fontSize: 32,
@@ -20,47 +24,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   answerText: {
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
   },
   actualAnswerText: {
-    fontSize: 28,
+    fontSize: 25,
     textAlign: "center",
-  },
-  textContainer: {
-    flex: 1,
-    flexDirection: "column",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "space-around",
-    paddingTop: 30,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingBottom: 30,
-  },
-  container: {
-    flex: 3,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignContent: "stretch",
-    justifyContent: "space-around",
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 50,
-  },
-  button: {
-    alignSelf: "center",
-    width: 300,
-    height: 50,
-    marginTop: 20,
-    marginBottom: 50,
-  },
-  buttonTitle: {
-    fontSize: 20,
-    fontWeight: "100",
-    textAlign: "center",
-    color: "white",
   },
 });
 
@@ -75,25 +45,19 @@ function PromptScreen({ navigation }) {
   return (
     <View style={styles.root}>
       <ProgressBar seconds = {300} red = {60} func = {() => {setFinished(true)}} shouldNotRender/>
-      <View style={styles.textContainer}>
-        <Text style={styles.instructionText}>Write down both the question and answer to: </Text>
-        <Text style = {styles.questionText}>{problem}</Text>
-      </View>
-      <View>
-        <Button
-          // eslint-disable-next-line no-nested-ternary
-          title={finished ? "Finish Writing Section" : "Next" }
-          titleStyle = {styles.buttonTitle}
-          buttonStyle={styles.button}
-          onPress={() => {
-            if (!finished) {
-              getNewProblem()
-            } else {
-              navigation.navigate("FinishedScreen")
-            }
-          }}
-        />
-      </View>
+      <Text style={styles.instructionText}>Write the question, then you answer</Text>
+      <Text style = {styles.questionText}>{problem}</Text>
+      <Button
+        // eslint-disable-next-line no-nested-ternary
+        title={finished ? "Finish Writing Section" : "Next" }
+        onPress={() => {
+          if (!finished) {
+            getNewProblem()
+          } else {
+            navigation.navigate("FinishedScreen")
+          }
+        }}
+      />
     </View>
   );
 }
