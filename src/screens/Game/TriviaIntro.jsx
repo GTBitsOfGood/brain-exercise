@@ -7,7 +7,7 @@ import styles from '../../styles/intro';
 
 const image = require("../../assets/books.png");
 
-function TriviaIntro({ navigation }) {
+function TriviaIntro({ navigation, route }) {
   return (
     <View style={styles.root}>
       <View style={styles.imageContainer}>
@@ -21,7 +21,7 @@ function TriviaIntro({ navigation }) {
       <Button
         title="Start Writing"
         buttonStyle={styles.nextButton}
-        onPress={() => navigation.navigate("TriviaScreen")}
+        onPress={() => navigation.navigate("TriviaScreen", { shouldReturn: route.params ? route.params.shouldReturn : false })}
       />
     </View>
   );
@@ -29,6 +29,7 @@ function TriviaIntro({ navigation }) {
 
 TriviaIntro.propTypes = {
   navigation: PropTypes.object,
+  route: PropTypes.object,
 };
 
 export default TriviaIntro;

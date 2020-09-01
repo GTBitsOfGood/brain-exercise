@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import Button from "../../components/Button";
 import PropTypes from "prop-types";
+import Button from "../../components/Button";
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../assets/prompts";
 import Text from "../../components/Text";
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function PromptScreen({ navigation }) {
+function PromptScreen({ navigation, route }) {
   const [problem, setProblem] = useState(getProblem());
   const [finished, setFinished] = useState(false);
 
@@ -55,8 +55,10 @@ function PromptScreen({ navigation }) {
         onPress={() => {
           if (!finished) {
             getNewProblem()
+          } else if (route.params.shouldReturn) {
+            navigation.navigate("HomeScreen");
           } else {
-            navigation.navigate("FinishedScreen")
+            navigation.navigate("FinishedScreen");
           }
         }}
       />

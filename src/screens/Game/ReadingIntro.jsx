@@ -7,7 +7,7 @@ import styles from '../../styles/intro';
 
 const image = require("../../assets/books.png");
 
-function ReadingIntro({ navigation }) {
+function ReadingIntro({ navigation, route }) {
   return (
     <View style={styles.root}>
       <View style={styles.imageContainer}>
@@ -21,7 +21,7 @@ function ReadingIntro({ navigation }) {
       </View>
       <Button
         title="Start Reading"
-        onPress={() => navigation.navigate("ReadingMain")}
+        onPress={() => navigation.navigate("ReadingMain", { shouldReturn: route.params ? route.params.shouldReturn : false })}
       />
     </View>
   );
@@ -29,6 +29,7 @@ function ReadingIntro({ navigation }) {
 
 ReadingIntro.propTypes = {
   navigation: PropTypes.object,
+  route: PropTypes.object,
 };
 
 export default ReadingIntro;

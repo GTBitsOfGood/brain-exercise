@@ -198,7 +198,11 @@ function Gameplay({ route, navigation }) {
         seconds={totalTime}
         red={60}
         func={() => {
-          navigation.navigate(route.params.nextScreen);
+          if (route.params.shouldReturn) {
+            navigation.navigate("HomeScreen");
+          } else {
+            navigation.navigate(route.params.nextScreen);
+          }
         }}
         ref={pBar}
         shouldNotRender

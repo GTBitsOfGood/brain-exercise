@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function ReadingMain({ navigation }) {
+export default function ReadingMain({ navigation, route }) {
   const [timeUp, setTimeUp] = useState(false);
   const [storyArray, setStoryArray] = useState(getStoryArray());
   const [paragraph, setParagraph] = useState("");
@@ -42,9 +42,13 @@ export default function ReadingMain({ navigation }) {
    */
   const buttonFunction = () => {
     if (timeUp) {
-      navigation.navigate("MathIntro", {
-        nextScreen: "WritingIntro",
-      });
+      if (route.params.shouldReturn) {
+        navigation.navigate("HomeScreen");
+      } else {
+        navigation.navigate("MathIntro", {
+          nextScreen: "WritingIntro",
+        });
+      }
     } else if (storyArray.length - 1 === page) {
       setStoryArray(getStoryArray());
       setPage(0);
@@ -72,5 +76,5 @@ export default function ReadingMain({ navigation }) {
 
 ReadingMain.propTypes = {
   navigation: propTypes.object,
-  route: propTypes.any,
+  route: propTypes.object,
 };

@@ -10,7 +10,7 @@ const image = require("../../assets/writing_icon.png");
 // Each article has a readAlready field to check if it should be presented again
 // The text is a text array where the text is split up by \n characters
 
-function WritingIntro({ navigation }) {
+function WritingIntro({ navigation, route }) {
   // Update stories when page is loaded
 
   return (
@@ -27,7 +27,7 @@ function WritingIntro({ navigation }) {
       <Button
         title="Start Writing"
         buttonStyle={styles.nextButton}
-        onPress={() => navigation.navigate("PromptScreen")}
+        onPress={() => navigation.navigate("PromptScreen", { shouldReturn: route.params ? route.params.shouldReturn : false })}
       />
     </View>
   );
@@ -35,6 +35,7 @@ function WritingIntro({ navigation }) {
 
 WritingIntro.propTypes = {
   navigation: PropTypes.object,
+  route: PropTypes.object,
 };
 
 export default WritingIntro;

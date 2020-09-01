@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 });
 const totalTime = 300;
 
-function TriviaScreen({ navigation }) {
+function TriviaScreen({ navigation, route }) {
   const [problem, setProblem] = useState(getProblem());
   const [answered, setAnswered] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -87,6 +87,8 @@ function TriviaScreen({ navigation }) {
               setAnswered(true);
             } else if (!finished) {
               getNewProblem();
+            } else if (route.params.shouldReturn) {
+              navigation.navigate("HomeScreen");
             } else {
               navigation.navigate("ReadingIntro");
             }
@@ -99,6 +101,7 @@ function TriviaScreen({ navigation }) {
 
 TriviaScreen.propTypes = {
   navigation: PropTypes.object,
+  route: PropTypes.object,
 };
 
 export default TriviaScreen;
