@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import PropTypes from "prop-types";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
@@ -16,12 +16,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginBottom: 20,
+    marginHorizontal: 12,
     textAlign: "center",
   },
   button: {
-    alignContent: "space-between",
     marginTop: 20,
-    borderRadius: 10,
   },
 });
 
@@ -35,9 +34,20 @@ function Pause({ navigation }) {
         onPress={() => navigation.goBack()}
       />
       <Button
-        title="Return to Home"
+        title="Quit"
         buttonStyle={styles.button}
-        onPress={() => navigation.navigate("HomeScreen")}
+        onPress={() => Alert.alert(
+          "Quit the Game",
+          "Are you sure? This will delete ALL of your progress.",
+          [
+            {
+              text: "Cancel",
+              style: "cancel"
+            },
+            { text: "Quit", onPress: () => navigation.navigate("HomeScreen") }
+          ],
+          { cancelable: false }
+        )}
       />
     </View>
   );
