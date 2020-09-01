@@ -16,14 +16,13 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
     instructions: {
-        flex: 0.4,
         fontSize: 30,
         fontWeight: "bold",
         textAlign: "center",
         marginTop: 20,
+        paddingBottom: 12,
     },
     article: {
-        flex: 1.8,
         fontSize: 20,
         textAlign: "center",
     },
@@ -49,7 +48,7 @@ export default function ReadingMain({ navigation }) {
       navigation.navigate("MathIntro", {
         nextScreen: "WritingIntro",
       });
-    } else if (storyArray.length - 1 == page) {
+    } else if (storyArray.length - 1 === page) {
       setStoryArray(getStoryArray());
       setPage(0);
     } else {
