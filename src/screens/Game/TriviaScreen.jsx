@@ -10,8 +10,9 @@ import Button from "../../components/Button";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 25,
+    justifyContent: "space-between",
+    alignItems: 'center',
+    padding: 20,
     backgroundColor: "white"
   },
   instructionText: {
@@ -24,45 +25,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   answerText: {
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
   },
   actualAnswerText: {
-    fontSize: 28,
+    fontSize: 25,
     textAlign: "center",
-  },
-  textContainer: {
-    flex: 1,
-    flexDirection: "column",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "space-around",
-    paddingTop: 30,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingBottom: 30,
-  },
-  container: {
-    flex: 3,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignContent: "stretch",
-    justifyContent: "space-around",
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 50,
-  },
-  buttonTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "white",
   },
 });
 const totalTime = 300;
 
-function TriviaScreen({ navigation }) {
+function TriviaScreen({ navigation, route }) {
   const [problem, setProblem] = useState(getProblem());
   const [answered, setAnswered] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -74,25 +48,28 @@ function TriviaScreen({ navigation }) {
 
   return (
     <View style={styles.root}>
-      <ProgressBar
-        seconds={totalTime}
-        red={60}
-        func={() => {
-          setFinished(true);
-        }}
-        shouldNotRender
-      />
-      <View style={styles.textContainer}>
-        <Text style={styles.instructionText}>
-          Write down both the question and answer to:
-        </Text>
-        <Text style={styles.questionText}>{problem.question}</Text>
-        <View>
-          <Text style={styles.answerText}>{answered ? "Answer:" : ""}</Text>
-          <Text style={styles.actualAnswerText}>
-            {answered ? problem.answer : ""}
+      <View>
+        <ProgressBar
+          seconds={totalTime}
+          red={60}
+          func={() => {
+            setFinished(true);
+          }}
+          shouldNotRender
+        />
+        {
+          !answered &&
+          <Text style={styles.instructionText}>
+            Write the question, then your answer
           </Text>
-        </View>
+        }
+      </View>
+      <Text style={styles.questionText}>{problem.question}</Text>
+      <View>
+        <Text style={styles.answerText}>{answered ? "Answer:" : ""}</Text>
+        <Text style={styles.actualAnswerText}>
+          {answered ? problem.answer : ""}
+        </Text>
       </View>
       <View>
         <Button
@@ -104,13 +81,14 @@ function TriviaScreen({ navigation }) {
               ? "Next"
               : "Show Answer"
           }
-          titleStyle={styles.buttonTitle}
           buttonStyle={styles.button}
           onPress={() => {
             if (!answered) {
               setAnswered(true);
             } else if (!finished) {
               getNewProblem();
+            } else if (route.params.shouldReturn) {
+              navigation.navigate("HomeScreen");
             } else {
               navigation.navigate("ReadingIntro");
             }
@@ -123,6 +101,7 @@ function TriviaScreen({ navigation }) {
 
 TriviaScreen.propTypes = {
   navigation: PropTypes.object,
+  route: PropTypes.object,
 };
 
 export default TriviaScreen;

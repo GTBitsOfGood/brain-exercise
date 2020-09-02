@@ -3,7 +3,7 @@
  * @param {*} range
  * Returns a random integer from within the range,
  * exclusive of range.end 
- **/
+ * */
 function randomChoiceFromRange(range) {
   const { start, end } = range;
   const choice = Math.floor(start + Math.random() * (end - start));
@@ -85,11 +85,11 @@ function generateProblem(difficulty) {
  * @param {*} difficulty
  * @param {*} solution
  * Return ranges [sol - 15, sol), [sol + 1, sol + 1 + 15)
- **/
+ * */
 function generateRanges(solution) {
   return {
     upperRange: { start: solution + 1, end: solution + 1 + 15 },
-    lowRange: { start: solution - 15, end: solution },
+    lowRange: { start: solution - 15, end: solution - 1 },
   };
 }
 
@@ -97,7 +97,7 @@ function generateRanges(solution) {
  * @param {*} difficulty
  * @param {*} solution
  * Returns array of unique answer choices
- **/
+ * */
 function generateChoices(solution) {
   const numChoices = 3;
   const { upperRange, lowRange } = generateRanges(solution);
@@ -106,9 +106,9 @@ function generateChoices(solution) {
   choiceSet.add(solution)
 
   while (choiceSet.size < numChoices) {
-    //If a coin lands heads
+    // If a coin lands heads
     if (Math.floor(Math.random() * 2 + 1) % 2 === 0) {
-      //pick a larger number than the solution 
+      // pick a larger number than the solution 
       choiceSet.add(randomChoiceFromRange(upperRange));
     } else {
       choiceSet.add(randomChoiceFromRange(lowRange));

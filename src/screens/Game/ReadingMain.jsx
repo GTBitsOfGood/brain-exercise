@@ -11,25 +11,21 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "space-between",
-        padding: 25,
-        paddingHorizontal: 15,
+        padding: 20,
         backgroundColor: "white"
     },
     instructions: {
-        flex: 0.4,
         fontSize: 30,
         fontWeight: "bold",
         textAlign: "center",
-        marginTop: 20,
     },
     article: {
-        flex: 1.8,
         fontSize: 20,
         textAlign: "center",
     },
 });
 
-export default function ReadingMain({ navigation }) {
+export default function ReadingMain({ navigation, route }) {
   const [timeUp, setTimeUp] = useState(false);
   const [storyArray, setStoryArray] = useState(getStoryArray());
   const [paragraph, setParagraph] = useState("");
@@ -46,10 +42,14 @@ export default function ReadingMain({ navigation }) {
    */
   const buttonFunction = () => {
     if (timeUp) {
-      navigation.navigate("MathIntro", {
-        nextScreen: "WritingIntro",
-      });
-    } else if (storyArray.length - 1 == page) {
+      if (route.params.shouldReturn) {
+        navigation.navigate("HomeScreen");
+      } else {
+        navigation.navigate("MathIntro", {
+          nextScreen: "WritingIntro",
+        });
+      }
+    } else if (storyArray.length - 1 === page) {
       setStoryArray(getStoryArray());
       setPage(0);
     } else {
@@ -76,5 +76,5 @@ export default function ReadingMain({ navigation }) {
 
 ReadingMain.propTypes = {
   navigation: propTypes.object,
-  route: propTypes.any,
+  route: propTypes.object,
 };

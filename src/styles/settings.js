@@ -5,19 +5,19 @@ const SettingsStyle = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    paddingVertical: 20,
+    padding: 20,
     backgroundColor: "white"
   },
   notifications: {
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   notificationChildren: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginLeft: 30,
+    marginLeft: 20,
   },
   text: {
     fontSize: 16,
@@ -53,13 +53,8 @@ const SettingsStyle = StyleSheet.create({
     fontSize: 16,
   },
   section: {
-    borderBottomColor: 'gray',
+    borderBottomColor: 'lightgray',
     borderBottomWidth: 1,
-    marginHorizontal: 30,
-  },
-  firstSection: {
-    borderTopColor: 'gray',
-    borderTopWidth: 1,
   },
   icon: {
     marginRight: 10,

@@ -1,57 +1,34 @@
-import React from "react";
-import { View, StyleSheet, Image } from "react-native";
-import { Button } from "react-native-elements";
+import React, { useEffect } from "react";
+import { View, Image } from "react-native";
+import { Audio } from 'expo-av';
 import PropTypes from "prop-types";
 import Text from "../../components/Text";
+import Button from "../../components/Button";
+import styles from '../../styles/intro';
+import useSoundSetting from "../../scripts/useSoundSetting";
 
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-between",
-    margin: 25,
-    marginVertical: 60,
-  },
-  instructions: {
-    fontSize: 18,
-    textAlign: "center",
-    marginVertical: 20,
-  },
-  headInstruction: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  nextButton: {
-    marginTop: 20,
-    width: 320,
-    height: 55,
-    borderRadius: 5,
-    backgroundColor: "#005AA3",
-  },
-  imageContainer: {
-    flex: 2,
-    width: "100%",
-    height: 200,
-    borderRadius: 2,
-    flexDirection: "column",
-    padding: 8,
-  },
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    width: undefined,
-    height: undefined,
-    resizeMode: "contain",
-  },
-});
-
-const image = require("../../assets/writing_icon.png");
+const image = require("../../assets/Prompts_Icon.png");
+const sound = require('../../assets/writing.mp3');
 
 // Each article has a readAlready field to check if it should be presented again
 // The text is a text array where the text is split up by \n characters
 
-function WritingIntro({ navigation }) {
-  // Update stories when page is loaded
+function WritingIntro({ navigation, route }) {
+  const shouldPlay = useSoundSetting();
+
+  useEffect(() => {
+    const soundObject = new Audio.Sound();
+    async function play() {
+      await soundObject.loadAsync(sound);
+      soundObject.playAsync();
+    }
+    if (shouldPlay.voiceOverOn) {
+      play();
+    }
+    return () => {
+      soundObject.unloadAsync();
+    };
+  });
 
   return (
     <View style={styles.root}>
@@ -67,7 +44,7 @@ function WritingIntro({ navigation }) {
       <Button
         title="Start Writing"
         buttonStyle={styles.nextButton}
-        onPress={() => navigation.navigate("PromptScreen")}
+        onPress={() => navigation.navigate("PromptScreen", { shouldReturn: route.params ? route.params.shouldReturn : false })}
       />
     </View>
   );
@@ -75,6 +52,7 @@ function WritingIntro({ navigation }) {
 
 WritingIntro.propTypes = {
   navigation: PropTypes.object,
+  route: PropTypes.object,
 };
 
 export default WritingIntro;

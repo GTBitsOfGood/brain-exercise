@@ -10,50 +10,80 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    marginVertical: 30,
-    marginHorizontal: 30,
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: 'white'
   },
   text: {
     fontSize: 20,
+    fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 30,
-  },
-  button: {
-    alignContent: "space-between",
-    marginTop: 20,
-    borderRadius: 10,
+    marginBottom: 20,
   },
   pause: {
     // alignContent: "space-between",
     borderRadius: 10,
   },
+  button: {
+    marginTop: 10,
+  },
 });
 
 function ExtraPractice({ navigation }) {
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button
-          titleStyle={{
-            color: "white",
-            fontSize: 16,
-          }}
-          buttonStyle={styles.pause}
-          onPress={() => navigation.navigate("Pause")}
-          title="Pause"
-          type="clear"
-        />
-      ),
-    });
-  }, [navigation]);
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>Insert Extra Practice Problems here!</Text>
+      <Text style={styles.text}>Choose an exercise!</Text>
+      <View>
+      <Button
+        title="Math"
+        icon={{
+          name: 'calculator',
+          type: 'font-awesome',
+          size: 20,
+          color: "white",
+        }}
+        buttonStyle={styles.button}
+        onPress={() => navigation.navigate("MathIntro", { shouldReturn: true })}
+      />
+      <Button
+        title="Reading"
+        icon={{
+          name: 'book',
+          type: 'font-awesome',
+          size: 20,
+          color: "white",
+        }}
+        buttonStyle={styles.button}
+        onPress={() => navigation.navigate("ReadingIntro", { shouldReturn: true })}
+      />
+      <Button
+        title="Writing Prompts"
+        icon={{
+          name: 'pencil',
+          type: 'font-awesome',
+          size: 20,
+          color: "white",
+        }}
+        buttonStyle={styles.button}
+        onPress={() => navigation.navigate("WritingIntro", { shouldReturn: true })}
+      />
+      <Button
+        title="Trivia"
+        icon={{
+          name: 'question-circle',
+          type: 'font-awesome',
+          size: 20,
+          color: "white",
+        }}
+        buttonStyle={styles.button}
+        onPress={() => navigation.navigate("TriviaIntro", { shouldReturn: true })}
+      />
       <Button
         title="Return to Home"
         buttonStyle={styles.button}
         onPress={() => navigation.navigate("HomeScreen")}
       />
+      </View>
     </View>
   );
 }

@@ -1,34 +1,32 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
+import { Audio } from 'expo-av';
 import ConfettiCannon from "react-native-confetti-cannon";
 import PropTypes from "prop-types";
 import AsyncStorage from "@react-native-community/async-storage";
 import { incrementStreak } from "../../scripts/progressbar-logic";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
+import useSoundSetting from "../../scripts/useSoundSetting";
+
+const sound = require('../../assets/congrats.mp3');
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    marginVertical: 30,
+    justifyContent: "center",
+    padding: 20,
   },
   goodWork: {
     fontSize: 42,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 15,
-    marginTop: 20,
   },
   message: {
     fontSize: 23,
     textAlign: "center",
-    marginVertical: 15,
-  },
-  button: {
-    marginTop: 20,
-    marginHorizontal: 30,
-    borderRadius: 10,
+    marginVertical: 20,
   },
 });
 
@@ -39,6 +37,22 @@ const getCount = async () => {
 }
 
 function ExercisesCompleted({ navigation }) {
+  const shouldPlay = useSoundSetting();
+
+  useEffect(() => {
+    const soundObject = new Audio.Sound();
+    async function play() {
+      await soundObject.loadAsync(sound);
+      soundObject.playAsync();
+    }
+    if (shouldPlay.voiceOverOn) {
+      play();
+    }
+    return () => {
+      soundObject.unloadAsync();
+    };
+  });
+
   useEffect(() => {
     incrementStreak();
   }, []);
@@ -49,17 +63,17 @@ function ExercisesCompleted({ navigation }) {
   })
 
   return (
-    <View style={styles.root}>
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
       <ConfettiCannon
         count={count}
         origin={{ x: -10, y: 0 }}
         autoStart={true}
         fadeOut={false}
       />
-      <View>
-        <Text style={styles.goodWork}>Good work!</Text>
+      <View style={styles.root}>
+        <Text style={styles.goodWork}>Great work!</Text>
         <Text style={styles.message}>
-          You have completed all of today&apos;s exercises
+          You have completed today&apos;s exercises
         </Text>
         <Button
           title="Finish"

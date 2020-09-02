@@ -1,34 +1,12 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Switch } from "react-native";
-import { Button } from "react-native-elements";
+import { View, Switch } from "react-native";
+import { CommonActions } from '@react-navigation/native';
 import AsyncStorage from "@react-native-community/async-storage";
 import PropTypes from "prop-types";
 import defaultSettings from "../../components/DefaultSettings"
 import Text from "../../components/Text";
-
-const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-        justifyContent: "space-between",
-        padding: 25,
-        backgroundColor: "white"
-    },
-    settingsBlock: {
-        flex: 1,
-    },
-    settingAndSwitch: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingVertical: 20,
-    },
-    saveButton: {
-        marginTop: 20,
-        height: 45,
-        borderRadius: 10,
-        backgroundColor: "#2a652c",
-    },
-})
+import Button from "../../components/Button";
+import styles from "../../styles/settings";
 
 
 function SoundScreen({ route, navigation }) {
@@ -72,36 +50,48 @@ function SoundScreen({ route, navigation }) {
 
     return (
         <View style={styles.root}>
-            <View style={styles.settingsBlock}>
-                <View style={styles.settingAndSwitch}>
-                    <Text style={{fontSize: route.params.fontSize}}>
+            <View style={styles.section}>
+                <View style={styles.touchableRow}>
+                    <Text style={styles.text}>
                         Sound Effects
                     </Text>
                     <Switch
-                     trackColor={{ false: "#ffffff", true: "#2a652c" }}
-                     onValueChange={() => storeSettings("soundEffects")}
-                     value={soundEffectsToggleOn}
-                     accessibilityRole="switch"
-                     />
-                </View>
-                <View style={styles.settingAndSwitch}>
-                    <Text style={{fontSize: route.params.fontSize}}>Voice Over</Text>
-                    <Switch
-                     trackColor={{ false: "#ffffff", true: "#2a652c" }}
-                     onValueChange={() => storeSettings("voiceOver")}
-                     value={voiceOverToggleOn}
-                     accessibilityRole="switch"
-                     />
-                </View>
-                <View>
-                <Button
-                  title="Save Changes"
-                  buttonStyle={styles.saveButton}
-                  onPressIn={() => storeSettings()}
-                  onPress={() => navigation.goBack()}
-                />
+                        trackColor={{ false: "#ffffff", true: "#2a652c" }}
+                        onValueChange={() => storeSettings("soundEffects")}
+                        value={soundEffectsToggleOn}
+                        accessibilityRole="switch"
+                        />
                 </View>
             </View>
+            <View style={styles.section}>
+                <View style={styles.touchableRow}>
+                    <Text style={styles.text}>
+                        Voice Over
+                    </Text>
+                    <Switch
+                        trackColor={{ false: "#ffffff", true: "#2a652c" }}
+                        onValueChange={() => storeSettings("voiceOver")}
+                        value={voiceOverToggleOn}
+                        accessibilityRole="switch"
+                        />
+                </View>
+            </View>
+            <Button
+                title="Save Changes"
+                style={{ marginTop: 20 }}
+                shouldNotPlay={!soundEffectsToggleOn}
+                onPress={async () => {
+                    await storeSettings()
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [
+                            { name: 'HomeScreen' },
+                            ],
+                        })
+                    );
+                }}
+            />
         </View>
     )
 }

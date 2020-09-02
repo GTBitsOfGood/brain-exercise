@@ -1,54 +1,32 @@
-import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import React, { useEffect } from "react";
+import { View, Image } from "react-native";
+import { Audio } from 'expo-av';
 import PropTypes from "prop-types";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
+import styles from '../../styles/intro';
+import useSoundSetting from "../../scripts/useSoundSetting";
 
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 25,
-    paddingVertical: 60,
-    backgroundColor: "white"
-  },
-  instructions: {
-    fontSize: 18,
-    textAlign: "center",
-    marginVertical: 20,
-  },
-  headInstruction: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  nextButton: {
-    marginTop: 20,
-    width: 320,
-    height: 55,
-    borderRadius: 5,
-    backgroundColor: "#005AA3",
-  },
-  imageContainer: {
-    flex: 2,
-    width: "100%",
-    height: 200,
-    borderRadius: 2,
-    flexDirection: "column",
-    padding: 8,
-  },
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    width: undefined,
-    height: undefined,
-    resizeMode: "contain",
-  },
-});
+const sound = require('../../assets/reading.mp3');
+const image = require("../../assets/Reading_Icon.png");
 
-const image = require("../../assets/books.png");
+function ReadingIntro({ navigation, route }) {
+  const shouldPlay = useSoundSetting();
 
-function ReadingIntro({ navigation }) {
+  useEffect(() => {
+    const soundObject = new Audio.Sound();
+    async function play() {
+      await soundObject.loadAsync(sound);
+      soundObject.playAsync();
+    }
+    if (shouldPlay.voiceOverOn) {
+      play();
+    }
+    return () => {
+      soundObject.unloadAsync();
+    };
+  });
+
   return (
     <View style={styles.root}>
       <View style={styles.imageContainer}>
@@ -62,8 +40,7 @@ function ReadingIntro({ navigation }) {
       </View>
       <Button
         title="Start Reading"
-        buttonStyle={styles.nextButton}
-        onPress={() => navigation.navigate("ReadingMain")}
+        onPress={() => navigation.navigate("ReadingMain", { shouldReturn: route.params ? route.params.shouldReturn : false })}
       />
     </View>
   );
@@ -71,6 +48,7 @@ function ReadingIntro({ navigation }) {
 
 ReadingIntro.propTypes = {
   navigation: PropTypes.object,
+  route: PropTypes.object,
 };
 
 export default ReadingIntro;
