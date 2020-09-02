@@ -8,17 +8,17 @@ const sound = require('../assets/button.mp3');
 const Button = (props) => {
     const soundObject = new Audio.Sound();
     useEffect(() => {
+        soundObject.loadAsync(sound);
         return () => {
             soundObject.unloadAsync();
         };
     });
     return (
     <BaseButton {...props}
-        onPress={async () => {
+        onPress={() => {
             props.onPress();
             try {
-                await soundObject.loadAsync(sound);
-                await soundObject.playAsync();
+                soundObject.replayAsync();
                 // Your sound is playing!
             } catch (error) {
                 // An error occurred!
