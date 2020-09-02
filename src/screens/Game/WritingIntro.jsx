@@ -5,7 +5,7 @@ import Text from "../../components/Text";
 import Button from "../../components/Button";
 import styles from '../../styles/intro';
 
-const image = require("../../assets/writing_icon.png");
+const image = require("../../assets/Prompts_Icon.png");
 
 // Each article has a readAlready field to check if it should be presented again
 // The text is a text array where the text is split up by \n characters

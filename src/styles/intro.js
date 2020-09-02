@@ -24,11 +24,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   imageContainer: {
+    flex: 1,
     width: "100%",
     alignItems: 'center',
   },
   image: {
-    height: 140,
+    height: "100%",
     resizeMode: 'contain',
   }
 });

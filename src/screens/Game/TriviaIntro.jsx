@@ -5,7 +5,7 @@ import Text from "../../components/Text";
 import Button from "../../components/Button";
 import styles from '../../styles/intro';
 
-const image = require("../../assets/books.png");
+const image = require("../../assets/Trivia_Icon.png");
 
 function TriviaIntro({ navigation, route }) {
   return (

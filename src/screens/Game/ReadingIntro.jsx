@@ -5,7 +5,7 @@ import Text from "../../components/Text";
 import Button from "../../components/Button";
 import styles from '../../styles/intro';
 
-const image = require("../../assets/books.png");
+const image = require("../../assets/Reading_Icon.png");
 
 function ReadingIntro({ navigation, route }) {
   return (
