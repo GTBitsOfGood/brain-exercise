@@ -18,7 +18,6 @@ export async function getStreak(onGetStreakComplete) {
     // gets the sunday before the last Exercise session
     const lastResetDay = lastStreakDay - lastStreakDate.getDay();
     const daysSinceLastReset = Math.ceil(today - lastResetDay);
-    console.log(daysSinceLastReset);
 
     if (daysSinceLastReset % 7 < daysSinceLastReset) {
       // It's sunday and no work has been done today
