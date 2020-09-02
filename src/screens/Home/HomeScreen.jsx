@@ -13,6 +13,7 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import { useFocusEffect } from "@react-navigation/native";
 import { getStreak } from "../../scripts/progressbar-logic";
 import Text from "../../components/Text";
+import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
   root: {
@@ -152,12 +153,12 @@ function HomeScreen({ navigation }) {
 
       {/* Home Screen Navigation Buttons: */}
 
-      <TouchableOpacity
-        style={styles.button}
+      <Button
+        buttonStyle={styles.button}
+        titleStyle={styles.buttonTitle}
+        title="Start Exercises"
         onPress={() => navigation.navigate("GameOverview")}
-      >
-        <Text style={styles.buttonTitle}>{"Start Exercises"}</Text>
-      </TouchableOpacity>
+      />
 
       <View style={styles.buttonsContainer}>
         <View>
