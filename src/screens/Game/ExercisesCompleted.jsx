@@ -7,7 +7,6 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { incrementStreak } from "../../scripts/progressbar-logic";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
-import useSoundSetting from "../../scripts/useSoundSetting";
 
 const sound = require('../../assets/congrats.mp3');
 
@@ -37,21 +36,22 @@ const getCount = async () => {
 }
 
 function ExercisesCompleted({ navigation }) {
-  const shouldPlay = useSoundSetting();
+  const soundObject = new Audio.Sound();
 
   useEffect(() => {
-    const soundObject = new Audio.Sound();
     async function play() {
-      await soundObject.loadAsync(sound);
-      soundObject.playAsync();
+      const storedSettings = await AsyncStorage.getItem("SETTINGS");
+      const settings = await JSON.parse(storedSettings);
+      if (settings.voiceOverOn) {
+        await soundObject.loadAsync(sound);
+        await soundObject.playAsync();
+      }
     }
-    if (shouldPlay.voiceOverOn) {
-      play();
-    }
+    play();
     return () => {
       soundObject.unloadAsync();
     };
-  });
+  }, []);
 
   useEffect(() => {
     incrementStreak();

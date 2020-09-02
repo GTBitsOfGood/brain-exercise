@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Audio } from 'expo-av';
+import AsyncStorage from "@react-native-community/async-storage";
 import PropTypes from "prop-types";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
 import "react-native-gesture-handler";
-import useSoundSetting from "../../scripts/useSoundSetting";
 
 const sound = require('../../assets/intro.mp3');
 
@@ -27,21 +27,22 @@ const styles = StyleSheet.create({
 })
 
 function GameOverview({ navigation }) {
-  const shouldPlay = useSoundSetting();
   const soundObject = new Audio.Sound();
 
   useEffect(() => {
     async function play() {
-      await soundObject.loadAsync(sound);
-      soundObject.playAsync();
+      const storedSettings = await AsyncStorage.getItem("SETTINGS");
+      const settings = await JSON.parse(storedSettings);
+      if (settings.voiceOverOn) {
+        await soundObject.loadAsync(sound);
+        await soundObject.playAsync();
+      }
     }
-    if (shouldPlay.voiceOverOn) {
-      play();
-    }
+    play();
     return () => {
       soundObject.unloadAsync();
     };
-  });
+  }, []);
 
   return (
     <View style={styles.root}>
