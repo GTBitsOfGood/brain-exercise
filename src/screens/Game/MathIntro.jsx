@@ -8,7 +8,7 @@ import Button from '../../components/Button';
 import styles from '../../styles/intro';
 
 const sound = require('../../assets/math.mp3');
-const image = require("../../assets/Math_Icon.png");
+const image = require("../../assets/Mathematics_Icon.png");
 
 // Each article has a readAlready field to check if it should be presented again
 // The text is a text array where the text is split up by \n characters
