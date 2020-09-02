@@ -113,7 +113,7 @@ const customStyles = {
   stepIndicatorLabelUnfinishedColor: "#000000",
 };
 
-const logo = require("../../assets/bei_edited.png");
+const logo = require("../../assets/bei.jpg");
 
 //  Home Screen Navigation
 function HomeScreen({ navigation }) {
