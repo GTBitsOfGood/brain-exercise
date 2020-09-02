@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { Button as BaseButton } from "react-native-elements";
 import PropTypes from 'prop-types';
 import { Audio } from 'expo-av';
+import useSoundSetting from "../scripts/useSoundSetting";
 
 const sound = require('../assets/button.mp3');
 
 const Button = (props) => {
     const soundObject = new Audio.Sound();
+    const shouldPlay = useSoundSetting().soundEffectsOn;
     useEffect(() => {
         soundObject.loadAsync(sound);
         return () => {
@@ -17,11 +19,13 @@ const Button = (props) => {
     <BaseButton {...props}
         onPress={() => {
             props.onPress();
-            try {
-                soundObject.replayAsync();
-                // Your sound is playing!
-            } catch (error) {
-                // An error occurred!
+            if (shouldPlay && !props.shouldNotPlay) {
+                try {
+                    soundObject.replayAsync();
+                    // Your sound is playing!
+                } catch (error) {
+                    // An error occurred!
+                }
             }
         }}
         buttonStyle={[{
@@ -40,6 +44,7 @@ Button.propTypes = {
     children: PropTypes.string,
     buttonStyle: PropTypes.object,
     onPress: PropTypes.func,
+    shouldNotPlay: PropTypes.bool,
 };
 
 export default Button;

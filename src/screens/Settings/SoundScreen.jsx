@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Switch } from "react-native";
+import { CommonActions } from '@react-navigation/native';
 import AsyncStorage from "@react-native-community/async-storage";
 import PropTypes from "prop-types";
 import defaultSettings from "../../components/DefaultSettings"
@@ -78,8 +79,18 @@ function SoundScreen({ route, navigation }) {
             <Button
                 title="Save Changes"
                 style={{ marginTop: 20 }}
-                onPressIn={() => storeSettings()}
-                onPress={() => navigation.goBack()}
+                shouldNotPlay={!soundEffectsToggleOn}
+                onPress={async () => {
+                    await storeSettings()
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [
+                            { name: 'HomeScreen' },
+                            ],
+                        })
+                    );
+                }}
             />
         </View>
     )
