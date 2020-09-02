@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Image } from "react-native";
+import { Audio } from 'expo-av';
 import PropTypes from "prop-types";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
 import styles from '../../styles/intro';
+import useSoundSetting from "../../scripts/useSoundSetting";
 
 const image = require("../../assets/Prompts_Icon.png");
+const sound = require('../../assets/writing.mp3');
 
 // Each article has a readAlready field to check if it should be presented again
 // The text is a text array where the text is split up by \n characters
 
 function WritingIntro({ navigation, route }) {
-  // Update stories when page is loaded
+  const shouldPlay = useSoundSetting();
+
+  useEffect(() => {
+    const soundObject = new Audio.Sound();
+    async function play() {
+      await soundObject.loadAsync(sound);
+      soundObject.playAsync();
+    }
+    if (shouldPlay.voiceOverOn) {
+      play();
+    }
+    return () => {
+      soundObject.unloadAsync();
+    };
+  });
 
   return (
     <View style={styles.root}>

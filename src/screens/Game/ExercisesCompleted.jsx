@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
+import { Audio } from 'expo-av';
 import ConfettiCannon from "react-native-confetti-cannon";
 import PropTypes from "prop-types";
 import AsyncStorage from "@react-native-community/async-storage";
 import { incrementStreak } from "../../scripts/progressbar-logic";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
+import useSoundSetting from "../../scripts/useSoundSetting";
+
+const sound = require('../../assets/congrats.mp3');
 
 const styles = StyleSheet.create({
   root: {
@@ -33,6 +37,22 @@ const getCount = async () => {
 }
 
 function ExercisesCompleted({ navigation }) {
+  const shouldPlay = useSoundSetting();
+
+  useEffect(() => {
+    const soundObject = new Audio.Sound();
+    async function play() {
+      await soundObject.loadAsync(sound);
+      soundObject.playAsync();
+    }
+    if (shouldPlay.voiceOverOn) {
+      play();
+    }
+    return () => {
+      soundObject.unloadAsync();
+    };
+  });
+
   useEffect(() => {
     incrementStreak();
   }, []);
