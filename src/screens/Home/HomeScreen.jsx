@@ -119,22 +119,24 @@ const logo = require("../../assets/bei_edited.png");
 function HomeScreen({ navigation }) {
   const [streak, setStreak] = useState(0);
   const [message, setMessage] = useState("");
+
+  const onGetStreakComplete = (retrievedStreak) => {
+    let m;
+    if (retrievedStreak === 0) {
+      m = "Let's Get Started!";
+    } else if (retrievedStreak < 5) {
+      m = "Keep Going!";
+    } else if (retrievedStreak === 5) {
+      m = "Well Done!";
+    }
+    setStreak(retrievedStreak);
+    setMessage(m);
+  };
+
   useFocusEffect(() => {
     getStreak(onGetStreakComplete);
   }, []);
-
-  const onGetStreakComplete = (retrievedStreak) => {
-    let message;
-    if (retrievedStreak === 0) {
-      message = "Let's Get Started!";
-    } else if (retrievedStreak < 5) {
-      message = "Keep Going!";
-    } else if (retrievedStreak === 5) {
-      message = "Well Done!";
-    }
-    setStreak(retrievedStreak);
-    setMessage(message);
-  };
+  
   const youtubeChannelURL =
     "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
 
