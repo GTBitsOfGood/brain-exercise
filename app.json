@@ -21,8 +21,14 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.BrainExerciseInitiative.BrainExercise",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
-    "description": "Dev Simulator"
+    "android": {
+      "package": "com.BrainExerciseInitiative.BrainExercise",
+      "versionCode": 1
+    },
+    "description": "Daily exercises for your brain."
   }
 }
