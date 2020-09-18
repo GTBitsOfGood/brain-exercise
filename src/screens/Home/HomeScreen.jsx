@@ -6,6 +6,8 @@ import {
   Image,
   TouchableOpacity,
   Linking,
+  Platform,
+  Dimensions,
 } from "react-native";
 import PropTypes from "prop-types";
 import StepIndicator from "react-native-step-indicator";
@@ -19,8 +21,8 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 30,
+    justifyContent: "space-around",
+    padding: 20,
     backgroundColor: "white"
   },
   title: {
@@ -29,33 +31,18 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     color:"#4A4B57",
   },
-
-  button: {
-    alignContent: "space-between",
-    borderRadius: 10,
-    padding: 15,
-    marginTop: 20,
-    marginBottom: 20,
-    fontWeight: "100",
-    fontSize: 30,
-    backgroundColor: "#005AA3",
-    margin: 20,
-  },
   squareButton: {
-    width: 99,
-    height: 99,
+    width: Platform.isPad ? 150 : 99,
+    height: Platform.isPad ? 150 : 99,
     backgroundColor: "white",
     borderColor: "#005AA3",
     borderWidth: 5,
     borderRadius: 25,
     marginTop: 20,
-    alignSelf: "center",
     justifyContent: "center",
     alignItems: "center",
   },
   buttonsContainer: {
-    flex: 2,
-    paddingBottom: 50,
     paddingLeft: 10,
     paddingRight: 10,
     justifyContent: "space-around",
@@ -65,7 +52,6 @@ const styles = StyleSheet.create({
   },
   buttonTitle: {
     alignSelf: "center",
-    fontSize: 20,
     fontWeight: "bold",
     color: "white",
   },
@@ -83,9 +69,9 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   image: {
-    ...StyleSheet.absoluteFillObject,
-    width: undefined,
-    height: undefined,
+    alignSelf: 'center',
+    width: Dimensions.get('window').width - 50,
+    height:  Platform.isPad ? 400 : Dimensions.get('window').height * 0.2,
     resizeMode: "contain",
   },
 });
@@ -149,14 +135,11 @@ function HomeScreen({ navigation }) {
       <Text style={styles.title}>{message}</Text>
       {/* Home Screen Step Indicator */}
 
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={logo} />
-      </View>
+      <Image style={styles.image} source={logo} />
 
       {/* Home Screen Navigation Buttons: */}
 
       <Button
-        buttonStyle={styles.button}
         titleStyle={styles.buttonTitle}
         title="Start Exercises"
         onPress={() => navigation.navigate("GameOverview")}
@@ -168,7 +151,7 @@ function HomeScreen({ navigation }) {
             style={styles.squareButton}
             onPress={() => navigation.navigate("SettingsScreen")}
           >
-            <FeatherIcon size={45} name="settings" />
+            <FeatherIcon size={Platform.isPad ? 60 : 45} name="settings" />
           </TouchableOpacity>
           <Text style={styles.squareButtonTitle}>{"Settings"}</Text>
         </View>
@@ -178,7 +161,7 @@ function HomeScreen({ navigation }) {
             style={styles.squareButton}
             onPress={() => Linking.openURL(youtubeChannelURL)}
           >
-            <FeatherIcon size={45} name="youtube" />
+            <FeatherIcon size={Platform.isPad ? 60 : 45} name="youtube" />
           </TouchableOpacity>
           <Text style={styles.squareButtonTitle}>{"Video"}</Text>
         </View>

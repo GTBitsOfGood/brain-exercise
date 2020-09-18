@@ -2,21 +2,19 @@ import React, { useEffect } from "react";
 import { Button as BaseButton } from "react-native-elements";
 import PropTypes from 'prop-types';
 import { Audio } from 'expo-av';
+import { Platform } from 'react-native'
 import useSoundSetting from "../scripts/useSoundSetting";
+
 
 const sound = require('../assets/button.mp3');
 
 const Button = (props) => {
     const soundObject = new Audio.Sound();
-    const shouldPlay = useSoundSetting().soundEffectsOn;
+    const shouldPlay = useSoundSetting() !== null && useSoundSetting().soundEffectsOn;
     useEffect(() => {
-        if (!props.shouldNotPlay) {
-            soundObject.loadAsync(sound);
-        }
+        soundObject.loadAsync(sound);
         return () => {
-            if (!props.shouldNotPlay) {
-                soundObject.unloadAsync();
-            }
+            soundObject.unloadAsync();
         };
     });
     return (
@@ -32,14 +30,17 @@ const Button = (props) => {
                 }
             }
         }}
+        titleStyle={[{
+            fontSize: Platform.isPad ? 28 : 18,
+        }, props.titleStyle]}
         buttonStyle={[{
             alignSelf: "center",
             marginVertical: 10,
-            width: 300,
-            height: 60,
+            width: Platform.isPad ? 600 : 300,
+            height: Platform.isPad ? 100 : 60,
             borderRadius: 5,
             backgroundColor: "#005AA3",
-    }, props.buttonStyle]}>
+        }, props.buttonStyle]}>
         {props.children}
     </BaseButton>
 )};
@@ -47,6 +48,7 @@ const Button = (props) => {
 Button.propTypes = {
     children: PropTypes.string,
     buttonStyle: PropTypes.object,
+    titleStyle: PropTypes.object,
     onPress: PropTypes.func,
     shouldNotPlay: PropTypes.bool,
 };

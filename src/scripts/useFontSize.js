@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Platform } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import defaultSettings from "../components/DefaultSettings";
 
@@ -24,7 +25,8 @@ const useFontSize = (originalFontsize) => {
     const asyncFontSize = settings.fontSize;
     const ratio = asyncFontSize / 20;
     const og = originalFontsize || 14;
-    return og >= 30 ? og : og * ratio;
+    const additional = Platform.isPad ? 10 : 0
+    return og >= 30 ? og + additional : og * ratio + additional;
 };
 
 export default useFontSize;
