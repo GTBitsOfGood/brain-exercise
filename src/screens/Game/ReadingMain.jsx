@@ -19,6 +19,11 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
     },
+    articleWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     article: {
         fontSize: 20,
         textAlign: "center",
@@ -62,13 +67,14 @@ export default function ReadingMain({ navigation, route }) {
       <View style={styles.root}>
           <ProgressBar seconds={600} red={30} func={() => setTimeUp(true)} shouldNotRender/>
           <Text style={styles.instructions}>Read the passage aloud.</Text>
-          <ScrollView>
+          <ScrollView contentContainerStyle={styles.articleWrapper}>
               <Text style={styles.article}>{paragraph}</Text>
           </ScrollView>
           <Button
               title="Next"
               buttonStyle={styles.nextButton}
               onPress={() => buttonFunction()}
+              shouldNotPlay
            />
       </View>
   )

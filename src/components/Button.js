@@ -10,9 +10,13 @@ const Button = (props) => {
     const soundObject = new Audio.Sound();
     const shouldPlay = useSoundSetting().soundEffectsOn;
     useEffect(() => {
-        soundObject.loadAsync(sound);
+        if (!props.shouldNotPlay) {
+            soundObject.loadAsync(sound);
+        }
         return () => {
-            soundObject.unloadAsync();
+            if (!props.shouldNotPlay) {
+                soundObject.unloadAsync();
+            }
         };
     });
     return (
