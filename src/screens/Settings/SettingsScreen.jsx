@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Switch, TouchableOpacity } from "react-native";
+import { View, Switch, TouchableOpacity, Linking } from "react-native";
 import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
@@ -9,6 +9,9 @@ import { useFocusEffect } from '@react-navigation/native';
 import Text from "../../components/Text";
 import defaultSettings from "../../components/DefaultSettings"
 import SettingsStyle from "../../styles/settings";
+
+const termsURL = 'https://gtbitsofgood.github.io/brain-exercise/terms/';
+const privacyURL = 'https://gtbitsofgood.github.io/brain-exercise/privacy/';
 
 /**
  * Takes in a settings object and stores it in Async Storage.
@@ -163,6 +166,30 @@ function SettingsScreen({ navigation }) {
             accessibilityRole="switch"
           />
         </View>
+      </View>
+      <View style={section}>
+        <TouchableOpacity
+          style={touchableRow}
+          onPress={() => Linking.openURL(termsURL)}
+        >
+          <View style={rowInfo}>
+            <Icon size={30} style={icon} name="content-copy" />
+            <Text style={text}>Terms and Conditions</Text>
+          </View>
+          <Icon size={42} style={icon} name="chevron-right" />
+        </TouchableOpacity>
+      </View>
+      <View style={section}>
+        <TouchableOpacity
+          style={touchableRow}
+          onPress={() => Linking.openURL(privacyURL)}
+        >
+          <View style={rowInfo}>
+            <Icon size={30} style={icon} name="lock" />
+            <Text style={text}>Privacy Policy</Text>
+          </View>
+          <Icon size={42} style={icon} name="chevron-right" />
+        </TouchableOpacity>
       </View>
     </View>
   );
