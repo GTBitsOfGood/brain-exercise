@@ -82,6 +82,7 @@ function TriviaScreen({ navigation, route }) {
               : "Show Answer"
           }
           buttonStyle={styles.button}
+          shouldNotPlay
           onPress={() => {
             if (!answered) {
               setAnswered(true);

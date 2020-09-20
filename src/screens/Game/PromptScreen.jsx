@@ -52,6 +52,7 @@ function PromptScreen({ navigation, route }) {
       <Button
         // eslint-disable-next-line no-nested-ternary
         title={finished ? "Finish Writing Section" : "Next" }
+        shouldNotPlay
         onPress={() => {
           if (!finished) {
             getNewProblem()
