@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Switch } from "react-native";
 import { CommonActions } from '@react-navigation/native';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from "prop-types";
 import defaultSettings from "../../components/DefaultSettings"
 import Text from "../../components/Text";

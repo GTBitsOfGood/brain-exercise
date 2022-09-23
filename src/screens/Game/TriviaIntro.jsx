@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View, Image } from "react-native";
 import { Audio } from 'expo-av';
 import PropTypes from "prop-types";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Text from "../../components/Text";
 import Button from "../../components/Button";
 import styles from '../../styles/intro';

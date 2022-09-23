@@ -4,7 +4,7 @@ import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import Text from "../../components/Text";
 import defaultSettings from "../../components/DefaultSettings"

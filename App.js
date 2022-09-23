@@ -28,7 +28,7 @@ import PromptScreen from "./src/screens/Game/PromptScreen.jsx";
 import WritingIntro from "./src/screens/Game/WritingIntro.jsx";
 import MathIntro from "./src/screens/Game/MathIntro.jsx";
 import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
-import PauseButton from "./src/components/PauseButton.js";
+import PauseButton from "./src/components/PauseButton.jsx";
 
 // Disabling dynamic type
 Text.defaultProps = Text.defaultProps || {};
@@ -49,6 +49,7 @@ const config = {
 const Stack = createStackNavigator();
 
 export default function App() {
+  
   return (
     <NavigationContainer>
       <Stack.Navigator
