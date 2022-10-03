@@ -49,20 +49,35 @@ function PromptScreen({ navigation, route }) {
         <Text style={styles.instructionText}>Write the question, then you answer</Text>
       </View>
       <Text style = {styles.questionText}>{problem}</Text>
-      <Button
-        // eslint-disable-next-line no-nested-ternary
-        title={finished ? "Finish Writing Section" : "Next" }
-        shouldNotPlay
-        onPress={() => {
-          if (!finished) {
-            getNewProblem()
-          } else if (route.params.shouldReturn) {
-            navigation.navigate("HomeScreen");
-          } else {
-            navigation.navigate("FinishedScreen");
-          }
-        }}
-      />
+      <View>
+        <Button
+          // eslint-disable-next-line no-nested-ternary
+          title={finished ? "Finish Writing Section" : "Next" }
+          shouldNotPlay
+          onPress={() => {
+            if (!finished) {
+              getNewProblem()
+            } else if (route.params.shouldReturn) {
+              navigation.navigate("HomeScreen");
+            } else {
+              navigation.navigate("FinishedScreen");
+            }
+          }}
+        />
+
+        <Button
+          title="Skip"  
+          onPress={() => {  
+            if (!finished) {
+              getNewProblem()
+            } else if (route.params.shouldReturn) {
+              navigation.navigate("HomeScreen");
+            } else {
+              navigation.navigate("FinishedScreen");
+            }
+          }}
+        />
+      </View> 
     </View>
   );
 }

@@ -33,6 +33,9 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: "center",
   },
+  button: {
+    marginVertical: '5%'
+  }
 });
 const totalTime = 300;
 
@@ -95,6 +98,18 @@ function TriviaScreen({ navigation, route }) {
             }
           }}
         />
+
+      <Button
+        title="Skip"
+        buttonStyle={styles.button}
+        onPress={() => {
+          if (finished) {
+            navigation.navigate("ReadingIntro");
+          } else {
+            getNewProblem();
+          }
+        }}
+      />
       </View>
     </View>
   );

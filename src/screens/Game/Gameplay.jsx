@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     color: "dimgrey",
   }
 });
-const totalTime = 300;
+const totalTime = 300; // should be 300 but set for variable for debugging
 
 const storeDifficultyScore = async (score) => {
   await AsyncStorage.setItem("difficultyScore", score);
@@ -131,13 +131,13 @@ function Gameplay({ route, navigation }) {
     });
   }
 
-  function checkAnswer(choiceValue) {
+  function checkAnswer(choiceValue, skip=false) {
     if (!answered) {
       const timeToAnswer = pBar.current.getCurrentTime() - remainingTime;
 
       pullDifficultyScore().then((score) => {
         let difficultyScore = parseInt(score);
-        if (timeToAnswer > 60) {
+        if (timeToAnswer > 60 || skip == true) {
           difficultyScore = Math.max(difficultyScore - 10, 100);
         }
         if (timeToAnswer < 30) {
@@ -148,7 +148,7 @@ function Gameplay({ route, navigation }) {
           }
         }
 
-        if (choiceValue === problem.solution) {
+        if (skip == false && choiceValue === problem.solution) {
           difficultyScore = Math.min(difficultyScore + 10, 499);
         }
 
@@ -215,6 +215,19 @@ function Gameplay({ route, navigation }) {
       <View style={styles.container}>
         {choices}
       </View>
+      <Button
+        title="Skip"
+        buttonStyle={{
+          width: '90%',
+          alignSelf: 'center',
+          marginBottom: '5%'
+        }}
+        onPress={() => {  
+          setPicked(5);         
+          checkAnswer(0, true);
+          setAnswered(true);
+        }}
+      />
     </View>
   );
 }
