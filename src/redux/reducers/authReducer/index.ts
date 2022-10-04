@@ -5,7 +5,7 @@ const initialState = {
   _id: '',
   name: '',
   phoneNumber: 0,
-  birthdate: new Date(),
+  birthdate: Date(),
   auth0AccessToken: '',
   authenticated: false,
   jwt: '',

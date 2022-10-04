@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants';
+import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/lib/constants';
 import rootReducer from './rootReducer';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     immutableCheck: false,
@@ -11,5 +11,3 @@ const store = configureStore({
     },
   }),
 });
-
-export default store;

@@ -12,6 +12,7 @@ import * as Auth0 from '../../constants/Auth0';
 import { login } from '../../redux/reducers/authReducer/index';
 import { setLoading } from '../../redux/reducers/loadingReducer/index';
 import { decodedJwtToken } from '../../types';
+import { logAxiosError } from '../../utils';
 
 const useProxy = Platform.select({ web: false, default: true });
 const redirectUri = AuthSession.makeRedirectUri({ useProxy });
@@ -57,24 +58,24 @@ function LoginButton(props: { onUserNotFound: () => void }) {
 
         dispatch(setLoading({ loading: true }));
 
-        // Now that we have the user access token we can request the user information from the backend
-        const loginUser = axios.post(`/login/${userInfo.sub}`, {});
-        const getDonationQueue = axios.get('/api/ongoingdonations');
+        console.log(userInfo.sub);
 
-        Promise.all([loginUser]).then((values) => {
-          const loginResponse = values[0];
+        // Now that we have the user access token we can request the user information from the backend
+        axios.post(`/login/${userInfo.sub}`, {}).then((res) => {
+          const loginResponse = res;
+          console.log(loginResponse);
 
           if (loginResponse.status === 200 && loginResponse.data !== null && loginResponse.data !== undefined && loginResponse.data.user !== null) {
             const { user } = loginResponse.data; // res.data.user is of type User
             user.jwt = receivedToken; // add jwt and authenticated to make it an AuthUser
             user.authenticated = true;
-            if (user.isAdmin || user.roles.includes('volunteer')) {
-              return dispatch(login(user));
-            }
+            return dispatch(login(user));
           } else {
             return Alert.alert('Authentication error!');
           }
         }).catch((err: AxiosError) => {
+          console.log(err);
+          logAxiosError(err);
           // We actually expect an AxiosError with response code 303 if the user could not be located in
           // the database. In this case we should redirect to onboarding to sign up this new user.
           if (err.response !== null && err.response !== undefined && err.response?.status === 303) {

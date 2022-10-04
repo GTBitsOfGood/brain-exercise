@@ -1,0 +1,27 @@
+{
+    "cli": {
+      "version": ">= 0.46.0"
+    },
+    "build": {
+      "development": {
+        "developmentClient": true,
+        "distribution": "internal"
+      },
+      "preview": {
+        "extends":"production",
+        "distribution": "internal",
+        "ios": {
+          "simulator": true
+        }
+      },
+      "production": {
+        "node":"16.9.1",
+        "env": {
+          "AXIOS_BASEURL": "https://TODO_ADD_PRODUCTION_BACKEND"
+        }
+      }
+    },
+    "submit": {
+      "production": {}
+    }
+  }

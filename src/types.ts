@@ -2,7 +2,7 @@ export type User = {
   _id?: string, // the unqiue id assigned to a user. Let Mongo create this when you insert a document without any _id attribute
   name: string,
   phoneNumber: number,
-  birthdate: Date,
+  birthdate: string,
   auth0AccessToken: string
 };
 

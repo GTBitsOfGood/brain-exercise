@@ -4,6 +4,7 @@ import session from 'express-session';
 
 import mongoose from 'mongoose';
 import bluebird from 'bluebird';
+import cors from 'cors';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { defaultRouter } from "./routes";
 import { MONGODB_URI, SESSION_SECRET } from './util/secrets';
@@ -48,6 +49,7 @@ app.get("/status", (req: Request, res: Response) => {
 });
 
 app.set('port', PORT);
+app.use(cors());
 app.use(defaultRouter);
 app.use(session({
   resave: true,
