@@ -74,8 +74,6 @@ function LoginButton(props: { onUserNotFound: () => void }) {
             return Alert.alert('Authentication error!');
           }
         }).catch((err: AxiosError) => {
-          console.log(err);
-          logAxiosError(err);
           // We actually expect an AxiosError with response code 303 if the user could not be located in
           // the database. In this case we should redirect to onboarding to sign up this new user.
           if (err.response !== null && err.response !== undefined && err.response?.status === 303) {

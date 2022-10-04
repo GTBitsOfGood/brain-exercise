@@ -15,8 +15,6 @@ export const postLoginUser = (req: Request, res: Response) => {
         return;
     }
 
-    console.log(req.params.accesstoken);
-
     // Query the users in the db based on the auth0AccessToken
     User.findOne({ auth0AccessToken: req.params.accesstoken }, (err:Error, user:UserDocument) => {
         // If there was an error report code 400 to the client
