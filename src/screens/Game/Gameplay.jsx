@@ -6,6 +6,8 @@ import React, { useState } from "react";
 import { View, StyleSheet, AsyncStorage } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
+import Toast from 'react-native-toast-message'
+
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../scripts/game-logic";
 import Text from "../../components/Text";
@@ -132,6 +134,7 @@ function Gameplay({ route, navigation }) {
   }
 
   function checkAnswer(choiceValue, skip=false) {
+    let correct = false;
     if (!answered) {
       const timeToAnswer = pBar.current.getCurrentTime() - remainingTime;
 
@@ -150,17 +153,33 @@ function Gameplay({ route, navigation }) {
 
         if (skip == false && choiceValue === problem.solution) {
           difficultyScore = Math.min(difficultyScore + 10, 499);
-        }
+          Toast.show({
+            type: 'success',
+            text1: 'Correct!'
+          });
+          correct = true;
 
+        } else {
+          Toast.show({
+            type: 'error',
+            text1: 'Wrong. Please Try Again!'
+          });
+        }
+        
         storeDifficultyScore(difficultyScore.toString());
       });
 
       setRemainingTime(pBar.current.getCurrentTime());
       setAnswered(true);
 
-      setTimeout(() => {
-        getNewProblem();
-      }, 500);
+      if (choiceValue === problem.solution) {
+        setTimeout(() => {
+          getNewProblem();
+        }, 500);
+      } else {
+        setAnswered(false);
+        setPicked(0);
+      }
     }
   }
 
@@ -206,6 +225,11 @@ function Gameplay({ route, navigation }) {
         }}
         ref={pBar}
         shouldNotRender
+      />
+      <Toast 
+        visibilityTime={1000}
+        position='bottom'
+        bottomOffset={60}
       />
       <View style={styles.textContainer}>
           <Text style={styles.title}>Tap the answer to the math problem.</Text>
