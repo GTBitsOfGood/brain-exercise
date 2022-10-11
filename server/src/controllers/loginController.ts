@@ -16,7 +16,7 @@ export const postLoginUser = (req: Request, res: Response) => {
     }
 
     // Query the users in the db based on the auth0AccessToken
-    User.findOne({ auth0AccessToken: req.params.accesstoken }, (err:Error, user:UserDocument) => {
+    User.findOne({ accessToken: req.params.accesstoken }, (err:Error, user:UserDocument) => {
         // If there was an error report code 400 to the client
         if (err) {
             res.status(400).json({ message: err.message, user });

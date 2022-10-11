@@ -58,17 +58,15 @@ function LoginButton(props: { onUserNotFound: () => void }) {
 
         dispatch(setLoading({ loading: true }));
 
-        console.log(userInfo.sub);
-
         // Now that we have the user access token we can request the user information from the backend
         axios.post(`/login/${userInfo.sub}`, {}).then((res) => {
           const loginResponse = res;
-          console.log(loginResponse);
 
           if (loginResponse.status === 200 && loginResponse.data !== null && loginResponse.data !== undefined && loginResponse.data.user !== null) {
             const { user } = loginResponse.data; // res.data.user is of type User
             user.jwt = receivedToken; // add jwt and authenticated to make it an AuthUser
             user.authenticated = true;
+            Alert.alert('Welcome, ' + user.name + "!");
             return dispatch(login(user));
           } else {
             return Alert.alert('Authentication error!');
