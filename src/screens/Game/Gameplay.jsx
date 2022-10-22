@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../scripts/game-logic";
 import Text from "../../components/Text";
+import ScoreValues from "./ScoreValues";
 
 const styles = StyleSheet.create({
   root: {
@@ -109,6 +110,8 @@ function Gameplay({ route, navigation }) {
   const [message, setMessage] = useState("");
   const [remainingTime, setRemainingTime] = useState(totalTime);
   const [answered, setAnswered] = useState(false);
+  const [correctAnswers, setCorrectAnswers] = useState(1);
+  const [attempted, setAttempted] = useState(1);
   let pBar = React.createRef();
 
   function getNewProblem() {
@@ -150,6 +153,8 @@ function Gameplay({ route, navigation }) {
 
         if (choiceValue === problem.solution) {
           difficultyScore = Math.min(difficultyScore + 10, 499);
+          setCorrectAnswers(correctAnswers + 1);
+          ScoreValues.correct = correctAnswers;
         }
 
         storeDifficultyScore(difficultyScore.toString());
@@ -186,7 +191,9 @@ function Gameplay({ route, navigation }) {
         key={choiceKey}
         onPress={() => {
           setPicked(choiceKey);
+          setAttempted(attempted+1);
           checkAnswer(choiceValue);
+          ScoreValues.total = attempted;
         }}
       />
     );
