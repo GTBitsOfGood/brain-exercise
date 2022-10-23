@@ -13,6 +13,8 @@ import FontSize from "./src/screens/Settings/FontSize.jsx";
 import SoundScreen from "./src/screens/Settings/SoundScreen.jsx";
 
 // Importing Game Screens
+import SignupScreen from "./src/screens/Signup/Signup";
+import PersonalInfoScreen from "./src/screens/Signup/PersonalInfo.jsx";
 import GameOverview from "./src/screens/Game/GameOverview.jsx";
 import GameMaterials from "./src/screens/Game/GameMaterials.jsx";
 import Gameplay from "./src/screens/Game/Gameplay.jsx";
@@ -68,6 +70,16 @@ export default function App() {
           color: 'black',
         },
       }}>
+        <Stack.Screen
+          name="SignupScreen"
+          component={SignupScreen}
+          options={{ title: 'Signup'}}
+        />
+        <Stack.Screen
+          name="PersonalInfo"
+          component={PersonalInfoScreen}
+          options={{ title: 'Personal Info'}}
+        />
         {/* Home Screens */}
         <Stack.Screen
           name="HomeScreen"
