@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Platform } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import defaultSettings from "../components/DefaultSettings";
 
 /**

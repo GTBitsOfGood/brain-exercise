@@ -3,7 +3,8 @@
 /* eslint-disable no-alert */
 import "react-native-gesture-handler";
 import React, { useState } from "react";
-import { View, StyleSheet, AsyncStorage } from "react-native";
+import { View, StyleSheet } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import ProgressBar from "../../components/ProgressBar";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import AsyncStorage from "@react-native-community/async-storage"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from "prop-types";
 import { Notifications } from "expo";
 import scheduleNotifications from "../../scripts/notification-logic";

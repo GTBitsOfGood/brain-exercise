@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { Audio } from 'expo-av';
 import ConfettiCannon from "react-native-confetti-cannon";
 import PropTypes from "prop-types";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { incrementStreak } from "../../scripts/progressbar-logic";
 import Button from "../../components/Button";
 import Text from "../../components/Text";

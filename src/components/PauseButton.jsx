@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-native-elements";
 
-const PauseButton = (props) => {
+export default function PauseButton(props) {
   return (
     <Button
       {...props}
@@ -19,5 +19,3 @@ const PauseButton = (props) => {
     />
   );
 }
-
-export default PauseButton;

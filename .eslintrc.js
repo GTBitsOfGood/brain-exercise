@@ -18,5 +18,7 @@ module.exports = {
     "prettier",
     "plugin:react/recommended",
     "plugin:react-native-a11y/basic",
+    "react-app",
+    "react-app/jest"
   ],
 };

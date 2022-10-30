@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // Number of milliseconds per day
 const msPerDay = 24 * 60 * 60 * 1000;
 

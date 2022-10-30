@@ -16,6 +16,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getStreak } from "../../scripts/progressbar-logic";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
+import LoginButton from "../../components/Auth/LoginButton";
+import LogoutButton from "../../components/Auth/LogoutButton";
 
 const styles = StyleSheet.create({
   root: {
@@ -119,9 +121,11 @@ function HomeScreen({ navigation }) {
     setMessage(m);
   };
 
-  useFocusEffect(() => {
-    getStreak(onGetStreakComplete);
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getStreak(onGetStreakComplete);
+    }, [])
+  );
   
   const youtubeChannelURL =
     "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
@@ -144,6 +148,9 @@ function HomeScreen({ navigation }) {
         title="Start Exercises"
         onPress={() => navigation.navigate("GameOverview")}
       />
+
+      <LoginButton onUserNotFound={() => {console.log("No user found!")}}></LoginButton>
+      <LogoutButton/>
 
       <View style={styles.buttonsContainer}>
         <View>

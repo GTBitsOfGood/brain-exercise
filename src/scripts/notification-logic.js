@@ -3,7 +3,7 @@ import { Notifications } from "expo";
  * Globally stores notification settings in <Day, Time of notification> pairs
  * Both key and value are stored as strings
  */
-import { AsyncStorage } from "react-native";
+ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * Returns the a number in Unix epoch time representing next notification

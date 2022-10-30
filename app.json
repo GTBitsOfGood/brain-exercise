@@ -29,6 +29,7 @@
       "package": "com.BrainExerciseInitiative.BrainExercise",
       "versionCode": 1
     },
-    "description": "Daily exercises for your brain."
+    "description": "Daily exercises for your brain.",
+    "scheme": "brain-exercise"
   }
 }
