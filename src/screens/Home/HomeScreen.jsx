@@ -149,7 +149,9 @@ function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate("GameOverview")}
       />
 
-      <LoginButton onUserNotFound={() => {console.log("No user found!")}}></LoginButton>
+      <LoginButton
+        onUserNotFound={() => navigation.navigate("SignUpScreen")}
+      ></LoginButton>
       <LogoutButton/>
 
       <View style={styles.buttonsContainer}>

@@ -42,7 +42,6 @@ function LoginButton(props: { onUserNotFound: () => void }) {
         // Retrieve the JWT access token from Auth0 and decode it
         const receivedToken = result.params.id_token;
         const userInfo: decodedJwtToken = jwtDecode(receivedToken);
-
         // TODO: Refactor to move jwt to secure store! HERE!
 
         // here for testing purposes. Change to the following if want authentication.

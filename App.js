@@ -41,6 +41,7 @@ import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store } from './src/redux/store';
+import SignUpScreen from "./src/screens/SignUp/SignUp";
 const persistor = persistStore(store);
 
 // Disabling dynamic type
@@ -94,6 +95,12 @@ export default function App() {
                     name="HomeScreen"
                     component={HomeScreen}
                     options={{ title: "Home" }}
+                  />
+      
+                  <Stack.Screen
+                    name="SignUpScreen"
+                    component={SignUpScreen}
+                    options={{ title: "SignUp" }}
                   />
 
                   {/* Game Screens */}
