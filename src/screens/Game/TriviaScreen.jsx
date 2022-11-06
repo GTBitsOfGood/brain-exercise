@@ -58,7 +58,6 @@ function TriviaScreen({ navigation, route }) {
           func={() => {
             setFinished(true);
           }}
-          shouldNotRender
         />
         {
           !answered &&

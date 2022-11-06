@@ -45,7 +45,7 @@ function PromptScreen({ navigation, route }) {
   return (
     <View style={styles.root}>
       <View>
-        <ProgressBar seconds = {300} red = {60} func = {() => {setFinished(true)}} shouldNotRender/>
+        <ProgressBar seconds = {300} red = {60} func = {() => {setFinished(true)}}/>
         <Text style={styles.instructionText}>Write the question, then you answer</Text>
       </View>
       <Text style = {styles.questionText}>{problem}</Text>

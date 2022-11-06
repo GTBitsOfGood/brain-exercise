@@ -205,7 +205,6 @@ function Gameplay({ route, navigation }) {
           }
         }}
         ref={pBar}
-        shouldNotRender
       />
       <View style={styles.textContainer}>
           <Text style={styles.title}>Tap the answer to the math problem.</Text>
