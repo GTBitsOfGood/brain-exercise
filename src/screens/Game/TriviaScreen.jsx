@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     justifyContent: "space-between",
-    alignItems: 'center',
+    alignItems: "center",
     padding: 20,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   instructionText: {
     fontSize: 32,
@@ -32,6 +32,9 @@ const styles = StyleSheet.create({
   actualAnswerText: {
     fontSize: 25,
     textAlign: "center",
+  },
+  button: {
+    marginVertical: "5%",
   },
 });
 const totalTime = 300;
@@ -55,14 +58,12 @@ function TriviaScreen({ navigation, route }) {
           func={() => {
             setFinished(true);
           }}
-          shouldNotRender
         />
-        {
-          !answered &&
+        {!answered && (
           <Text style={styles.instructionText}>
             Write the question, then your answer
           </Text>
-        }
+        )}
       </View>
       <Text style={styles.questionText}>{problem.question}</Text>
       <View>
@@ -95,10 +96,22 @@ function TriviaScreen({ navigation, route }) {
             }
           }}
         />
+        <Button
+          title="Skip"
+          buttonStyle={styles.button}
+          onPress={() => {
+            if (finished) {
+              navigation.navigate("ReadingIntro");
+            } else {
+              console.log("SKIPPED!");
+              getNewProblem();
+            }
+          }}
+        />
       </View>
     </View>
   );
-};
+}
 
 TriviaScreen.propTypes = {
   navigation: PropTypes.object,
