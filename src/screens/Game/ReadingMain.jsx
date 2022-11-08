@@ -65,7 +65,7 @@ export default function ReadingMain({ navigation, route }) {
 
   return (
       <View style={styles.root}>
-          <ProgressBar seconds={600} red={30} func={() => setTimeUp(true)} shouldNotRender/>
+          <ProgressBar seconds={600} red={30} func={() => setTimeUp(true)}/>
           <Text style={styles.instructions}>Read the passage aloud.</Text>
           <ScrollView contentContainerStyle={styles.articleWrapper}>
               <Text style={styles.article}>{paragraph}</Text>
@@ -76,6 +76,11 @@ export default function ReadingMain({ navigation, route }) {
               onPress={() => buttonFunction()}
               shouldNotPlay
            />
+
+          <Button
+            title="Skip"
+            onPress={() => buttonFunction()}
+          />
       </View>
   )
 }
