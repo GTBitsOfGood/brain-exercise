@@ -4,6 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
+import ScoreValues from "./ScoreValues";
 
 const styles = StyleSheet.create({
   root: {
@@ -24,6 +25,7 @@ function FinishedScreen({ navigation }) {
   return (
     <View style={styles.root}>
       <Text style={styles.text}>Congratulations on completing today&apos;s brain exercise!</Text>
+      <Text style={styles.text}>Score: {ScoreValues.correct}/{ScoreValues.total}</Text>
       <Button
         title="Return to Home"
         buttonStyle={styles.button}

@@ -6,11 +6,12 @@ import React, { useState } from "react";
 import { View, StyleSheet, AsyncStorage } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
-import Toast from 'react-native-toast-message'
+import Toast from "react-native-toast-message";
 
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../scripts/game-logic";
 import Text from "../../components/Text";
+import ScoreValues from "./ScoreValues";
 
 const styles = StyleSheet.create({
   root: {
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingBottom: 80,
   },
-  title :{
+  title: {
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
   gameMessage: {
     fontSize: 22,
     textAlign: "center",
-    color: "black"
+    color: "black",
   },
   selectedButton: {
     alignSelf: "center",
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "dimgrey",
-  }
+  },
 });
 const totalTime = 300; // should be 300 but set for variable for debugging
 
@@ -111,6 +112,8 @@ function Gameplay({ route, navigation }) {
   const [message, setMessage] = useState("");
   const [remainingTime, setRemainingTime] = useState(totalTime);
   const [answered, setAnswered] = useState(false);
+  const [correctAnswers, setCorrectAnswers] = useState(1);
+  const [attempted, setAttempted] = useState(1);
   let pBar = React.createRef();
 
   function getNewProblem() {
@@ -133,7 +136,7 @@ function Gameplay({ route, navigation }) {
     });
   }
 
-  function checkAnswer(choiceValue, skip=false) {
+  function checkAnswer(choiceValue, skip = false) {
     let correct = false;
     if (!answered) {
       const timeToAnswer = pBar.current.getCurrentTime() - remainingTime;
@@ -154,18 +157,19 @@ function Gameplay({ route, navigation }) {
         if (skip == false && choiceValue === problem.solution) {
           difficultyScore = Math.min(difficultyScore + 10, 499);
           Toast.show({
-            type: 'success',
-            text1: 'Correct!'
+            type: "success",
+            text1: "Correct!",
           });
           correct = true;
-
+          setCorrectAnswers(correctAnswers + 1);
+          ScoreValues.correct = correctAnswers;
         } else {
           Toast.show({
-            type: 'error',
-            text1: 'Wrong. Please Try Again!'
+            type: "error",
+            text1: "Wrong. Please Try Again!",
           });
         }
-        
+
         storeDifficultyScore(difficultyScore.toString());
       });
 
@@ -191,12 +195,12 @@ function Gameplay({ route, navigation }) {
         title={`${choiceValue}`}
         titleStyle={styles.buttonTitle}
         disabledTitleStyle={
-          answered && choiceKey === picked 
-            ? styles.selectedButtonTitle 
+          answered && choiceKey === picked
+            ? styles.selectedButtonTitle
             : styles.disabledButtonTitle
         }
         buttonStyle={styles.button}
-        disabled = {answered}
+        disabled={answered}
         disabledStyle={
           answered && choiceKey === picked
             ? styles.selectedButton
@@ -205,7 +209,9 @@ function Gameplay({ route, navigation }) {
         key={choiceKey}
         onPress={() => {
           setPicked(choiceKey);
+          setAttempted(attempted + 1);
           checkAnswer(choiceValue);
+          ScoreValues.total = attempted;
         }}
       />
     );
@@ -224,30 +230,23 @@ function Gameplay({ route, navigation }) {
           }
         }}
         ref={pBar}
-        shouldNotRender
       />
-      <Toast 
-        visibilityTime={1000}
-        position='bottom'
-        bottomOffset={60}
-      />
+      <Toast visibilityTime={1000} position="bottom" bottomOffset={60} />
       <View style={styles.textContainer}>
-          <Text style={styles.title}>Tap the answer to the math problem.</Text>
-          <Text style={styles.expressionText}>{problem.expression}</Text>
+        <Text style={styles.title}>Tap the answer to the math problem.</Text>
+        <Text style={styles.expressionText}>{problem.expression}</Text>
       </View>
       <Text style={styles.gameMessage}>{message}</Text>
-      <View style={styles.container}>
-        {choices}
-      </View>
+      <View style={styles.container}>{choices}</View>
       <Button
         title="Skip"
         buttonStyle={{
-          width: '90%',
-          alignSelf: 'center',
-          marginBottom: '5%'
+          width: "90%",
+          alignSelf: "center",
+          marginBottom: "5%",
         }}
-        onPress={() => {  
-          setPicked(5);         
+        onPress={() => {
+          setPicked(5);
           checkAnswer(0, true);
           setAnswered(true);
         }}

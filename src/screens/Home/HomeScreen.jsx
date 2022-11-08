@@ -119,9 +119,12 @@ function HomeScreen({ navigation }) {
     setMessage(m);
   };
 
-  useFocusEffect(() => {
-    getStreak(onGetStreakComplete);
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      getStreak(onGetStreakComplete);
+    }, [])
+  );
   
   const youtubeChannelURL =
     "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
