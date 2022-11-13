@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator, HeaderBackButton } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  HeaderBackButton,
+} from "@react-navigation/stack";
 import { Text } from "react-native";
 
-import Constants from 'expo-constants';
-import axios from 'axios';
-import { logAxiosError } from './src/utils';
+import Constants from "expo-constants";
+import axios from "axios";
+import { logAxiosError } from "./src/utils";
+
+// Importing temporary login screen
+import Login from "./src/screens/Settings/Login.jsx";
 
 // Importing Home Screen
 import HomeScreen from "./src/screens/Home/HomeScreen.jsx";
@@ -35,12 +41,12 @@ import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
 import PauseButton from "./src/components/PauseButton.jsx";
 
 // React Redux Persist State
-import useCachedResources from './src/hooks/useCachedResources';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Provider } from 'react-redux';
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
-import { store } from './src/redux/store';
+import useCachedResources from "./src/hooks/useCachedResources";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import { store } from "./src/redux/store";
 const persistor = persistStore(store);
 
 // Disabling dynamic type
@@ -61,38 +67,52 @@ const config = {
 
 const Stack = createStackNavigator();
 
+const AppContext = React.createContext();
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
+
+  const [signedIn, setSignedIn] = React.useState(true);
+
+  const appContextValue = useMemo(
+    () => ({
+      signedIn,
+      setSignedIn,
+    }),
+    [signedIn]
+  );
 
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
       <Provider store={store}>
-          <PersistGate persistor={persistor} loading={null}>
-            <SafeAreaProvider>
-              <NavigationContainer>
+        <PersistGate persistor={persistor} loading={null}>
+          <SafeAreaProvider>
+            <NavigationContainer>
+              <AppContext.Provider value={appContextValue}>
                 <Stack.Navigator
-                // Consistent styling across all stacked screens
-                screenOptions={{
-                  headerBackTitleVisible: false,
-                  headerTitleAllowFontScaling: false,
-                  gestureEnabled: false,
-                  headerTintColor: 'black',
-                  headerLeft: null,
-                  headerStyle: {
-                    backgroundColor: 'white',
-                  },
-                  headerTitleStyle: {
-                    fontWeight: 'bold',
-                    fontSize: 22,
-                    color: 'black',
-                  },
-                }}>
+                  // Consistent styling across all stacked screens
+                  screenOptions={{
+                    headerBackTitleVisible: false,
+                    headerTitleAllowFontScaling: false,
+                    gestureEnabled: false,
+                    headerTintColor: "black",
+                    headerLeft: null,
+                    headerStyle: {
+                      backgroundColor: "white",
+                    },
+                    headerTitleStyle: {
+                      fontWeight: "bold",
+                      fontSize: 22,
+                      color: "black",
+                    },
+                  }}
+                >
                   {/* Home Screens */}
                   <Stack.Screen
                     name="HomeScreen"
-                    component={HomeScreen}
+                    component={signedIn ? HomeScreen : Login}
                     options={{ title: "Home" }}
                   />
 
@@ -100,8 +120,10 @@ export default function App() {
                   <Stack.Screen
                     name="GameOverview"
                     component={GameOverview}
-                    options={({navigation}) => ({
-                      headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/> ),
+                    options={({ navigation }) => ({
+                      headerLeft: () => (
+                        <HeaderBackButton onPress={() => navigation.goBack()} />
+                      ),
                       title: "Today's Exercises",
                     })}
                   />
@@ -109,19 +131,20 @@ export default function App() {
                     name="GameMaterials"
                     component={GameMaterials}
                     options={{
-                      title: "Choose your game!",}}
+                      title: "Choose your game!",
+                    }}
                   />
                   <Stack.Screen
                     name="Gameplay"
                     component={Gameplay}
-                    options={({navigation}) => ({
+                    options={({ navigation }) => ({
                       headerRight: () => (
                         <PauseButton
-                          onPress={() => navigation.navigate('Pause')}
+                          onPress={() => navigation.navigate("Pause")}
                         />
                       ),
                       title: "Math",
-                      })}
+                    })}
                   />
                   <Stack.Screen
                     name="GameplayIntermediate"
@@ -133,10 +156,10 @@ export default function App() {
                   <Stack.Screen
                     name="TriviaScreen"
                     component={TriviaScreen}
-                    options={({navigation}) => ({
+                    options={({ navigation }) => ({
                       headerRight: () => (
                         <PauseButton
-                          onPress={() => navigation.navigate('Pause')}
+                          onPress={() => navigation.navigate("Pause")}
                         />
                       ),
                       title: "Writing (Trivia)",
@@ -181,15 +204,16 @@ export default function App() {
                     name="ReadingIntro"
                     component={ReadingIntro}
                     options={{
-                      title: "Get ready to read!"}}
+                      title: "Get ready to read!",
+                    }}
                   />
                   <Stack.Screen
                     name="ReadingMain"
                     component={ReadingMain}
-                    options={({navigation}) => ({
+                    options={({ navigation }) => ({
                       headerRight: () => (
                         <PauseButton
-                          onPress={() => navigation.navigate('Pause')}
+                          onPress={() => navigation.navigate("Pause")}
                         />
                       ),
                       title: "Reading",
@@ -198,21 +222,21 @@ export default function App() {
                   <Stack.Screen
                     name="PromptScreen"
                     component={PromptScreen}
-                    options={({navigation}) => ({
+                    options={({ navigation }) => ({
                       headerRight: () => (
                         <PauseButton
-                          onPress={() => navigation.navigate('Pause')}
+                          onPress={() => navigation.navigate("Pause")}
                         />
                       ),
                       title: "Writing Prompts",
                     })}
-
                   />
                   <Stack.Screen
                     name="ExercisesCompleted"
                     component={ExercisesCompleted}
                     options={{
-                      title: "Exercises done!"}}
+                      title: "Exercises done!",
+                    }}
                   />
                   {/* Pause Screen */}
                   <Stack.Screen
@@ -232,38 +256,47 @@ export default function App() {
                   <Stack.Screen
                     name="SettingsScreen"
                     component={SettingsScreen}
-                    options={({navigation}) => ({
-                      headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
+                    options={({ navigation }) => ({
+                      headerLeft: () => (
+                        <HeaderBackButton onPress={() => navigation.goBack()} />
+                      ),
                       title: "Settings",
-                      })}
-                    />
+                    })}
+                  />
                   <Stack.Screen
                     name="TimePicker"
                     component={TimePicker}
-                    options={({navigation}) => ({
-                      headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
+                    options={({ navigation }) => ({
+                      headerLeft: () => (
+                        <HeaderBackButton onPress={() => navigation.goBack()} />
+                      ),
                       title: "Set Time Reminder",
-                      })}
+                    })}
                   />
                   <Stack.Screen
                     name="SoundScreen"
                     component={SoundScreen}
-                    options={({navigation}) => ({
-                      headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
+                    options={({ navigation }) => ({
+                      headerLeft: () => (
+                        <HeaderBackButton onPress={() => navigation.goBack()} />
+                      ),
                       title: "Sound",
-                      })}
+                    })}
                   />
                   <Stack.Screen
                     name="FontSize"
                     component={FontSize}
-                    options={({navigation}) => ({
-                      headerLeft: () => (<HeaderBackButton onPress={() => navigation.goBack()}/>),
+                    options={({ navigation }) => ({
+                      headerLeft: () => (
+                        <HeaderBackButton onPress={() => navigation.goBack()} />
+                      ),
                       title: "Font Size",
                     })}
                   />
                 </Stack.Navigator>
-              </NavigationContainer>
-            </SafeAreaProvider>
+              </AppContext.Provider>
+            </NavigationContainer>
+          </SafeAreaProvider>
         </PersistGate>
       </Provider>
     );
@@ -274,9 +307,11 @@ axios.defaults.baseURL = Constants.manifest.extra.AXIOS_BASEURL;
 console.log(Constants.manifest.extra.AXIOS_BASEURL);
 
 // Add a request interceptor
-axios.interceptors.request.use((config) => config,
+axios.interceptors.request.use(
+  (config) => config,
   (error) => {
-  // Do something with request error
+    // Do something with request error
     logAxiosError(error);
     return Promise.reject(error);
-  });
+  }
+);
