@@ -10,8 +10,10 @@ import axios, { AxiosError } from "axios";
 import * as Auth0 from "../../constants/Auth0";
 
 import { login } from "../../redux/reducers/authReducer/index";
+import { beginOnboarding } from '../../redux/reducers/OnboardingReducer';
 import { setLoading } from "../../redux/reducers/loadingReducer/index";
 import { decodedJwtToken } from "../../types";
+import { BeginOnboardingUser } from '../../redux/reducers/OnboardingReducer/types';
 import { logAxiosError } from "../../utils";
 
 const useProxy = Platform.select({ web: false, default: true });
@@ -93,12 +95,13 @@ function LoginButton(props: { onUserNotFound: () => void }) {
 
               // TODO: ADD ONBOARDING DISPATCH LOGIC HERE!
 
-              // const onboardingUser: BeginOnboardingUser = {
-              //   name: `${userInfo.given_name} ${userInfo.family_name}`,
-              //   auth0AccessToken: userInfo.sub,
-              //   email: userInfo.nickname, // nickname field is email.  Had to make this change because otherwise users with same name could not both have accounts
-              //   jwt: receivedToken,
-              // };
+              const onboardingUser: BeginOnboardingUser = {
+                name: `${userInfo.given_name} ${userInfo.family_name}`,
+                auth0AccessToken: userInfo.sub,
+                email: userInfo.nickname, // nickname field is email.  Had to make this change because otherwise users with same name could not both have accounts
+                jwt: receivedToken,
+              };
+              dispatch(beginOnboarding(onboardingUser));
               // Alert.alert(
               //   "User does not exist (we should implement some sort of onboarding logic here!)"
               // );

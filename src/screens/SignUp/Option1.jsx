@@ -13,6 +13,7 @@ import {
   TextInput,
   SafeAreaView,
   Pressable,
+  Alert,
 } from "react-native";
 import PropTypes from "prop-types";
 import StepIndicator from "react-native-step-indicator";
@@ -22,6 +23,9 @@ import { getStreak } from "../../scripts/progressbar-logic";
 import { Input } from "react-native-elements";
 import Text from "../../components/Text";
 import { Button } from "react-native-elements";
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/rootReducer';
+import axios from "axios";
 // import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
@@ -100,6 +104,9 @@ function SignUpOption1({ navigation }) {
   const [dateofBirth, setDateofBirth] = useState("");
   const [secondContactName, setSecondContactName] = useState("");
   const [secondContactNumber, setSecondContactNumber] = useState("");
+
+  const dispatch = useDispatch();
+  const onboardingState = useSelector((state) => state.onboarding);
 
   const isFormValid = () => {
     if (fullName.length == 0) {
@@ -207,7 +214,28 @@ function SignUpOption1({ navigation }) {
             titleStyle={styles.buttonTitle}
             disabled={!isFormValid()}
             title="Sign Up"
-            onPress={() => navigation.navigate("HomeScreen")}
+            onPress={() => {
+              axios.post('/signup', {
+                name: fullName,
+                email: "TODO WE HAVE TO SETUP A WAY TO COLLECT EMAIL OR REMOVE IT FROM USER MODEL ON BACKEND",
+                phoneNumber: phoneNumber,
+                auth0AccessToken: onboardingState.auth0AccessToken,
+                username: onboardingState.name, // Probably should remove or come up with a better way of handling
+                password: "TODO REMOVE BECAUSE WE DON'T STORE PASSWORDS (AUTH0 HANDLES IT)",
+                birthdate: dateofBirth,
+                // secondaryContactName: secondContactName, // Not implemented in backend yet
+                // secondaryContactNumber: secondContactNumber, // Not implemented in backend yet
+                accessToken: onboardingState.auth0AccessToken,
+              }).then((res) => {
+                const user = res.data;
+                user.jwt = onboardingState.jwt;
+                user.authenticated = true;
+                dispatch(login(user));
+                navigation.navigate("HomeScreen");
+              }).catch((err) => {
+                Alert.alert('Authentication error! Please try again at another time');
+              });
+            }}
           />
 
           <View

@@ -5,6 +5,7 @@ import { persistReducer } from 'redux-persist';
 
 import authReducer from './reducers/authReducer';
 import loadingReducer from './reducers/loadingReducer';
+import OnboardingReducer from './reducers/OnboardingReducer';
 
 const persistConfig = {
   key: 'root',
@@ -14,7 +15,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth: persistReducer(persistConfig, authReducer),
-  loading: persistReducer(persistConfig, loadingReducer)
+  loading: persistReducer(persistConfig, loadingReducer),
+  onboarding: persistReducer(persistConfig, OnboardingReducer)
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
