@@ -219,7 +219,7 @@ function SignUpOption1({ navigation }) {
             }}
           >
             <Text style={{ fontSize: 14, color: "#4A4B57" }}>
-              Already Have an Account?{" "}
+              {"Already Have an Account? "}
             </Text>
 
             {/* TODO: change navigation to navigate to the login screen */}

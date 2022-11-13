@@ -99,9 +99,9 @@ function LoginButton(props: { onUserNotFound: () => void }) {
               //   email: userInfo.nickname, // nickname field is email.  Had to make this change because otherwise users with same name could not both have accounts
               //   jwt: receivedToken,
               // };
-              Alert.alert(
-                "User does not exist (we should implement some sort of onboarding logic here!)"
-              );
+              // Alert.alert(
+              //   "User does not exist (we should implement some sort of onboarding logic here!)"
+              // );
               return onUserNotFound();
             } else {
               // In this case it was actually an unexpected error
