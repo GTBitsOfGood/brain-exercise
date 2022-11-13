@@ -41,12 +41,14 @@ import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
 import PauseButton from "./src/components/PauseButton.jsx";
 
 // React Redux Persist State
-import useCachedResources from "./src/hooks/useCachedResources";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Provider } from "react-redux";
-import { persistStore } from "redux-persist";
-import { PersistGate } from "redux-persist/integration/react";
-import { store } from "./src/redux/store";
+import useCachedResources from './src/hooks/useCachedResources';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store } from './src/redux/store';
+import SignUpScreen from "./src/screens/SignUp/SignUp.jsx";
+
 const persistor = persistStore(store);
 
 // Disabling dynamic type
@@ -114,6 +116,12 @@ export default function App() {
                     name="HomeScreen"
                     component={signedIn ? HomeScreen : Login}
                     options={{ title: "Home" }}
+                  />
+      
+                  <Stack.Screen
+                    name="SignUpScreen"
+                    component={SignUpScreen}
+                    options={{ title: "SignUp" }}
                   />
 
                   {/* Game Screens */}
@@ -304,7 +312,7 @@ export default function App() {
 }
 
 axios.defaults.baseURL = Constants.manifest.extra.AXIOS_BASEURL;
-console.log(Constants.manifest.extra.AXIOS_BASEURL);
+// console.log(Constants.manifest.extra.AXIOS_BASEURL);
 
 // Add a request interceptor
 axios.interceptors.request.use(
