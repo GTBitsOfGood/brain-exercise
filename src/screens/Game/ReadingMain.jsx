@@ -7,27 +7,27 @@ import getStoryArray from "../../assets/stories";
 import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: 20,
-        backgroundColor: "white"
-    },
-    instructions: {
-        fontSize: 30,
-        fontWeight: "bold",
-        textAlign: "center",
-    },
-    articleWrapper: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    article: {
-        fontSize: 20,
-        textAlign: "center",
-    },
+  root: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 20,
+    backgroundColor: "white",
+  },
+  instructions: {
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  articleWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  article: {
+    fontSize: 20,
+    textAlign: "center",
+  },
 });
 
 export default function ReadingMain({ navigation, route }) {
@@ -37,7 +37,7 @@ export default function ReadingMain({ navigation, route }) {
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    setParagraph(storyArray[0])
+    setParagraph(storyArray[0]);
   }, [storyArray]);
 
   /**
@@ -64,20 +64,21 @@ export default function ReadingMain({ navigation, route }) {
   };
 
   return (
-      <View style={styles.root}>
-          <ProgressBar seconds={600} red={30} func={() => setTimeUp(true)} shouldNotRender/>
-          <Text style={styles.instructions}>Read the passage aloud.</Text>
-          <ScrollView contentContainerStyle={styles.articleWrapper}>
-              <Text style={styles.article}>{paragraph}</Text>
-          </ScrollView>
-          <Button
-              title="Next"
-              buttonStyle={styles.nextButton}
-              onPress={() => buttonFunction()}
-              shouldNotPlay
-           />
-      </View>
-  )
+    <View style={styles.root}>
+      <ProgressBar seconds={600} red={30} func={() => setTimeUp(true)} />
+      <Text style={styles.instructions}>Read the passage aloud.</Text>
+      <ScrollView contentContainerStyle={styles.articleWrapper}>
+        <Text style={styles.article}>{paragraph}</Text>
+      </ScrollView>
+      <Button
+        title="Next"
+        buttonStyle={styles.nextButton}
+        onPress={() => buttonFunction()}
+        shouldNotPlay
+      />
+      <Button title="Skip" onPress={() => buttonFunction()} />
+    </View>
+  );
 }
 
 ReadingMain.propTypes = {
