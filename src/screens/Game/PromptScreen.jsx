@@ -10,9 +10,9 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     justifyContent: "space-between",
-    alignItems: 'center',
+    alignItems: "center",
     padding: 20,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   instructionText: {
     fontSize: 32,
@@ -45,24 +45,47 @@ function PromptScreen({ navigation, route }) {
   return (
     <View style={styles.root}>
       <View>
-        <ProgressBar seconds = {300} red = {60} func = {() => {setFinished(true)}} shouldNotRender/>
-        <Text style={styles.instructionText}>Write the question, then you answer</Text>
+        <ProgressBar
+          seconds={300}
+          red={60}
+          func={() => {
+            setFinished(true);
+          }}
+        />
+        <Text style={styles.instructionText}>
+          Write the question, then you answer
+        </Text>
       </View>
-      <Text style = {styles.questionText}>{problem}</Text>
-      <Button
-        // eslint-disable-next-line no-nested-ternary
-        title={finished ? "Finish Writing Section" : "Next" }
-        shouldNotPlay
-        onPress={() => {
-          if (!finished) {
-            getNewProblem()
-          } else if (route.params.shouldReturn) {
-            navigation.navigate("HomeScreen");
-          } else {
-            navigation.navigate("FinishedScreen");
-          }
-        }}
-      />
+      <Text style={styles.questionText}>{problem}</Text>
+      <View>
+        <Button
+          // eslint-disable-next-line no-nested-ternary
+          title={finished ? "Finish Writing Section" : "Next"}
+          shouldNotPlay
+          onPress={() => {
+            if (!finished) {
+              getNewProblem();
+            } else if (route.params.shouldReturn) {
+              navigation.navigate("HomeScreen");
+            } else {
+              navigation.navigate("FinishedScreen");
+            }
+          }}
+        />
+
+        <Button
+          title="Skip"
+          onPress={() => {
+            if (!finished) {
+              getNewProblem();
+            } else if (route.params.shouldReturn) {
+              navigation.navigate("HomeScreen");
+            } else {
+              navigation.navigate("FinishedScreen");
+            }
+          }}
+        />
+      </View>
     </View>
   );
 }

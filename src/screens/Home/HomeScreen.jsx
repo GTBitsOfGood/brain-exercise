@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "space-around",
     padding: 20,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   title: {
     fontSize: 34,
     textAlign: "center",
     marginVertical: 8,
-    color:"#4A4B57",
+    color: "#4A4B57",
   },
   squareButton: {
     width: Platform.isPad ? 150 : 99,
@@ -71,9 +71,9 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   image: {
-    alignSelf: 'center',
-    width: Dimensions.get('window').width - 50,
-    height:  Platform.isPad ? 400 : Dimensions.get('window').height * 0.2,
+    alignSelf: "center",
+    width: Dimensions.get("window").width - 50,
+    height: Platform.isPad ? 400 : Dimensions.get("window").height * 0.2,
     resizeMode: "contain",
   },
 });
@@ -123,10 +123,11 @@ function HomeScreen({ navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
+      // Do something when the screen is focused
       getStreak(onGetStreakComplete);
     }, [])
   );
-  
+
   const youtubeChannelURL =
     "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
 
