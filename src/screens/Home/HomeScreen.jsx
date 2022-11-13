@@ -151,11 +151,9 @@ function HomeScreen({ navigation }) {
       />
 
       <LoginButton
-        onUserNotFound={() => {
-          console.log("No user found!");
-        }}
+        onUserNotFound={() => navigation.navigate("SignUpScreen")}
       ></LoginButton>
-      <LogoutButton />
+      <LogoutButton/>
 
       <View style={styles.buttonsContainer}>
         <View>
