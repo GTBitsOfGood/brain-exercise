@@ -37,10 +37,8 @@ function LoginButton(props: { onUserNotFound: () => void }) {
     },
     { authorizationEndpoint: Auth0.authorizationEndpoint }
   );
-  console.log(result);
   useEffect(() => {
     if (result) {
-      Alert.alert("Hello!");
       if (result.type === "success") {
         // Retrieve the JWT access token from Auth0 and decode it
         const receivedToken = result.params.id_token;

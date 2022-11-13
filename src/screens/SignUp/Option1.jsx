@@ -162,7 +162,7 @@ function SignUpOption1({ navigation }) {
             value={fullName}
           />
 
-          <Text style={styles.textInputTitle}>Phone Number</Text>
+          <Text style={styles.textInputTitle}>Phone Number: (XXX) XXX-XXXX</Text>
           <TextInput
             placeholder="(XXX) XXX-XXXX"
             onChangeText={setPhoneNumber}
@@ -170,7 +170,7 @@ function SignUpOption1({ navigation }) {
             value={phoneNumber}
           />
 
-          <Text style={styles.textInputTitle}>Date of Birth</Text>
+          <Text style={styles.textInputTitle}>Date of Birth: MM-DD-YYYY</Text>
           <TextInput
             placeholder="MM-DD-YYYY"
             onChangeText={setDateofBirth}
@@ -186,7 +186,7 @@ function SignUpOption1({ navigation }) {
             value={secondContactName}
           />
 
-          <Text style={styles.textInputTitle}>Secondary Contact Phone</Text>
+          <Text style={styles.textInputTitle}>Secondary Contact Phone: (XXX) XXX-XXXX</Text>
           <TextInput
             placeholder="(XXX) XXX-XXXX"
             onChangeText={setSecondContactNumber}
@@ -207,8 +207,31 @@ function SignUpOption1({ navigation }) {
             titleStyle={styles.buttonTitle}
             disabled={!isFormValid()}
             title="Sign Up"
-            onPress={() => navigation.navigate("PersonalInfo")}
+            onPress={() => navigation.navigate("HomeScreen")}
           />
+
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: "5%",
+              flexDirection: "row",
+              alignItems: "flex-end",
+            }}
+          >
+            <Text style={{ fontSize: 14, color: "#4A4B57" }}>
+              Already Have an Account?{" "}
+            </Text>
+
+            {/* TODO: change navigation to navigate to the login screen */}
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("HomeScreen")}
+            >
+              <Text style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}>
+                Log In
+              </Text>
+            </Pressable>
+          </View>
         </SafeAreaView>
       </KeyboardAvoidingView>
     </ScrollView>

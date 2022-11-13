@@ -41,7 +41,7 @@ import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store } from './src/redux/store';
-import SignUpScreen from "./src/screens/SignUp/SignUp";
+import SignUpScreen from "./src/screens/SignUp/SignUp.jsx";
 const persistor = persistStore(store);
 
 // Disabling dynamic type
@@ -278,7 +278,7 @@ export default function App() {
 }
 
 axios.defaults.baseURL = Constants.manifest.extra.AXIOS_BASEURL;
-console.log(Constants.manifest.extra.AXIOS_BASEURL);
+// console.log(Constants.manifest.extra.AXIOS_BASEURL);
 
 // Add a request interceptor
 axios.interceptors.request.use((config) => config,

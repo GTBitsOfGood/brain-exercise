@@ -24,12 +24,12 @@ import Option1 from "./Option1.jsx";
 import Option2 from "./Option2.jsx";
 
 //  Home Screen Navigation
-function SignUpScreen({ navigation, option = 2 }) {
-  return option == 1 ? (
-    <Option1 navigation={navigation} />
-  ) : (
-    <Option2 navigation={navigation} />
-  );
+function SignUpScreen({ navigation }) {
+  // return option == 1 ? (
+    return <Option1 navigation={navigation} />
+  // ) : (
+  //   <Option2 navigation={navigation} />
+  // );
 }
 
 SignUpScreen.propTypes = {
