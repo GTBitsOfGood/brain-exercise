@@ -1,17 +1,26 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+
+const bcrypt = require("bcrypt");
 
 export type UserDocument = mongoose.Document & {
-    name: string;
-    phoneNumber: number;
-    birthdate: Date;
-    accessToken: string;
-}
+  name: string;
+  phoneNumber: number;
+  birthdate: Date;
+  accessToken: string;
+  secondaryContactName: string;
+  secondaryPhoneNumber: string;
+};
 
-const userSchema = new mongoose.Schema<UserDocument>({
+const userSchema = new mongoose.Schema<UserDocument>(
+  {
     name: { type: String, required: true },
     phoneNumber: { type: Number, required: true },
-    birthdate : { type: Date, required: false },
-    accessToken : { type: String, required: true, unique: true }
-}, { timestamps: true });
+    birthdate: { type: Date, required: false },
+    accessToken: { type: String, required: true, unique: true },
+    secondaryContactName: { type: String, required: false },
+    secondaryPhoneNumber: { type: String, required: false },
+  },
+  { timestamps: true }
+);
 
-export const User = mongoose.model<UserDocument>('users', userSchema);
+export const User = mongoose.model<UserDocument>("users", userSchema);
