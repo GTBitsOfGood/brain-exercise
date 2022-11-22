@@ -14,6 +14,8 @@ import { decodedJwtToken } from "../../types";
 import { logAxiosError } from "../../utils";
 import Button from "../../components/Button";
 import { useAuth0 } from "react-native-auth0";
+import { beginOnboarding } from "../../redux/reducers/OnboardingReducer";
+import { BeginOnboardingUser } from "../../redux/reducers/OnboardingReducer/types";
 
 const useProxy = Platform.select({ web: false, default: true });
 const redirectUri = AuthSession.makeRedirectUri({ useProxy });
@@ -115,7 +117,6 @@ function LoginButton(props: { onUserNotFound: () => void }) {
         // Retrieve the JWT access token from Auth0 and decode it
         const receivedToken = result.params.id_token;
         const userInfo: decodedJwtToken = jwtDecode(receivedToken);
-
         // TODO: Refactor to move jwt to secure store! HERE!
 
         // here for testing purposes. Change to the following if want authentication.
@@ -135,6 +136,7 @@ function LoginButton(props: { onUserNotFound: () => void }) {
         axios
           .post(`/login/${userInfo.sub}`, {})
           .then((res) => {
+            console.log("Axios success");
             const loginResponse = res;
 
             if (
@@ -153,6 +155,7 @@ function LoginButton(props: { onUserNotFound: () => void }) {
             }
           })
           .catch((err: AxiosError) => {
+            console.log("Axios error");
             // We actually expect an AxiosError with response code 303 if the user could not be located in
             // the database. In this case we should redirect to onboarding to sign up this new user.
             if (
@@ -164,15 +167,16 @@ function LoginButton(props: { onUserNotFound: () => void }) {
 
               // TODO: ADD ONBOARDING DISPATCH LOGIC HERE!
 
-              // const onboardingUser: BeginOnboardingUser = {
-              //   name: `${userInfo.given_name} ${userInfo.family_name}`,
-              //   auth0AccessToken: userInfo.sub,
-              //   email: userInfo.nickname, // nickname field is email.  Had to make this change because otherwise users with same name could not both have accounts
-              //   jwt: receivedToken,
-              // };
-              Alert.alert(
-                "User does not exist (we should implement some sort of onboarding logic here!)"
-              );
+              const onboardingUser: BeginOnboardingUser = {
+                name: `${userInfo.given_name} ${userInfo.family_name}`,
+                auth0AccessToken: userInfo.sub,
+                email: userInfo.nickname, // nickname field is email.  Had to make this change because otherwise users with same name could not both have accounts
+                jwt: receivedToken,
+              };
+              dispatch(beginOnboarding(onboardingUser));
+              // Alert.alert(
+              //   "User does not exist (we should implement some sort of onboarding logic here!)"
+              // );
               return onUserNotFound();
             } else {
               // In this case it was actually an unexpected error
