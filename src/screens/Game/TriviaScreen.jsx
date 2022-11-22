@@ -36,6 +36,11 @@ const styles = StyleSheet.create({
   button: {
     marginVertical: "5%",
   },
+  buttonTitle: {
+    alignSelf: "center",
+    fontWeight: "bold",
+    color: "white",
+  },
 });
 const totalTime = 300;
 
@@ -82,7 +87,7 @@ function TriviaScreen({ navigation, route }) {
               ? "Next"
               : "Show Answer"
           }
-          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
           shouldNotPlay
           onPress={() => {
             if (!answered) {
@@ -98,7 +103,7 @@ function TriviaScreen({ navigation, route }) {
         />
         <Button
           title="Skip"
-          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
           onPress={() => {
             if (finished) {
               navigation.navigate("ReadingIntro");

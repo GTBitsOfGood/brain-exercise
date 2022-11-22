@@ -2,10 +2,7 @@
   "expo": {
     "name": "BrainExercise",
     "slug": "BrainExercise",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -17,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.BrainExerciseInitiative.BrainExercise",
       "buildNumber": "1.0.0",
@@ -30,6 +25,14 @@
       "versionCode": 1
     },
     "description": "Daily exercises for your brain.",
-    "scheme": "brain-exercise"
+    "scheme": "brain-exercise",
+    "plugins": [
+      [
+        "react-native-auth0",
+        {
+          "domain": "bitsofgood.us.auth0.com"
+        }
+      ]
+    ]
   }
 }
