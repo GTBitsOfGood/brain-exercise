@@ -23,35 +23,45 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   quit: {
-    backgroundColor: '#EEE'
+    backgroundColor: "#EEE",
   },
 });
 
-function Pause({ navigation }) {
+function Pause({ navigation, setPaused }) {
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>{`You're just getting started. Keep going!`}</Text>
+      <Text
+        style={styles.text}
+      >{`You're just getting started. Keep going!`}</Text>
       <Button
         title="Resume"
         buttonStyle={styles.button}
-        onPress={() => navigation.goBack()}
+        onPress={() => {
+          setPaused(false);
+          navigation.goBack();
+        }}
       />
       <Button
         title="Quit"
         buttonStyle={styles.quit}
-        titleStyle={{ color: 'red' }}
-        onPress={() => Alert.alert(
-          "Quit the Game",
-          "Are you sure? This will delete ALL of your progress.",
-          [
-            {
-              text: "Cancel",
-              style: "cancel"
-            },
-            { text: "Quit", onPress: () => navigation.navigate("HomeScreen") }
-          ],
-          { cancelable: false }
-        )}
+        titleStyle={{ color: "red" }}
+        onPress={() =>
+          Alert.alert(
+            "Quit the Game",
+            "Are you sure? This will delete ALL of your progress.",
+            [
+              {
+                text: "Cancel",
+                style: "cancel",
+              },
+              {
+                text: "Quit",
+                onPress: () => navigation.navigate("HomeScreen"),
+              },
+            ],
+            { cancelable: false }
+          )
+        }
       />
     </View>
   );

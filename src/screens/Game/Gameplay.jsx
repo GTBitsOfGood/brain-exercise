@@ -2,10 +2,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-alert */
 import "react-native-gesture-handler";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Button } from "react-native-elements";
+import { Button as BaseButton } from "react-native-elements";
+import Button from "../../components/Button";
 import PropTypes from "prop-types";
 import ProgressBar from "../../components/ProgressBar";
 import getProblem from "../../scripts/game-logic";
@@ -107,13 +108,15 @@ const pullDifficultyScore = async () => {
   return 100;
 };
 
-function Gameplay({ route, navigation }) {
+function Gameplay({ route, navigation, paused }) {
   const [problem, setProblem] = useState(getProblem());
   const [message, setMessage] = useState("");
   const [remainingTime, setRemainingTime] = useState(totalTime);
   const [answered, setAnswered] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(1);
   const [attempted, setAttempted] = useState(1);
+  const [disableSkip, setDisableSkip] = useState(false);
+
   let pBar = React.createRef();
 
   function getNewProblem() {
@@ -138,12 +141,13 @@ function Gameplay({ route, navigation }) {
 
   function checkAnswer(choiceValue, skip = false) {
     let correct = false;
-    if (!answered) {
+    if (skip) {
+    } else if (!answered) {
       const timeToAnswer = pBar.current.getCurrentTime() - remainingTime;
 
       pullDifficultyScore().then((score) => {
         let difficultyScore = parseInt(score);
-        if (timeToAnswer > 60 || skip == true) {
+        if (timeToAnswer > 60 || skip === true) {
           difficultyScore = Math.max(difficultyScore - 10, 100);
         }
         if (timeToAnswer < 30) {
@@ -154,7 +158,7 @@ function Gameplay({ route, navigation }) {
           }
         }
 
-        if (skip == false && choiceValue === problem.solution) {
+        if (skip === false && choiceValue === problem.solution) {
           difficultyScore = Math.min(difficultyScore + 10, 499);
           Toast.show({
             type: "success",
@@ -191,7 +195,7 @@ function Gameplay({ route, navigation }) {
   const [picked, setPicked] = React.useState(0);
   const choices = choicesArray.map((choiceValue, choiceKey) => {
     return (
-      <Button
+      <BaseButton
         title={`${choiceValue}`}
         titleStyle={styles.buttonTitle}
         disabledTitleStyle={
@@ -221,6 +225,8 @@ function Gameplay({ route, navigation }) {
     <View style={styles.root}>
       <ProgressBar
         seconds={totalTime}
+        remainingTime={remainingTime}
+        setRemainingTime={setRemainingTime}
         red={60}
         func={() => {
           if (route.params.shouldReturn) {
@@ -230,6 +236,7 @@ function Gameplay({ route, navigation }) {
           }
         }}
         ref={pBar}
+        paused={paused}
       />
       <Toast visibilityTime={1000} position="bottom" bottomOffset={60} />
       <View style={styles.textContainer}>
@@ -245,10 +252,22 @@ function Gameplay({ route, navigation }) {
           alignSelf: "center",
           marginBottom: "5%",
         }}
+        disabled={disableSkip}
         onPress={() => {
-          setPicked(5);
+          let correctAnswer = 0;
+          choicesArray.map((choiceValue, choiceKey) => {
+            if (problem.solution === choiceValue) {
+              correctAnswer = choiceKey;
+            }
+          });
+          setPicked(correctAnswer);
           checkAnswer(0, true);
           setAnswered(true);
+          setDisableSkip(true);
+          setTimeout(() => {
+            getNewProblem();
+            setDisableSkip(false);
+          }, 2000);
         }}
       />
     </View>
@@ -258,6 +277,7 @@ function Gameplay({ route, navigation }) {
 Gameplay.propTypes = {
   navigation: PropTypes.object,
   route: PropTypes.object,
+  paused: PropTypes.bool,
 };
 
 export default Gameplay;

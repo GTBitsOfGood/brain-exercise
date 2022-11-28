@@ -76,6 +76,7 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
 
   const [signedIn, setSignedIn] = React.useState(true);
+  const [paused, setPaused] = React.useState(false);
 
   const appContextValue = useMemo(
     () => ({
@@ -151,16 +152,20 @@ export default function App() {
                     />
                     <Stack.Screen
                       name="Gameplay"
-                      component={Gameplay}
                       options={({ navigation }) => ({
                         headerRight: () => (
                           <PauseButton
-                            onPress={() => navigation.navigate("Pause")}
+                            onPress={() => {
+                              setPaused(true);
+                              navigation.navigate("Pause");
+                            }}
                           />
                         ),
                         title: "Math",
                       })}
-                    />
+                    >
+                      {(props) => <Gameplay {...props} paused={paused} />}
+                    </Stack.Screen>
                     <Stack.Screen
                       name="GameplayIntermediate"
                       component={GameplayIntermediate}
@@ -256,7 +261,6 @@ export default function App() {
                     {/* Pause Screen */}
                     <Stack.Screen
                       name="Pause"
-                      component={Pause}
                       options={{
                         title: "Paused",
                         animationTypeForReplace: "pop",
@@ -265,7 +269,9 @@ export default function App() {
                           close: config,
                         },
                       }}
-                    />
+                    >
+                      {(props) => <Pause {...props} setPaused={setPaused} />}
+                    </Stack.Screen>
 
                     {/* Settings Screens */}
                     <Stack.Screen

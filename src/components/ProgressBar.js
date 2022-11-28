@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
 import * as Progress from "react-native-progress";
@@ -30,44 +30,57 @@ class ProgressBar extends Component {
   componentDidMount = () => {
     this.intervals.push(
       setInterval(() => {
-        if (this.time % 60 > 0) {
-          this.setState(() => ({
-            seconds: this.time % 60,
-          }));
-        }
-        if (this.time % 60 === 0) {
-          if (Math.floor(this.time / 60) === 0) {
-            this.intervals.forEach((interval) => {
-              clearInterval(interval);
-            });
+        if (!this.props.paused) {
+          if (this.time % 60 > 0) {
             this.setState(() => ({
-              seconds: 0,
+              seconds: this.time % 60,
             }));
-            this.props.func();
-          } else {
+          }
+          if (this.time % 60 === 0) {
+            if (Math.floor(this.time / 60) === 0) {
+              this.intervals.forEach((interval) => {
+                clearInterval(interval);
+              });
+              this.setState(() => ({
+                seconds: 0,
+              }));
+              this.props.func();
+            } else {
+              this.setState(() => ({
+                minutes: Math.floor(this.time / 60) - 1,
+                seconds: 59,
+              }));
+            }
+          }
+          this.time -= 1;
+          this.setState(() => ({
+            progress: 1.0 - this.time / this.props.seconds,
+          }));
+          if (this.state.red !== "red" && this.time < this.props.red) {
             this.setState(() => ({
-              minutes: Math.floor(this.time / 60) - 1,
-              seconds: 59,
+              red: true,
             }));
           }
         }
-        this.time -= 1;
-        this.setState(() => ({
-          progress: 1.0 - this.time / this.props.seconds,
-        }));
-        if (this.state.red !== "red" && this.time < this.props.red) {
-          this.setState(() => ({
-            red: true,
-          }));
-        }
       }, 1000)
     );
+  };
+
+  pause = () => {
+    this.paused = true;
+  };
+
+  unpause = () => {
+    this.paused = false;
   };
 
   /**
    * cancels the interval on unmount
    */
   componentWillUnmount = () => {
+    if (this.props.paused) {
+      return;
+    }
     this.intervals.forEach((interval) => {
       clearInterval(interval);
     });
@@ -80,12 +93,12 @@ class ProgressBar extends Component {
    * returns 300 when no time is left
    */
   getCurrentTime = () => {
-    return this.props.seconds - this.time
-  }
+    return this.props.seconds - this.time;
+  };
 
   render() {
     if (this.props.shouldNotRender) {
-      return (<View />);
+      return <View />;
     }
     return (
       <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -109,52 +122,61 @@ ProgressBar.propTypes = {
   red: PropTypes.number,
   func: PropTypes.func,
   shouldNotRender: PropTypes.bool,
+  paused: PropTypes.bool,
 };
 
 export default ProgressBar;
 // functional component version
 // const ProgressBar = (props) => {
-//     const [minutes, setMinutes] = React.useState(Math.floor(props.seconds / 60))
-//     const [seconds, setSeconds] = React.useState(props.seconds % 60)
-//     const [progress, setProgress] = React.useState(0)
-//     const [red, setRed] = React.useState(false)
-//     useEffect(() => startTimer(), [])
+//   const [minutes, setMinutes] = React.useState(Math.floor(props.seconds / 60));
+//   const [seconds, setSeconds] = React.useState(props.seconds % 60);
+//   const [progress, setProgress] = React.useState(0);
+//   const [red, setRed] = React.useState(false);
+//   const [paused, setPaused] = React.useState(props.paused);
+//   useEffect(() => {
+//     console.log(props.paused);
+//   }, [props.paused]);
+//   useEffect(() => startTimer(props.paused), []);
 
-//     const startTimer = () => {
-//         let time = props.seconds
-//         const myInterval = setInterval(() => {
-//             if (time % 60 > 0) {
-//                 setSeconds(time % 60)
-//             }
-//             if (time % 60 === 0) {
-//                 if (Math.floor(time / 60) === 0) {
-//                     clearInterval(myInterval)
-//                     setSeconds(0)
-//                 } else {
-//                     setSeconds(59)
-//                     setMinutes(Math.floor(time / 60) - 1)
-//                 }
-//             }
-//             time -= 1
-//             setProgress(1.0 - time/props.seconds)
-//             if (time < props.red) {
-//                 setRed(true)
-//             }
-//         }, 1000)
-//     }
+//   const startTimer = (paused) => {
+//     let time = props.remainingTime;
+//     const myInterval = setInterval(() => {
+//       console.log(paused);
+//       if (time % 60 > 0) {
+//         setSeconds(time % 60);
+//       }
+//       if (time % 60 === 0) {
+//         if (Math.floor(time / 60) === 0) {
+//           clearInterval(myInterval);
+//           setSeconds(0);
+//         } else {
+//           setSeconds(59);
+//           setMinutes(Math.floor(time / 60) - 1);
+//         }
+//       }
+//       time -= 1;
+//       setProgress(1.0 - time / props.seconds);
+//       if (time < props.red) {
+//         setRed(true);
+//       }
+//       props.setRemainingTime(time);
+//     }, 1000);
+//   };
 
-//     return (
-//         <View style = {{justifyContent: "center", alignItems: "center"}}>
-//             <Text style = {{fontSize: 40}}>{minutes}:{seconds.toString().padStart(2, "0")}</Text>
-//             <Progress.Bar
-//                 progress={progress}
-//                 width={375}
-//                 height={20}
-//                 borderRadius={10}
-//                 color = {red ? "red":"purple"}
-//             />
-//         </View>
-//     )
-// }
+//   return (
+//     <View style={{ justifyContent: "center", alignItems: "center" }}>
+//       <Text style={{ fontSize: 40 }}>
+//         {minutes}:{seconds.toString().padStart(2, "0")}
+//       </Text>
+//       <Progress.Bar
+//         progress={progress}
+//         width={375}
+//         height={20}
+//         borderRadius={10}
+//         color={red ? "red" : "purple"}
+//       />
+//     </View>
+//   );
+// };
 
-// export default ProgressBar
+// export default ProgressBar;
