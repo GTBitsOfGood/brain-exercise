@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -18,6 +18,9 @@ import Text from "../../components/Text";
 import Button from "../../components/Button";
 import LoginButton from "../../components/Auth/LoginButton";
 import LogoutButton from "../../components/Auth/LogoutButton";
+import defaultSettings from "../../components/DefaultSettings";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { incrementStreak } from "../../scripts/progressbar-logic";
 
 const styles = StyleSheet.create({
   root: {
@@ -105,6 +108,7 @@ const logo = require("../../assets/bei.jpg");
 
 //  Home Screen Navigation
 function HomeScreen({ navigation }) {
+  const [settings, setSettings] = useState(defaultSettings);
   const [streak, setStreak] = useState(0);
   const [message, setMessage] = useState("");
 
@@ -125,6 +129,11 @@ function HomeScreen({ navigation }) {
     React.useCallback(() => {
       // Do something when the screen is focused
       getStreak(onGetStreakComplete);
+      const fetchSettings = async () => {
+        const storedSettings = await AsyncStorage.getItem("SETTINGS");
+        setSettings(JSON.parse(storedSettings));
+      };
+      fetchSettings();
     }, [])
   );
 
@@ -133,9 +142,17 @@ function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>{`${streak} of 5 Days`}</Text>
+      <Text style={styles.title}>{`${
+        streak < settings.streakLength ? streak : settings.streakLength
+      } of ${settings.streakLength} Days`}</Text>
 
-      <StepIndicator customStyles={customStyles} currentPosition={streak} />
+      <StepIndicator
+        customStyles={customStyles}
+        currentPosition={
+          streak < settings.streakLength ? streak : settings.streakLength
+        }
+        stepCount={settings.streakLength}
+      />
 
       <Text style={styles.title}>{message}</Text>
       {/* Home Screen Step Indicator */}
@@ -153,7 +170,7 @@ function HomeScreen({ navigation }) {
       <LoginButton
         onUserNotFound={() => navigation.navigate("SignUpScreen")}
       ></LoginButton>
-      <LogoutButton/>
+      <LogoutButton />
 
       <View style={styles.buttonsContainer}>
         <View>
