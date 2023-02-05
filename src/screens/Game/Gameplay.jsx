@@ -238,7 +238,7 @@ function Gameplay({ route, navigation, paused }) {
         ref={pBar}
         paused={paused}
       />
-      <Toast visibilityTime={1000} position="bottom" bottomOffset={60} />
+      <Toast visibilityTime={1000} position="bottom" bottomOffset={90} />
       <View style={styles.textContainer}>
         <Text style={styles.title}>Tap the answer to the math problem.</Text>
         <Text style={styles.expressionText}>{problem.expression}</Text>
@@ -251,6 +251,7 @@ function Gameplay({ route, navigation, paused }) {
           width: "90%",
           alignSelf: "center",
           marginBottom: "5%",
+          backgroundColor: "#005AA3"
         }}
         disabled={disableSkip}
         onPress={() => {

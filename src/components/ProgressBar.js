@@ -110,7 +110,7 @@ class ProgressBar extends Component {
           width={375}
           height={20}
           borderRadius={10}
-          color={this.state.red ? "red" : "blue"}
+          color={this.state.red ? "red" : "#005AA3"}
         />
       </View>
     );
