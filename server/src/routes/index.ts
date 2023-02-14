@@ -1,12 +1,14 @@
 import express from "express";
-import { testRouter } from "./test";
-import LoginRoute from './login';
+import AnalyticsRoute from "./analytics";
+import LoginRoute from "./login";
 import AuthRoute from "./auth";
+import { testRouter } from "./test";
 
 export const defaultRouter = express.Router();
 
-defaultRouter.use('/login', LoginRoute);
+defaultRouter.use("/login", LoginRoute);
+defaultRouter.use("/analytics", AnalyticsRoute);
 
 defaultRouter.use(testRouter);
 
-defaultRouter.use('/auth', AuthRoute);
+defaultRouter.use("/auth", AuthRoute);

@@ -1,15 +1,23 @@
-import { Schema, model } from "mongoose";
+import mongoose, { ObjectId } from 'mongoose';
 
-interface Test {
-  name: string;
-  age: number;
-}
+export type TestDocument = mongoose.Document & {
+  date: Date;
+  result: string; // the result of the test; did the user answer all questions or quit?
+  numCorrect: Number; // the number of correct answers
+  numQuestions: Number; // the total number of questions answered
+  userId: ObjectId; // the id of the user who took the test
+};
 
-const TestSchema = new Schema<Test>({
-  name: { type: String, required: true, unique: true },
-  age: { type: Number, required: true },
+const testSchema = new mongoose.Schema<TestDocument>({
+  date: { type: Date, required: true },
+  result: { type: String, required: true, enum: ['QUIT', 'COMPLETED'] },
+  numCorrect: { type: Number, required: true },
+  numQuestions: { type: Number, required: true },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'users',
+    required: true,
+  },
 });
 
-const TestModel = model("Test", TestSchema);
-
-export default TestModel;
+export const Test = mongoose.model<TestDocument>('tests', testSchema);
