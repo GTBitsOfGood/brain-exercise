@@ -59,6 +59,8 @@ app.use(session({
       mongoUrl,
   })
 }));
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
 
 app.listen(PORT, () => {
   console.log(`App is listening on PORT ${PORT}`);

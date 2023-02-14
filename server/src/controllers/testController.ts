@@ -9,21 +9,21 @@ import { Test, TestDocument } from '../models/Test';
  */
 export const getTests = (req: Request, res: Response) => {
     // If there is no access token then we are not going to be able to query the db for the user information
-    if (req.params === undefined || req.params === null || req.params.accessToken === undefined || req.params.accessToken === null) {
+    if (req.query === undefined || req.query === null || req.query.accessToken === undefined || req.query.accessToken === null) {
         res.status(400).json({ message: 'No access token provided to query the user by', user: {} });
         return;
     }
 
     // Query the users in the db based on the auth0AccessToken and within date range
-    Test.find({ accessToken: req.params.accessToken, date: {$gte: req.params.startDate, $lte: req.params.endDate} }, (err:Error, tests: TestDocument) => {
+    Test.find({ accessToken: req.query.accessToken, date: {$gte: req.query.startDate, $lte: req.query.endDate} }, (err:Error, tests: TestDocument) => {
         // If there was an error report code 400 to the client
         if (err) {
             res.status(400).json({ message: err.message, tests });
             return;
         }
         // If no test was found then alert user
-        if (tests === null) {
-            res.status(404).json({ message: 'Could not find test completion in db', tests });
+        if (tests === null || tests === undefined || (<any>tests).length === 0) {
+            res.status(404).json({ message: 'No tests found', tests });
             return;
         }
         // Successfully found the user information based on the auth0token
