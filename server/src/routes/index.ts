@@ -1,7 +1,7 @@
-import express from "express";
-import { testRouter } from "./test";
-import LoginRoute from './login';
+import express from 'express';
 import AnalyticsRoute from './analytics';
+import LoginRoute from './login';
+import { testRouter } from './test';
 
 export const defaultRouter = express.Router();
 
