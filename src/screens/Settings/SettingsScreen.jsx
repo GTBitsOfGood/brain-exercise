@@ -4,36 +4,36 @@ import { Notifications } from "expo";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 import Text from "../../components/Text";
-import defaultSettings from "../../components/DefaultSettings"
+import defaultSettings from "../../components/DefaultSettings";
 import SettingsStyle from "../../styles/settings";
 
-const termsURL = 'https://gtbitsofgood.github.io/brain-exercise/terms/';
-const privacyURL = 'https://gtbitsofgood.github.io/brain-exercise/privacy/';
+const termsURL = "https://gtbitsofgood.github.io/brain-exercise/terms/";
+const privacyURL = "https://gtbitsofgood.github.io/brain-exercise/privacy/";
 
 /**
  * Takes in a settings object and stores it in Async Storage.
  * @param {Object} settingsObj A settings object
  */
 const storeSettings = async (settingsObj) => {
-  const jsonSettings = JSON.stringify(settingsObj)
-  await AsyncStorage.setItem("SETTINGS", jsonSettings)
-}
+  const jsonSettings = JSON.stringify(settingsObj);
+  await AsyncStorage.setItem("SETTINGS", jsonSettings);
+};
 
 /**
  * Pulls an object containing the app settings from Async Storage and returns it.
  * If no settings exist in Async Storage, default settings are pushed and returned.
  */
 const pullSettings = async () => {
-  const jsonSettings = await AsyncStorage.getItem("SETTINGS")
+  const jsonSettings = await AsyncStorage.getItem("SETTINGS");
   if (jsonSettings !== null) {
-     const result = await JSON.parse(jsonSettings);
-     return result;
+    const result = await JSON.parse(jsonSettings);
+    return result;
   }
-  return defaultSettings
-}
+  return defaultSettings;
+};
 
 const {
   root,
@@ -47,30 +47,33 @@ const {
   icon,
   rowInfo,
   firstSection,
-  touchableRow
-} = SettingsStyle
+  touchableRow,
+} = SettingsStyle;
 
 // Settings Navigation
 function SettingsScreen({ navigation }) {
   const [settings, setSettings] = useState(defaultSettings);
   const [toggleOn, setToggleOn] = useState(settings.notificationsActive);
-  const [animationToggleOn, setAnimationToggleOn] = useState(settings.animationOn)
+  const [animationToggleOn, setAnimationToggleOn] = useState(
+    settings.animationOn
+  );
 
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
-      pullSettings()
-      .then((item) => {
-        setSettings(item)
-        setToggleOn(item.notificationsActive)
-        setAnimationToggleOn(item.animationOn)
+      pullSettings().then((item) => {
+        setSettings(item);
+        setToggleOn(item.notificationsActive);
+        setAnimationToggleOn(item.animationOn);
       });
     }, [])
   );
 
   function getDate() {
     const dateObj = new Date(settings.scheduledTime);
-    const date = dateObj.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'}).replace(/^(?:00:)?0?/, '');
+    const date = dateObj
+      .toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
+      .replace(/^(?:00:)?0?/, "");
     return date;
   }
 
@@ -79,26 +82,26 @@ function SettingsScreen({ navigation }) {
       // going from enabled to disabled
       Notifications.cancelAllScheduledNotificationsAsync();
       setToggleOn(false);
-      settings.notificationsActive = false
+      settings.notificationsActive = false;
     } else {
       // going from disabled to enabled
       setToggleOn(true);
-      settings.notificationsActive = true
+      settings.notificationsActive = true;
     }
-    storeSettings(settings)
-  }
+    storeSettings(settings);
+  };
 
   const toggleAnimations = () => {
     if (animationToggleOn) {
       // going from enabled to disabled
-      setAnimationToggleOn(false)
-      settings.animationOn = false
+      setAnimationToggleOn(false);
+      settings.animationOn = false;
     } else {
-      setAnimationToggleOn(true)
-      settings.animationOn = true
+      setAnimationToggleOn(true);
+      settings.animationOn = true;
     }
-    storeSettings(settings)
-  }
+    storeSettings(settings);
+  };
 
   return (
     <View style={root}>
@@ -118,7 +121,7 @@ function SettingsScreen({ navigation }) {
             accessibilityRole="switch"
           />
         </View>
-        { toggleOn &&
+        {toggleOn && (
           <View style={notificationChildren}>
             <Text style={subtext}>Reminder Time</Text>
             <Button
@@ -127,7 +130,20 @@ function SettingsScreen({ navigation }) {
               buttonStyle={timeButton}
               onPress={() => navigation.navigate("TimePicker", settings)}
             />
-          </View> }
+          </View>
+        )}
+      </View>
+      <View style={section}>
+        <TouchableOpacity
+          style={touchableRow}
+          onPress={() => navigation.navigate("StreakLength", settings)}
+        >
+          <View style={rowInfo}>
+            <Icon size={30} style={icon} name="calendar-today" />
+            <Text style={text}>Streak Length</Text>
+          </View>
+          <Icon size={42} style={icon} name="chevron-right" />
+        </TouchableOpacity>
       </View>
       <View style={section}>
         <TouchableOpacity
