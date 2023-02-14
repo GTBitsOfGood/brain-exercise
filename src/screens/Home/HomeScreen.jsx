@@ -18,6 +18,7 @@ import Text from "../../components/Text";
 import Button from "../../components/Button";
 import LoginButton from "../../components/Auth/LoginButton";
 import LogoutButton from "../../components/Auth/LogoutButton";
+import { useAuth0 } from "react-native-auth0";
 import defaultSettings from "../../components/DefaultSettings";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { incrementStreak } from "../../scripts/progressbar-logic";
@@ -89,12 +90,12 @@ const customStyles = {
   separatorStrokeFinishedWidth: 8,
   stepStrokeWidth: 0,
   currentStepStrokeWidth: 5,
-  stepStrokeCurrentColor: "#0363f5",
-  stepStrokeFinishedColor: "#0363f5",
-  stepStrokeUnfinishedColor: "#0363f5",
-  separatorFinishedColor: "#0363f5",
+  stepStrokeCurrentColor: "#005AA3",
+  stepStrokeFinishedColor: "#005AA3",
+  stepStrokeUnfinishedColor: "#005AA3",
+  separatorFinishedColor: "#005AA3",
   separatorUnFinishedColor: "#dbdbdb",
-  stepIndicatorFinishedColor: "#0363f5",
+  stepIndicatorFinishedColor: "#005AA3",
   stepIndicatorUnFinishedColor: "#dbdbdb",
   stepIndicatorCurrentColor: "#ffffff",
   stepIndicatorLabelFontSize: 15,
@@ -111,6 +112,7 @@ function HomeScreen({ navigation }) {
   const [settings, setSettings] = useState(defaultSettings);
   const [streak, setStreak] = useState(0);
   const [message, setMessage] = useState("");
+  const { user } = useAuth0();
 
   const onGetStreakComplete = (retrievedStreak) => {
     let m;
@@ -167,10 +169,11 @@ function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate("GameOverview")}
       />
 
-      <LoginButton
+      { // if user is null, show login button, else show logout button
+        !user ? <LoginButton
         onUserNotFound={() => navigation.navigate("SignUpScreen")}
-      ></LoginButton>
-      <LogoutButton />
+      ></LoginButton> :
+      <LogoutButton/>}
 
       <View style={styles.buttonsContainer}>
         <View>
