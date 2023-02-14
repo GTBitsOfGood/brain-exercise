@@ -49,6 +49,7 @@ import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import { store } from "./src/redux/store";
 import SignUpScreen from "./src/screens/SignUp/SignUp.jsx";
+import StreakLength from "./src/screens/Settings/StreakLength";
 
 const persistor = persistStore(store);
 
@@ -320,6 +321,18 @@ export default function App() {
                           />
                         ),
                         title: "Font Size",
+                      })}
+                    />
+                    <Stack.Screen
+                      name="StreakLength"
+                      component={StreakLength}
+                      options={({ navigation }) => ({
+                        headerLeft: () => (
+                          <HeaderBackButton
+                            onPress={() => navigation.goBack()}
+                          />
+                        ),
+                        title: "Streak Length",
                       })}
                     />
                   </Stack.Navigator>

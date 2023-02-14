@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // Number of milliseconds per day
 const msPerDay = 24 * 60 * 60 * 1000;
 
@@ -52,11 +52,11 @@ export async function incrementStreak() {
     const lastStreakDate = new Date(streakObject.date);
     const today = Math.ceil(now.getTime() / msPerDay);
     const lastStreakDay = Math.ceil(lastStreakDate.getTime() / msPerDay);
-    if (streakObject.streak < 5 && today !== lastStreakDay) {
+    if (today !== lastStreakDay) {
       // streak is less than 5 and it's a new day
       await AsyncStorage.setItem(
         "streak",
-        JSON.stringify({ streak: (streakObject.streak + 1) % 6, date: now })
+        JSON.stringify({ streak: streakObject.streak + 1, date: now })
       );
     }
   } catch (error) {

@@ -12,6 +12,8 @@ if (fs.existsSync('.env')) {
 export const ENVIRONMENT = process.env.NODE_ENV;
 export const { SESSION_SECRET } = process.env;
 export const { MONGODB_URI } = process.env;
+export const { CLIENT_ID } = process.env;
+export const { CLIENT_SECRET } = process.env;
 
 if (!SESSION_SECRET) {
     logger.error('No client secret. Set SESSION_SECRET environment variable.');
@@ -20,5 +22,15 @@ if (!SESSION_SECRET) {
 
 if (!MONGODB_URI) {
     logger.error('No mongo connection string. Set MONGODB_URI environment variable.');
+    process.exit(1);
+}
+
+if (!CLIENT_ID) {
+    logger.error('No client id. Set CLIENT_ID environment variable.');
+    process.exit(1);
+}
+
+if (!CLIENT_SECRET) {
+    logger.error('No client secret. Set CLIENT_SECRET environment variable.');
     process.exit(1);
 }

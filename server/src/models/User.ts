@@ -9,16 +9,18 @@ export type UserDocument = mongoose.Document & {
   accessToken: string;
   secondaryContactName: string;
   secondaryPhoneNumber: string;
+  googleId: string;
 };
 
 const userSchema = new mongoose.Schema<UserDocument>(
   {
     name: { type: String, required: true },
-    phoneNumber: { type: Number, required: true },
+    phoneNumber: { type: Number, required: false },
     birthdate: { type: Date, required: false },
     accessToken: { type: String, required: true, unique: true },
     secondaryContactName: { type: String, required: false },
     secondaryPhoneNumber: { type: String, required: false },
+    googleId: { type: String, required: false },
   },
   { timestamps: true }
 );
