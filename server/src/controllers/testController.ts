@@ -25,6 +25,7 @@ export const getTests = async (req: Request, res: Response) => {
     });
   }
 
+  // ensure startDate and endDate are valid dates
   if (
     isNaN(Date.parse(req.query.startDate as string)) ||
     isNaN(Date.parse(req.query.endDate as string))
@@ -52,6 +53,7 @@ export const getTests = async (req: Request, res: Response) => {
     });
   }
 
+  // Query the tests in the db based on the user id and date range
   let tests;
   try {
     tests = await Test.find({
@@ -91,12 +93,14 @@ export const postTests = async (req: Request, res: Response) => {
     });
   }
 
+  // ensure that result is either QUIT or COMPLETED
   if (!['QUIT', 'COMPLETED'].includes(req.body.result as string)) {
     return res.status(400).json({
       message: 'Invalid result. Must be either QUIT or COMPLETED',
     });
   }
 
+  // ensure that numCorrect and numQuestions are integers
   if (
     !(
       typeof req.body.numCorrect === 'number' &&
@@ -125,6 +129,7 @@ export const postTests = async (req: Request, res: Response) => {
     });
   }
 
+  // Query the tests in the db based on the user id and date range
   let test;
   try {
     test = await Test.create({
