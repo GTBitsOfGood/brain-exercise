@@ -41,6 +41,8 @@ import MathIntro from "./src/screens/Game/MathIntro.jsx";
 import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
 import PauseButton from "./src/components/PauseButton.jsx";
 
+// Time Wrapper Component
+import TimeWrapperComponent from "./src/screens/Game/TimeWrapperComponent";
 // React Redux Persist State
 import useCachedResources from "./src/hooks/useCachedResources";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -132,9 +134,9 @@ export default function App() {
                     />
 
                     {/* Game Screens */}
+
                     <Stack.Screen
                       name="GameOverview"
-                      component={GameOverview}
                       options={({ navigation }) => ({
                         headerLeft: () => (
                           <HeaderBackButton
@@ -144,6 +146,7 @@ export default function App() {
                         title: "Today's Exercises",
                       })}
                     />
+                    
                     <Stack.Screen
                       name="GameMaterials"
                       component={GameMaterials}

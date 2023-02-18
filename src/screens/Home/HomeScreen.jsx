@@ -144,7 +144,7 @@ function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>{`${
+      {/* <Text style={styles.title}>{`${
         streak < settings.streakLength ? streak : settings.streakLength
       } of ${settings.streakLength} Days`}</Text>
 
@@ -154,7 +154,7 @@ function HomeScreen({ navigation }) {
           streak < settings.streakLength ? streak : settings.streakLength
         }
         stepCount={settings.streakLength}
-      />
+      /> */}
 
       <Text style={styles.title}>{message}</Text>
       {/* Home Screen Step Indicator */}
