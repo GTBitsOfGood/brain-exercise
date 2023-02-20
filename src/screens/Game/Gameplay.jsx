@@ -1,107 +1,108 @@
 /* eslint-disable prefer-const */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-alert */
-import "react-native-gesture-handler";
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Button as BaseButton } from "react-native-elements";
-import Button from "../../components/Button";
-import PropTypes from "prop-types";
-import ProgressBar from "../../components/ProgressBar";
-import getProblem from "../../scripts/game-logic";
-import Text from "../../components/Text";
-import Toast from "react-native-toast-message";
-import ScoreValues from "./ScoreValues";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button as BaseButton } from 'react-native-elements';
+import 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
+import Button from '../../components/Button';
+import ProgressBar from '../../components/ProgressBar';
+import Text from '../../components/Text';
+import getProblem from '../../scripts/game-logic';
+import ScoreValues from './ScoreValues';
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "white",
-    justifyContent: "flex-end",
+    backgroundColor: 'white',
+    justifyContent: 'flex-end',
   },
   expressionText: {
     fontSize: 50,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingBottom: 80,
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     padding: 40,
     paddingTop: 80,
   },
   textContainer: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    textAlign: "center",
-    justifyContent: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
     paddingTop: 20,
   },
   container: {
     flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     paddingLeft: 10,
     paddingRight: 10,
     paddingTop: 20,
-    justifyContent: "space-around",
-    alignItems: "center",
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   button: {
-    alignSelf: "center",
+    alignSelf: 'center',
     marginTop: 20,
     minWidth: 99,
     height: 99,
     borderRadius: 25,
     borderWidth: 5,
-    borderColor: "#005AA3",
-    backgroundColor: "#fff",
+    borderColor: '#005AA3',
+    backgroundColor: '#fff',
   },
   gameMessage: {
     fontSize: 22,
-    textAlign: "center",
-    color: "black",
+    textAlign: 'center',
+    color: 'black',
   },
   selectedButton: {
-    alignSelf: "center",
+    alignSelf: 'center',
     marginTop: 20,
     width: 99,
     height: 99,
     borderRadius: 25,
     borderWidth: 5,
-    borderColor: "#005AA3",
-    backgroundColor: "#005AA3",
+    borderColor: '#005AA3',
+    backgroundColor: '#005AA3',
   },
   selectedButtonTitle: {
     fontSize: 40,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "white",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'white',
   },
   buttonTitle: {
     fontSize: 40,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "black",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'black',
   },
   disabledButtonTitle: {
     fontSize: 40,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "dimgrey",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'dimgrey',
   },
 });
 const totalTime = 300;
+// const totalTime = 3;
 
 const storeDifficultyScore = async (score) => {
-  await AsyncStorage.setItem("difficultyScore", score);
+  await AsyncStorage.setItem('difficultyScore', score);
 };
 
 const pullDifficultyScore = async () => {
-  const score = await AsyncStorage.getItem("difficultyScore");
+  const score = await AsyncStorage.getItem('difficultyScore');
   if (score !== null) {
     return score;
   }
@@ -110,7 +111,7 @@ const pullDifficultyScore = async () => {
 
 function Gameplay({ route, navigation, paused }) {
   const [problem, setProblem] = useState(getProblem());
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [remainingTime, setRemainingTime] = useState(totalTime);
   const [answered, setAnswered] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(1);
@@ -120,10 +121,10 @@ function Gameplay({ route, navigation, paused }) {
   let pBar = React.createRef();
 
   function getNewProblem() {
-    setMessage("");
+    setMessage('');
     setAnswered(false);
 
-    AsyncStorage.getItem("difficultyScore").then((difficultyScore) => {
+    AsyncStorage.getItem('difficultyScore').then((difficultyScore) => {
       const score = parseInt(difficultyScore);
       if (score < 200) {
         setProblem(getProblem(1));
@@ -161,16 +162,16 @@ function Gameplay({ route, navigation, paused }) {
         if (skip === false && choiceValue === problem.solution) {
           difficultyScore = Math.min(difficultyScore + 10, 499);
           Toast.show({
-            type: "success",
-            text1: "Correct!",
+            type: 'success',
+            text1: 'Correct!',
           });
           correct = true;
           setCorrectAnswers(correctAnswers + 1);
           ScoreValues.correct = correctAnswers;
         } else {
           Toast.show({
-            type: "error",
-            text1: "Wrong. Please Try Again!",
+            type: 'error',
+            text1: 'Wrong. Please Try Again!',
           });
         }
 
@@ -230,7 +231,7 @@ function Gameplay({ route, navigation, paused }) {
         red={60}
         func={() => {
           if (route.params.shouldReturn) {
-            navigation.navigate("HomeScreen");
+            navigation.navigate('HomeScreen');
           } else {
             navigation.navigate(route.params.nextScreen);
           }
@@ -238,7 +239,7 @@ function Gameplay({ route, navigation, paused }) {
         ref={pBar}
         paused={paused}
       />
-      <Toast visibilityTime={1000} position="bottom" bottomOffset={90} />
+      <Toast visibilityTime={1000} position='bottom' bottomOffset={90} />
       <View style={styles.textContainer}>
         <Text style={styles.title}>Tap the answer to the math problem.</Text>
         <Text style={styles.expressionText}>{problem.expression}</Text>
@@ -246,12 +247,12 @@ function Gameplay({ route, navigation, paused }) {
       <Text style={styles.gameMessage}>{message}</Text>
       <View style={styles.container}>{choices}</View>
       <Button
-        title="Skip"
+        title='Skip'
         buttonStyle={{
-          width: "90%",
-          alignSelf: "center",
-          marginBottom: "5%",
-          backgroundColor: "#005AA3"
+          width: '90%',
+          alignSelf: 'center',
+          marginBottom: '5%',
+          backgroundColor: '#005AA3',
         }}
         disabled={disableSkip}
         onPress={() => {
