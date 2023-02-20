@@ -95,12 +95,11 @@ export default function App() {
   }, [])
   
   const handleAppStateChange = (nextAppState) => {
-    if (AppState.currentState.match(/active/) && (nextAppState === 'inactive' || nextAppState === 'background')) {
+    if (AppState.currentState.match(/inactive|background/)){
+      console.log("went back");
       axios
         .post("screen-times/", screenTimeDict)
         .then(() => console.log("Done :)"));
-    }
-    if (AppState.currentState.match(/inactive|background/)){
       if (nextAppState === "active") {
         appStartTime = new Date();
       }
