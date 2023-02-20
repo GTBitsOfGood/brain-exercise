@@ -77,6 +77,9 @@ const Stack = createStackNavigator();
 const AppContext = React.createContext();
 
 export default function App() {
+  // For local testing add your IP address here
+  const IPV4_ADD = '192.123.123.12'
+  // axios.post(`http://${IPV4_ADD}:3000/status`).then(() => console.log("works"));
   const isLoadingComplete = useCachedResources();
   let appStartTime = new Date();
   const routeNameRef = useRef();
@@ -96,10 +99,11 @@ export default function App() {
   
   const handleAppStateChange = (nextAppState) => {
     if (AppState.currentState.match(/inactive|background/)){
-      console.log("went back");
+      console.log("going to axios");
       axios
-        .post("screen-times/", screenTimeDict)
-        .then(() => console.log("Done :)"));
+        .post(`http://${IPV4_ADD}:3000/screen-times`, { dict: screenTimeDict })
+        .then(() => console.log("Done :)"))
+        .catch((err) => console.log(err));
       if (nextAppState === "active") {
         appStartTime = new Date();
       }

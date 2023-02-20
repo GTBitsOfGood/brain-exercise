@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import bodyParser from "body-parser";
 
 import session from 'express-session';
 
@@ -12,6 +13,8 @@ import { MONGODB_URI, SESSION_SECRET } from './util/secrets';
 const MongoStore = require('connect-mongo');
 
 const app = express();
+// Local testing -- add your IP ADDRESS
+const IPV4_ADD = '192.123.123.12'
 
 const PORT = process.env.PORT || 3000;
 
@@ -58,6 +61,12 @@ app.get('/status', (req: Request, res: Response) => {
   res.send('Service is running!');
 });
 
+app.post('/screen-times', (req: Request, res: Response) => {
+  // console.log(req.body);
+  console.log(req);
+  res.send("WOHHOOO");
+});
+
 app.set('port', PORT);
 app.use(cors());
 app.use(express.json());
@@ -73,7 +82,13 @@ app.use(
   })
 );
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.listen(PORT, () => {
+app.use(function(req, res, next) {
+   res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+      next();
+});
+
+app.listen(3000, IPV4_ADD, () => {
   console.log(`App is listening on PORT ${PORT}`);
 });
