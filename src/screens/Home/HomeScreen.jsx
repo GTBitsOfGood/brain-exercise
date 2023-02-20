@@ -133,7 +133,8 @@ function HomeScreen({ navigation }) {
       getStreak(onGetStreakComplete);
       const fetchSettings = async () => {
         const storedSettings = await AsyncStorage.getItem("SETTINGS");
-        setSettings(JSON.parse(storedSettings));
+	if (storedSettings)
+          setSettings(JSON.parse(storedSettings));
       };
       fetchSettings();
     }, [])
