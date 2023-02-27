@@ -9,13 +9,12 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import { defaultRouter } from './routes';
 import { MONGODB_URI, SESSION_SECRET } from './util/secrets';
+import { updateTimeEntry } from './controllers/timeController';
 
 const MongoStore = require('connect-mongo');
 
 const app = express();
-// Local testing -- add your IP ADDRESS
-const IPV4_ADD = '192.123.123.12'
-
+const IPV4_ADD = "192.168.162.41";
 const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
@@ -61,15 +60,11 @@ app.get('/status', (req: Request, res: Response) => {
   res.send('Service is running!');
 });
 
-app.post('/screen-times', (req: Request, res: Response) => {
-  // console.log(req.body);
-  console.log(req);
-  res.send("WOHHOOO");
-});
-
 app.set('port', PORT);
-app.use(cors());
+
 app.use(express.json());
+app.use(cors());
+
 app.use(defaultRouter);
 app.use(
   session({
