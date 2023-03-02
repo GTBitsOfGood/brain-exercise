@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
@@ -51,6 +51,9 @@ import { store } from "./src/redux/store";
 import SignUpScreen from "./src/screens/SignUp/SignUp.jsx";
 import StreakLength from "./src/screens/Settings/StreakLength";
 
+// Time Analytics
+import { AppState } from "react-native";
+
 const persistor = persistStore(store);
 
 // Disabling dynamic type
@@ -74,10 +77,46 @@ const Stack = createStackNavigator();
 const AppContext = React.createContext();
 
 export default function App() {
+  // For local testing add your IP address here
   const isLoadingComplete = useCachedResources();
+  let appStartTime = new Date();
+  let screenStartTime = new Date();
+  const routeNameRef = useRef();
+  const navigationRef = useRef();
+  // let screenTimeDict = {};
 
   const [signedIn, setSignedIn] = React.useState(true);
   const [paused, setPaused] = React.useState(false);
+
+  // Time tracking when app is in background
+  useEffect(() => {
+    AppState.addEventListener("change", handleAppStateChange);
+    return () => {
+      AppState.removeEventListener("change", handleAppStateChange);
+    };
+  }, []);
+
+  const handleAppStateChange = async (nextAppState) => {
+    if (AppState.currentState.match(/inactive|background/)) {
+      if (nextAppState === "active") {
+        screenStartTime = new Date();
+        appStartTime = new Date();
+      } else {
+        deltaTime = (Date.now() - appStartTime) / 1000;
+        console.log("going away");
+        await axios
+          .post(`/analytics/screen-times`, {
+            // screenTimeDict,
+            type: "totalScreenTime",
+            time: deltaTime,
+          })
+          .then(() => console.log("Done :)"))
+          .catch((err) => console.log(err));
+      }
+    } else {
+      appStartTime = new Date();
+    }
+  };
 
   const appContextValue = useMemo(
     () => ({
@@ -98,7 +137,47 @@ export default function App() {
         <Provider store={store}>
           <PersistGate persistor={persistor} loading={null}>
             <SafeAreaProvider>
-              <NavigationContainer>
+              <NavigationContainer
+                ref={navigationRef}
+                onReady={() => {
+                  routeNameRef.current = navigationRef.current.getCurrentRoute().name;
+                }}
+                onStateChange={async () => {
+                  const prevRouteName = routeNameRef.current;
+                  const currentRouteName = navigationRef.current.getCurrentRoute()
+                    .name;
+
+                  if (currentRouteName != prevRouteName) {
+                    const deltaTime = Math.floor(
+                      (new Date() - screenStartTime) / 1000
+                    );
+
+                    let questionType;
+                    if (prevRouteName === "TriviaScreen") {
+                      questionType = "writingTime";
+                    } else if (prevRouteName === "Gameplay") {
+                      questionType = "mathTime";
+                    } else if (prevRouteName === "ReadingMain") {
+                      questionType = "readingTime";
+                    }
+
+                    console.log(deltaTime);
+
+                    if (questionType) {
+                      await axios
+                        .post(`/analytics/screen-times`, {
+                          type: questionType,
+                          time: deltaTime,
+                        })
+                        .catch((err) => console.log(err));
+                    }
+
+                    screenStartTime = new Date();
+                  }
+
+                  routeNameRef.current = currentRouteName;
+                }}
+              >
                 <AppContext.Provider value={appContextValue}>
                   <Stack.Navigator
                     // Consistent styling across all stacked screens
@@ -132,6 +211,7 @@ export default function App() {
                     />
 
                     {/* Game Screens */}
+
                     <Stack.Screen
                       name="GameOverview"
                       component={GameOverview}
@@ -347,7 +427,6 @@ export default function App() {
 }
 
 axios.defaults.baseURL = Constants.manifest.extra.AXIOS_BASEURL;
-// console.log(Constants.manifest.extra.AXIOS_BASEURL);
 
 // Add a request interceptor
 axios.interceptors.request.use(
