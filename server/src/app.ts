@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import bodyParser from "body-parser";
 
 import session from 'express-session';
 
@@ -8,11 +9,12 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import { defaultRouter } from './routes';
 import { MONGODB_URI, SESSION_SECRET } from './util/secrets';
+import { updateTimeEntry } from './controllers/timeController';
 
 const MongoStore = require('connect-mongo');
 
 const app = express();
-
+const IPV4_ADD = "192.168.162.41";
 const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
@@ -61,8 +63,10 @@ app.get('/status', (req: Request, res: Response) => {
 });
 
 app.set('port', PORT);
-app.use(cors());
+
 app.use(express.json());
+app.use(cors());
+
 app.use(defaultRouter);
 app.use(
   session({
@@ -75,6 +79,12 @@ app.use(
   })
 );
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(function(req, res, next) {
+   res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+      next();
+});
 
 app.listen(PORT, () => {
   console.log(`App is listening on PORT ${PORT}`);

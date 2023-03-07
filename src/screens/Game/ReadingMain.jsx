@@ -1,39 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
-import propTypes from "prop-types";
-import ProgressBar from "../../components/ProgressBar";
-import Text from "../../components/Text";
-import getStoryArray from "../../assets/stories";
-import Button from "../../components/Button";
+import propTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import getStoryArray from '../../assets/stories';
+import Button from '../../components/Button';
+import ProgressBar from '../../components/ProgressBar';
+import Text from '../../components/Text';
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "space-between",
+    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 20,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   instructions: {
     fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   articleWrapper: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   article: {
     fontSize: 20,
-    textAlign: "center",
+    textAlign: 'center',
   },
 });
 
 export default function ReadingMain({ navigation, route }) {
   const [timeUp, setTimeUp] = useState(false);
   const [storyArray, setStoryArray] = useState(getStoryArray());
-  const [paragraph, setParagraph] = useState("");
+  const [paragraph, setParagraph] = useState('');
   const [page, setPage] = useState(0);
 
   useEffect(() => {
@@ -48,10 +48,10 @@ export default function ReadingMain({ navigation, route }) {
   const buttonFunction = () => {
     if (timeUp) {
       if (route.params.shouldReturn) {
-        navigation.navigate("HomeScreen");
+        navigation.navigate('HomeScreen');
       } else {
-        navigation.navigate("MathIntro", {
-          nextScreen: "WritingIntro",
+        navigation.navigate('MathIntro', {
+          nextScreen: 'WritingIntro',
         });
       }
     } else if (storyArray.length - 1 === page) {
@@ -71,12 +71,12 @@ export default function ReadingMain({ navigation, route }) {
         <Text style={styles.article}>{paragraph}</Text>
       </ScrollView>
       <Button
-        title="Next"
+        title='Next'
         buttonStyle={styles.nextButton}
         onPress={() => buttonFunction()}
         shouldNotPlay
       />
-      <Button title="Skip" onPress={() => buttonFunction()} />
+      <Button title='Skip' onPress={() => buttonFunction()} />
     </View>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
@@ -7,8 +7,8 @@ import {
 import { Text } from "react-native";
 import { Auth0Provider } from "react-native-auth0";
 
-import Constants from "expo-constants";
 import axios from "axios";
+import Constants from "expo-constants";
 import { logAxiosError } from "./src/utils";
 
 // Importing temporary login screen
@@ -18,38 +18,41 @@ import Login from "./src/screens/Settings/Login.jsx";
 import HomeScreen from "./src/screens/Home/HomeScreen.jsx";
 
 // Importing Settings Screens
-import SettingsScreen from "./src/screens/Settings/SettingsScreen.jsx";
-import TimePicker from "./src/screens/Settings/TimePicker.jsx";
 import FontSize from "./src/screens/Settings/FontSize.jsx";
+import SettingsScreen from "./src/screens/Settings/SettingsScreen.jsx";
 import SoundScreen from "./src/screens/Settings/SoundScreen.jsx";
+import TimePicker from "./src/screens/Settings/TimePicker.jsx";
 
 // Importing Game Screens
-import GameOverview from "./src/screens/Game/GameOverview.jsx";
-import GameMaterials from "./src/screens/Game/GameMaterials.jsx";
-import Gameplay from "./src/screens/Game/Gameplay.jsx";
-import TriviaScreen from "./src/screens/Game/TriviaScreen.jsx";
-import GameplayIntermediate from "./src/screens/Game/GameplayIntermediate.jsx";
-import ReadingIntro from "./src/screens/Game/ReadingIntro.jsx";
-import Pause from "./src/screens/Game/Pause.jsx";
-import FinishedScreen from "./src/screens/Game/FinishedScreen.jsx";
-import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
-import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
-import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted.jsx";
-import PromptScreen from "./src/screens/Game/PromptScreen.jsx";
-import WritingIntro from "./src/screens/Game/WritingIntro.jsx";
-import MathIntro from "./src/screens/Game/MathIntro.jsx";
-import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
 import PauseButton from "./src/components/PauseButton.jsx";
+import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted.jsx";
+import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
+import FinishedScreen from "./src/screens/Game/FinishedScreen.jsx";
+import GameMaterials from "./src/screens/Game/GameMaterials.jsx";
+import GameOverview from "./src/screens/Game/GameOverview.jsx";
+import Gameplay from "./src/screens/Game/Gameplay.jsx";
+import GameplayIntermediate from "./src/screens/Game/GameplayIntermediate.jsx";
+import MathIntro from "./src/screens/Game/MathIntro.jsx";
+import Pause from "./src/screens/Game/Pause.jsx";
+import PromptScreen from "./src/screens/Game/PromptScreen.jsx";
+import ReadingIntro from "./src/screens/Game/ReadingIntro.jsx";
+import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
+import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
+import TriviaScreen from "./src/screens/Game/TriviaScreen.jsx";
+import WritingIntro from "./src/screens/Game/WritingIntro.jsx";
 
 // React Redux Persist State
-import useCachedResources from "./src/hooks/useCachedResources";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import useCachedResources from "./src/hooks/useCachedResources";
 import { store } from "./src/redux/store";
-import SignUpScreen from "./src/screens/SignUp/SignUp.jsx";
 import StreakLength from "./src/screens/Settings/StreakLength";
+import SignUpScreen from "./src/screens/SignUp/SignUp.jsx";
+
+// Time Analytics
+import { AppState } from "react-native";
 
 const persistor = persistStore(store);
 
@@ -74,10 +77,46 @@ const Stack = createStackNavigator();
 const AppContext = React.createContext();
 
 export default function App() {
+  // For local testing add your IP address here
   const isLoadingComplete = useCachedResources();
+  let appStartTime = new Date();
+  let screenStartTime = new Date();
+  const routeNameRef = useRef();
+  const navigationRef = useRef();
+  // let screenTimeDict = {};
 
   const [signedIn, setSignedIn] = React.useState(true);
   const [paused, setPaused] = React.useState(false);
+
+  // Time tracking when app is in background
+  useEffect(() => {
+    AppState.addEventListener("change", handleAppStateChange);
+    return () => {
+      AppState.removeEventListener("change", handleAppStateChange);
+    };
+  }, []);
+
+  const handleAppStateChange = async (nextAppState) => {
+    if (AppState.currentState.match(/inactive|background/)) {
+      if (nextAppState === "active") {
+        screenStartTime = new Date();
+        appStartTime = new Date();
+      } else {
+        deltaTime = (Date.now() - appStartTime) / 1000;
+        console.log("going away");
+        await axios
+          .post(`/analytics/screen-times`, {
+            // screenTimeDict,
+            type: "totalScreenTime",
+            time: deltaTime,
+          })
+          .then(() => console.log("Done :)"))
+          .catch((err) => console.log(err));
+      }
+    } else {
+      appStartTime = new Date();
+    }
+  };
 
   const appContextValue = useMemo(
     () => ({
@@ -98,7 +137,47 @@ export default function App() {
         <Provider store={store}>
           <PersistGate persistor={persistor} loading={null}>
             <SafeAreaProvider>
-              <NavigationContainer>
+              <NavigationContainer
+                ref={navigationRef}
+                onReady={() => {
+                  routeNameRef.current = navigationRef.current.getCurrentRoute().name;
+                }}
+                onStateChange={async () => {
+                  const prevRouteName = routeNameRef.current;
+                  const currentRouteName = navigationRef.current.getCurrentRoute()
+                    .name;
+
+                  if (currentRouteName != prevRouteName) {
+                    const deltaTime = Math.floor(
+                      (new Date() - screenStartTime) / 1000
+                    );
+
+                    let questionType;
+                    if (prevRouteName === "TriviaScreen") {
+                      questionType = "writingTime";
+                    } else if (prevRouteName === "Gameplay") {
+                      questionType = "mathTime";
+                    } else if (prevRouteName === "ReadingMain") {
+                      questionType = "readingTime";
+                    }
+
+                    console.log(deltaTime);
+
+                    if (questionType) {
+                      await axios
+                        .post(`/analytics/screen-times`, {
+                          type: questionType,
+                          time: deltaTime,
+                        })
+                        .catch((err) => console.log(err));
+                    }
+
+                    screenStartTime = new Date();
+                  }
+
+                  routeNameRef.current = currentRouteName;
+                }}
+              >
                 <AppContext.Provider value={appContextValue}>
                   <Stack.Navigator
                     // Consistent styling across all stacked screens
@@ -132,6 +211,7 @@ export default function App() {
                     />
 
                     {/* Game Screens */}
+
                     <Stack.Screen
                       name="GameOverview"
                       component={GameOverview}

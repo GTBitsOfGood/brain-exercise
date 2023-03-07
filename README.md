@@ -26,3 +26,4 @@ Make sure the connection type on the Expo dashboard is set to "Local".
 ## Bug Reporting
 
 Please create a new bug report Github Issue to disclose any problems you might've found
+changed readme to open PR
