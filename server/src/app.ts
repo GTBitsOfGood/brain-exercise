@@ -20,9 +20,11 @@ const ENVIRONMENT = process.env.NODE_ENV;
 const mongoUrl = MONGODB_URI;
 mongoose.Promise = bluebird;
 
-if (ENVIRONMENT !== 'test') {
+if (ENVIRONMENT !== 'development') {
   mongoose
-    .connect(mongoUrl)
+    .connect(mongoUrl, {
+      dbName: process.env.DB_NAME
+    })
     .then(() => {
       /** ready to use. The `mongoose.connect()` promise resolves to undefined. */
     })
@@ -32,7 +34,7 @@ if (ENVIRONMENT !== 'test') {
       );
       // process.exit();
     });
-} else if (ENVIRONMENT === 'test') {
+} else if (ENVIRONMENT === 'development') {
   // Connect to mongo memory server for testing
   const mongoServer = new MongoMemoryServer(); // in-memory server
 

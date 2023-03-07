@@ -1,6 +1,16 @@
 import * as AuthSession from "expo-auth-session";
-import React, { useEffect } from "react";
-import { Alert, Dimensions, Platform, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  Alert,
+  Dimensions,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import * as WebBrowser from "expo-web-browser";
+import Constants from "expo-constants";
+import * as Google from "expo-auth-session/providers/google";
 
 import { useDispatch } from "react-redux";
 
@@ -20,7 +30,13 @@ import { BeginOnboardingUser } from "../../redux/reducers/OnboardingReducer/type
 const useProxy = Platform.select({ web: false, default: true });
 const redirectUri = AuthSession.makeRedirectUri({ useProxy });
 
+WebBrowser.maybeCompleteAuthSession();
+
 const styles = StyleSheet.create({
+  loggedInLabel: {
+    textAlign: "center",
+    fontSize: 20,
+  },
   root: {
     flex: 1,
     alignContent: "center",
@@ -80,126 +96,73 @@ const styles = StyleSheet.create({
 });
 
 function LoginButton(props: { onUserNotFound: () => void }) {
-  const { authorize, user } = useAuth0();
+  const [token, setToken] = useState("");
+  const [userInfo, setUserInfo] = useState(null);
 
-  const onPress = async () => {
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId:
+      "1021563384726-gau4bvagu7r392i5u9qa9pd5oobmvvvo.apps.googleusercontent.com",
+    iosClientId:
+      "1021563384726-gau4bvagu7r392i5u9qa9pd5oobmvvvo.apps.googleusercontent.com",
+    clientId:
+      "1021563384726-gau4bvagu7r392i5u9qa9pd5oobmvvvo.apps.googleusercontent.com",
+  });
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      setToken(response.authentication.accessToken);
+      getUserInfo(response.authentication.accessToken);
+    }
+  }, [response, token]);
+
+  const getUserInfo = async (passedToken: string) => {
     try {
-      console.log(user);
-      await authorize();
-      console.log(user);
-    } catch (e) {
-      console.log(e);
+      const response = await fetch(
+        "https://www.googleapis.com/userinfo/v2/me",
+        {
+          headers: { Authorization: `Bearer ${passedToken}` },
+        }
+      );
+
+      const user = await response.json();
+      logUser(user);
+      setUserInfo(user);
+    } catch (error) {
+      console.error(error);
     }
   };
+
+  const logUser = async (user) => {
+    const response = await fetch(
+      `http://${Constants.expoConfig.extra.AXIOS_BASEURL}:3000/login/create`,
+      {
+        mode: "cors",
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  };
+
   const dispatch = useDispatch();
 
   const { onUserNotFound } = props;
 
-  const [, result, promptAsync] = AuthSession.useAuthRequest(
-    {
-      redirectUri,
-      clientId: Auth0.auth0ClientId,
-      // id_token will return a JWT token
-      responseType: "id_token",
-      // retrieve the user's profile
-      scopes: ["openid", "profile"],
-      extraParams: {
-        // ideally, this will be a random value
-        nonce: "nonce",
-      },
-    },
-    { authorizationEndpoint: Auth0.authorizationEndpoint }
-  );
-
-  useEffect(() => {
-    if (result) {
-      if (result.type === "success") {
-        // Retrieve the JWT access token from Auth0 and decode it
-        const receivedToken = result.params.id_token;
-        const userInfo: decodedJwtToken = jwtDecode(receivedToken);
-        // TODO: Refactor to move jwt to secure store! HERE!
-
-        // here for testing purposes. Change to the following if want authentication.
-        // But better to use expo-secure to store jwt token rather than redux state
-        // https://docs.expo.dev/versions/latest/sdk/securestore/
-        // console.log(userInfo.sub);
-        // axios.post(`/login/${userInfo.sub}`, {}, {
-        //   headers: {
-        //     'Content-Type': 'multipart/form-data',
-        //     Authorization: `Bearer ${receivedToken}`
-        //   }
-        // })
-
-        dispatch(setLoading({ loading: true }));
-
-        // Now that we have the user access token we can request the user information from the backend
-        axios
-          .post(`/login/${userInfo.sub}`, {})
-          .then((res) => {
-            console.log("Axios success");
-            const loginResponse = res;
-
-            if (
-              loginResponse.status === 200 &&
-              loginResponse.data !== null &&
-              loginResponse.data !== undefined &&
-              loginResponse.data.user !== null
-            ) {
-              const { user } = loginResponse.data; // res.data.user is of type User
-              user.jwt = receivedToken; // add jwt and authenticated to make it an AuthUser
-              user.authenticated = true;
-              Alert.alert("Welcome, " + user.name + "!");
-              return dispatch(login(user));
-            } else {
-              return Alert.alert("Authentication error!");
-            }
-          })
-          .catch((err: AxiosError) => {
-            console.log("Axios error");
-            // We actually expect an AxiosError with response code 303 if the user could not be located in
-            // the database. In this case we should redirect to onboarding to sign up this new user.
-            if (
-              err.response !== null &&
-              err.response !== undefined &&
-              err.response?.status === 303
-            ) {
-              // The name and jwt will be useful during onboarding even though we don't have any more user info
-
-              // TODO: ADD ONBOARDING DISPATCH LOGIC HERE!
-
-              const onboardingUser: BeginOnboardingUser = {
-                name: `${userInfo.given_name} ${userInfo.family_name}`,
-                auth0AccessToken: userInfo.sub,
-                email: userInfo.nickname, // nickname field is email.  Had to make this change because otherwise users with same name could not both have accounts
-                jwt: receivedToken,
-              };
-              dispatch(beginOnboarding(onboardingUser));
-              // Alert.alert(
-              //   "User does not exist (we should implement some sort of onboarding logic here!)"
-              // );
-              return onUserNotFound();
-            } else {
-              // In this case it was actually an unexpected error
-              return Alert.alert(
-                "Authentication error! Please Try Again Later"
-              );
-            }
-          })
-          .finally(() => {
-            dispatch(setLoading({ loading: false }));
-          });
-      } else {
-        Alert.alert("Authentication error!");
-      }
-    }
-  }, [result]);
-
   return (
-    <Button
-      titleStyle={styles.buttonTitle}
-      title="Continue to Sign In"
-      onPress={onPress}
-    />
+    <>
+      {userInfo ? (
+        <Text style={styles.loggedInLabel}>Logged in: {userInfo.name}</Text>
+      ) : (
+        <Button
+          titleStyle={styles.buttonTitle}
+          title="Continue to Sign In"
+          onPress={() => {
+            // onPress()
+            promptAsync();
+          }}
+        />
+      )}
+    </>
   );
 }
 

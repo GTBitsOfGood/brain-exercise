@@ -4656,7 +4656,7 @@ expo-modules-core@0.11.6:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
-expo-random@^12.3.0:
+expo-random@~12.3.0:
   version "12.3.0"
   resolved "https://registry.yarnpkg.com/expo-random/-/expo-random-12.3.0.tgz#4a45bcb14e285a4a9161e4a5dc82ff6c3fc2ac0c"
   integrity sha512-q+AsTfGNT+Q+fb2sRrYtRkI3g5tV4H0kuYXM186aueILGO/vLn/YYFa7xFZj1IZ8LJZg2h96JDPDpsqHfRG2mQ==

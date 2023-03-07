@@ -133,7 +133,9 @@ function HomeScreen({ navigation }) {
       getStreak(onGetStreakComplete);
       const fetchSettings = async () => {
         const storedSettings = await AsyncStorage.getItem("SETTINGS");
-        setSettings(JSON.parse(storedSettings));
+        storedSettings !== null
+          ? setSettings(JSON.parse(storedSettings))
+          : null;
       };
       fetchSettings();
     }, [])
@@ -169,11 +171,16 @@ function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate("GameOverview")}
       />
 
-      { // if user is null, show login button, else show logout button
-        !user ? <LoginButton
-        onUserNotFound={() => navigation.navigate("SignUpScreen")}
-      ></LoginButton> :
-      <LogoutButton/>}
+      {
+        // if user is null, show login button, else show logout button
+        !user ? (
+          <LoginButton
+            onUserNotFound={() => navigation.navigate("SignUpScreen")}
+          ></LoginButton>
+        ) : (
+          <LogoutButton />
+        )
+      }
 
       <View style={styles.buttonsContainer}>
         <View>

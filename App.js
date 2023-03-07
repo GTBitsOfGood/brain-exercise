@@ -346,8 +346,7 @@ export default function App() {
   }
 }
 
-axios.defaults.baseURL = Constants.manifest.extra.AXIOS_BASEURL;
-// console.log(Constants.manifest.extra.AXIOS_BASEURL);
+axios.defaults.baseURL = Constants.expoConfig.extra.AXIOS_BASEURL;
 
 // Add a request interceptor
 axios.interceptors.request.use(
