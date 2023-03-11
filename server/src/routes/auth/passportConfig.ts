@@ -10,7 +10,8 @@ module.exports = (passport) => {
       {
         clientID: CLIENT_ID,
         clientSecret: CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/google/callback",
+        callbackURL:
+          "https://auth.expo.io/@anonymous/BrainExercise-c894925d-93b9-49e5-8fb6-e519e9c4a667",
         passReqToCallback: true,
       },
       async (request, accessToken, refreshToken, profile, done) => {
