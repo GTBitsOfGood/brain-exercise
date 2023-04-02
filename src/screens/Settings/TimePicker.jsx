@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from "prop-types";
-import { Notifications } from "expo";
+import * as Notifications from "expo-notifications";
 import scheduleNotifications from "../../scripts/notification-logic";
 import defaultSettings from "../../components/DefaultSettings"
 import Text from "../../components/Text";
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 
 function TimePicker({ navigation, route }) {
 
-  const [date, setDate] = useState(route.params.scheduledTime || defaultSettings.scheduledTime);
+  const [date, setDate] = useState(route.params.scheduledTime || defaultSettings.scheduledTime); // this always needs to be string
 
   const storeSettings = async () => {
     const settingsObj = route.params;
@@ -36,13 +36,16 @@ function TimePicker({ navigation, route }) {
   }
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setDate(currentDate);
+    const currentDate = selectedDate || new Date(date);
+    console.log(typeof(selectedDate));
+    console.log(selectedDate);
+    setDate(currentDate.toString());
   };
 
   function confirmTime() {
     Notifications.cancelAllScheduledNotificationsAsync();
-    scheduleNotifications(date);
+    console.log(date)
+    scheduleNotifications(new Date(date));
     storeSettings();
     navigation.goBack()
   }
@@ -52,7 +55,7 @@ function TimePicker({ navigation, route }) {
       <Text style={styles.text}>You will receive a notification at this time on Monday through Friday</Text>
       <DateTimePicker 
         testID="dateTimePicker"
-        value={date}
+        value={new Date(date)}
         mode="time"
         is24Hour={false}
         display="default"

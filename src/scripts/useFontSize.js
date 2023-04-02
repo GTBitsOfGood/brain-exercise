@@ -20,7 +20,7 @@ const useFontSize = (originalFontsize) => {
     const [settings, setSettings] = useState(defaultSettings)
     useEffect(() => {
         pullSettings()
-        .then((setting) => setSettings(setting));
+        .then((setting) => setSettings(setting)).catch(err => console.log(err));
     }, []);
     const asyncFontSize = settings.fontSize;
     const ratio = asyncFontSize / 20;

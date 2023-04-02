@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 
 function GameOverview({ navigation }) {
   const soundObject = new Audio.Sound();
-
+  
   useEffect(() => {
     async function play() {
       const storedSettings = await AsyncStorage.getItem("SETTINGS");

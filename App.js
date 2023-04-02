@@ -110,7 +110,6 @@ export default function App() {
             type: "totalScreenTime",
             time: deltaTime,
           })
-          .then(() => console.log("Done :)"))
           .catch((err) => console.log(err));
       }
     } else {

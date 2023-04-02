@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'center',
-    marginTop: 20,
     minWidth: 99,
     height: 99,
     borderRadius: 25,
@@ -67,7 +66,6 @@ const styles = StyleSheet.create({
   },
   selectedButton: {
     alignSelf: 'center',
-    marginTop: 20,
     width: 99,
     height: 99,
     borderRadius: 25,
@@ -95,7 +93,6 @@ const styles = StyleSheet.create({
   },
 });
 const totalTime = 300;
-// const totalTime = 3;
 
 const storeDifficultyScore = async (score) => {
   await AsyncStorage.setItem('difficultyScore', score);
@@ -137,7 +134,7 @@ function Gameplay({ route, navigation, paused }) {
       } else {
         setProblem(getProblem());
       }
-    });
+    }).catch(err => console.log(err));
   }
 
   function checkAnswer(choiceValue, skip = false) {
@@ -176,7 +173,7 @@ function Gameplay({ route, navigation, paused }) {
         }
 
         storeDifficultyScore(difficultyScore.toString());
-      });
+      }).catch(err => console.log(err));
 
       setRemainingTime(pBar.current.getCurrentTime());
       setAnswered(true);

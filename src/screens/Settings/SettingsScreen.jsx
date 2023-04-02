@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Switch, TouchableOpacity, Linking } from "react-native";
-import { Notifications } from "expo";
+// import { Notifications } from "expo";
+import * as Notifications from "expo-notifications";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -65,7 +66,7 @@ function SettingsScreen({ navigation }) {
         setSettings(item);
         setToggleOn(item.notificationsActive);
         setAnimationToggleOn(item.animationOn);
-      });
+      }).catch(err => console.log(err));
     }, [])
   );
 

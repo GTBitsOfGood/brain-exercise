@@ -1,4 +1,4 @@
-import { Notifications } from "expo";
+import * as Notifications from "expo-notifications";
 /**
  * Globally stores notification settings in <Day, Time of notification> pairs
  * Both key and value are stored as strings
@@ -56,10 +56,16 @@ const scheduleNotifications = (inputDate) => {
           time: getNotificationTimeDifference(date, i),
           repeat: "week",
         };
-        Notifications.scheduleLocalNotificationAsync(
-          localNotification,
-          schedulingOptions
-        );
+        Notifications.scheduleNotificationAsync({
+          content: {
+            localNotification,
+          },
+          trigger: {
+            repeats: true,
+            hour: date.getHours(),
+            minute: date.getMinutes()
+          },
+        });
       }
     }
   }

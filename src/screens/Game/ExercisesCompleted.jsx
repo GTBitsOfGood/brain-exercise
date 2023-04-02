@@ -60,7 +60,7 @@ function ExercisesCompleted({ navigation }) {
   const [count, setCount] = React.useState(200)
   getCount().then(ct => {
     setCount(ct)
-  })
+  }).catch(err => console.log(err))
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>

@@ -19,7 +19,7 @@ const useSoundSetting = () => {
     const [settings, setSettings] = useState(defaultSettings)
     useEffect(() => {
         pullSettings()
-        .then((setting) => setSettings(setting));
+        .then((setting) => setSettings(setting)).catch(err => console.log(err));
     }, []);
     const soundObj = {
       soundEffectsOn: settings.soundEffectsOn,
