@@ -12,10 +12,13 @@ const Button = (props) => {
   const shouldPlay =
     useSoundSetting() !== null && useSoundSetting().soundEffectsOn;
   useEffect(() => {
-    soundObject.loadAsync(sound);
-    return () => {
-      soundObject.unloadAsync();
-    };
+    (async() => {
+      console.log(`soundObject: ${soundObject}`);
+      await soundObject.loadAsync(sound);
+      return () => {
+        soundObject.unloadAsync();
+      };
+    })
   });
   return (
     <BaseButton

@@ -49,8 +49,12 @@ function GameOverview({ navigation }) {
       <Text style={styles.text}>You will be completing a mixture of Math, Reading, and Writing exercises.</Text>
       <Button
         title="Begin"
-        onPress={() => {
-          soundObject.stopAsync();
+        onPress={async () => {
+          const storedSettings = await AsyncStorage.getItem("SETTINGS");
+          const settings = await JSON.parse(storedSettings);
+          if (settings.voiceOverOn) {
+            await soundObject.stopAsync();
+          }
           navigation.navigate("MathIntro", { nextScreen: "TriviaIntro" })
         }}
       />
