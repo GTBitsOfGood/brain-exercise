@@ -13,3 +13,5 @@ export type decodedJwtToken = {
   name: string,
   sub: string,
 }
+
+export type TimeAnalyticsTypes = "totalScreenTime" | "writingTime" | "mathTime" | "readingTime";
