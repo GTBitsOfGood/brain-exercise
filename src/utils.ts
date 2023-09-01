@@ -2,7 +2,7 @@ import axios from "axios";
 import { TimeAnalyticsTypes } from "./types";
 
 // From https://github.com/axios/axios#handling-errors, which is by Matt Zabriskie and is under the MIT license
-export function logAxiosError(error: any) {
+export function logAxiosError(error) {
   if (error.response) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx
@@ -35,7 +35,6 @@ export const wait = (timeout: number) =>
 
 export async function reportTimeAnalytics(startTime: Date, timeType: TimeAnalyticsTypes) {
   const deltaTime = (Date.now() - startTime.getTime()) / 1000;
-  console.log(timeType, deltaTime);
   await axios
     .post(`/analytics/screen-times`, {
       type: timeType,
