@@ -5,8 +5,6 @@ import Text from "../../components/Text";
 import "react-native-gesture-handler";
 import useSound from "../../hooks/useSound";
 import { RootStackParamList, SoundSetting } from "../../types";
-// import BaseOverlay from "../../components/OverLays/BaseOverlay";
-
 
 const sound = require('../../assets/intro.mp3');
 

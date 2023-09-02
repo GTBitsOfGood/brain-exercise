@@ -2,16 +2,16 @@ import { ReactNode, useRef, useEffect } from "react";
 import { AppState, AppStateStatus } from "react-native";
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
 import { reportTimeAnalytics } from "../utils";
-import { TimeAnalyticsTypes } from "../types";
+import { RootStackParamList, TimeAnalyticsTypes } from "../types";
 
 const timeTypeMapping: Record<string, TimeAnalyticsTypes> = {
   "TriviaScreen": "writingTime",
-  "Gameplay": "mathTime",
+  "MathMain": "mathTime",
   "ReadingMain": "readingTime",
 };
 
 export default function NavigationContainerWithTracking({ children }: { children: ReactNode }) {
-  const navigationRef = useRef<NavigationContainerRef>();
+  const navigationRef = useRef<NavigationContainerRef<RootStackParamList>>();
   const routeNameRef = useRef<string>();
 
   const appState = useRef(AppState.currentState);

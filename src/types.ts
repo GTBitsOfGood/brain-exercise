@@ -1,30 +1,5 @@
-import { FC } from "react";
 import { AVPlaybackSource } from "expo-av";
 import { ImageSourcePropType } from "react-native";
-
-export enum GameTypes {
-  Math = "Math",
-  Reading = "Reading",
-  Trivia = "Trivia",
-}
-
-export type GameDescriptions = Record<GameTypes, {
-  title: string;
-  minutes: number;
-  intro: {
-    name: keyof RootStackParamList;
-    sound: AVPlaybackSource,
-    image: ImageSourcePropType,
-    description: string,
-    buttonTitle: string,
-    nextScreen: keyof RootStackParamList,
-    subDescription?: string,
-  };
-  game: {
-    name: keyof RootStackParamList;
-    component: FC;
-  }
-}>;
 
 export interface User {
   _id?: string, // the unqiue id assigned to a user. Let Mongo create this when you insert a document without any _id attribute
@@ -45,18 +20,59 @@ export interface DecodedJwtToken {
 export type TimeAnalyticsTypes = "totalScreenTime" | "writingTime" | "mathTime" | "readingTime";
 
 export enum SoundSetting {
-  voiceOverOn = "voiceOverOn",
+  animationOn = "animationOn",
+  fontSize = "fontSize",
+  notificationsActive = "notificationsActive",
+  scheduledTime = "scheduledTime",
   soundEffectsOn = "soundEffectsOn",
+  streakLength = "streakLength",
+  voiceOverOn = "voiceOverOn",
 }
 export type SoundSettings = Record<SoundSetting, boolean>;
 
 export type RootStackParamList = {
   GameOverview: undefined,
   MathIntro: undefined,
-  MathMain: undefined,
+  MathMain: { nextScreen: keyof RootStackParamList } | undefined,
   ReadingIntro: undefined,
-  ReadingMain: undefined,
+  ReadingMain: { nextScreen: keyof RootStackParamList } | undefined,
+  WritingIntro: undefined,
+  WritingMain: { nextScreen: keyof RootStackParamList } | undefined,
   TriviaIntro: undefined,
-  TriviaMain: undefined,
+  TriviaMain: { nextScreen: keyof RootStackParamList } | undefined,
+  ExercisesCompleted: undefined,
   Pause: undefined,
 };
+
+export type NavigationArgs = {
+  [T in keyof RootStackParamList]: {
+    navigationArgs: [nextScreen: T] | [nextScreen: T, params: RootStackParamList[T]];
+  }
+}[keyof RootStackParamList]["navigationArgs"];
+
+export enum GameTypes {
+  Math = "Math",
+  Reading = "Reading",
+  Writing = "Writing",
+  Trivia = "Trivia",
+}
+
+export type GameDescriptions = Record<GameTypes, {
+  title: string;
+  minutes: number;
+  intro: {
+    name: keyof RootStackParamList;
+    sound: AVPlaybackSource,
+    image: ImageSourcePropType,
+    description: string,
+    buttonTitle: string,
+    subDescription?: string,
+    nextScreenNavigationArgs: NavigationArgs,
+  };
+  game: {
+    name: keyof RootStackParamList;
+    nextScreenNavigationArgs: NavigationArgs,
+  }
+}>;
+
+export type AsyncStorageKey = "SETTINGS";

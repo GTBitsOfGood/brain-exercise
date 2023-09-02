@@ -1,30 +1,31 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthUser } from './types';
+/* eslint-disable no-param-reassign */
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AuthUser } from "./types";
 
-const initialState = {
-  _id: '',
-  name: '',
+const initialState: AuthUser = {
+  _id: "",
+  name: "",
   phoneNumber: 0,
   birthdate: Date(),
-  auth0AccessToken: '',
+  auth0AccessToken: "",
   authenticated: false,
-  jwt: '',
-  firstTimeLogin: false
-} as AuthUser;
+  jwt: "",
+  firstTimeLogin: false,
+};
 
 // Helper function to copy all properties from newState over to the existing state
-const setState = (state:AuthUser, newState:AuthUser) : void => {
+const setState = (state: AuthUser, newState: AuthUser): void => {
   state._id = newState._id;
   state.name = newState.name;
   state.phoneNumber = newState.phoneNumber;
-  state.birthdate = state.birthdate;
+  state.birthdate = newState.birthdate;
   state.auth0AccessToken = newState.auth0AccessToken;
   state.authenticated = newState.authenticated;
   state.jwt = newState.jwt;
 };
 
 const authReducer = createSlice({
-  name: 'authInfo',
+  name: "authInfo",
   initialState,
   reducers: {
     // Update the authState with the user information
@@ -37,8 +38,8 @@ const authReducer = createSlice({
     },
     firstTimeLogin(state, action: PayloadAction<boolean>) {
       state.firstTimeLogin = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const { login, logout, firstTimeLogin } = authReducer.actions;

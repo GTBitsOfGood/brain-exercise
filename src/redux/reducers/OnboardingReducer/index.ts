@@ -1,7 +1,8 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { OnboardingState, BeginOnboardingUser } from './types';
 
-const initialState = {
+const initialState: OnboardingState = {
   name: '',
   email: '',
   phoneNumber: 0,
@@ -9,7 +10,7 @@ const initialState = {
   secondaryPhoneNumber: 0,
   auth0AccessToken: '',
   jwt: '',
-} as OnboardingState;
+};
 
 const onboardingReducer = createSlice({
   name: 'onboardingState',
@@ -22,7 +23,7 @@ const onboardingReducer = createSlice({
       state.jwt = action.payload.jwt;
     },
     reset: () => initialState,
-  }
+  },
 });
 
 // make sure to add your reducer to the root reducer and store

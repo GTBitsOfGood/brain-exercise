@@ -2,8 +2,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import 'react-native-gesture-handler';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { unpause } from '../../redux/reducers/pauseReducer';
 import Button from '../../components/Button';
 import Text from '../../components/Text';
+import { RootStackParamList } from '../../types';
+
 
 const styles = StyleSheet.create({
   root: {
@@ -28,7 +34,10 @@ const styles = StyleSheet.create({
   },
 });
 
-function Pause({ navigation, setPaused }) {
+function Pause() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const dispatch = useDispatch();
+  
   return (
     <View style={styles.root}>
       <Text
@@ -38,7 +47,7 @@ function Pause({ navigation, setPaused }) {
         title='Resume'
         buttonStyle={styles.button}
         onPress={() => {
-          setPaused(false);
+          dispatch(unpause());
           navigation.goBack();
         }}
       />

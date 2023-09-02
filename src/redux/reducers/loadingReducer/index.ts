@@ -1,24 +1,23 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LoadingState } from './types';
+/* eslint-disable no-param-reassign */
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { LoadingState, LoadingType } from "./types";
 
-const initialState = {
+const initialState: LoadingState = {
   loadingStatus: false,
-  loadStartTime: 0 // the epoch
-} as LoadingState;
-
-type setLoadingType = { loading: boolean }
+  loadStartTime: 0, // the epoch
+};
 
 const loadingReducer = createSlice({
-  name: 'loadingState',
+  name: "loadingState",
   initialState,
   reducers: {
-    setLoading(state, action: PayloadAction<setLoadingType>) {
+    setLoading(state, action: PayloadAction<LoadingType>) {
       state.loadingStatus = action.payload.loading;
     },
     flipLoading(state) {
       state.loadingStatus = !state.loadingStatus;
     },
-  }
+  },
 });
 
 // make sure to add your reducer to the root reducer and store

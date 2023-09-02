@@ -53,7 +53,8 @@ module.exports = {
         "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/quotes": "off",
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "no-underscore-dangle": "off"
       }
     }
   ]

@@ -1,14 +1,14 @@
 import React from "react";
 import { AVPlaybackSource } from "expo-av";
 import { ImageSourcePropType, View, Image, StyleSheet } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import "react-native-gesture-handler";
 
 import Button from "../Button";
 import Text from "../Text";
 import useSound from "../../hooks/useSound";
-import { RootStackParamList, SoundSetting } from "../../types";
+import { NavigationArgs, RootStackParamList, SoundSetting } from "../../types";
 
 const styles = StyleSheet.create({
   root: {
@@ -47,16 +47,24 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  sound: AVPlaybackSource,
-  image: ImageSourcePropType,
-  description: string,
-  time: number,
-  buttonTitle: string,
-  nextScreen: keyof RootStackParamList,
-  subDescription?: string,
+  sound: AVPlaybackSource;
+  image: ImageSourcePropType;
+  description: string;
+  time: number;
+  buttonTitle: string;
+  subDescription?: string;
+  navigationArgs: NavigationArgs;
 };
 
-function IntroOverlay({ sound, image, description, time, buttonTitle, subDescription, nextScreen }: Props) {
+function IntroOverlay({
+  sound,
+  image,
+  description,
+  time,
+  buttonTitle,
+  subDescription,
+  navigationArgs,
+}: Props) {
   const { unloadSound } = useSound(sound, SoundSetting.voiceOverOn);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
@@ -66,16 +74,14 @@ function IntroOverlay({ sound, image, description, time, buttonTitle, subDescrip
         <Image source={image} style={styles.image} />
         <Text style={styles.description}>{description}</Text>
       </View>
-      { subDescription && (
+      {subDescription && (
         <Text style={styles.subDescription}>{subDescription}</Text>
       )}
       <Text style={styles.timeText}>{`Total time: ${time} minutes`}</Text>
       <Button
         title={buttonTitle}
-        onPress={() => unloadSound() && navigation.navigate(nextScreen)}
-        buttonStyle={
-          { marginBottom: 40 } 
-        }
+        onPress={() => unloadSound() && navigation.navigate(...navigationArgs)}
+        buttonStyle={{ marginBottom: 40 }}
       />
     </View>
   );

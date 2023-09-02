@@ -28,10 +28,10 @@ import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
 import FinishedScreen from "./src/screens/Game/FinishedScreen.jsx";
 import GameMaterials from "./src/screens/Game/GameMaterials.jsx";
 import GameOverview from "./src/screens/Game/GameOverview";
-import Gameplay from "./src/screens/Game/Gameplay.jsx";
+// import Gameplay from "./src/screens/Game/MathMain.js";
 // import GameplayIntermediate from "./src/screens/Game/GameplayIntermediate.jsx";
 import MathIntro from "./src/screens/Game/MathIntro";
-import Pause from "./src/screens/Game/Pause.jsx";
+import Pause from "./src/screens/Game/Pause";
 import PromptScreen from "./src/screens/Game/PromptScreen.jsx";
 import ReadingIntro from "./src/screens/Game/ReadingIntro";
 import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
@@ -83,7 +83,6 @@ export default function App() {
   // let screenTimeDict = {};
 
   const [signedIn, setSignedIn] = React.useState(true);
-  const [paused, setPaused] = React.useState(false);
 
   const appContextValue = useMemo(
     () => ({
@@ -204,6 +203,7 @@ export default function App() {
                   {/* Pause Screen */}
                   <Stack.Screen
                     name="Pause"
+                    component={Pause}
                     options={{
                       title: "Paused",
                       animationTypeForReplace: "pop",
@@ -212,9 +212,7 @@ export default function App() {
                         close: config,
                       },
                     }}
-                  >
-                    {(props) => <Pause {...props} setPaused={setPaused} />}
-                  </Stack.Screen>
+                  />
 
                   {/* Settings Screens */}
                   <Stack.Screen

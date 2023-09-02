@@ -24,8 +24,8 @@ import { DecodedJwtToken } from "../../types";
 import { logAxiosError } from "../../utils";
 import Button from "../../components/Button";
 import { useAuth0 } from "react-native-auth0";
-import { beginOnboarding } from "../../redux/reducers/OnboardingReducer";
-import { BeginOnboardingUser } from "../../redux/reducers/OnboardingReducer/types";
+import { beginOnboarding } from "../../redux/reducers/onboardingReducer";
+import { BeginOnboardingUser } from "../../redux/reducers/onboardingReducer/types";
 
 const useProxy = Platform.select({ web: false, default: true });
 const redirectUri = AuthSession.makeRedirectUri({ useProxy });
