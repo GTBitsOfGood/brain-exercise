@@ -18,13 +18,6 @@ export default function NavigationContainerWithTracking({ children }: { children
   const recentActiveTime = useRef(new Date()); // Time when app became active most recently
   const recentRouteTime = useRef(new Date()); // Time when current route became active most recently
 
-  useEffect(() => {
-    const subscription = AppState.addEventListener("change", handleAppStateChange);
-    return () => {
-      subscription.remove();
-    };
-  }, []);
-
   // Reports the time spent in app/route when the app is closed or in the background
   const handleAppStateChange = async (nextAppState: AppStateStatus) => {
     if (appState.current.match(/inactive|background/) && nextAppState === "active") {
@@ -40,6 +33,13 @@ export default function NavigationContainerWithTracking({ children }: { children
     }
     appState.current = nextAppState;
   };
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", handleAppStateChange);
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   return (
     <NavigationContainer

@@ -20,7 +20,7 @@ import * as Auth0 from "../../constants/Auth0";
 
 import { login } from "../../redux/reducers/authReducer/index";
 import { setLoading } from "../../redux/reducers/loadingReducer/index";
-import { decodedJwtToken } from "../../types";
+import { DecodedJwtToken } from "../../types";
 import { logAxiosError } from "../../utils";
 import Button from "../../components/Button";
 import { useAuth0 } from "react-native-auth0";
