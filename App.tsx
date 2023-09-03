@@ -36,7 +36,7 @@ import PromptScreen from "./src/screens/Game/PromptScreen.jsx";
 import ReadingIntro from "./src/screens/Game/ReadingIntro";
 import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
 import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
-import TriviaScreen from "./src/screens/Game/TriviaScreen.jsx";
+import TriviaScreen from "./src/screens/Game/TriviaMain.jsx";
 import WritingIntro from "./src/screens/Game/WritingIntro.jsx";
 
 // React Redux Persist State

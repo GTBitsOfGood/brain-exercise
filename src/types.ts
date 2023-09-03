@@ -76,3 +76,7 @@ export type GameDescriptions = Record<GameTypes, {
 }>;
 
 export type AsyncStorageKey = "SETTINGS";
+
+export type RemainingTimeGetter = {
+  getRemainingTime: () => number
+};

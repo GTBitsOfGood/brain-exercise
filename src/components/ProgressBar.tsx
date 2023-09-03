@@ -1,26 +1,35 @@
 /* eslint-disable no-param-reassign */
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { useEffect, useState, MutableRefObject } from "react";
 import { View, Text } from "react-native";
 import * as Progress from "react-native-progress";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/rootReducer";
+import { RemainingTimeGetter } from "../types";
 
 interface Props {
   maxSeconds: number,
-  remainingTime: number,
-  setRemainingTime: Dispatch<SetStateAction<number>>,
   redThreshold: number,
-  onTimeComplete: () => void,
+  onTimeComplete?: () => void,
+  remainingTimeRef?: MutableRefObject<RemainingTimeGetter>,
 }
 
-export default function ProgressBar({ maxSeconds, remainingTime, setRemainingTime, redThreshold, onTimeComplete }: Props) {
+export default function ProgressBar({ maxSeconds, redThreshold, onTimeComplete, remainingTimeRef }: Props) {
+  const [remainingTime, setRemainingTime] = useState(maxSeconds);
   const paused = useSelector<RootState>((state) => state.paused.paused);
+
+  useEffect(() => {
+    if (remainingTimeRef) {
+      remainingTimeRef.current = { getRemainingTime: () => remainingTime };
+    }
+  }, [remainingTimeRef, remainingTime]);
 
   useEffect(() => {
     const timer = setInterval(() => {
       if (remainingTime <= 0) {
         clearInterval(timer);
-        onTimeComplete();
+        if (onTimeComplete) {
+          onTimeComplete();
+        }
       } else if (!paused) {
         setRemainingTime(remainingTime - 1);
       }

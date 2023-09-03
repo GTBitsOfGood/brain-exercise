@@ -10,18 +10,18 @@ import ProgressBar from '../../../components/ProgressBar';
 import Text from '../../../components/Text';
 import gameDescriptions from '../../Stacks/gameDescriptions';
 import useMathProblems from '../../../hooks/useMathProblems';
-import { RootStackParamList } from '../../../types';
+import { RemainingTimeGetter, RootStackParamList } from '../../../types';
 import styles from './MathMain.style';
 
 const TOTAL_TIME = gameDescriptions.Math.minutes * 60;
 type Props = NativeStackScreenProps<RootStackParamList, 'MathMain'>;
 
 function MathMain({ route, navigation }: Props) {
-  const [remainingTime, setRemainingTime] = useState(TOTAL_TIME);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const [skipped, setSkipped] = useState(false);
 
-  const prevProblemRemainingTime = useRef(TOTAL_TIME);
+  const remainingTimeRef = useRef<RemainingTimeGetter>();
+  const prevProblemRemainingTimeRef = useRef<number>(TOTAL_TIME);
   const { problem, getNewProblem, updateStatsOnAnswer, updateStatsOnSkip } = useMathProblems();
 
   const resetAndNewProblem = useCallback((waitSeconds: number) => {
@@ -30,13 +30,13 @@ function MathMain({ route, navigation }: Props) {
       setButtonsDisabled(false);
       setSkipped(false);
       getNewProblem();
-      prevProblemRemainingTime.current = remainingTime;
+      prevProblemRemainingTimeRef.current = remainingTimeRef.current.getRemainingTime();
     }, waitSeconds * 1000);
-  }, [getNewProblem, remainingTime]);
+  }, [getNewProblem, remainingTimeRef]);
 
   const onPressChoice = (choiceValue: number) => {
     const isCorrect = choiceValue === problem.solution;
-    updateStatsOnAnswer(isCorrect, prevProblemRemainingTime.current - remainingTime);
+    updateStatsOnAnswer(isCorrect, prevProblemRemainingTimeRef.current - remainingTimeRef.current.getRemainingTime());
     if (isCorrect) {
       Toast.show({
         type: 'success',
@@ -51,13 +51,16 @@ function MathMain({ route, navigation }: Props) {
     }
   };
 
+  const onTimeComplete = useCallback(() => {
+    navigation.navigate(route.params.nextScreen);
+  }, [navigation, route.params.nextScreen]);
+
   const onPressSkip = () => {
+    if (remainingTimeRef.current.getRemainingTime() === 0) {
+      onTimeComplete();
+    }
     updateStatsOnSkip();
     resetAndNewProblem(2);
-  };
-
-  const onTimeComplete = () => {
-    navigation.navigate(route.params.nextScreen);
   };
 
   const choices = problem.choices.map((choiceValue, i) => {
@@ -87,8 +90,7 @@ function MathMain({ route, navigation }: Props) {
     <View style={styles.root}>
       <ProgressBar
         maxSeconds={TOTAL_TIME}
-        remainingTime={remainingTime}
-        setRemainingTime={setRemainingTime}
+        remainingTimeRef={remainingTimeRef}
         redThreshold={60}
         onTimeComplete={onTimeComplete}
       />

@@ -28,7 +28,7 @@ const gameDescriptions: GameDescriptions = {
   },
   "Reading": {
     title: "Reading",
-    minutes: 10,
+    minutes: 5,
     intro: {
       name: "ReadingIntro",
       sound: readingSound,

@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import MathMain from "../Game/MathMain/MathMain";
 import ReadingMain from "../Game/ReadingMain";
-import TriviaScreen from "../Game/TriviaScreen";
+import TriviaMain from "../Game/TriviaMain";
 import PromptScreen from "../Game/PromptScreen";
 
 import IntroOverlay from "../../components/OverLays/IntroOverlay";
@@ -14,7 +14,7 @@ import gameDescriptions from "./gameDescriptions";
 export const gameComponents: Record<GameTypes, FC> = {
   Math: MathMain,
   Reading: ReadingMain,
-  Trivia: TriviaScreen,
+  Trivia: TriviaMain,
   Writing: PromptScreen,
 };
 
