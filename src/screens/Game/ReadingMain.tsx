@@ -13,9 +13,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 25,
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingTop: 20,
+    paddingHorizontal: 20,
     backgroundColor: 'white',
   },
   instructions: {
@@ -63,8 +62,8 @@ export default function ReadingMain({ navigation, route }: Props) {
   const paragraph = storyArray[page];
 
   const onTimeComplete = useCallback(() => {
-    navigation.navigate(route.params.nextScreen);
-  }, [navigation, route.params.nextScreen]);
+    navigation.navigate(...route.params.nextScreenArgs);
+  }, [navigation, route.params.nextScreenArgs]);
 
   return (
     <View style={styles.root}>

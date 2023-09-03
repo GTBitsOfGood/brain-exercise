@@ -69,8 +69,8 @@ function TriviaScreen({ navigation, route }: Props) {
   }, [answered]);
 
   const onTimeComplete = useCallback(() => {
-    navigation.navigate(route.params.nextScreen);
-  }, [navigation, route.params.nextScreen]);
+    navigation.navigate(...route.params.nextScreenArgs);
+  }, [navigation, route.params.nextScreenArgs]);
 
   return (
     <View style={styles.root}>

@@ -3,6 +3,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Button, Text } from "react-native";
 import { Auth0Provider } from "react-native-auth0";
 
+// React Redux Persist State
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+
 import axios from "axios";
 import Constants from "expo-constants";
 import { logAxiosError } from "./src/utils";
@@ -13,7 +19,7 @@ import Stack from "./src/screens/Stacks/StackNavigator";
 import Login from "./src/screens/Settings/Login.jsx";
 
 // Importing Home Screen
-import HomeScreen from "./src/screens/Home/HomeScreen.jsx";
+import HomeScreen from "./src/screens/Home/HomeScreen";
 
 // Importing Settings Screens
 import FontSize from "./src/screens/Settings/FontSize.jsx";
@@ -23,27 +29,15 @@ import TimePicker from "./src/screens/Settings/TimePicker.jsx";
 
 // Importing Game Screens
 import PauseButton from "./src/components/PauseButton";
-import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted.jsx";
-import ExtraPractice from "./src/screens/Game/ExtraPractice.jsx";
-import FinishedScreen from "./src/screens/Game/FinishedScreen.jsx";
-import GameMaterials from "./src/screens/Game/GameMaterials.jsx";
+import ExercisesCompleted from "./src/screens/Game/ExercisesCompleted";
+import ExtraPractice from "./src/screens/Game/ExtraPractice";
 import GameOverview from "./src/screens/Game/GameOverview";
 // import Gameplay from "./src/screens/Game/MathMain.js";
 // import GameplayIntermediate from "./src/screens/Game/GameplayIntermediate.jsx";
-import MathIntro from "./src/screens/Game/MathIntro";
+
 import Pause from "./src/screens/Game/Pause";
 import PromptScreen from "./src/screens/Game/PromptScreen.jsx";
-import ReadingIntro from "./src/screens/Game/ReadingIntro";
-import ReadingMain from "./src/screens/Game/ReadingMain.jsx";
-import TriviaIntro from "./src/screens/Game/TriviaIntro.jsx";
-import TriviaScreen from "./src/screens/Game/TriviaMain.jsx";
-import WritingIntro from "./src/screens/Game/WritingIntro.jsx";
 
-// React Redux Persist State
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Provider } from "react-redux";
-import { persistStore } from "redux-persist";
-import { PersistGate } from "redux-persist/integration/react";
 import useCachedResources from "./src/hooks/useCachedResources";
 import { store } from "./src/redux/store";
 import StreakLength from "./src/screens/Settings/StreakLength";
@@ -51,27 +45,9 @@ import SignUpScreen from "./src/screens/SignUp/SignUp.jsx";
 
 // Time Analytics
 import NavigationContainerWithTracking from "./src/components/NavigationContainerWithTracking";
-import { RootStackParamList } from "./src/types.js";
 import MergedStacks from "./src/screens/Stacks/MergedStacks";
 
 const persistor = persistStore(store);
-
-// Disabling dynamic type
-Text.defaultProps = Text.defaultProps || {};
-Text.defaultProps.allowFontScaling = false;
-
-const config = {
-  animation: "spring",
-  config: {
-    stiffness: 1000,
-    damping: 500,
-    mass: 3,
-    overshootClamping: true,
-    restDisplacementThreshold: 0.01,
-    restSpeedThreshold: 0.01,
-  },
-};
-
 
 
 const AppContext = React.createContext();
@@ -137,82 +113,6 @@ export default function App() {
                   />
 
                   { MergedStacks }
-
-                  {/* Game Screens */}
-
-                  <Stack.Screen
-                    name="GameOverview"
-                    component={GameOverview}
-                    options={{
-                      title: "Today's Exercises",
-                    }}
-                  />
-                  <Stack.Screen
-                    name="GameMaterials"
-                    component={GameMaterials}
-                    options={{
-                      title: "Choose your game!",
-                    }}
-                  />
-
-                  {/* <Stack.Screen
-                    name="GameplayIntermediate"
-                    component={GameplayIntermediate}
-                    options={{
-                      title: "Gameplay Intermediate",
-                    }}
-                  /> */}
-                  
-                
-                  <Stack.Screen
-                    name="FinishedScreen"
-                    component={FinishedScreen}
-                    options={{
-                      title: "Exercises Completed",
-                    }}
-                  />
-
-                  
-                  <Stack.Screen
-                    name="ExtraPractice"
-                    component={ExtraPractice}
-                    options={{
-                      title: "More Exercises",
-                    }}
-                  />
-                  
-                  <Stack.Screen
-                    name="PromptScreen"
-                    component={PromptScreen}
-                    options={({ navigation }) => ({
-                      headerRight: () => (
-                        <PauseButton
-                          onPress={() => navigation.navigate("Pause")}
-                        />
-                      ),
-                      title: "Writing Prompts",
-                    })}
-                  />
-                  <Stack.Screen
-                    name="ExercisesCompleted"
-                    component={ExercisesCompleted}
-                    options={{
-                      title: "Exercises done!",
-                    }}
-                  />
-                  {/* Pause Screen */}
-                  <Stack.Screen
-                    name="Pause"
-                    component={Pause}
-                    options={{
-                      title: "Paused",
-                      animationTypeForReplace: "pop",
-                      transitionSpec: {
-                        open: config,
-                        close: config,
-                      },
-                    }}
-                  />
 
                   {/* Settings Screens */}
                   <Stack.Screen

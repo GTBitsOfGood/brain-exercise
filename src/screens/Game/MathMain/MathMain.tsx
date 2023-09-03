@@ -52,8 +52,8 @@ function MathMain({ route, navigation }: Props) {
   };
 
   const onTimeComplete = useCallback(() => {
-    navigation.navigate(route.params.nextScreen);
-  }, [navigation, route.params.nextScreen]);
+    navigation.navigate(...route.params.nextScreenArgs);
+  }, [navigation, route.params.nextScreenArgs]);
 
   const onPressSkip = () => {
     if (remainingTimeRef.current.getRemainingTime() === 0) {

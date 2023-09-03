@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import 'react-native-gesture-handler';
@@ -21,12 +20,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 24,
     marginBottom: 20,
     textAlign: 'center',
   },
   button: {
     marginTop: 20,
+    marginBottom: 15,
     backgroundColor: '#005AA3',
   },
   quit: {
@@ -67,21 +67,17 @@ function Pause() {
               {
                 text: 'Quit',
                 onPress: () => {
+                  dispatch(unpause());
                   navigation.navigate('HomeScreen');
-                  setPaused(false);
                 },
               },
             ],
-            { cancelable: false }
+            { cancelable: false },
           )
         }
       />
     </View>
   );
 }
-
-Pause.propTypes = {
-  navigation: PropTypes.object,
-};
 
 export default Pause;

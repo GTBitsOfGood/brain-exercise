@@ -31,17 +31,19 @@ export enum SoundSetting {
 export type SoundSettings = Record<SoundSetting, boolean>;
 
 export type RootStackParamList = {
+  HomeScreen: undefined,
   GameOverview: undefined,
-  MathIntro: undefined,
-  MathMain: { nextScreen: keyof RootStackParamList } | undefined,
-  ReadingIntro: undefined,
-  ReadingMain: { nextScreen: keyof RootStackParamList } | undefined,
-  WritingIntro: undefined,
-  WritingMain: { nextScreen: keyof RootStackParamList } | undefined,
-  TriviaIntro: undefined,
-  TriviaMain: { nextScreen: keyof RootStackParamList } | undefined,
-  ExercisesCompleted: undefined,
+  MathIntro: { nextScreenArgs: NavigationArgs } | undefined,
+  MathMain: { nextScreenArgs: NavigationArgs } | undefined,
+  ReadingIntro: { nextScreenArgs: NavigationArgs } | undefined,
+  ReadingMain: { nextScreenArgs: NavigationArgs } | undefined,
+  WritingIntro: { nextScreenArgs: NavigationArgs } | undefined,
+  WritingMain: { nextScreenArgs: NavigationArgs } | undefined,
+  TriviaIntro: { nextScreenArgs: NavigationArgs } | undefined,
+  TriviaMain: { nextScreenArgs: NavigationArgs } | undefined,
   Pause: undefined,
+  ExercisesCompleted: undefined,
+  ExtraPractice: undefined,
 };
 
 export type NavigationArgs = {
@@ -67,11 +69,11 @@ export type GameDescriptions = Record<GameTypes, {
     description: string,
     buttonTitle: string,
     subDescription?: string,
-    nextScreenNavigationArgs: NavigationArgs,
+    nextScreenArgs: NavigationArgs,
   };
   game: {
     name: keyof RootStackParamList;
-    nextScreenNavigationArgs: NavigationArgs,
+    nextScreenArgs: NavigationArgs,
   }
 }>;
 

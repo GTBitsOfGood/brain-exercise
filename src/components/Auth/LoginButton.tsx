@@ -1,5 +1,5 @@
 import * as AuthSession from "expo-auth-session";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   Alert,
   Dimensions,
@@ -108,41 +108,43 @@ function LoginButton(props: { onUserNotFound: () => void }) {
       "1021563384726-gau4bvagu7r392i5u9qa9pd5oobmvvvo.apps.googleusercontent.com",
   });
 
-  useEffect(() => {
-    if (response?.type === "success") {
-      setToken(response.authentication.accessToken);
-      getUserInfo(response.authentication.accessToken);
-    }
-  }, [response, token]);
-
-  const getUserInfo = async (passedToken: string) => {
-    try {
-      const response = await fetch(
-        "https://www.googleapis.com/userinfo/v2/me",
-        {
-          headers: { Authorization: `Bearer ${passedToken}` },
-        }
-      );
-
-      const user = await response.json();
-      logUser(user);
-      setUserInfo(user);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const logUser = async (user) => {
-    const response = await fetch(
+    const res = await fetch(
       `http://${Constants.expoConfig.extra.AXIOS_BASEURL}:3000/login/create`,
       {
         mode: "cors",
         method: "POST",
         body: JSON.stringify(user),
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
   };
+
+  const getUserInfo = useCallback(async (passedToken: string) => {
+    try {
+      const res = await fetch(
+        "https://www.googleapis.com/userinfo/v2/me",
+        {
+          headers: { Authorization: `Bearer ${passedToken}` },
+        },
+      );
+
+      const user = await res.json();
+      logUser(user);
+      setUserInfo(user);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      setToken(response.authentication.accessToken);
+      getUserInfo(response.authentication.accessToken);
+    }
+  }, [response, token, getUserInfo]);
+
+  
 
   const dispatch = useDispatch();
 

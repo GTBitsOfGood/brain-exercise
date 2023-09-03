@@ -12,55 +12,55 @@ const triviaImage = require("../../assets/Trivia_Icon.png");
 const gameDescriptions: GameDescriptions = {
   "Math": {
     title: "Math",
-    minutes: 5,
+    minutes: 0.01,
     intro: {
       name: "MathIntro",
       sound: mathSound,
       image: mathImage,
       description: "Solve math questions as fast as you can",
       buttonTitle: "Start Math",
-      nextScreenNavigationArgs: ["MathMain"],
+      nextScreenArgs: ["MathMain"],
     },
     game: {
       name: "MathMain",
-      nextScreenNavigationArgs: ["ReadingIntro"],
+      nextScreenArgs: ["ReadingIntro"],
     },
   },
   "Reading": {
     title: "Reading",
-    minutes: 5,
+    minutes: 0.01,
     intro: {
       name: "ReadingIntro",
       sound: readingSound,
       image: readingImage,
       description: "Read the following passage aloud",
       buttonTitle: "Start Reading",
-      nextScreenNavigationArgs: ["ReadingMain"],
+      nextScreenArgs: ["ReadingMain"],
     },
     game: {
       name: "ReadingMain",
-      nextScreenNavigationArgs: ["TriviaIntro"], // Intentionally skipping Writing section
+      nextScreenArgs: ["TriviaIntro"], // Intentionally skipping Writing section
     },
   },
   "Writing": {
     title: "Writing",
-    minutes: 5,
+    minutes: 0.01,
     intro: {
       name: "WritingIntro",
       sound: writingSound,
       image: writingImage,
       description: "Grab some paper and a pencil and write what you see.",
       buttonTitle: "Start Writing",
-      nextScreenNavigationArgs: ["WritingMain"],
+      nextScreenArgs: ["WritingMain"],
     },
     game: {
       name: "WritingMain",
-      nextScreenNavigationArgs: ["TriviaIntro"],
+      nextScreenArgs: ["TriviaIntro"],
     },
   },
   "Trivia": {
     title: "Writing (Trivia)",
-    minutes: 5,
+    minutes: 0.01,
     intro: {
       name: "TriviaIntro",
       sound: triviaSound,
@@ -68,11 +68,11 @@ const gameDescriptions: GameDescriptions = {
       description: "Grab some paper and a pencil.",
       subDescription: "Writing is a great way to exercise your brain, so please write each trivia question first before answering.",
       buttonTitle: "Start Writing",
-      nextScreenNavigationArgs: ["TriviaMain"],
+      nextScreenArgs: ["TriviaMain"],
     },
     game: {
       name: "TriviaMain",
-      nextScreenNavigationArgs: ["ExercisesCompleted"],
+      nextScreenArgs: ["ExercisesCompleted"],
     },
   },
 };

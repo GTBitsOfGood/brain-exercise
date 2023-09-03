@@ -2,13 +2,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // Number of milliseconds per day
 const msPerDay = 24 * 60 * 60 * 1000;
 
-export async function getStreak(onGetStreakComplete) {
+export async function getStreak(): Promise<number> {
   try {
     const retrieveStreak = await AsyncStorage.getItem("streak");
     const streakObject = JSON.parse(retrieveStreak);
     if (streakObject === null || !streakObject.hasOwnProperty("date")) {
-      onGetStreakComplete(0);
-      return;
+      return 0;
     }
     const now = new Date();
     const lastStreakDate = new Date(streakObject.date);
@@ -22,18 +21,19 @@ export async function getStreak(onGetStreakComplete) {
     if (daysSinceLastReset % 7 < daysSinceLastReset) {
       // It's sunday and no work has been done today
       // or, it's been over a week since last Exercise reset
-      onGetStreakComplete(0);
       await AsyncStorage.setItem(
         "streak",
         JSON.stringify({ ...streakObject, streak: 0 }) // save previous date
       );
-    } else {
-      // if it's a weekday or today's work was done.
-      onGetStreakComplete(streakObject.streak);
+      return 0;
     }
+    
+    // if it's a weekday or today's work was done.
+    return streakObject.streak;
   } catch (error) {
     console.log("Error HomeScreen", error);
   }
+  return 0;
 }
 
 export async function incrementStreak() {

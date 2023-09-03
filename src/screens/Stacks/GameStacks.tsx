@@ -1,5 +1,3 @@
-import { FC } from "react";
-
 import MathMain from "../Game/MathMain/MathMain";
 import ReadingMain from "../Game/ReadingMain";
 import TriviaMain from "../Game/TriviaMain";
@@ -11,7 +9,7 @@ import { GameTypes } from "../../types";
 import Stack from "./StackNavigator";
 import gameDescriptions from "./gameDescriptions";
 
-export const gameComponents: Record<GameTypes, FC> = {
+export const gameComponents: Record<GameTypes, React.FC> = {
   Math: MathMain,
   Reading: ReadingMain,
   Trivia: TriviaMain,
@@ -31,15 +29,17 @@ Object.keys(GameTypes).forEach((game: GameTypes) => {
         headerBackVisible: true,
       }}
     >
-      {() => <IntroOverlay
-        sound={gameDescription.intro.sound}
-        image={gameDescription.intro.image}
-        description={gameDescription.intro.description}
-        time={gameDescription.minutes}
-        buttonTitle={gameDescription.intro.buttonTitle}
-        subDescription={gameDescription.intro.subDescription}
-        navigationArgs={gameDescription.intro.nextScreenNavigationArgs}
-      />}
+      {({ route }) => (
+        <IntroOverlay
+          sound={gameDescription.intro.sound}
+          image={gameDescription.intro.image}
+          description={gameDescription.intro.description}
+          time={gameDescription.minutes}
+          buttonTitle={gameDescription.intro.buttonTitle}
+          subDescription={gameDescription.intro.subDescription}
+          navigationArgs={route.params && "nextScreenArgs" in route.params ? route.params.nextScreenArgs : gameDescription.intro.nextScreenArgs}
+        />
+      )}
     </Stack.Screen>,
   );
   GameStacks.push(
@@ -53,7 +53,7 @@ Object.keys(GameTypes).forEach((game: GameTypes) => {
         headerRight: () => <PauseButton />,
       }}
       initialParams={{
-        nextScreen: gameDescription.game.nextScreenNavigationArgs[0],
+        nextScreenArgs: gameDescription.game.nextScreenArgs,
       }}
     />,
   );
