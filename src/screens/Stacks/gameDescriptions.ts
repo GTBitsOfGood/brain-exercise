@@ -12,7 +12,7 @@ const triviaImage = require("../../assets/Trivia_Icon.png");
 const gameDescriptions: GameDescriptions = {
   "Math": {
     title: "Math",
-    minutes: 0.01,
+    minutes: 1,
     intro: {
       name: "MathIntro",
       sound: mathSound,
@@ -28,7 +28,7 @@ const gameDescriptions: GameDescriptions = {
   },
   "Reading": {
     title: "Reading",
-    minutes: 0.01,
+    minutes: 1,
     intro: {
       name: "ReadingIntro",
       sound: readingSound,
@@ -44,7 +44,7 @@ const gameDescriptions: GameDescriptions = {
   },
   "Writing": {
     title: "Writing",
-    minutes: 0.01,
+    minutes: 1,
     intro: {
       name: "WritingIntro",
       sound: writingSound,
@@ -60,7 +60,7 @@ const gameDescriptions: GameDescriptions = {
   },
   "Trivia": {
     title: "Writing (Trivia)",
-    minutes: 0.01,
+    minutes: 1,
     intro: {
       name: "TriviaIntro",
       sound: triviaSound,
