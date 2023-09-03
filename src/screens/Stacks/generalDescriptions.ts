@@ -1,18 +1,22 @@
-import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types";
+import { ScreenDescription } from "../../types";
 import GameOverview from "../Game/GameOverview";
 import ExtraPractice from "../Game/ExtraPractice";
 import ExercisesCompleted from "../Game/ExercisesCompleted";
 import Pause from "../Game/Pause";
+import HomeScreen from "../Home/HomeScreen";
+import SignUpScreen from "../SignUp/SignUp";
 
-interface GeneralDescription {
-  name: keyof RootStackParamList;
-  component: React.FC;
-  title: string;
-  options?: NativeStackNavigationOptions;
-}
-
-const generalDescriptions: GeneralDescription[] = [
+const generalDescriptions: ScreenDescription[] = [
+  {
+    name: "HomeScreen",
+    component: HomeScreen,
+    title: "Home"
+  },
+  {
+    name: "SignUpScreen",
+    component: SignUpScreen,
+    title: "Sign Up"
+  },
   {
     name: "GameOverview",
     component: GameOverview,

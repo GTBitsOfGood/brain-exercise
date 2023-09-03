@@ -1,3 +1,4 @@
+import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { AVPlaybackSource } from "expo-av";
 import { ImageSourcePropType } from "react-native";
 
@@ -32,6 +33,7 @@ export type SoundSettings = Record<SoundSetting, boolean>;
 
 export type RootStackParamList = {
   HomeScreen: undefined,
+  SignUpScreen: undefined,
   GameOverview: undefined,
   MathIntro: { nextScreenArgs: NavigationArgs } | undefined,
   MathMain: { nextScreenArgs: NavigationArgs } | undefined,
@@ -44,6 +46,11 @@ export type RootStackParamList = {
   Pause: undefined,
   ExercisesCompleted: undefined,
   ExtraPractice: undefined,
+  SettingsScreen: undefined,
+  TimePicker: undefined,
+  SoundScreen: undefined,
+  FontSize: undefined,
+  StreakLength: undefined
 };
 
 export type NavigationArgs = {
@@ -76,6 +83,14 @@ export type GameDescriptions = Record<GameTypes, {
     nextScreenArgs: NavigationArgs,
   }
 }>;
+
+export interface ScreenDescription {
+  name: keyof RootStackParamList;
+  component: React.FC;
+  title: string;
+  options?: NativeStackNavigationOptions;
+}
+
 
 export type AsyncStorageKey = "SETTINGS";
 

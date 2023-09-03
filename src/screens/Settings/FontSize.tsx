@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Slider } from "react-native-elements";
 import { CommonActions } from '@react-navigation/native';
 import { StyleSheet, View, Text } from "react-native";
@@ -6,6 +7,7 @@ import PropTypes from 'prop-types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import defaultSettings from "../../components/DefaultSettings";
 import Button from "../../components/Button";
+import { RootStackParamList } from "../../types";
 
 const styles = StyleSheet.create({
   root: {
@@ -28,15 +30,17 @@ const styles = StyleSheet.create({
   }
 });
 
-function FontSize ({ route, navigation }) {
+type Props = NativeStackScreenProps<RootStackParamList, "FontSize">;
+
+function FontSize ({ route, navigation }: Props) {
   const settingsObj = route.params;
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    settingsObj.fontSize = route.params.fontSize
+    settingsObj.fontSize = route.params?.fontSize
     || defaultSettings.fontSize;
-    setTimeout(() => setValue(route.params.fontSize
+    setTimeout(() => setValue(route.params?.fontSize
       || defaultSettings.fontSize), 50);
   }, [])
 
