@@ -53,6 +53,7 @@ export default function App() {
                     color: "black",
                   },
                   headerTitleAlign: "center",
+                  animation: "fade"
                 }}
               >
                 {MergedStacks}

@@ -1,4 +1,3 @@
-import React from "react";
 import { AVPlaybackSource } from "expo-av";
 import { ImageSourcePropType, View, Image, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";

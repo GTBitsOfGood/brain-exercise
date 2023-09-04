@@ -1,8 +1,10 @@
 import { ReactNode, useRef, useEffect } from "react";
 import { AppState, AppStateStatus } from "react-native";
+import { useDispatch } from "react-redux";
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
 import { reportTimeAnalytics } from "../utils";
 import { RootStackParamList, TimeAnalyticsTypes } from "../types";
+import { unpause } from "../redux/reducers/pauseReducer";
 
 const timeTypeMapping: Record<string, TimeAnalyticsTypes> = {
   "TriviaScreen": "writingTime",
@@ -13,6 +15,8 @@ const timeTypeMapping: Record<string, TimeAnalyticsTypes> = {
 export default function NavigationContainerWithTracking({ children }: { children: ReactNode }) {
   const navigationRef = useRef<NavigationContainerRef<RootStackParamList>>();
   const routeNameRef = useRef<string>();
+
+  const dispatch = useDispatch();
 
   const appState = useRef(AppState.currentState);
   const recentActiveTime = useRef(new Date()); // Time when app became active most recently
@@ -52,6 +56,9 @@ export default function NavigationContainerWithTracking({ children }: { children
         const currentRouteName = navigationRef.current.getCurrentRoute().name;
 
         if (currentRouteName !== prevRouteName) {
+          if (prevRouteName === "Pause") {
+            dispatch(unpause());
+          }
           if (prevRouteName in timeTypeMapping) {
             const timeType = timeTypeMapping[prevRouteName];
             await reportTimeAnalytics(recentRouteTime.current, timeType);
