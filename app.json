@@ -28,9 +28,11 @@
     "scheme": "brain-exercise",
     "plugins": [
       [
-        "react-native-auth0",
+        "expo-build-properties",
         {
-          "domain": "bitsofgood.us.auth0.com"
+          "android": {
+            "usesCleartextTraffic": true
+          }
         }
       ]
     ]
