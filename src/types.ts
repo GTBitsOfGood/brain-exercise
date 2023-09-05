@@ -12,9 +12,11 @@ export interface User {
   _id?: string;
   name: string;
   email: string;
-  phoneNumber: number;
+  phoneNumber: string;
   birthdate: string;
-  firstTimeLogin: boolean;
+  signedUp: boolean;
+  secondaryContactName: string;
+  secondaryContactPhone: string;
   role: Role;
 }
 

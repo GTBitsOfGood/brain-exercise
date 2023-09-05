@@ -7,10 +7,12 @@ const initialState: AuthUser = {
   _id: "",
   name: "",
   email: "",
-  phoneNumber: 0,
+  phoneNumber: "",
   birthdate: Date(),
-  firstTimeLogin: false,
+  signedUp: false,
   authenticated: false,
+  secondaryContactName: "",
+  secondaryContactPhone: "",
   role: Role.NONPROFIT_USER,
 };
 
@@ -18,10 +20,14 @@ const initialState: AuthUser = {
 const setState = (state: AuthUser, newState: AuthUser): void => {
   state._id = newState._id;
   state.name = newState.name;
+  state.email = newState.email;
   state.phoneNumber = newState.phoneNumber;
   state.birthdate = newState.birthdate;
-  state.firstTimeLogin = newState.firstTimeLogin;
+  state.signedUp = newState.signedUp;
+  state.secondaryContactName = newState.secondaryContactName;
+  state.secondaryContactPhone = newState.secondaryContactPhone;
   state.authenticated = newState.authenticated;
+  state.role = newState.role;
 };
 
 const authReducer = createSlice({
@@ -37,7 +43,7 @@ const authReducer = createSlice({
       setState(state, initialState);
     },
     setFirstTimeLogin(state, action: PayloadAction<boolean>) {
-      state.firstTimeLogin = action.payload;
+      state.signedUp = action.payload;
     },
   },
 });
