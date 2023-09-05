@@ -1,12 +1,11 @@
-
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 const SettingsStyle = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
     padding: 20,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   notifications: {
     flexDirection: "row",
@@ -53,7 +52,7 @@ const SettingsStyle = StyleSheet.create({
     fontSize: 16,
   },
   section: {
-    borderBottomColor: 'lightgray',
+    borderBottomColor: "lightgray",
     borderBottomWidth: 1,
   },
   icon: {
@@ -65,4 +64,4 @@ const SettingsStyle = StyleSheet.create({
     alignItems: "center",
   },
 });
-export default SettingsStyle
+export default SettingsStyle;

@@ -33,8 +33,10 @@ export const wait = (timeout: number) =>
     setTimeout(resolve, timeout);
   });
 
-
-export async function reportTimeAnalytics(startTime: Date, timeType: TimeAnalyticsTypes) {
+export async function reportTimeAnalytics(
+  startTime: Date,
+  timeType: TimeAnalyticsTypes,
+) {
   const deltaTime = (Date.now() - startTime.getTime()) / 1000;
   await axios
     .post(`/analytics/screen-times`, {

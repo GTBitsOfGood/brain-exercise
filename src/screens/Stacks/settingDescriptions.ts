@@ -19,12 +19,12 @@ const settingDescriptions: ScreenDescription[] = [
   {
     name: "SoundScreen",
     component: SoundScreen,
-    title: "Sound"
+    title: "Sound",
   },
   {
     name: "FontSize",
     component: FontSize,
-    title: "Font Size"
+    title: "Font Size",
   },
   {
     name: "StreakLength",

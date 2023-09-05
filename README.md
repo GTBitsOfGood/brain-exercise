@@ -19,7 +19,7 @@ npm install
 npm run start
 ```
 
-This command starts a local Expo development server. On your phone, you will need to scan the generated QR code using the Expo app or navigate to the provided URL in a browser. 
+This command starts a local Expo development server. On your phone, you will need to scan the generated QR code using the Expo app or navigate to the provided URL in a browser.
 
 Make sure the connection type on the Expo dashboard is set to "Local".
 

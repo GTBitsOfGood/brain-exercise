@@ -1,19 +1,19 @@
 /* eslint-disable no-param-reassign */
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { OnboardingState, BeginOnboardingUser } from './types';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { OnboardingState, BeginOnboardingUser } from "./types";
 
 const initialState: OnboardingState = {
-  name: '',
-  email: '',
+  name: "",
+  email: "",
   phoneNumber: 0,
-  secondaryName: '',
+  secondaryName: "",
   secondaryPhoneNumber: 0,
-  auth0AccessToken: '',
-  jwt: '',
+  auth0AccessToken: "",
+  jwt: "",
 };
 
 const onboardingReducer = createSlice({
-  name: 'onboardingState',
+  name: "onboardingState",
   initialState,
   reducers: {
     beginOnboarding(state, action: PayloadAction<BeginOnboardingUser>) {

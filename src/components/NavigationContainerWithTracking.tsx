@@ -1,18 +1,25 @@
 import { ReactNode, useRef, useEffect } from "react";
 import { AppState, AppStateStatus } from "react-native";
 import { useDispatch } from "react-redux";
-import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  NavigationContainerRef,
+} from "@react-navigation/native";
 import { reportTimeAnalytics } from "../utils";
 import { RootStackParamList, TimeAnalyticsTypes } from "../types";
 import { unpause } from "../redux/reducers/pauseReducer";
 
 const timeTypeMapping: Record<string, TimeAnalyticsTypes> = {
-  "TriviaScreen": "writingTime",
-  "MathMain": "mathTime",
-  "ReadingMain": "readingTime",
+  TriviaScreen: "writingTime",
+  MathMain: "mathTime",
+  ReadingMain: "readingTime",
 };
 
-export default function NavigationContainerWithTracking({ children }: { children: ReactNode }) {
+export default function NavigationContainerWithTracking({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const navigationRef = useRef<NavigationContainerRef<RootStackParamList>>();
   const routeNameRef = useRef<string>();
 
@@ -24,7 +31,10 @@ export default function NavigationContainerWithTracking({ children }: { children
 
   // Reports the time spent in app/route when the app is closed or in the background
   const handleAppStateChange = async (nextAppState: AppStateStatus) => {
-    if (appState.current.match(/inactive|background/) && nextAppState === "active") {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
       const newDate = new Date();
       recentActiveTime.current = newDate;
       recentRouteTime.current = newDate;
@@ -39,7 +49,10 @@ export default function NavigationContainerWithTracking({ children }: { children
   };
 
   useEffect(() => {
-    const subscription = AppState.addEventListener("change", handleAppStateChange);
+    const subscription = AppState.addEventListener(
+      "change",
+      handleAppStateChange,
+    );
     return () => {
       subscription.remove();
     };

@@ -1,16 +1,16 @@
 import { GameDescriptions } from "../../types";
 
-const mathSound = require('../../assets/math.mp3');
+const mathSound = require("../../assets/math.mp3");
 const mathImage = require("../../assets/Mathematics_Icon.png");
-const readingSound = require('../../assets/reading.mp3');
+const readingSound = require("../../assets/reading.mp3");
 const readingImage = require("../../assets/Reading_Icon.png");
-const writingSound = require('../../assets/writing.mp3');
+const writingSound = require("../../assets/writing.mp3");
 const writingImage = require("../../assets/Prompts_Icon.png");
-const triviaSound = require('../../assets/writing.mp3');
+const triviaSound = require("../../assets/writing.mp3");
 const triviaImage = require("../../assets/Trivia_Icon.png");
 
 const gameDescriptions: GameDescriptions = {
-  "Math": {
+  Math: {
     title: "Math",
     minutes: 1,
     intro: {
@@ -26,7 +26,7 @@ const gameDescriptions: GameDescriptions = {
       nextScreenArgs: ["ReadingIntro"],
     },
   },
-  "Reading": {
+  Reading: {
     title: "Reading",
     minutes: 1,
     intro: {
@@ -42,7 +42,7 @@ const gameDescriptions: GameDescriptions = {
       nextScreenArgs: ["TriviaIntro"], // Intentionally skipping Writing section
     },
   },
-  "Writing": {
+  Writing: {
     title: "Writing",
     minutes: 1,
     intro: {
@@ -58,7 +58,7 @@ const gameDescriptions: GameDescriptions = {
       nextScreenArgs: ["TriviaIntro"],
     },
   },
-  "Trivia": {
+  Trivia: {
     title: "Writing (Trivia)",
     minutes: 1,
     intro: {
@@ -66,7 +66,8 @@ const gameDescriptions: GameDescriptions = {
       sound: triviaSound,
       image: triviaImage,
       description: "Grab some paper and a pencil.",
-      subDescription: "Writing is a great way to exercise your brain, so please write each trivia question first before answering.",
+      subDescription:
+        "Writing is a great way to exercise your brain, so please write each trivia question first before answering.",
       buttonTitle: "Start Writing",
       nextScreenArgs: ["TriviaMain"],
     },

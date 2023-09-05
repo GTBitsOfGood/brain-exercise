@@ -7,9 +7,9 @@ import { SoundSetting } from "../types";
 const sound = require("../assets/button.mp3");
 
 interface Props extends ButtonProps {
-  title: string,
-  onPress: (event: GestureResponderEvent) => void,
-  shouldNotPlay?: boolean,
+  title: string;
+  onPress: (event: GestureResponderEvent) => void;
+  shouldNotPlay?: boolean;
 }
 
 const Button = ({

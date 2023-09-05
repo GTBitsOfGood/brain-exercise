@@ -7,23 +7,27 @@ import { GestureResponderEvent } from "react-native-modal";
 import { RootStackParamList } from "../types";
 import { pause } from "../redux/reducers/pauseReducer";
 
-type Props = { 
+type Props = {
   onPress?: (e: GestureResponderEvent) => void;
 };
 
 export default function PauseButton({ onPress }: Props) {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const dispatch = useDispatch();
 
-  const onPressButton = useCallback(async (e: GestureResponderEvent) => {
-    if (onPress) {
-      onPress(e);
-    }
-    dispatch(pause());
-    navigation.navigate("Pause");
-    
-    // Need to implement: Change paused state with Redux
-  }, [onPress, navigation, dispatch]);
+  const onPressButton = useCallback(
+    async (e: GestureResponderEvent) => {
+      if (onPress) {
+        onPress(e);
+      }
+      dispatch(pause());
+      navigation.navigate("Pause");
+
+      // Need to implement: Change paused state with Redux
+    },
+    [onPress, navigation, dispatch],
+  );
 
   return (
     <Button

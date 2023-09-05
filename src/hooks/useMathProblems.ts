@@ -22,23 +22,29 @@ export default function useMathQuestions() {
     }
   }, [difficultyScore]);
 
-  const updateStatsOnAnswer = useCallback((isCorrect: boolean, timeTaken: number) => {
-    setDifficultyScore((prevDifficultyScore) => {
-      let newDifficultyScore = prevDifficultyScore;
-      if (isCorrect) {
-        newDifficultyScore += 10;
-      }
+  const updateStatsOnAnswer = useCallback(
+    (isCorrect: boolean, timeTaken: number) => {
+      setDifficultyScore((prevDifficultyScore) => {
+        let newDifficultyScore = prevDifficultyScore;
+        if (isCorrect) {
+          newDifficultyScore += 10;
+        }
 
-      if (timeTaken > 60) {
-        newDifficultyScore -= 10;
-      } else if (timeTaken < 10) {
-        newDifficultyScore += 5;
-      } else {
-        newDifficultyScore += 2;
-      }
-      return Math.min(Math.max(newDifficultyScore, MIN_DIFFICULTY_SCORE), MAX_DIFFICULTY_SCORE);
-    });
-  }, []);
+        if (timeTaken > 60) {
+          newDifficultyScore -= 10;
+        } else if (timeTaken < 10) {
+          newDifficultyScore += 5;
+        } else {
+          newDifficultyScore += 2;
+        }
+        return Math.min(
+          Math.max(newDifficultyScore, MIN_DIFFICULTY_SCORE),
+          MAX_DIFFICULTY_SCORE,
+        );
+      });
+    },
+    [],
+  );
 
   const updateStatsOnSkip = useCallback(() => {
     setDifficultyScore((prevDifficultyScore) => prevDifficultyScore - 10);

@@ -26,7 +26,7 @@ import Option2 from "./Option2.jsx";
 //  Home Screen Navigation
 function SignUpScreen({ navigation }) {
   // return option == 1 ? (
-    return <Option1 navigation={navigation} />
+  return <Option1 navigation={navigation} />;
   // ) : (
   //   <Option2 navigation={navigation} />
   // );

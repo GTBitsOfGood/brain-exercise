@@ -2,7 +2,7 @@
 /** randomChoiceFromRange:
  * @param {*} range
  * Returns a random integer from within the range,
- * exclusive of range.end 
+ * exclusive of range.end
  * */
 function randomChoiceFromRange(range) {
   const { start, end } = range;
@@ -67,19 +67,17 @@ function generateProblem(difficulty) {
     operator = choosePlus ? " + " : " - ";
     solution = choosePlus ? a + b : a - b;
   }
-  if (Math.random() * 3 < 1){
+  if (Math.random() * 3 < 1) {
     return {
-      expression: `${a + operator  }__ = ${  solution}`,
+      expression: `${a + operator}__ = ${solution}`,
       solution: b,
     };
-  } 
-    return {
-      expression: a + operator + b,
-      solution,
-    };
-  
+  }
+  return {
+    expression: a + operator + b,
+    solution,
+  };
 }
-
 
 /** generateRanges:
  * @param {*} difficulty
@@ -102,19 +100,19 @@ function generateChoices(solution) {
   const numChoices = 3;
   const { upperRange, lowRange } = generateRanges(solution);
 
-  const choiceSet = new Set()
-  choiceSet.add(solution)
+  const choiceSet = new Set();
+  choiceSet.add(solution);
 
   while (choiceSet.size < numChoices) {
     // If a coin lands heads
     if (Math.floor(Math.random() * 2 + 1) % 2 === 0) {
-      // pick a larger number than the solution 
+      // pick a larger number than the solution
       choiceSet.add(randomChoiceFromRange(upperRange));
     } else {
       choiceSet.add(randomChoiceFromRange(lowRange));
     }
   }
-  return [...choiceSet]
+  return [...choiceSet];
 }
 
 /**
@@ -124,7 +122,7 @@ function generateChoices(solution) {
  * of the string expression of the problem, its answer choices,
  * and its solution. */
 function getProblemObject(difficulty) {
-  const problem = generateProblem(difficulty)
+  const problem = generateProblem(difficulty);
   const { expression, solution } = problem;
   const choicesArray = generateChoices(solution);
   shuffleChoices(choicesArray);
@@ -138,6 +136,8 @@ function getProblemObject(difficulty) {
 /** getProblem:
  * Returns the object representation of a math problem with
  * a random level of difficulty. */
-export default function getProblem(difficulty = Math.floor(Math.random() * 4 + 1)) {
-  return getProblemObject(difficulty)
+export default function getProblem(
+  difficulty = Math.floor(Math.random() * 4 + 1),
+) {
+  return getProblemObject(difficulty);
 }

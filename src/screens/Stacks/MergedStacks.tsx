@@ -20,7 +20,7 @@ const generateStacks = (descriptions: ScreenDescription[]) =>
 const MergedStacks = [
   ...generateStacks(generalDescriptions),
   ...generateStacks(settingDescriptions),
-  ...GameStacks
+  ...GameStacks,
 ];
 
 export default MergedStacks;

@@ -1,11 +1,6 @@
 import "react-native-gesture-handler";
 import React, { useState } from "react";
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  Linking,
-} from "react-native";
+import { View, Image, TouchableOpacity, Linking } from "react-native";
 import PropTypes from "prop-types";
 import { useAuth0 } from "react-native-auth0";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -82,11 +77,7 @@ function HomeScreen({ navigation }) {
 
       {
         // if user is null, show login button, else show logout button
-        !user ? (
-          <LoginButton />
-        ) : (
-          <LogoutButton />
-        )
+        !user ? <LoginButton /> : <LogoutButton />
       }
 
       <View style={styles.buttonsContainer}>
@@ -103,7 +94,7 @@ function HomeScreen({ navigation }) {
 
         <View>
           <TouchableOpacity
-          accessibilityRole="none"
+            accessibilityRole="none"
             style={styles.squareButton}
             onPress={() => Linking.openURL(youtubeChannelURL)}
           >

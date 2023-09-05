@@ -6,7 +6,7 @@ import "react-native-gesture-handler";
 import useSound from "../../hooks/useSound";
 import { RootStackParamList, SoundSetting } from "../../types";
 
-const sound = require('../../assets/intro.mp3');
+const sound = require("../../assets/intro.mp3");
 
 const styles = StyleSheet.create({
   root: {
@@ -30,21 +30,22 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = NativeStackScreenProps<RootStackParamList, 'GameOverview'>;
+type Props = NativeStackScreenProps<RootStackParamList, "GameOverview">;
 
 function GameOverview({ navigation }: Props) {
   const { unloadSound } = useSound(sound, SoundSetting.voiceOverOn);
 
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>You will be completing a mixture of Math, Reading, and Writing exercises.</Text>
+      <Text style={styles.text}>
+        You will be completing a mixture of Math, Reading, and Writing
+        exercises.
+      </Text>
       <Text style={styles.time}>Total time: 30 minutes</Text>
       <Button
         title="Begin"
         onPress={() => unloadSound() && navigation.navigate("MathIntro")}
-        buttonStyle={
-          { marginBottom: 30 } 
-        }
+        buttonStyle={{ marginBottom: 30 }}
       />
     </View>
   );

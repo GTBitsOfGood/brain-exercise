@@ -38,7 +38,7 @@ function StreakLength({ route, navigation }) {
       route.params.streakLength || defaultSettings.streakLength;
     setTimeout(
       () => setValue(route.params.streakLength || defaultSettings.streakLength),
-      50
+      50,
     );
   }, []);
 
@@ -82,7 +82,7 @@ function StreakLength({ route, navigation }) {
             CommonActions.reset({
               index: 0,
               routes: [{ name: "HomeScreen" }],
-            })
+            }),
           );
         }}
         loading={isLoading}

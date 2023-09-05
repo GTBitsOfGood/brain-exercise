@@ -11,7 +11,10 @@ const styles = StyleSheet.create({
   image: {
     alignSelf: "center",
     width: Dimensions.get("window").width - 50,
-    height: Platform.OS === "ios" && Platform.isPad ? 500 : Dimensions.get("window").height * 0.3,
+    height:
+      Platform.OS === "ios" && Platform.isPad
+        ? 500
+        : Dimensions.get("window").height * 0.3,
     resizeMode: "contain",
   },
   title: {
@@ -32,7 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   squareButtonTitle: {
     marginTop: 5,

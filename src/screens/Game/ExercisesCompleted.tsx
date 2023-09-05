@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = NativeStackScreenProps<RootStackParamList, 'ExercisesCompleted'>;
+type Props = NativeStackScreenProps<RootStackParamList, "ExercisesCompleted">;
 
 function ExercisesCompleted({ navigation }: Props) {
   const { storageValue: settings } = useAsyncStorage<SoundSettings>("SETTINGS");
@@ -45,7 +45,7 @@ function ExercisesCompleted({ navigation }: Props) {
   useEffect(() => {
     incrementStreak();
   }, []);
-  
+
   const correct = 1;
   const total = 1;
 
@@ -62,9 +62,7 @@ function ExercisesCompleted({ navigation }: Props) {
         <Text style={styles.message}>
           You have completed all of today&apos;s exercises.
         </Text>
-        <Text style={styles.scoreText}>
-          {`Score: ${correct} / ${total}`}
-        </Text>
+        <Text style={styles.scoreText}>{`Score: ${correct} / ${total}`}</Text>
         <Button
           buttonStyle={{ marginBottom: 10 }}
           title="Return to Home"

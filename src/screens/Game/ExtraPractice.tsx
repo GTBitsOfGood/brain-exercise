@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   text: {
     fontSize: 30,
@@ -31,36 +31,50 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = NativeStackScreenProps<RootStackParamList, 'ExtraPractice'>;
+type Props = NativeStackScreenProps<RootStackParamList, "ExtraPractice">;
 
 function ExtraPractice({ navigation }: Props) {
   return (
     <View style={styles.root}>
       <Text style={styles.text}>Choose an exercise!</Text>
       <View>
-      <Button
-        title="Math"
-        icon={{
-          name: 'calculator',
-          type: 'font-awesome',
-          size: 20,
-          color: "white",
-        }}
-        buttonStyle={styles.button}
-        onPress={() => navigation.navigate("MathIntro", { nextScreenArgs: ["MathMain", { nextScreenArgs: ["ExtraPractice"] }] })}
-      />
-      <Button
-        title="Reading"
-        icon={{
-          name: 'book',
-          type: 'font-awesome',
-          size: 20,
-          color: "white",
-        }}
-        buttonStyle={styles.button}
-        onPress={() => navigation.navigate("ReadingIntro", { nextScreenArgs: ["ReadingMain", { nextScreenArgs: ["ExtraPractice"] }] })}
-      />
-      {/* <Button
+        <Button
+          title="Math"
+          icon={{
+            name: "calculator",
+            type: "font-awesome",
+            size: 20,
+            color: "white",
+          }}
+          buttonStyle={styles.button}
+          onPress={() =>
+            navigation.navigate("MathIntro", {
+              nextScreenArgs: [
+                "MathMain",
+                { nextScreenArgs: ["ExtraPractice"] },
+              ],
+            })
+          }
+        />
+        <Button
+          title="Reading"
+          icon={{
+            name: "book",
+            type: "font-awesome",
+            size: 20,
+            color: "white",
+          }}
+          buttonStyle={styles.button}
+          onPress={() =>
+            navigation.navigate("ReadingIntro", {
+              nextScreenArgs: [
+                "ReadingMain",
+                { nextScreenArgs: ["ExtraPractice"] },
+              ],
+            })
+          }
+        />
+        {/* <Button
         title="Writing Prompts"
         icon={{
           name: 'pencil',
@@ -71,22 +85,29 @@ function ExtraPractice({ navigation }: Props) {
         buttonStyle={styles.button}
         onPress={() => navigation.navigate("WritingIntro", { nextScreenArgs: ["WritingMain", { nextScreenArgs: ["ExtraPractice"] }] })}
       /> */}
-      <Button
-        title="Trivia"
-        icon={{
-          name: 'question-circle',
-          type: 'font-awesome',
-          size: 20,
-          color: "white",
-        }}
-        buttonStyle={styles.button}
-        onPress={() => navigation.navigate("TriviaIntro", { nextScreenArgs: ["TriviaMain", { nextScreenArgs: ["ExtraPractice"] }] })}
-      />
-      <Button
-        title="Return to Home"
-        buttonStyle={styles.button}
-        onPress={() => navigation.navigate("HomeScreen")}
-      />
+        <Button
+          title="Trivia"
+          icon={{
+            name: "question-circle",
+            type: "font-awesome",
+            size: 20,
+            color: "white",
+          }}
+          buttonStyle={styles.button}
+          onPress={() =>
+            navigation.navigate("TriviaIntro", {
+              nextScreenArgs: [
+                "TriviaMain",
+                { nextScreenArgs: ["ExtraPractice"] },
+              ],
+            })
+          }
+        />
+        <Button
+          title="Return to Home"
+          buttonStyle={styles.button}
+          onPress={() => navigation.navigate("HomeScreen")}
+        />
       </View>
     </View>
   );

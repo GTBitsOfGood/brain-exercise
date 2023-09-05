@@ -10,12 +10,12 @@ const generalDescriptions: ScreenDescription[] = [
   {
     name: "HomeScreen",
     component: HomeScreen,
-    title: "Home"
+    title: "Home",
   },
   {
     name: "SignUpScreen",
     component: SignUpScreen,
-    title: "Sign Up"
+    title: "Sign Up",
   },
   {
     name: "GameOverview",

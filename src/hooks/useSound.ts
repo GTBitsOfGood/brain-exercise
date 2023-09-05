@@ -7,10 +7,14 @@ type SoundSettings = {
   [key in SoundSetting]: string;
 };
 
-export default function useSound(sound: AVPlaybackSource, setting: SoundSetting, playAutomatic: boolean = true) {
+export default function useSound(
+  sound: AVPlaybackSource,
+  setting: SoundSetting,
+  playAutomatic: boolean = true,
+) {
   const soundObject = useMemo(() => new Audio.Sound(), []);
   const { storageValue: settings } = useAsyncStorage<SoundSettings>("SETTINGS");
-  
+
   const loadSound = useCallback(async () => {
     if (settings && settings[setting]) {
       await soundObject.loadAsync(sound);
