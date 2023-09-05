@@ -28,7 +28,6 @@ export async function getStreak() {
       );
       return 0;
     }
-
     // if it's a weekday or today's work was done.
     return streakObject.streak;
   } catch (error) {
