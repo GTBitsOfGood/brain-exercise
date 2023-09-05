@@ -4,19 +4,19 @@
 
 ## Pre-requisites
 
-1. NodeJS v10+
+1. NodeJS v16+
 2. Expo (on Android/iOS App Store)
 
 ## Install
 
 ```sh
-npm install
+yarn
 ```
 
 ## Usage
 
 ```sh
-npm run start
+yarn start or yarn dev
 ```
 
 This command starts a local Expo development server. On your phone, you will need to scan the generated QR code using the Expo app or navigate to the provided URL in a browser.
