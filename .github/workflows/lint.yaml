@@ -14,9 +14,9 @@ jobs:
         id: install
 
       - name: Run prettier
-        run: yarn run format:check
+        run: yarn format:check
 
       - name: Run ESLint
-        run: yarn run lint
+        run: yarn lint:check
         # Always run the linter, even if prettier failed
         if: ${{ steps.install.outcome == 'success' }}
