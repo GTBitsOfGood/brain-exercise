@@ -83,9 +83,6 @@ android {
 
     namespace 'com.BrainExerciseInitiative.BrainExercise'
     defaultConfig {
-// @generated begin react-native-auth0-manifest-placeholder - expo prebuild (DO NOT MODIFY) sync-491d6687520fc725f2b613e6d093eb8c0416d74e
-manifestPlaceholders = [auth0Domain: "bitsofgood.us.auth0.com", auth0Scheme: "com.BrainExerciseInitiative.BrainExercise.auth0"]
-// @generated end react-native-auth0-manifest-placeholder
         applicationId 'com.BrainExerciseInitiative.BrainExercise'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -181,5 +178,3 @@ dependencies {
 
 apply from: new File(["node", "--print", "require.resolve('@react-native-community/cli-platform-android/package.json')"].execute(null, rootDir).text.trim(), "../native_modules.gradle");
 applyNativeModulesAppBuildGradle(project)
-
-apply plugin: 'com.google.gms.google-services'

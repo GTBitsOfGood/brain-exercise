@@ -4,5 +4,4 @@ import { User } from "../../../types";
 // for sending authenticated requests to the backend in addition to the other user info
 export type AuthUser = User & {
   authenticated: boolean,
-  getIdToken: () => Promise<string>,
 };

@@ -1,16 +1,17 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { AuthUser } from "./types";
+import { Role } from "../../../types";
 
 const initialState: AuthUser = {
   _id: "",
   name: "",
+  email: "",
   phoneNumber: 0,
   birthdate: Date(),
   firstTimeLogin: false,
   authenticated: false,
-  getIdToken: async () => GoogleSignin.getTokens().then(({ idToken }) => idToken),
+  role: Role.NONPROFIT_USER,
 };
 
 // Helper function to copy all properties from newState over to the existing state
@@ -41,6 +42,6 @@ const authReducer = createSlice({
   },
 });
 
-export const { login, logout, firstTimeLogin } = authReducer.actions;
+export const { login, logout, setFirstTimeLogin } = authReducer.actions;
 
 export default authReducer.reducer;
