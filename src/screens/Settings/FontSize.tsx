@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Slider } from "react-native-elements";
-import { CommonActions } from '@react-navigation/native';
+import { CommonActions } from "@react-navigation/native";
 import { StyleSheet, View, Text } from "react-native";
-import PropTypes from 'prop-types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import PropTypes from "prop-types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import defaultSettings from "../../components/DefaultSettings";
 import Button from "../../components/Button";
 import { RootStackParamList } from "../../types";
@@ -13,36 +13,37 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignContent: "center",
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     padding: 20,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   texts: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 20,
-    textAlign: "center"
+    textAlign: "center",
   },
   textWrapper: {
-    justifyContent: 'center',
-    minHeight:200, 
-  }
+    justifyContent: "center",
+    minHeight: 200,
+  },
 });
 
 type Props = NativeStackScreenProps<RootStackParamList, "FontSize">;
 
-function FontSize ({ route, navigation }: Props) {
+function FontSize({ route, navigation }: Props) {
   const settingsObj = route.params;
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    settingsObj.fontSize = route.params?.fontSize
-    || defaultSettings.fontSize;
-    setTimeout(() => setValue(route.params?.fontSize
-      || defaultSettings.fontSize), 50);
-  }, [])
+    settingsObj.fontSize = route.params?.fontSize || defaultSettings.fontSize;
+    setTimeout(
+      () => setValue(route.params?.fontSize || defaultSettings.fontSize),
+      50,
+    );
+  }, [settingsObj, route.params]);
 
   const storeSettings = async () => {
     setIsLoading(true);
@@ -50,14 +51,14 @@ function FontSize ({ route, navigation }: Props) {
     const jsonSettings = JSON.stringify(settingsObj);
     await AsyncStorage.setItem("SETTINGS", jsonSettings);
     setIsLoading(false);
-  }
+  };
 
   return (
     <View style={styles.root}>
       <View style={styles.textWrapper}>
-        <Text style={{fontSize: value,textAlign: "center"}}>
+        <Text style={{ fontSize: value, textAlign: "center" }}>
           Drag the slider below to make the text on screen smaller or larger.
-        </Text> 
+        </Text>
       </View>
       <View>
         <Slider
@@ -71,8 +72,8 @@ function FontSize ({ route, navigation }: Props) {
           value={value}
         />
         <View style={styles.texts}>
-          <Text style={{fontSize:16}}>T</Text>
-          <Text style={{fontSize:28}}>T</Text>
+          <Text style={{ fontSize: 16 }}>T</Text>
+          <Text style={{ fontSize: 28 }}>T</Text>
         </View>
       </View>
       <Button
@@ -83,10 +84,8 @@ function FontSize ({ route, navigation }: Props) {
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
-              routes: [
-                { name: 'HomeScreen' },
-              ],
-            })
+              routes: [{ name: "HomeScreen" }],
+            }),
           );
         }}
         loading={isLoading}
@@ -97,7 +96,7 @@ function FontSize ({ route, navigation }: Props) {
 
 FontSize.propTypes = {
   navigation: PropTypes.object,
-  route: PropTypes.any
-}
+  route: PropTypes.any,
+};
 
 export default FontSize;

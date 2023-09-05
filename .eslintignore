@@ -1,1 +1,13 @@
 node_modules/
+android/
+brain-exercise/
+.expo/
+web-build/
+
+app.config.js
+babel.config.js
+metro.config.js
+
+# Remove once refactored:
+src/components/Auth/LoginButton/LoginButton.tsx
+src/components/Auth/LogoutButton.tsx

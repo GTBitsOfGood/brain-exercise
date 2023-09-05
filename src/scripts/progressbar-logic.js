@@ -1,12 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { logError } from "../logger.ts";
 // Number of milliseconds per day
 const msPerDay = 24 * 60 * 60 * 1000;
 
-export async function getStreak(): Promise<number> {
+export async function getStreak() {
   try {
     const retrieveStreak = await AsyncStorage.getItem("streak");
     const streakObject = JSON.parse(retrieveStreak);
-    if (streakObject === null || !streakObject.hasOwnProperty("date")) {
+    if (streakObject === null || !("date" in streakObject)) {
       return 0;
     }
     const now = new Date();
@@ -23,15 +24,15 @@ export async function getStreak(): Promise<number> {
       // or, it's been over a week since last Exercise reset
       await AsyncStorage.setItem(
         "streak",
-        JSON.stringify({ ...streakObject, streak: 0 }) // save previous date
+        JSON.stringify({ ...streakObject, streak: 0 }), // save previous date
       );
       return 0;
     }
-    
+
     // if it's a weekday or today's work was done.
     return streakObject.streak;
   } catch (error) {
-    console.log("Error HomeScreen", error);
+    logError("Error HomeScreen", error);
   }
   return 0;
 }
@@ -42,10 +43,10 @@ export async function incrementStreak() {
     const streakObject = JSON.parse(streak);
     const now = new Date();
 
-    if (streakObject === null || !streakObject.hasOwnProperty("date")) {
+    if (streakObject === null || !("date" in streakObject)) {
       await AsyncStorage.setItem(
         "streak",
-        JSON.stringify({ streak: 1, date: now })
+        JSON.stringify({ streak: 1, date: now }),
       );
       return;
     }
@@ -56,10 +57,10 @@ export async function incrementStreak() {
       // streak is less than 5 and it's a new day
       await AsyncStorage.setItem(
         "streak",
-        JSON.stringify({ streak: streakObject.streak + 1, date: now })
+        JSON.stringify({ streak: streakObject.streak + 1, date: now }),
       );
     }
   } catch (error) {
-    console.log("Error ExercisesCompleted Screen", error);
+    logError("Error ExercisesCompleted Screen", error);
   }
 }

@@ -1,5 +1,6 @@
-import * as SplashScreen from 'expo-splash-screen';
-import { useState, useEffect } from 'react';
+import * as SplashScreen from "expo-splash-screen";
+import { useState, useEffect } from "react";
+import { logWarning } from "../logger";
 
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -11,7 +12,7 @@ export default function useCachedResources() {
         SplashScreen.preventAutoHideAsync();
       } catch (e) {
         // We might want to provide this error information to an error reporting service
-        console.warn(e);
+        logWarning(e);
       } finally {
         setLoadingComplete(true);
         SplashScreen.hideAsync();
