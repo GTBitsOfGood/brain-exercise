@@ -37,7 +37,11 @@ Object.keys(GameTypes).forEach((game: GameTypes) => {
           time={gameDescription.minutes}
           buttonTitle={gameDescription.intro.buttonTitle}
           subDescription={gameDescription.intro.subDescription}
-          navigationArgs={route.params && "nextScreenArgs" in route.params ? route.params.nextScreenArgs : gameDescription.intro.nextScreenArgs}
+          navigationArgs={
+            route.params && "nextScreenArgs" in route.params
+              ? route.params.nextScreenArgs
+              : gameDescription.intro.nextScreenArgs
+          }
         />
       )}
     </Stack.Screen>,

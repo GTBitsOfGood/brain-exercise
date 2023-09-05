@@ -12,11 +12,14 @@ export default function useAsyncStorage<T>(key: AsyncStorageKey) {
     });
   }, [key]);
 
-  const updateStorageValue = useCallback((newValue: T) => {
-    setStorageValue(newValue);
-    const newValueJSON = JSON.stringify(newValue);
-    AsyncStorage.setItem(key, newValueJSON);
-  }, [key]);
+  const updateStorageValue = useCallback(
+    (newValue: T) => {
+      setStorageValue(newValue);
+      const newValueJSON = JSON.stringify(newValue);
+      AsyncStorage.setItem(key, newValueJSON);
+    },
+    [key],
+  );
 
   return { storageValue, updateStorageValue };
 }

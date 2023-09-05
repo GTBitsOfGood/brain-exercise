@@ -1,4 +1,4 @@
-import { StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   root: {
@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     padding: 20,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   instructions: {
     fontSize: 18,
@@ -26,14 +26,14 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   image: {
     height: "100%",
     maxHeight: 400,
-    resizeMode: 'contain',
-  }
+    resizeMode: "contain",
+  },
 });
 
 export default styles;

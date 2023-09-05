@@ -1,5 +1,3 @@
-import { Auth0Provider } from "react-native-auth0";
-
 // React Redux Persist State
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
@@ -73,5 +71,5 @@ axios.interceptors.request.use(
     // Do something with request error
     logAxiosError(error);
     return Promise.reject(error);
-  }
+  },
 );

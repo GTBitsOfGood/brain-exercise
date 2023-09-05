@@ -1,17 +1,17 @@
-import { combineReducers } from '@reduxjs/toolkit';
+import { combineReducers } from "@reduxjs/toolkit";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { persistReducer } from 'redux-persist';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { persistReducer } from "redux-persist";
 
-import authReducer from './reducers/authReducer';
-import loadingReducer from './reducers/loadingReducer';
-import onboardingReducer from './reducers/onboardingReducer';
-import pauseReducer from './reducers/pauseReducer';
+import authReducer from "./reducers/authReducer";
+import loadingReducer from "./reducers/loadingReducer";
+import onboardingReducer from "./reducers/onboardingReducer";
+import pauseReducer from "./reducers/pauseReducer";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage: AsyncStorage,
-  blacklist: ["auth.getIdToken"]
+  blacklist: ["auth.getIdToken"],
 };
 
 const rootReducer = persistReducer(

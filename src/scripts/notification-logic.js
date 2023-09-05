@@ -3,7 +3,7 @@ import * as Notifications from "expo-notifications";
  * Globally stores notification settings in <Day, Time of notification> pairs
  * Both key and value are stored as strings
  */
- import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /**
  * Returns the a number in Unix epoch time representing next notification
@@ -11,9 +11,7 @@ import * as Notifications from "expo-notifications";
  * @param i number of days from current day to schedule notification
  * @return Promise for number that represents next scheduled notification
  */
-const getNotificationTimeDifference = (date, i) => {
-  return date.getTime() + i * 86400000;
-};
+// const getNotificationTimeDifference = (date, i) => date.getTime() + i * 86400000;
 
 /**
  * Schedules notifications for every day S/M/T/W/R/F/S
@@ -24,7 +22,7 @@ const scheduleNotifications = (inputDate) => {
   AsyncStorage.setItem("notificationHours", inputDate.getHours().toString());
   AsyncStorage.setItem(
     "notificationMinutes",
-    inputDate.getMinutes().toString()
+    inputDate.getMinutes().toString(),
   );
   const date = new Date();
   date.setMinutes(inputDate.getMinutes());
@@ -52,10 +50,10 @@ const scheduleNotifications = (inputDate) => {
           title: dayText,
           text: "Reminder for Brain Games!", // some encouraging message
         };
-        const schedulingOptions = {
-          time: getNotificationTimeDifference(date, i),
-          repeat: "week",
-        };
+        // const schedulingOptions = {
+        // time: getNotificationTimeDifference(date, i),
+        // repeat: "week",
+        // };
         Notifications.scheduleNotificationAsync({
           content: {
             localNotification,
@@ -63,7 +61,7 @@ const scheduleNotifications = (inputDate) => {
           trigger: {
             repeats: true,
             hour: date.getHours(),
-            minute: date.getMinutes()
+            minute: date.getMinutes(),
           },
         });
       }

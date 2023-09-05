@@ -4,5 +4,5 @@ export type LoadingState = {
 };
 
 export type LoadingType = {
-  loading: boolean
+  loading: boolean;
 };

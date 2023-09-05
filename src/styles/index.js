@@ -2,7 +2,7 @@
 // Styles can change whether or not the project is dark mode or light mode
 
 import { PixelRatio } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const scaleFont = (originalSize) => {
   const size =

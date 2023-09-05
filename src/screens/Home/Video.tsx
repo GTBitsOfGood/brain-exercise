@@ -24,7 +24,9 @@ const styles = StyleSheet.create({
 function Video() {
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>Note: You will be redirected to Brain Exercise&apos;s Youtube Channel</Text>
+      <Text style={styles.text}>
+        Note: You will be redirected to Brain Exercise&apos;s Youtube Channel
+      </Text>
     </View>
   );
 }

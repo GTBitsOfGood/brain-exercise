@@ -56,18 +56,20 @@ function SettingsScreen({ navigation }) {
   const [settings, setSettings] = useState(defaultSettings);
   const [toggleOn, setToggleOn] = useState(settings.notificationsActive);
   const [animationToggleOn, setAnimationToggleOn] = useState(
-    settings.animationOn
+    settings.animationOn,
   );
 
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
-      pullSettings().then((item) => {
-        setSettings(item);
-        setToggleOn(item.notificationsActive);
-        setAnimationToggleOn(item.animationOn);
-      }).catch(err => console.log(err));
-    }, [])
+      pullSettings()
+        .then((item) => {
+          setSettings(item);
+          setToggleOn(item.notificationsActive);
+          setAnimationToggleOn(item.animationOn);
+        })
+        .catch((err) => console.log(err));
+    }, []),
   );
 
   function getDate() {

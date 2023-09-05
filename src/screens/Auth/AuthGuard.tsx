@@ -9,12 +9,12 @@ import styles from "./AuthGuard.styles";
 const logo = require("../../assets/bei.jpg");
 
 const youtubeChannelURL =
-    "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
+  "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
 
 type Props = { children: React.ReactNode };
 
 function AuthGuard({ children }: Props) {
-  return children;
+  return <>{children}</>;
   return (
     <View style={styles.root}>
       <Image style={styles.image} source={logo} />

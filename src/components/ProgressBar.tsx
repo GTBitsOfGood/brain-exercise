@@ -7,13 +7,18 @@ import { RootState } from "../redux/rootReducer";
 import { RemainingTimeGetter } from "../types";
 
 interface Props {
-  maxSeconds: number,
-  redThreshold: number,
-  onTimeComplete?: () => void,
-  remainingTimeRef?: MutableRefObject<RemainingTimeGetter>,
+  maxSeconds: number;
+  redThreshold: number;
+  onTimeComplete?: () => void;
+  remainingTimeRef?: MutableRefObject<RemainingTimeGetter>;
 }
 
-export default function ProgressBar({ maxSeconds, redThreshold, onTimeComplete, remainingTimeRef }: Props) {
+export default function ProgressBar({
+  maxSeconds,
+  redThreshold,
+  onTimeComplete,
+  remainingTimeRef,
+}: Props) {
   const [remainingTime, setRemainingTime] = useState(maxSeconds);
   const paused = useSelector<RootState>((state) => state.paused.paused);
 
@@ -42,7 +47,7 @@ export default function ProgressBar({ maxSeconds, redThreshold, onTimeComplete, 
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
       <Text style={{ fontSize: 40, paddingBottom: 5 }}>
-        {minutes}:{(seconds).toString().padStart(2, "0")}
+        {minutes}:{seconds.toString().padStart(2, "0")}
       </Text>
       <Progress.Bar
         progress={1 - remainingTime / maxSeconds}
