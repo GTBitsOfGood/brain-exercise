@@ -5,7 +5,6 @@ import {
   Image,
   TouchableOpacity,
   Linking,
-  Platform,
 } from "react-native";
 import PropTypes from "prop-types";
 import { useAuth0 } from "react-native-auth0";
@@ -14,10 +13,10 @@ import StepIndicator from "react-native-step-indicator";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { useFocusEffect } from "@react-navigation/native";
 
-import { getStreak, incrementStreak } from "../../scripts/progressbar-logic";
+import { getStreak } from "../../scripts/progressbar-logic";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
-import LoginButton from "../../components/Auth/LoginButton";
+import LoginButton from "../../components/Auth/LoginButton/LoginButton";
 import LogoutButton from "../../components/Auth/LogoutButton";
 import defaultSettings from "../../components/DefaultSettings";
 import { styles, streakStyles } from "./HomeScreen.styles";
@@ -84,9 +83,7 @@ function HomeScreen({ navigation }) {
       {
         // if user is null, show login button, else show logout button
         !user ? (
-          <LoginButton
-            onUserNotFound={() => navigation.navigate("SignUpScreen")}
-          ></LoginButton>
+          <LoginButton />
         ) : (
           <LogoutButton />
         )

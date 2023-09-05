@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { AuthUser } from "./types";
 
 const initialState: AuthUser = {
@@ -7,10 +8,9 @@ const initialState: AuthUser = {
   name: "",
   phoneNumber: 0,
   birthdate: Date(),
-  auth0AccessToken: "",
-  authenticated: false,
-  jwt: "",
   firstTimeLogin: false,
+  authenticated: false,
+  getIdToken: async () => GoogleSignin.getTokens().then(({ idToken }) => idToken),
 };
 
 // Helper function to copy all properties from newState over to the existing state
@@ -19,9 +19,8 @@ const setState = (state: AuthUser, newState: AuthUser): void => {
   state.name = newState.name;
   state.phoneNumber = newState.phoneNumber;
   state.birthdate = newState.birthdate;
-  state.auth0AccessToken = newState.auth0AccessToken;
+  state.firstTimeLogin = newState.firstTimeLogin;
   state.authenticated = newState.authenticated;
-  state.jwt = newState.jwt;
 };
 
 const authReducer = createSlice({
@@ -36,7 +35,7 @@ const authReducer = createSlice({
     logout(state) {
       setState(state, initialState);
     },
-    firstTimeLogin(state, action: PayloadAction<boolean>) {
+    setFirstTimeLogin(state, action: PayloadAction<boolean>) {
       state.firstTimeLogin = action.payload;
     },
   },

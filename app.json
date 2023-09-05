@@ -22,7 +22,8 @@
     },
     "android": {
       "package": "com.BrainExerciseInitiative.BrainExercise",
-      "versionCode": 1
+      "versionCode": 1,
+      "googleServicesFile": "./google-services.json"
     },
     "description": "Daily exercises for your brain.",
     "scheme": "brain-exercise",
@@ -31,6 +32,15 @@
         "react-native-auth0",
         {
           "domain": "bitsofgood.us.auth0.com"
+        }
+      ],
+      "@react-native-google-signin/google-signin",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
         }
       ]
     ]

@@ -2,20 +2,20 @@ import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { AVPlaybackSource } from "expo-av";
 import { ImageSourcePropType } from "react-native";
 
+export enum Role {
+  NONPROFIT_ADMIN = "Nonprofit Admin",
+  NONPROFIT_USER = "Nonprofit User",
+}
 export interface User {
-  _id?: string, // the unqiue id assigned to a user. Let Mongo create this when you insert a document without any _id attribute
+  // the unqiue id assigned to a user. Let MongoDB create this when you insert a document
+  // without any_id attribute
+  _id?: string;
   name: string,
+  email: string,
   phoneNumber: number,
   birthdate: string,
-  auth0AccessToken: string
-}
-
-export interface DecodedJwtToken {
-  given_name: string,
-  family_name: string,
-  nickname: string,
-  name: string,
-  sub: string,
+  firstTimeLogin: boolean,
+  role: Role,
 }
 
 export type TimeAnalyticsTypes = "totalScreenTime" | "writingTime" | "mathTime" | "readingTime";

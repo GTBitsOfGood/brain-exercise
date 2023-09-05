@@ -18,6 +18,7 @@ import { store } from "./src/redux/store";
 
 // Time Analytics
 import NavigationContainerWithTracking from "./src/components/NavigationContainerWithTracking";
+import AuthGuard from "./src/screens/Auth/AuthGuard";
 
 const persistor = persistStore(store);
 
@@ -29,13 +30,10 @@ export default function App() {
     return null;
   }
   return (
-    <Auth0Provider
-      domain={"bitsofgood.us.auth0.com"}
-      clientId={"7DAGINdmjDATs8dDqA0c3i6XrPgbe2MT"}
-    >
-      <Provider store={store}>
-        <PersistGate persistor={persistor} loading={null}>
-          <SafeAreaProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={null}>
+        <SafeAreaProvider>
+          <AuthGuard>
             <NavigationContainerWithTracking>
               <Stack.Navigator
                 // Consistent styling across all stacked screens
@@ -53,16 +51,16 @@ export default function App() {
                     color: "black",
                   },
                   headerTitleAlign: "center",
-                  animation: "fade"
+                  animation: "fade",
                 }}
               >
                 {MergedStacks}
               </Stack.Navigator>
             </NavigationContainerWithTracking>
-          </SafeAreaProvider>
-        </PersistGate>
-      </Provider>
-    </Auth0Provider>
+          </AuthGuard>
+        </SafeAreaProvider>
+      </PersistGate>
+    </Provider>
   );
 }
 

@@ -11,7 +11,7 @@ import pauseReducer from './reducers/pauseReducer';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['jwt', 'authenticated', '_id', 'name', 'phoneNumber', 'auth0AccessToken', 'birthdate'],
+  blacklist: ["auth.getIdToken"]
 };
 
 const rootReducer = persistReducer(
