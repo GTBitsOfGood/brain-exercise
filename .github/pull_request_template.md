@@ -6,14 +6,9 @@ What does this PR change and why?
 
 ### Checklist
 
-- [ ] Requirements have been implemented
-- [ ] Acceptance criteria are met
-- [ ] Database schema docs have been updated or are not necessary
-- [ ] Code follows design and style guidelines
-- [ ] Commits follow guidelines (concise, squashed, etc)
-- [ ] Relevant reviewers (Senior Dev/EM/Designers) have been assigned to this PR
+- [ ] Copy the checklist from the issue and check off items completed.
 
-### Critical Changes
+### Critical Changes / Notes
 
 - Database change/migration to run
 - Environment config change
