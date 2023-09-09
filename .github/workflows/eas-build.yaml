@@ -1,5 +1,8 @@
 name: Development Build
-on: [pull_request]
+on:
+  push:
+    branches:
+      - develop
 
 jobs:
   build:
