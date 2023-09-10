@@ -1,12 +1,14 @@
 import React, { useState, useCallback } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View , Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useDispatch } from "react-redux";
 import getStoryArray from "../../assets/stories";
 import Button from "../../components/Button";
 import ProgressBar from "../../components/ProgressBar";
 import Text from "../../components/Text";
 import { RootStackParamList } from "../../types";
 import gameDescriptions from "../Stacks/gameDescriptions";
+import { unpause } from "../../redux/reducers/pauseReducer";
 
 const styles = StyleSheet.create({
   root: {
@@ -54,9 +56,27 @@ export default function ReadingMain({ navigation, route }: Props) {
     }
   };
 
-  const nextArticle = () => {
-    setStoryArray(getStoryArray());
-    setPage(0);
+  const dispatch = useDispatch();
+
+  const nextSection = () => {
+    Alert.alert(
+      "Skip Reading Section",
+      "Are you sure you want to skip the Reading section?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            dispatch(unpause());
+            navigation.navigate("TriviaMain");
+          },
+        },
+      ],
+      { cancelable: false },
+    );
   };
 
   const paragraph = storyArray[page];
@@ -83,8 +103,8 @@ export default function ReadingMain({ navigation, route }: Props) {
         shouldNotPlay
       />
       <Button
-        title="Skip Article"
-        onPress={nextArticle}
+        title="Skip Section"
+        onPress={nextSection}
         buttonStyle={{ marginBottom: 40 }}
       />
     </View>
