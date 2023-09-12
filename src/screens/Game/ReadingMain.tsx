@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const TOTAL_TIME = gameDescriptions.Reading.minutes * 5;
+const TOTAL_TIME = gameDescriptions.Reading.minutes * 60;
 type Props = NativeStackScreenProps<RootStackParamList, "ReadingMain">;
 
 export default function ReadingMain({ navigation, route }: Props) {
