@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from "react";
-import { ScrollView, StyleSheet, View , Alert } from "react-native";
+import { ScrollView, StyleSheet, View, Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
-import getStoryArray from "../../assets/stories";
+
 import Button from "../../components/Button";
 import ProgressBar from "../../components/ProgressBar";
 import Text from "../../components/Text";
+import useReadingProblems from "../../hooks/useReadingProblems";
 import { RootStackParamList } from "../../types";
 import gameDescriptions from "../Stacks/gameDescriptions";
 import { unpause } from "../../redux/reducers/pauseReducer";
@@ -40,23 +40,10 @@ const TOTAL_TIME = gameDescriptions.Reading.minutes * 60;
 type Props = NativeStackScreenProps<RootStackParamList, "ReadingMain">;
 
 export default function ReadingMain({ navigation, route }: Props) {
-  const [storyArray, setStoryArray] = useState(getStoryArray());
-  const [page, setPage] = useState(0);
-
-  /**
-   * This function will pull up the next paragraph of the current article or move on
-   * to the next one once the user is finished with this article.
-   */
-  const nextParagraph = () => {
-    if (storyArray.length - 1 === page) {
-      setStoryArray(getStoryArray());
-      setPage(0);
-    } else {
-      setPage(page + 1);
-    }
-  };
-
   const dispatch = useDispatch();
+
+  const { paragraph, nextParagraph, onTimeComplete, setSkipped } =
+    useReadingProblems({ navigation, route });
 
   const nextSection = () => {
     Alert.alert(
@@ -70,6 +57,8 @@ export default function ReadingMain({ navigation, route }: Props) {
         {
           text: "Yes",
           onPress: () => {
+            setSkipped(true);
+            onTimeComplete();
             dispatch(unpause());
             navigation.navigate("TriviaMain");
           },
@@ -78,12 +67,6 @@ export default function ReadingMain({ navigation, route }: Props) {
       { cancelable: false },
     );
   };
-
-  const paragraph = storyArray[page];
-
-  const onTimeComplete = useCallback(() => {
-    navigation.navigate(...route.params.nextScreenArgs);
-  }, [navigation, route.params.nextScreenArgs]);
 
   return (
     <View style={styles.root}>
