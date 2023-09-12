@@ -36,14 +36,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const TOTAL_TIME = gameDescriptions.Reading.minutes * 60;
+const TOTAL_TIME = gameDescriptions.Reading.minutes * 5;
 type Props = NativeStackScreenProps<RootStackParamList, "ReadingMain">;
 
 export default function ReadingMain({ navigation, route }: Props) {
   const dispatch = useDispatch();
 
-  const { paragraph, nextParagraph, onTimeComplete, setSkipped } =
-    useReadingProblems({ navigation, route });
+  const { paragraph, nextParagraph, onTimeComplete } = useReadingProblems({
+    navigation,
+    route,
+  });
 
   const nextSection = () => {
     Alert.alert(
@@ -57,10 +59,8 @@ export default function ReadingMain({ navigation, route }: Props) {
         {
           text: "Yes",
           onPress: () => {
-            setSkipped(true);
-            onTimeComplete();
             dispatch(unpause());
-            navigation.navigate("TriviaMain");
+            onTimeComplete(true);
           },
         },
       ],
@@ -73,7 +73,7 @@ export default function ReadingMain({ navigation, route }: Props) {
       <ProgressBar
         maxSeconds={TOTAL_TIME}
         redThreshold={30}
-        onTimeComplete={onTimeComplete}
+        onTimeComplete={() => onTimeComplete(false)}
       />
       <Text style={styles.instructions}>Read the passage aloud.</Text>
       <ScrollView contentContainerStyle={styles.articleWrapper}>

@@ -5,7 +5,7 @@ export default function useReadingProblems({ navigation, route }) {
   const [storyArray, setStoryArray] = useState(getStoryArray());
   const [page, setPage] = useState(0);
   const [passagesRead, setPassagesRead] = useState(0);
-  const [skipped, setSkipped] = useState(false);
+  const paragraph = storyArray[page];
 
   const incrementPassagesRead = useCallback(() => {
     setPassagesRead((prev) => prev + 1);
@@ -21,21 +21,21 @@ export default function useReadingProblems({ navigation, route }) {
     incrementPassagesRead();
   };
 
-  const paragraph = storyArray[page];
-
-  const onTimeComplete = useCallback(() => {
-    const statistics = { passagesRead, completed: !skipped };
-    // checking that statistics are correct:
-    console.log("statistics: ", statistics);
-    console.log("completed: ", statistics.completed);
-    console.log("passagesRead: ", statistics.passagesRead);
-    navigation.navigate(...route.params.nextScreenArgs);
-  }, [navigation, route.params.nextScreenArgs, skipped, passagesRead]);
+  const onTimeComplete = useCallback(
+    (skipped) => {
+      const statistics = { passagesRead, completed: !skipped };
+      // checking that statistics are correct:
+      console.log("statistics: ", statistics);
+      console.log("completed: ", statistics.completed);
+      console.log("passagesRead: ", statistics.passagesRead);
+      navigation.replace(...route.params.nextScreenArgs);
+    },
+    [navigation, route.params.nextScreenArgs, passagesRead],
+  );
 
   return {
     paragraph,
     nextParagraph,
     onTimeComplete,
-    setSkipped,
   };
 }
