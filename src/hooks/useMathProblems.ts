@@ -1,12 +1,16 @@
 import { useCallback, useState } from "react";
 import getProblem from "../scripts/game-logic";
+import { useRef } from "react";
+import gameDescriptions from "../screens/Stacks/gameDescriptions";
 
 const MIN_DIFFICULTY_SCORE = 100;
 const MAX_DIFFICULTY_SCORE = 499;
+export const TOTAL_TIME = gameDescriptions.Math.minutes * 60;
 
 export default function useMathQuestions() {
   const [problem, setProblem] = useState(getProblem());
   const [difficultyScore, setDifficultyScore] = useState(0);
+  const statsMap = useRef({ questionsAttemped: 0, questionsCorrect: 0, difficultyScore: 0, timePerQuestion: 0.0 });
 
   const getNewProblem = useCallback(() => {
     if (difficultyScore < 200) {
@@ -21,6 +25,15 @@ export default function useMathQuestions() {
       setProblem(getProblem());
     }
   }, [difficultyScore]);
+
+  const onTimeComplete = useCallback((route, navigation) => {
+
+    // FIXME: route and navigation type
+
+    statsMap.current['difficultyScore'] = difficultyScore;
+    statsMap.current['timePerQuestion'] = TOTAL_TIME / statsMap.current['questionsAttemped'];
+    navigation.navigate(...route.params.nextScreenArgs);
+  }, []);
 
   const updateStatsOnAnswer = useCallback(
     (isCorrect: boolean, timeTaken: number) => {
@@ -42,6 +55,7 @@ export default function useMathQuestions() {
           MAX_DIFFICULTY_SCORE,
         );
       });
+      
     },
     [],
   );
@@ -50,5 +64,5 @@ export default function useMathQuestions() {
     setDifficultyScore((prevDifficultyScore) => prevDifficultyScore - 10);
   }, []);
 
-  return { problem, getNewProblem, updateStatsOnAnswer, updateStatsOnSkip };
+  return { problem, getNewProblem, updateStatsOnAnswer, updateStatsOnSkip, onTimeComplete, statsMap };
 }
