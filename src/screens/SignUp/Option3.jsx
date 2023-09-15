@@ -11,6 +11,8 @@ import {
   TextInput,
   SafeAreaView,
   Pressable,
+  ScrollView,
+  FlatList
 } from "react-native";
 import PropTypes from "prop-types";
 import StepIndicator from "react-native-step-indicator";
@@ -20,7 +22,9 @@ import { getStreak } from "../../scripts/progressbar-logic";
 import { Input } from "react-native-elements";
 import Text from "../../components/Text";
 import { Button } from "react-native-elements";
-// import Button from "../../components/Button";
+import { emailSignUp } from "../../firebase/email_signin";
+import authReducer from "../../redux/reducers/authReducer";
+import { useDispatch } from "react-redux";
 
 const styles = StyleSheet.create({
   root: {
@@ -64,6 +68,10 @@ const styles = StyleSheet.create({
     color: "#4A4B57",
     fontSize: 14,
   },
+  errorTitle: {
+    color: "#ed0707",
+    fontSize: 14,
+  },
 });
 
 const customStyles = {
@@ -96,9 +104,11 @@ function SignUpOption3({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
   const isFormValid = () => {
-    if (!/.+@.+.com/gm.test(email)){
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/.test(email)) {
       return false;
     }
 
@@ -162,6 +172,7 @@ function SignUpOption3({ navigation }) {
             onChangeText={setRepeatPassword}
             value={repeatPassword}
           />
+          <Text style={styles.errorTitle}>{error}</Text>
         </SafeAreaView>
       </View>
 
@@ -186,7 +197,31 @@ function SignUpOption3({ navigation }) {
           titleStyle={styles.buttonTitle}
           disabled={!isFormValid()}
           title="Sign Up"
-          onPress={() => navigation.navigate("PersonalInfo")}
+          onPress={() => {
+            setError("");
+            emailSignUp(email, password)
+              .then((res) => {
+                console.log(typeof (res));
+                navigation.navigate("PersonalInfoScreen", {
+                  userInfo: {
+                    _id: res.uid,
+                    email: res.email,
+                    emailVerified: res.emailVerified
+                  }
+                });
+              })
+              .catch((err) => {
+                setError("Email is already in use");
+                if (err.code === "auth/email-already-in-use") {
+                  setError("Email is already in use");
+                } else if (err.code === "auth/weak-password") {
+                  setError("Password is too short");
+                } else {
+                  setError("Unexpected error occured. Check your info");
+                }
+                console.log("error popped", error.code)
+              })
+          }}
         />
       </View>
 
@@ -205,7 +240,9 @@ function SignUpOption3({ navigation }) {
         {/* TODO: change navigation to navigate to the login screen */}
         <Pressable
           style={styles.button}
-          onPress={() => navigation.navigate("HomeScreen")}
+          onPress={() => {
+            navigation.navigate("SignInScreen")
+          }}
         >
           <Text style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}>
             Log In

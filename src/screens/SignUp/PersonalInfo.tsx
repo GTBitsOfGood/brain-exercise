@@ -15,12 +15,17 @@ import {
 import PropTypes from "prop-types";
 import StepIndicator from "react-native-step-indicator";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import { useFocusEffect } from "@react-navigation/native";
+import { TypedNavigator, useFocusEffect } from "@react-navigation/native";
 import { getStreak } from "../../scripts/progressbar-logic";
 import { Input } from "react-native-elements";
 import Text from "../../components/Text";
 import { Button } from "react-native-elements";
-// import Button from "../../components/Button";
+import { AuthUser } from "../../redux/reducers/authReducer/types";
+import { User } from "firebase/auth";
+import { Role } from "../../types";
+import axios, { AxiosError } from "axios";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/reducers/authReducer";
 
 const styles = StyleSheet.create({
   root: {
@@ -64,6 +69,10 @@ const styles = StyleSheet.create({
     color: "#4A4B57",
     fontSize: 14,
   },
+  errorTitle: {
+    color: "#ed0707",
+    fontSize: 14,
+  },
 });
 
 const customStyles = {
@@ -92,11 +101,18 @@ const customStyles = {
 const logo = require("../../assets/bei.jpg");
 
 //  Home Screen Navigation
-function PersonalInfoScreen({ navigation }) {
+function PersonalInfoScreen({ navigation, route }) {
+  const { userInfo } = route.params;
   const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [dateofBirth, setDateofBirth] = useState("");
   const [secondContactName, setSecondContactName] = useState("");
   const [secondContactNumber, setSecondContactNumber] = useState("");
+  const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
+
+  console.log(userInfo)
 
   const isFormValid = () => {
     if (fullName.length == 0) {
@@ -129,10 +145,11 @@ function PersonalInfoScreen({ navigation }) {
           sentence or two.
         </Text>
       </View>
-
       <View
         style={{
           flex: 4,
+          maxHeight: 600,
+          marginBottom: 100,
           paddingVertical: "5%",
           paddingHorizontal: "3%",
           width: "100%",
@@ -145,6 +162,14 @@ function PersonalInfoScreen({ navigation }) {
             style={styles.textInput}
             onChangeText={setFullName}
             value={fullName}
+          />
+
+          <Text style={styles.textInputTitle}>Phone Number</Text>
+          <TextInput
+            placeholder="(XXX) XXX-XXXX"
+            onChangeText={setPhoneNumber}
+            style={styles.textInput}
+            value={phoneNumber}
           />
 
           <Text style={styles.textInputTitle}>Date of Birth</Text>
@@ -170,6 +195,7 @@ function PersonalInfoScreen({ navigation }) {
             style={styles.textInput}
             value={secondContactNumber}
           />
+          <Text style={styles.errorTitle}>{error}</Text>
         </SafeAreaView>
       </View>
 
@@ -194,7 +220,40 @@ function PersonalInfoScreen({ navigation }) {
           titleStyle={styles.buttonTitle}
           title="Start"
           disabled={!isFormValid()}
-          onPress={() => navigation.navigate("HomeScreen")}
+          onPress={async () => {
+            console.log(userInfo)
+            setError("")
+            let userObject: AuthUser = {
+              _id: userInfo.uid,
+              name: fullName,
+              email: userInfo.email,
+              phoneNumber,
+              authenticated: userInfo.emailVerified,
+              patientDetails: {
+                signedUp: true,
+                birthdate: dateofBirth,
+                secondaryContactName: secondContactName,
+                secondaryContactPhone: secondContactNumber
+              },
+              role: Role.NONPROFIT_USER
+            }
+            try {
+              // !! Uncomment when the api endpoint is implemented !!
+              
+              // await axios.post('/api/patient/auth/signUp', {
+              //   email: userObject.email,
+              //   name: userObject.name,
+              //   phoneNumber: userObject.phoneNumber,
+              //   birthDate: userObject.patientDetails.birthdate,
+              //   secondaryContactName: userObject.patientDetails.secondaryContactName,
+              //   secondaryContactPhone: userObject.patientDetails.secondaryContactPhone
+              // });
+              dispatch(login(userObject));
+              navigation.navigate("HomeScreen");
+            } catch (e) {
+              setError("An error occured\n" + e)
+            }
+          }}
         />
       </View>
     </View>

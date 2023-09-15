@@ -6,6 +6,7 @@ import Pause from "../Game/Pause";
 import HomeScreen from "../Home/HomeScreen";
 import SignUpScreen from "../SignUp/SignUp";
 import SignInScreen from "../SignIn/SignIn";
+import PersonalInfoScreen from "../SignUp/PersonalInfo";
 
 const generalDescriptions: ScreenDescription[] = [
   {
@@ -45,6 +46,11 @@ const generalDescriptions: ScreenDescription[] = [
     name: "SignInScreen",
     component: SignInScreen,
     title: "Sign In",
+  },
+  {
+    name: "PersonalInfoScreen",
+    component: PersonalInfoScreen,
+    title: "Personal Info",
   },
 ];
 

@@ -1,24 +1,23 @@
+/* eslint-disable react-native-a11y/has-valid-accessibility-descriptors */
 import "react-native-gesture-handler";
 import React, { useState } from "react";
 import {
   View,
-  KeyboardAvoidingView,
-  ScrollView,
   StyleSheet,
   Image,
-  TouchableOpacity,
-  Linking,
   Platform,
   Dimensions,
   TextInput,
   SafeAreaView,
-  Pressable,
+  Pressable
 } from "react-native";
 import PropTypes from "prop-types";
 import { Button } from "react-native-elements";
+import { useDispatch } from "react-redux";
 import Text from "../../components/Text";
-
-// import Button from "../../components/Button";
+import { emailSignIn, emailSignUp } from "../../firebase/email_signin";
+import authReducer, { login } from "../../redux/reducers/authReducer";
+import { Role } from "../../types";
 
 const styles = StyleSheet.create({
   root: {
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
     height: Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
   },
   textInput: {
-    height: "10%",
+    height: "20%",
     width: "100%",
     marginBottom: "5%",
     borderWidth: 1,
@@ -60,6 +59,10 @@ const styles = StyleSheet.create({
   },
   textInputTitle: {
     color: "#4A4B57",
+    fontSize: 14,
+  },
+  errorTitle: {
+    color: "#ed0707",
     fontSize: 14,
   },
 });
@@ -90,42 +93,25 @@ const customStyles = {
 const logo = require("../../assets/bei.jpg");
 
 //  Home Screen Navigation
-export default function SignInScreen({ navigation }) {
-  const [fullName, setFullName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [dateofBirth, setDateofBirth] = useState("");
-  const [secondContactName, setSecondContactName] = useState("");
-  const [secondContactNumber, setSecondContactNumber] = useState("");
+function SignUpOption3({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
   const isFormValid = () => {
-    if (fullName.length == 0) {
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/.test(email)) {
       return false;
     }
 
-    if (!/^\(\d{3}\)\s\d{3}-\d{4}/.test(phoneNumber)) {
+    if (password.length === 0) {
       return false;
     }
-
-    if (!/^\d{2}-\d{2}-\d{4}/.test(dateofBirth)) {
-      return false;
-    }
-
-    if (secondContactName.length == 0) {
-      return false;
-    }
-
-    if (!/^\(\d{3}\)\s\d{3}-\d{4}/.test(secondContactNumber)) {
-      return false;
-    }
-
     return true;
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.root}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <View style={styles.root}>
       <View style={{ flex: 1 }}>
         <Image style={styles.image} source={logo} />
         <Text
@@ -137,104 +123,121 @@ export default function SignInScreen({ navigation }) {
             paddingTop: "2%",
           }}
         >
-          Let's Get Started
+          Sign Up
         </Text>
       </View>
 
-      <KeyboardAvoidingView
+      <View
         style={{
-          flex: 5,
+          flex: 3,
           paddingVertical: "5%",
           paddingHorizontal: "3%",
           width: "100%",
         }}
       >
         <SafeAreaView>
-          <Text style={styles.textInputTitle}>Full Name</Text>
+          <Text style={styles.textInputTitle}>Email</Text>
           <TextInput
-            placeholder='Full Name'
+            placeholder='username@email.com'
             style={styles.textInput}
-            onChangeText={setFullName}
-            value={fullName}
+            onChangeText={setEmail}
+            value={email}
           />
 
-          <Text style={styles.textInputTitle}>
-            Phone Number: (XXX) XXX-XXXX
-          </Text>
+          <Text style={styles.textInputTitle}>Password</Text>
           <TextInput
-            placeholder='(XXX) XXX-XXXX'
-            onChangeText={setPhoneNumber}
+            placeholder='Password'
             style={styles.textInput}
-            value={phoneNumber}
+            onChangeText={setPassword}
+            value={password}
+            accessibilityHint='d'
           />
-
-          <Text style={styles.textInputTitle}>Date of Birth: MM-DD-YYYY</Text>
-          <TextInput
-            placeholder='MM-DD-YYYY'
-            onChangeText={setDateofBirth}
-            style={styles.textInput}
-            value={dateofBirth}
-          />
-
-          <Text style={styles.textInputTitle}>Secondary Contact Name</Text>
-          <TextInput
-            placeholder='Full Name'
-            onChangeText={setSecondContactName}
-            style={styles.textInput}
-            value={secondContactName}
-          />
-
-          <Text style={styles.textInputTitle}>
-            Secondary Contact Phone: (XXX) XXX-XXXX
-          </Text>
-          <TextInput
-            placeholder='(XXX) XXX-XXXX'
-            onChangeText={setSecondContactNumber}
-            style={styles.textInput}
-            value={secondContactNumber}
-          />
-
-          <Button
-            containerStyle={{
-              width: 0.85 * Dimensions.get("window").width,
-              padding: "1%",
-            }}
-            buttonStyle={{
-              backgroundColor: "#005AA3",
-              borderRadius: 4,
-              height: 0.13 * Dimensions.get("window").width,
-            }}
-            titleStyle={styles.buttonTitle}
-            disabled={!isFormValid()}
-            title='Sign Up'
-          />
-
-          <View
-            style={{
-              flex: 1,
-              paddingHorizontal: "5%",
-              flexDirection: "row",
-              alignItems: "flex-end",
-            }}
-          >
-            <Text style={{ fontSize: 14, color: "#4A4B57" }}>
-              {"Already Have an Account? "}
-            </Text>
-
-            {/* TODO: change navigation to navigate to the login screen */}
-            <Pressable
-              style={styles.button}
-              onPress={() => navigation.navigate("HomeScreen")}
-            >
-              <Text
-                style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}
-              >
-                Log In
-              </Text>
-            </Pressable>
-          </View>
+          <Text style={styles.errorTitle}>{error}</Text>
         </SafeAreaView>
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </View>
+
+      <View
+        style={{
+          flex: 1,
+          alignSelf: "center",
+          paddingHorizontal: "3%",
+          margin: 0,
+        }}
+      >
+        <Button
+          containerStyle={{
+            width: 0.85 * Dimensions.get("window").width,
+            padding: "1%",
+          }}
+          buttonStyle={{
+            backgroundColor: "#005AA3",
+            borderRadius: 4,
+            height: 0.13 * Dimensions.get("window").width,
+          }}
+          titleStyle={styles.buttonTitle}
+          disabled={!isFormValid()}
+          title='Sign In'
+          onPress={() => {
+            setError("");
+            emailSignIn(email, password)
+              .then((res) => {
+                // !! Should add call to backend to retrieve rest of the information !!
+                
+                let userObject: AuthUser = {
+                  _id: res.uid,
+                  email: res.email,
+                  authenticated: res.emailVerified,
+                  patientDetails: {
+                    signedUp: true,
+                  },
+                  role: Role.NONPROFIT_USER
+                }
+                dispatch(login(userObject));
+                console.log(res)
+                navigation.navigate("HomeScreen");
+              }).catch((err) => {
+                console.log(err)
+                if (err.code === "auth/wrong-password") {
+                  setError("Incorrect password");
+                } else if (err.code === "auth/user-not-found") {
+                  setError("Email not found");
+                } else {
+                  setError("Unexpected error occured. Check your info");
+                }
+              });
+          }}
+        />
+      </View>
+
+      <View
+        style={{
+          flex: 1,
+          paddingHorizontal: "5%",
+          flexDirection: "row",
+          alignItems: "flex-end",
+        }}
+      >
+        <Text style={{ fontSize: 14, color: "#4A4B57" }}>
+          Don&apos;t Have an Account?&nbsp;
+        </Text>
+
+        {/* TODO: change navigation to navigate to the login screen */}
+        <Pressable
+          onPress={() => {
+            navigation.navigate("SignUpScreen");
+          }}
+        >
+          <Text style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}>
+            Sign Up
+          </Text>
+        </Pressable>
+      </View>
+    </View>
   );
 }
+
+SignUpOption3.propTypes = {
+  navigation: PropTypes.object,
+};
+
+export default SignUpOption3;
