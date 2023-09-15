@@ -8,17 +8,16 @@ import Toast from "react-native-toast-message";
 import CustomButton from "../../../components/Button";
 import ProgressBar from "../../../components/ProgressBar";
 import Text from "../../../components/Text";
-import useMathProblems from "../../../hooks/useMathProblems";
+import useMathProblems, { TOTAL_TIME } from "../../../hooks/useMathProblems";
 import { RemainingTimeGetter, RootStackParamList } from "../../../types";
 import styles from "./MathMain.style";
-import { TOTAL_TIME } from "../../../hooks/useMathProblems";
 
 type Props = NativeStackScreenProps<RootStackParamList, "MathMain">;
 
 function MathMain({ route, navigation }: Props) {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const [skipped, setSkipped] = useState(false);
-  let firstTry = useRef(true);
+  const firstTry = useRef(true);
   // const statsMap = useRef({"QUESTION_ATTEMPT": 0, "QUESTION_CORRECT": 0, "AVERAGE_TIME": 0});
 
   const remainingTimeRef = useRef<RemainingTimeGetter>();
@@ -56,8 +55,8 @@ function MathMain({ route, navigation }: Props) {
     );
     if (isCorrect) {
       if (firstTry.current) {
-        statsMap.current["questionsAttemped"] += 1;
-        statsMap.current["questionsCorrect"] += 1;
+        statsMap.current.questionsAttemped += 1;
+        statsMap.current.questionsCorrect += 1;
       }
       Toast.show({
         type: "success",
@@ -66,7 +65,7 @@ function MathMain({ route, navigation }: Props) {
       resetAndNewProblem(1);
     } else {
       if (firstTry.current) {
-        statsMap.current["questionsAttemped"] += 1;
+        statsMap.current.questionsAttemped += 1;
       }
       firstTry.current = false;
       Toast.show({
