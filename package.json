@@ -38,7 +38,7 @@
     "expo-random": "~13.2.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
-    "expo-updates": "^0.18.12",
+    "expo-updates": "~0.18.12",
     "expo-web-browser": "~12.3.2",
     "jwt-decode": "^3.1.2",
     "mongoose": "^7.5.0",
