@@ -77,7 +77,7 @@ function HomeScreen({ navigation }) {
 
       {
         // if user is null, show login button, else show logout button
-        !user ? <LoginButton /> : <LogoutButton />
+        !user ? <LoginButton navigation={navigation}/> : <LogoutButton />
       }
 
       <View style={styles.buttonsContainer}>

@@ -57,6 +57,7 @@ export type RootStackParamList = {
   SoundScreen: undefined;
   FontSize: undefined;
   StreakLength: undefined;
+  SignInScreen: undefined;
 };
 
 export type NavigationArgs = {

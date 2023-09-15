@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "expo start --tunnel",
+    "start": "expo start --localhost",
     "dev": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
@@ -29,10 +29,11 @@
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "expo": "^49.0.0",
-    "expo-auth-session": "~5.0.2",
+    "expo-auth-session": "^5.2.0",
     "expo-av": "~13.4.1",
     "expo-build-properties": "^0.8.3",
     "expo-constants": "~14.4.2",
+    "expo-crypto": "^12.6.0",
     "expo-dev-client": "~2.4.8",
     "expo-notifications": "~0.20.1",
     "expo-random": "~13.2.0",
@@ -40,6 +41,7 @@
     "expo-status-bar": "~1.6.0",
     "expo-updates": "~0.18.12",
     "expo-web-browser": "~12.3.2",
+    "firebase": "^10.4.0",
     "jwt-decode": "^3.1.2",
     "mongoose": "^7.5.0",
     "prop-types": "^15.8.1",

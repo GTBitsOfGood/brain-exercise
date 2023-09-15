@@ -1,9 +1,9 @@
 import "react-native-gesture-handler";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
+  View,
   KeyboardAvoidingView,
   ScrollView,
-  View,
   StyleSheet,
   Image,
   TouchableOpacity,
@@ -13,19 +13,11 @@ import {
   TextInput,
   SafeAreaView,
   Pressable,
-  Alert,
 } from "react-native";
 import PropTypes from "prop-types";
-import StepIndicator from "react-native-step-indicator";
-import FeatherIcon from "react-native-vector-icons/Feather";
-import { useFocusEffect } from "@react-navigation/native";
-import { getStreak } from "../../scripts/progressbar-logic";
-import { Input } from "react-native-elements";
-import Text from "../../components/Text";
 import { Button } from "react-native-elements";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/rootReducer";
-import axios from "axios";
+import Text from "../../components/Text";
+
 // import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
@@ -98,7 +90,7 @@ const customStyles = {
 const logo = require("../../assets/bei.jpg");
 
 //  Home Screen Navigation
-function SignUpOption1({ navigation }) {
+export default function SignInScreen({ navigation }) {
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [dateofBirth, setDateofBirth] = useState("");
@@ -160,7 +152,7 @@ function SignUpOption1({ navigation }) {
         <SafeAreaView>
           <Text style={styles.textInputTitle}>Full Name</Text>
           <TextInput
-            placeholder="Full Name"
+            placeholder='Full Name'
             style={styles.textInput}
             onChangeText={setFullName}
             value={fullName}
@@ -170,7 +162,7 @@ function SignUpOption1({ navigation }) {
             Phone Number: (XXX) XXX-XXXX
           </Text>
           <TextInput
-            placeholder="(XXX) XXX-XXXX"
+            placeholder='(XXX) XXX-XXXX'
             onChangeText={setPhoneNumber}
             style={styles.textInput}
             value={phoneNumber}
@@ -178,7 +170,7 @@ function SignUpOption1({ navigation }) {
 
           <Text style={styles.textInputTitle}>Date of Birth: MM-DD-YYYY</Text>
           <TextInput
-            placeholder="MM-DD-YYYY"
+            placeholder='MM-DD-YYYY'
             onChangeText={setDateofBirth}
             style={styles.textInput}
             value={dateofBirth}
@@ -186,7 +178,7 @@ function SignUpOption1({ navigation }) {
 
           <Text style={styles.textInputTitle}>Secondary Contact Name</Text>
           <TextInput
-            placeholder="Full Name"
+            placeholder='Full Name'
             onChangeText={setSecondContactName}
             style={styles.textInput}
             value={secondContactName}
@@ -196,7 +188,7 @@ function SignUpOption1({ navigation }) {
             Secondary Contact Phone: (XXX) XXX-XXXX
           </Text>
           <TextInput
-            placeholder="(XXX) XXX-XXXX"
+            placeholder='(XXX) XXX-XXXX'
             onChangeText={setSecondContactNumber}
             style={styles.textInput}
             value={secondContactNumber}
@@ -214,7 +206,7 @@ function SignUpOption1({ navigation }) {
             }}
             titleStyle={styles.buttonTitle}
             disabled={!isFormValid()}
-            title="Sign Up"
+            title='Sign Up'
           />
 
           <View
@@ -232,7 +224,7 @@ function SignUpOption1({ navigation }) {
             {/* TODO: change navigation to navigate to the login screen */}
             <Pressable
               style={styles.button}
-              onPress={() => navigation.navigate("SignInScreen")}
+              onPress={() => navigation.navigate("HomeScreen")}
             >
               <Text
                 style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}
@@ -246,9 +238,3 @@ function SignUpOption1({ navigation }) {
     </ScrollView>
   );
 }
-
-SignUpOption1.propTypes = {
-  navigation: PropTypes.object,
-};
-
-export default SignUpOption1;

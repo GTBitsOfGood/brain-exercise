@@ -22,13 +22,14 @@ import Text from "../../components/Text";
 import { Button } from "react-native-elements";
 import Option1 from "./Option1.jsx";
 import Option2 from "./Option2.jsx";
+import Option3 from "./Option3.jsx";
 
 //  Home Screen Navigation
 function SignUpScreen({ navigation }) {
   // return option == 1 ? (
-  return <Option1 navigation={navigation} />;
+  return <Option3 navigation={navigation} />;
   // ) : (
-  //   <Option2 navigation={navigation} />
+    // return <Option2 navigation={navigation} />
   // );
 }
 

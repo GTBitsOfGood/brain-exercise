@@ -5,6 +5,7 @@ import ExercisesCompleted from "../Game/ExercisesCompleted";
 import Pause from "../Game/Pause";
 import HomeScreen from "../Home/HomeScreen";
 import SignUpScreen from "../SignUp/SignUp";
+import SignInScreen from "../SignIn/SignIn";
 
 const generalDescriptions: ScreenDescription[] = [
   {
@@ -39,6 +40,11 @@ const generalDescriptions: ScreenDescription[] = [
     name: "ExtraPractice",
     component: ExtraPractice,
     title: "More Exercises",
+  },
+  {
+    name: "SignInScreen",
+    component: SignInScreen,
+    title: "Sign In",
   },
 ];
 
