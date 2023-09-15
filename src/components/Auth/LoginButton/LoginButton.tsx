@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 import Button from "../../Button";
-import { useDispatch } from "react-redux";
 import authReducer from "../../../redux/reducers/authReducer";
-import { Role } from "../../../types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/rootReducer";
 
@@ -11,10 +9,9 @@ import styles from "./LoginButton.style";
 import { AuthUser } from "../../../redux/reducers/authReducer/types";
 
 function LoginButton({ navigation }) {
-  const [userInfo, setUserInfo]:[AuthUser|any, any] = useState(useSelector<RootState>((state) => state.auth));
-  const dispatch = useDispatch();
+  const userInfo: AuthUser|any = useSelector<RootState>((state) => state.auth);
   useEffect(() => {
-    console.log(authReducer)
+    console.log("At login button reducer value", userInfo)
   }, []);
   return (
     <>

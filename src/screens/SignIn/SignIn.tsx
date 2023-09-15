@@ -15,9 +15,11 @@ import PropTypes from "prop-types";
 import { Button } from "react-native-elements";
 import { useDispatch } from "react-redux";
 import Text from "../../components/Text";
-import { emailSignIn, emailSignUp } from "../../firebase/email_signin";
-import authReducer, { login } from "../../redux/reducers/authReducer";
+import { emailSignIn } from "../../firebase/email_signin";
+import { login } from "../../redux/reducers/authReducer";
 import { Role } from "../../types";
+import useAsyncStorage from "../../hooks/useAsyncStorage";
+import { AuthUser } from "../../redux/reducers/authReducer/types";
 
 const styles = StyleSheet.create({
   root: {
@@ -67,29 +69,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const customStyles = {
-  stepIndicatorSize: 30,
-  currentStepIndicatorSize: 30,
-  separatorStrokeWidth: 8,
-  separatorStrokeUnfinishedWidth: 8,
-  separatorStrokeFinishedWidth: 8,
-  stepStrokeWidth: 0,
-  currentStepStrokeWidth: 5,
-  stepStrokeCurrentColor: "#005AA3",
-  stepStrokeFinishedColor: "#005AA3",
-  stepStrokeUnfinishedColor: "#005AA3",
-  separatorFinishedColor: "#005AA3",
-  separatorUnFinishedColor: "#dbdbdb",
-  stepIndicatorFinishedColor: "#005AA3",
-  stepIndicatorUnFinishedColor: "#dbdbdb",
-  stepIndicatorCurrentColor: "#ffffff",
-  stepIndicatorLabelFontSize: 15,
-  currentStepIndicatorLabelFontSize: 15,
-  stepIndicatorLabelCurrentColor: "#000000",
-  stepIndicatorLabelFinishedColor: "#ffffff",
-  stepIndicatorLabelUnfinishedColor: "#000000",
-};
-
 const logo = require("../../assets/bei.jpg");
 
 //  Home Screen Navigation
@@ -98,6 +77,8 @@ function SignUpOption3({ navigation }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const { updateStorageValue } =
+    useAsyncStorage<AuthUser>("LOGGEDINUSER");
 
   const isFormValid = () => {
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/.test(email)) {
@@ -192,7 +173,9 @@ function SignUpOption3({ navigation }) {
                   },
                   role: Role.NONPROFIT_USER
                 }
+                updateStorageValue(userObject);
                 dispatch(login(userObject));
+                
                 console.log(res)
                 navigation.navigate("HomeScreen");
               }).catch((err) => {
