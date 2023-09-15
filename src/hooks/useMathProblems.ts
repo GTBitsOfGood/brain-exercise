@@ -1,6 +1,5 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState , useRef } from "react";
 import getProblem from "../scripts/game-logic";
-import { useRef } from "react";
 import gameDescriptions from "../screens/Stacks/gameDescriptions";
 
 const MIN_DIFFICULTY_SCORE = 100;
@@ -30,10 +29,10 @@ export default function useMathQuestions() {
 
     // FIXME: route and navigation type
 
-    statsMap.current['difficultyScore'] = difficultyScore;
-    statsMap.current['timePerQuestion'] = TOTAL_TIME / statsMap.current['questionsAttemped'];
+    statsMap.current.difficultyScore = difficultyScore;
+    statsMap.current.timePerQuestion = TOTAL_TIME / statsMap.current.questionsAttemped;
     navigation.navigate(...route.params.nextScreenArgs);
-  }, []);
+  }, [difficultyScore]); 
 
   const updateStatsOnAnswer = useCallback(
     (isCorrect: boolean, timeTaken: number) => {
