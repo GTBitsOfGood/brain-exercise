@@ -23,8 +23,14 @@ function MathMain({ route, navigation }: Props) {
 
   const remainingTimeRef = useRef<RemainingTimeGetter>();
   const prevProblemRemainingTimeRef = useRef<number>(TOTAL_TIME);
-  const { problem, getNewProblem, updateStatsOnAnswer, updateStatsOnSkip, onTimeComplete, statsMap } =
-    useMathProblems();
+  const {
+    problem,
+    getNewProblem,
+    updateStatsOnAnswer,
+    updateStatsOnSkip,
+    onTimeComplete,
+    statsMap,
+  } = useMathProblems();
 
   const resetAndNewProblem = useCallback(
     (waitSeconds: number) => {
@@ -50,8 +56,8 @@ function MathMain({ route, navigation }: Props) {
     );
     if (isCorrect) {
       if (firstTry.current) {
-        statsMap.current['questionsAttemped'] += 1;
-        statsMap.current['questionsCorrect'] += 1;
+        statsMap.current["questionsAttemped"] += 1;
+        statsMap.current["questionsCorrect"] += 1;
       }
       Toast.show({
         type: "success",
@@ -60,7 +66,7 @@ function MathMain({ route, navigation }: Props) {
       resetAndNewProblem(1);
     } else {
       if (firstTry.current) {
-        statsMap.current['questionsAttemped'] += 1;
+        statsMap.current["questionsAttemped"] += 1;
       }
       firstTry.current = false;
       Toast.show({

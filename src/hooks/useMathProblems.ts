@@ -1,4 +1,4 @@
-import { useCallback, useState , useRef } from "react";
+import { useCallback, useState, useRef } from "react";
 import getProblem from "../scripts/game-logic";
 import gameDescriptions from "../screens/Stacks/gameDescriptions";
 
@@ -9,7 +9,12 @@ export const TOTAL_TIME = gameDescriptions.Math.minutes * 60;
 export default function useMathQuestions() {
   const [problem, setProblem] = useState(getProblem());
   const [difficultyScore, setDifficultyScore] = useState(0);
-  const statsMap = useRef({ questionsAttemped: 0, questionsCorrect: 0, difficultyScore: 0, timePerQuestion: 0.0 });
+  const statsMap = useRef({
+    questionsAttemped: 0,
+    questionsCorrect: 0,
+    difficultyScore: 0,
+    timePerQuestion: 0.0,
+  });
 
   const getNewProblem = useCallback(() => {
     if (difficultyScore < 200) {
@@ -25,14 +30,17 @@ export default function useMathQuestions() {
     }
   }, [difficultyScore]);
 
-  const onTimeComplete = useCallback((route, navigation) => {
+  const onTimeComplete = useCallback(
+    (route, navigation) => {
+      // FIXME: route and navigation type
 
-    // FIXME: route and navigation type
-
-    statsMap.current.difficultyScore = difficultyScore;
-    statsMap.current.timePerQuestion = TOTAL_TIME / statsMap.current.questionsAttemped;
-    navigation.navigate(...route.params.nextScreenArgs);
-  }, [difficultyScore]); 
+      statsMap.current.difficultyScore = difficultyScore;
+      statsMap.current.timePerQuestion =
+        TOTAL_TIME / statsMap.current.questionsAttemped;
+      navigation.navigate(...route.params.nextScreenArgs);
+    },
+    [difficultyScore],
+  );
 
   const updateStatsOnAnswer = useCallback(
     (isCorrect: boolean, timeTaken: number) => {
@@ -54,7 +62,6 @@ export default function useMathQuestions() {
           MAX_DIFFICULTY_SCORE,
         );
       });
-      
     },
     [],
   );
@@ -63,5 +70,12 @@ export default function useMathQuestions() {
     setDifficultyScore((prevDifficultyScore) => prevDifficultyScore - 10);
   }, []);
 
-  return { problem, getNewProblem, updateStatsOnAnswer, updateStatsOnSkip, onTimeComplete, statsMap };
+  return {
+    problem,
+    getNewProblem,
+    updateStatsOnAnswer,
+    updateStatsOnSkip,
+    onTimeComplete,
+    statsMap,
+  };
 }
