@@ -16,10 +16,9 @@ import { Button } from "react-native-elements";
 import { useDispatch } from "react-redux";
 import Text from "../../components/Text";
 import { emailSignIn } from "../../firebase/email_signin";
-import { login } from "../../redux/reducers/authReducer";
 import { Role } from "../../types";
-import useAsyncStorage from "../../hooks/useAsyncStorage";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
+import { login } from "../../redux/reducers/authReducer";
 
 const styles = StyleSheet.create({
   root: {
@@ -72,13 +71,11 @@ const styles = StyleSheet.create({
 const logo = require("../../assets/bei.jpg");
 
 //  Home Screen Navigation
-function SignUpOption3({ navigation }) {
+function SignInScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const { updateStorageValue } =
-    useAsyncStorage<AuthUser>("LOGGEDINUSER");
 
   const isFormValid = () => {
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/.test(email)) {
@@ -173,10 +170,8 @@ function SignUpOption3({ navigation }) {
                   },
                   role: Role.NONPROFIT_USER
                 }
-                updateStorageValue(userObject);
-                dispatch(login(userObject));
+                dispatch(login(userObject))
                 
-                console.log(res)
                 navigation.navigate("HomeScreen");
               }).catch((err) => {
                 console.log(err)
@@ -219,8 +214,8 @@ function SignUpOption3({ navigation }) {
   );
 }
 
-SignUpOption3.propTypes = {
+SignInScreen.propTypes = {
   navigation: PropTypes.object,
 };
 
-export default SignUpOption3;
+export default SignInScreen;

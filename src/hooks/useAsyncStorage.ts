@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AsyncStorageKey } from "../types";
 
 export default function useAsyncStorage<T>(key: AsyncStorageKey) {
+  // Very bad code. New hook created per call but sometimes it may be saved across calls. A mess.
   const [storageValue, setStorageValue] = useState<T>();
 
   useEffect(() => {
@@ -20,6 +21,13 @@ export default function useAsyncStorage<T>(key: AsyncStorageKey) {
     },
     [key],
   );
+  const clearStorageValue = useCallback(
+    () => {
+      setStorageValue(null);
+      AsyncStorage.removeItem(key);
+    },
+    [key]
+  );
 
-  return { storageValue, updateStorageValue };
+  return { storageValue, updateStorageValue, clearStorageValue };
 }

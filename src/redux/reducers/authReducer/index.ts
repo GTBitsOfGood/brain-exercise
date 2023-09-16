@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthUser } from "./types";
 import { Role } from "../../../types";
 
@@ -20,6 +21,7 @@ const initialState: AuthUser = {
 
 // Helper function to copy all properties from newState over to the existing state
 const setState = (state: AuthUser, newState: AuthUser): void => {
+  AsyncStorage.setItem("User", JSON.stringify(newState));
   state._id = newState._id;
   state.name = newState.name;
   state.email = newState.email;
@@ -45,9 +47,16 @@ const authReducer = createSlice({
     // Clear the authState
     logout(state) {
       setState(state, initialState);
+      AsyncStorage.removeItem("User");
     },
     setFirstTimeLogin(state, action: PayloadAction<boolean>) {
       state.patientDetails.signedUp = action.payload;
+      AsyncStorage.getItem("User")
+        .then((user) => JSON.parse(user))
+        .then((user: AuthUser) => {
+          user.patientDetails.signedUp = action.payload;
+          AsyncStorage.setItem("User", JSON.stringify(user))
+        });
     },
   },
 });

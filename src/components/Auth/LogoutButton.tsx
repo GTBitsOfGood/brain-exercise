@@ -10,6 +10,8 @@ import { logout } from "../../redux/reducers/authReducer";
 import { setLoading } from "../../redux/reducers/loadingReducer/index";
 import Button from "../Button";
 import { useAuth0, Auth0Provider } from "react-native-auth0";
+import useAsyncStorage from "../../hooks/useAsyncStorage";
+import { AuthUser } from "../../redux/reducers/authReducer/types";
 
 const useProxy = Platform.select({ web: false, default: true });
 const redirectUri = AuthSession.makeRedirectUri({ useProxy });
@@ -32,9 +34,9 @@ const styles = StyleSheet.create({
 
 function LogoutButton() {
   const { clearSession, user } = useAuth0();
-
   const onPress = async () => {
     try {
+      dispatch(logout());
       await clearSession();
     } catch (e) {
       console.log(e);

@@ -106,7 +106,7 @@ export interface ScreenDescription {
   options?: NativeStackNavigationOptions;
 }
 
-export type AsyncStorageKey = "SETTINGS"|"LOGGEDINUSER";
+export type AsyncStorageKey = "SETTINGS";
 
 export type RemainingTimeGetter = {
   getRemainingTime: () => number;
