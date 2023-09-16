@@ -48,7 +48,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "0.72.4",
-    "react-native-auth0": "^3.0.1",
     "react-native-confetti-cannon": "^1.5.2",
     "react-native-eject": "^0.2.0",
     "react-native-elements": "^3.4.3",
