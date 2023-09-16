@@ -116,7 +116,7 @@ function SignInScreen({ navigation }) {
         <SafeAreaView>
           <Text style={styles.textInputTitle}>Email</Text>
           <TextInput
-            placeholder='username@email.com'
+            placeholder="username@email.com"
             style={styles.textInput}
             onChangeText={setEmail}
             value={email}
@@ -124,11 +124,11 @@ function SignInScreen({ navigation }) {
 
           <Text style={styles.textInputTitle}>Password</Text>
           <TextInput
-            placeholder='Password'
+            placeholder="Password"
             style={styles.textInput}
             onChangeText={setPassword}
             value={password}
-            accessibilityHint='d'
+            accessibilityHint="d"
           />
           <Text style={styles.errorTitle}>{error}</Text>
         </SafeAreaView>
@@ -154,7 +154,7 @@ function SignInScreen({ navigation }) {
           }}
           titleStyle={styles.buttonTitle}
           disabled={!isFormValid()}
-          title='Sign In'
+          title="Sign In"
           onPress={() => {
             setError("");
             emailSignIn(email, password)

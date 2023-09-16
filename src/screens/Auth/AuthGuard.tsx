@@ -88,11 +88,11 @@ function AuthGuard({ children }: Props) {
       </View>
       <View>
         <TouchableOpacity
-          accessibilityRole='none'
+          accessibilityRole="none"
           style={styles.squareButton}
           onPress={() => Linking.openURL(youtubeChannelURL)}
         >
-          <FeatherIcon style={styles.icon} name='youtube' />
+          <FeatherIcon style={styles.icon} name="youtube" />
         </TouchableOpacity>
         <Text style={styles.squareButtonTitle}>{"Video"}</Text>
       </View>
