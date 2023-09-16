@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity, Linking } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Text from "../../components/Text";
@@ -13,7 +13,7 @@ import { AuthUser } from "../../redux/reducers/authReducer/types";
 import { login } from "../../redux/reducers/authReducer";
 import SignInScreen from "../SignIn/SignIn";
 import NavigationContainerWithTracking from "../../components/NavigationContainerWithTracking";
-import Stack from "../../../src/screens/Stacks/StackNavigator";
+import Stack from "../Stacks/StackNavigator";
 import SignUpScreen from "../SignUp/SignUp";
 import PersonalInfoScreen from "../SignUp/PersonalInfo";
 
@@ -29,23 +29,20 @@ function AuthGuard({ children }: Props) {
   const auth = getAuth();
   const [authenticated, setAuthenticated] = useState(false);
   onAuthStateChanged(auth, (user) => {
+    // !! Should add code to get additional info from user from Analytics and check for Personal Info !!
     if (user) {
-      setAuthenticated(true);
+      AsyncStorage.getItem("User")
+        .then((User) => JSON.parse(User))
+        .then((User: AuthUser) => {
+          if (User?.patientDetails.signedUp) {
+            dispatch(login(User));
+          }
+          setAuthenticated(true);
+        });
     } else {
       setAuthenticated(false);
     }
   });
-  useEffect(() => {
-    if (authenticated) {
-      AsyncStorage.getItem("User")
-        .then((user) => JSON.parse(user))
-        .then((user: AuthUser) => {
-          if (user?.patientDetails.signedUp) {
-            dispatch(login(user));
-          }
-        });
-    }
-  }, [dispatch]);
   return (
     <>
       {authenticated ? (
@@ -91,11 +88,11 @@ function AuthGuard({ children }: Props) {
       </View>
       <View>
         <TouchableOpacity
-          accessibilityRole="none"
+          accessibilityRole='none'
           style={styles.squareButton}
           onPress={() => Linking.openURL(youtubeChannelURL)}
         >
-          <FeatherIcon style={styles.icon} name="youtube" />
+          <FeatherIcon style={styles.icon} name='youtube' />
         </TouchableOpacity>
         <Text style={styles.squareButtonTitle}>{"Video"}</Text>
       </View>

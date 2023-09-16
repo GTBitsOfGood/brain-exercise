@@ -78,7 +78,7 @@ function SignInScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const isFormValid = () => {
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/.test(email)) {
+    if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w\w+)+$/.test(email)) {
       return false;
     }
 
@@ -116,7 +116,7 @@ function SignInScreen({ navigation }) {
         <SafeAreaView>
           <Text style={styles.textInputTitle}>Email</Text>
           <TextInput
-            placeholder="username@email.com"
+            placeholder='username@email.com'
             style={styles.textInput}
             onChangeText={setEmail}
             value={email}
@@ -124,11 +124,11 @@ function SignInScreen({ navigation }) {
 
           <Text style={styles.textInputTitle}>Password</Text>
           <TextInput
-            placeholder="Password"
+            placeholder='Password'
             style={styles.textInput}
             onChangeText={setPassword}
             value={password}
-            accessibilityHint="d"
+            accessibilityHint='d'
           />
           <Text style={styles.errorTitle}>{error}</Text>
         </SafeAreaView>
@@ -154,14 +154,14 @@ function SignInScreen({ navigation }) {
           }}
           titleStyle={styles.buttonTitle}
           disabled={!isFormValid()}
-          title="Sign In"
+          title='Sign In'
           onPress={() => {
             setError("");
             emailSignIn(email, password)
               .then((res) => {
                 // !! Should add call to backend to retrieve rest of the information !!
 
-                let userObject: AuthUser = {
+                const userObject: AuthUser = {
                   _id: res.uid,
                   email: res.email,
                   authenticated: res.emailVerified,
@@ -175,7 +175,7 @@ function SignInScreen({ navigation }) {
                 // navigation.navigate("HomeScreen");
               })
               .catch((err) => {
-                console.log(err);
+                console.debug(err);
                 if (err.code === "auth/wrong-password") {
                   setError("Incorrect password");
                 } else if (err.code === "auth/user-not-found") {

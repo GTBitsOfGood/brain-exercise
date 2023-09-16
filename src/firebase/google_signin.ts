@@ -1,5 +1,9 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getAuth, signInWithRedirect, getRedirectResult } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  getAuth,
+  getRedirectResult,
+} from "firebase/auth";
 
 const provider = new GoogleAuthProvider();
 export default async function GoogleSignIn() {
@@ -16,7 +20,7 @@ export default async function GoogleSignIn() {
       // This gives you a Facebook Access Token.
       const credential = provider.credentialFromResult(auth, result);
       const token = credential.accessToken;
-      return { user: user, token: token };
+      return { user, token };
     }
   } catch (error) {
     // const errorCode = error.code;
