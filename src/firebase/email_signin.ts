@@ -11,7 +11,7 @@ async function emailSignUp(email, password) {
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,
-    password
+    password,
   );
   // Signed in
   const { user } = userCredential;
@@ -23,7 +23,7 @@ async function emailSignIn(email, password): Promise<User> {
   const userCredential = await signInWithEmailAndPassword(
     auth,
     email,
-    password
+    password,
   );
   // Signed in
   return userCredential.user;

@@ -27,7 +27,7 @@ export default function App() {
   const { isLoadingComplete } = useCachedResources();
   useEffect(() => {
     firebaseInit();
-  }, [])
+  }, []);
   if (!isLoadingComplete) {
     return null;
   }

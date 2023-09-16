@@ -55,7 +55,7 @@ const authReducer = createSlice({
         .then((user) => JSON.parse(user))
         .then((user: AuthUser) => {
           user.patientDetails.signedUp = action.payload;
-          AsyncStorage.setItem("User", JSON.stringify(user))
+          AsyncStorage.setItem("User", JSON.stringify(user));
         });
     },
   },

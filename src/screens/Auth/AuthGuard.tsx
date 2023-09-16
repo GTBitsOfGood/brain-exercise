@@ -29,12 +29,12 @@ function AuthGuard({ children }: Props) {
   const auth = getAuth();
   const [authenticated, setAuthenticated] = useState(false);
   onAuthStateChanged(auth, (user) => {
-    if(user) { 
+    if (user) {
       setAuthenticated(true);
     } else {
       setAuthenticated(false);
     }
-  })
+  });
   useEffect(() => {
     if (authenticated) {
       AsyncStorage.getItem("User")
@@ -91,11 +91,11 @@ function AuthGuard({ children }: Props) {
       </View>
       <View>
         <TouchableOpacity
-          accessibilityRole='none'
+          accessibilityRole="none"
           style={styles.squareButton}
           onPress={() => Linking.openURL(youtubeChannelURL)}
         >
-          <FeatherIcon style={styles.icon} name='youtube' />
+          <FeatherIcon style={styles.icon} name="youtube" />
         </TouchableOpacity>
         <Text style={styles.squareButtonTitle}>{"Video"}</Text>
       </View>

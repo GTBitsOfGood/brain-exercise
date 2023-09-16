@@ -9,7 +9,7 @@ import {
   Dimensions,
   TextInput,
   SafeAreaView,
-  Pressable
+  Pressable,
 } from "react-native";
 import PropTypes from "prop-types";
 import { Button } from "react-native-elements";
@@ -116,7 +116,7 @@ function SignInScreen({ navigation }) {
         <SafeAreaView>
           <Text style={styles.textInputTitle}>Email</Text>
           <TextInput
-            placeholder='username@email.com'
+            placeholder="username@email.com"
             style={styles.textInput}
             onChangeText={setEmail}
             value={email}
@@ -124,11 +124,11 @@ function SignInScreen({ navigation }) {
 
           <Text style={styles.textInputTitle}>Password</Text>
           <TextInput
-            placeholder='Password'
+            placeholder="Password"
             style={styles.textInput}
             onChangeText={setPassword}
             value={password}
-            accessibilityHint='d'
+            accessibilityHint="d"
           />
           <Text style={styles.errorTitle}>{error}</Text>
         </SafeAreaView>
@@ -154,13 +154,13 @@ function SignInScreen({ navigation }) {
           }}
           titleStyle={styles.buttonTitle}
           disabled={!isFormValid()}
-          title='Sign In'
+          title="Sign In"
           onPress={() => {
             setError("");
             emailSignIn(email, password)
               .then((res) => {
                 // !! Should add call to backend to retrieve rest of the information !!
-                
+
                 let userObject: AuthUser = {
                   _id: res.uid,
                   email: res.email,
@@ -168,13 +168,14 @@ function SignInScreen({ navigation }) {
                   patientDetails: {
                     signedUp: true,
                   },
-                  role: Role.NONPROFIT_USER
-                }
-                dispatch(login(userObject))
-                
+                  role: Role.NONPROFIT_USER,
+                };
+                dispatch(login(userObject));
+
                 // navigation.navigate("HomeScreen");
-              }).catch((err) => {
-                console.log(err)
+              })
+              .catch((err) => {
+                console.log(err);
                 if (err.code === "auth/wrong-password") {
                   setError("Incorrect password");
                 } else if (err.code === "auth/user-not-found") {

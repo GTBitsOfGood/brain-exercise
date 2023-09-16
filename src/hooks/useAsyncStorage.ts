@@ -21,13 +21,10 @@ export default function useAsyncStorage<T>(key: AsyncStorageKey) {
     },
     [key],
   );
-  const clearStorageValue = useCallback(
-    () => {
-      setStorageValue(null);
-      AsyncStorage.removeItem(key);
-    },
-    [key]
-  );
+  const clearStorageValue = useCallback(() => {
+    setStorageValue(null);
+    AsyncStorage.removeItem(key);
+  }, [key]);
 
   return { storageValue, updateStorageValue, clearStorageValue };
 }
