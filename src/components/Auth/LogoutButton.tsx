@@ -10,8 +10,7 @@ import { logout } from "../../redux/reducers/authReducer";
 import { setLoading } from "../../redux/reducers/loadingReducer/index";
 import Button from "../Button";
 import { useAuth0, Auth0Provider } from "react-native-auth0";
-import useAsyncStorage from "../../hooks/useAsyncStorage";
-import { AuthUser } from "../../redux/reducers/authReducer/types";
+import {getAuth, signOut} from "firebase/auth"
 
 const useProxy = Platform.select({ web: false, default: true });
 const redirectUri = AuthSession.makeRedirectUri({ useProxy });
@@ -37,6 +36,8 @@ function LogoutButton() {
   const onPress = async () => {
     try {
       dispatch(logout());
+      const auth = getAuth();
+      await signOut(auth);
       await clearSession();
     } catch (e) {
       console.log(e);

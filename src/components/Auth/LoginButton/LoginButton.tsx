@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Text } from "react-native";
 import Button from "../../Button";
-import authReducer, { login } from "../../../redux/reducers/authReducer";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/rootReducer";
 
 import styles from "./LoginButton.style";
 import { AuthUser } from "../../../redux/reducers/authReducer/types";
+
+import { getAuth } from "firebase/auth";
 
 function LoginButton({ navigation }) {
     const userInfo: AuthUser | any = useSelector<RootState>((state) => state.auth);

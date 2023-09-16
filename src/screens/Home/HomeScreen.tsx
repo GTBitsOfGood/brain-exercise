@@ -71,34 +71,35 @@ function HomeScreen({ navigation }) {
 
       <Button
         titleStyle={styles.buttonTitle}
-        title="Start Exercises"
+        title='Start Exercises'
         onPress={() => navigation.navigate("GameOverview")}
       />
 
       {
         // if user is null, show login button, else show logout button
-        !user ? <LoginButton navigation={navigation}/> : <LogoutButton />
+        // !user ? <LoginButton navigation={navigation}/> : <LogoutButton />
+        <LogoutButton />
       }
 
       <View style={styles.buttonsContainer}>
         <View>
           <TouchableOpacity
-            accessibilityRole="none"
+            accessibilityRole='none'
             style={styles.squareButton}
             onPress={() => navigation.navigate("SettingsScreen")}
           >
-            <FeatherIcon style={styles.icon} name="settings" />
+            <FeatherIcon style={styles.icon} name='settings' />
           </TouchableOpacity>
           <Text style={styles.squareButtonTitle}>{"Settings"}</Text>
         </View>
 
         <View>
           <TouchableOpacity
-            accessibilityRole="none"
+            accessibilityRole='none'
             style={styles.squareButton}
             onPress={() => Linking.openURL(youtubeChannelURL)}
           >
-            <FeatherIcon style={styles.icon} name="youtube" />
+            <FeatherIcon style={styles.icon} name='youtube' />
           </TouchableOpacity>
           <Text style={styles.squareButtonTitle}>{"Video"}</Text>
         </View>

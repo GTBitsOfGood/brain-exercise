@@ -172,7 +172,7 @@ function SignInScreen({ navigation }) {
                 }
                 dispatch(login(userObject))
                 
-                navigation.navigate("HomeScreen");
+                // navigation.navigate("HomeScreen");
               }).catch((err) => {
                 console.log(err)
                 if (err.code === "auth/wrong-password") {

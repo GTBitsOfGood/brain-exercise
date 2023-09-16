@@ -15,11 +15,6 @@ const generalDescriptions: ScreenDescription[] = [
     title: "Home",
   },
   {
-    name: "SignUpScreen",
-    component: SignUpScreen,
-    title: "Sign Up",
-  },
-  {
     name: "GameOverview",
     component: GameOverview,
     title: "Today's Exercises",
@@ -41,16 +36,6 @@ const generalDescriptions: ScreenDescription[] = [
     name: "ExtraPractice",
     component: ExtraPractice,
     title: "More Exercises",
-  },
-  {
-    name: "SignInScreen",
-    component: SignInScreen,
-    title: "Sign In",
-  },
-  {
-    name: "PersonalInfoScreen",
-    component: PersonalInfoScreen,
-    title: "Personal Info",
   },
 ];
 

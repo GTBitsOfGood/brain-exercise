@@ -3,13 +3,19 @@ import { View, Image, TouchableOpacity, Linking } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Text from "../../components/Text";
 import LoginButton from "../../components/Auth/LoginButton/LoginButton";
 import styles from "./AuthGuard.styles";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
 import { login } from "../../redux/reducers/authReducer";
+import SignInScreen from "../SignIn/SignIn";
+import NavigationContainerWithTracking from "../../components/NavigationContainerWithTracking";
+import Stack from "../../../src/screens/Stacks/StackNavigator";
+import SignUpScreen from "../SignUp/SignUp";
+import PersonalInfoScreen from "../SignUp/PersonalInfo";
 
 const logo = require("../../assets/bei.jpg");
 
@@ -20,18 +26,62 @@ type Props = { children: React.ReactNode };
 
 function AuthGuard({ children }: Props) {
   const dispatch = useDispatch();
-
+  const auth = getAuth();
+  const [authenticated, setAuthenticated] = useState(false);
+  onAuthStateChanged(auth, (user) => {
+    if(user) { 
+      setAuthenticated(true);
+    } else {
+      setAuthenticated(false);
+    }
+  })
   useEffect(() => {
-    AsyncStorage.getItem("User")
-      .then((user) => JSON.parse(user))
-      .then((user: AuthUser) => {
-        console.log("got user", user)
-        if (user?.patientDetails.signedUp) {
-          dispatch(login(user));
-        }
-      });
+    if (authenticated) {
+      AsyncStorage.getItem("User")
+        .then((user) => JSON.parse(user))
+        .then((user: AuthUser) => {
+          if (user?.patientDetails.signedUp) {
+            dispatch(login(user));
+          }
+        });
+    }
   }, [dispatch]);
-  return <>{children}</>;
+  return (
+    <>
+      {authenticated ? (
+        children
+      ) : (
+        <NavigationContainerWithTracking>
+          <Stack.Navigator>
+            <Stack.Screen
+              key={"SignInScreen"}
+              name={"SignInScreen"}
+              component={SignInScreen}
+              options={{
+                title: "Sign In",
+              }}
+            />
+            <Stack.Screen
+              key={"SignUpScreen"}
+              name={"SignUpScreen"}
+              component={SignUpScreen}
+              options={{
+                title: "Sign Up",
+              }}
+            />
+            <Stack.Screen
+              key={"PersonalInfoScreen"}
+              name={"PersonalInfoScreen"}
+              component={PersonalInfoScreen}
+              options={{
+                title: "Personal Info",
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainerWithTracking>
+      )}
+    </>
+  );
   return (
     <View style={styles.root}>
       <Image style={styles.image} source={logo} />

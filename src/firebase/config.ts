@@ -1,5 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import {initializeApp} from "firebase/app"
+import { initializeApp } from "firebase/app";
+import { initializeAuth, getReactNativePersistence } from "firebase/auth";
+import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
 // Need to be updated once google login screen is finalised
 export default function firebaseInit() {
@@ -14,5 +16,8 @@ export default function firebaseInit() {
     appId: "insert yours: 1:1234:web:ee873bd1234c0deb7eba61ce",
   };
 
-  initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
+  initializeAuth(app, {
+    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+  });
 }
