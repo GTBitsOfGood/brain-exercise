@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     height: Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
   },
   textInput: {
-    height: "20%",
+    height: 55,
     width: "100%",
     marginBottom: "5%",
     borderWidth: 1,
@@ -125,7 +125,7 @@ function SignUpOption3({ navigation }) {
 
   return (
     <View style={styles.root}>
-      <View style={{ flex: 1 }}>
+      <View style={{ height: 127 }}>
         <Image style={styles.image} source={logo} />
         <Text
           style={{
@@ -143,37 +143,39 @@ function SignUpOption3({ navigation }) {
       <View
         style={{
           flex: 3,
-          paddingVertical: "5%",
+          paddingVertical: 3,
           paddingHorizontal: "3%",
           width: "100%",
         }}
       >
-        <SafeAreaView>
-          <Text style={styles.textInputTitle}>Email</Text>
-          <TextInput
-            placeholder="username@email.com"
-            style={styles.textInput}
-            onChangeText={setEmail}
-            value={email}
-          />
+        <ScrollView>
+          <SafeAreaView>
+            <Text style={styles.textInputTitle}>Email</Text>
+            <TextInput
+              placeholder="username@email.com"
+              style={styles.textInput}
+              onChangeText={setEmail}
+              value={email}
+            />
 
-          <Text style={styles.textInputTitle}>Password</Text>
-          <TextInput
-            placeholder="Password"
-            style={styles.textInput}
-            onChangeText={setPassword}
-            value={password}
-          />
+            <Text style={styles.textInputTitle}>Password</Text>
+            <TextInput
+              placeholder="Password"
+              style={styles.textInput}
+              onChangeText={setPassword}
+              value={password}
+            />
 
-          <Text style={styles.textInputTitle}>Repeat Password</Text>
-          <TextInput
-            placeholder="Password"
-            style={styles.textInput}
-            onChangeText={setRepeatPassword}
-            value={repeatPassword}
-          />
-          <Text style={styles.errorTitle}>{error}</Text>
-        </SafeAreaView>
+            <Text style={styles.textInputTitle}>Repeat Password</Text>
+            <TextInput
+              placeholder="Password"
+              style={styles.textInput}
+              onChangeText={setRepeatPassword}
+              value={repeatPassword}
+            />
+            <Text style={styles.errorTitle}>{error}</Text>
+          </SafeAreaView>
+        </ScrollView>
       </View>
 
       <View

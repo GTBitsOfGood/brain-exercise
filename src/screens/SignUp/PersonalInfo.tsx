@@ -1,31 +1,21 @@
-import "react-native-gesture-handler";
 import React, { useState } from "react";
 import {
   View,
   StyleSheet,
-  Image,
-  TouchableOpacity,
-  Linking,
   Platform,
   Dimensions,
   TextInput,
   SafeAreaView,
-  Pressable,
+  ScrollView,
 } from "react-native";
 import PropTypes from "prop-types";
-import StepIndicator from "react-native-step-indicator";
-import FeatherIcon from "react-native-vector-icons/Feather";
-import { TypedNavigator, useFocusEffect } from "@react-navigation/native";
-import { getStreak } from "../../scripts/progressbar-logic";
-import { Input } from "react-native-elements";
 import Text from "../../components/Text";
 import { Button } from "react-native-elements";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
-import { User } from "firebase/auth";
 import { Role } from "../../types";
-import axios, { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/reducers/authReducer";
+import { getAuth } from "firebase/auth";
 
 const styles = StyleSheet.create({
   root: {
@@ -57,7 +47,7 @@ const styles = StyleSheet.create({
     height: Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
   },
   textInput: {
-    height: "15%",
+    height: 55,
     width: "100%",
     marginBottom: "5%",
     borderWidth: 1,
@@ -102,7 +92,8 @@ const logo = require("../../assets/bei.jpg");
 
 //  Home Screen Navigation
 function PersonalInfoScreen({ navigation, route }) {
-  const { userInfo } = route.params;
+  const auth = getAuth();
+  const userInfo = auth.currentUser;
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [dateofBirth, setDateofBirth] = useState("");
@@ -136,7 +127,7 @@ function PersonalInfoScreen({ navigation, route }) {
 
   return (
     <View style={styles.root}>
-      <View style={{ flex: 1, paddingLeft: "3%", paddingTop: "2%" }}>
+      <View style={{ height: 80, paddingLeft: "3%", paddingTop: "2%" }}>
         <Text style={{ fontWeight: "bold", fontSize: 20, color: "#4A4B57" }}>
           Tell Us About Yourself!
         </Text>
@@ -148,13 +139,12 @@ function PersonalInfoScreen({ navigation, route }) {
       <View
         style={{
           flex: 4,
-          maxHeight: 600,
-          marginBottom: 100,
-          paddingVertical: "5%",
+          paddingVertical: 5,
           paddingHorizontal: "3%",
           width: "100%",
         }}
       >
+        <ScrollView>
         <SafeAreaView>
           <Text style={styles.textInputTitle}>Full Name</Text>
           <TextInput
@@ -197,6 +187,7 @@ function PersonalInfoScreen({ navigation, route }) {
           />
           <Text style={styles.errorTitle}>{error}</Text>
         </SafeAreaView>
+        </ScrollView>
       </View>
 
       <View
