@@ -1,15 +1,15 @@
 import { useState, useCallback } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import getStoryArray from "../assets/stories";
+import { RootStackParamList } from "../types";
 
-export default function useReadingProblems({ navigation, route }) {
+type Props = NativeStackScreenProps<RootStackParamList, "ReadingMain">;
+
+export default function useReadingProblems({ navigation, route }: Props) {
   const [storyArray, setStoryArray] = useState(getStoryArray());
   const [page, setPage] = useState(0);
   const [passagesRead, setPassagesRead] = useState(0);
   const paragraph = storyArray[page];
-
-  const incrementPassagesRead = useCallback(() => {
-    setPassagesRead((prev) => prev + 1);
-  }, []);
 
   const nextParagraph = () => {
     if (storyArray.length - 1 === page) {
@@ -18,16 +18,12 @@ export default function useReadingProblems({ navigation, route }) {
     } else {
       setPage(page + 1);
     }
-    incrementPassagesRead();
+    setPassagesRead((prev) => prev + 1);
   };
 
   const onTimeComplete = useCallback(
-    (skipped) => {
-      const statistics = { passagesRead, completed: !skipped };
-      // checking that statistics are correct:
-      console.log("statistics: ", statistics);
-      console.log("completed: ", statistics.completed);
-      console.log("passagesRead: ", statistics.passagesRead);
+    (skipped: boolean) => {
+      const statistics = { passagesRead, completed: !skipped }; // eslint-disable-line
       navigation.replace(...route.params.nextScreenArgs);
     },
     [navigation, route.params.nextScreenArgs, passagesRead],

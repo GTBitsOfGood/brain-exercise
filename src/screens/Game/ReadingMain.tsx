@@ -8,7 +8,7 @@ import Text from "../../components/Text";
 import useReadingProblems from "../../hooks/useReadingProblems";
 import { RootStackParamList } from "../../types";
 import gameDescriptions from "../Stacks/gameDescriptions";
-import { unpause } from "../../redux/reducers/pauseReducer";
+import { pause, unpause } from "../../redux/reducers/pauseReducer";
 
 const styles = StyleSheet.create({
   root: {
@@ -48,6 +48,7 @@ export default function ReadingMain({ navigation, route }: Props) {
   });
 
   const nextSection = () => {
+    dispatch(pause());
     Alert.alert(
       "Skip Reading Section",
       "Are you sure you want to skip the Reading section?",
@@ -55,6 +56,7 @@ export default function ReadingMain({ navigation, route }: Props) {
         {
           text: "Cancel",
           style: "cancel",
+          onPress: () => dispatch(unpause()),
         },
         {
           text: "Yes",
