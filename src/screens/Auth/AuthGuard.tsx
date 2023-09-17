@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import axios from "axios";
 import Text from "../../components/Text";
 import LoginButton from "../../components/Auth/LoginButton/LoginButton";
 import styles from "./AuthGuard.styles";
@@ -35,6 +36,8 @@ function AuthGuard({ children }: Props) {
         .then((User) => JSON.parse(User))
         .then((User: AuthUser) => {
           if (User?.patientDetails.signedUp) {
+            axios.defaults.params = {};
+            axios.defaults.params._id = user.uid;
             dispatch(login(User));
           }
           setAuthenticated(true);
