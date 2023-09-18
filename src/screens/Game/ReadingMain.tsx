@@ -1,12 +1,14 @@
-import React, { useState, useCallback } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import getStoryArray from "../../assets/stories";
+import { useDispatch } from "react-redux";
+
 import Button from "../../components/Button";
 import ProgressBar from "../../components/ProgressBar";
 import Text from "../../components/Text";
+import useReadingProblems from "../../hooks/useReadingProblems";
 import { RootStackParamList } from "../../types";
 import gameDescriptions from "../Stacks/gameDescriptions";
+import { pause, unpause } from "../../redux/reducers/pauseReducer";
 
 const styles = StyleSheet.create({
   root: {
@@ -38,39 +40,42 @@ const TOTAL_TIME = gameDescriptions.Reading.minutes * 60;
 type Props = NativeStackScreenProps<RootStackParamList, "ReadingMain">;
 
 export default function ReadingMain({ navigation, route }: Props) {
-  const [storyArray, setStoryArray] = useState(getStoryArray());
-  const [page, setPage] = useState(0);
+  const dispatch = useDispatch();
 
-  /**
-   * This function will pull up the next paragraph of the current article or move on
-   * to the next one once the user is finished with this article.
-   */
-  const nextParagraph = () => {
-    if (storyArray.length - 1 === page) {
-      setStoryArray(getStoryArray());
-      setPage(0);
-    } else {
-      setPage(page + 1);
-    }
+  const { paragraph, nextParagraph, onTimeComplete } = useReadingProblems({
+    navigation,
+    route,
+  });
+
+  const nextSection = () => {
+    dispatch(pause());
+    Alert.alert(
+      "Skip Reading Section",
+      "Are you sure you want to skip the Reading section?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+          onPress: () => dispatch(unpause()),
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            dispatch(unpause());
+            onTimeComplete(true);
+          },
+        },
+      ],
+      { cancelable: false },
+    );
   };
-
-  const nextArticle = () => {
-    setStoryArray(getStoryArray());
-    setPage(0);
-  };
-
-  const paragraph = storyArray[page];
-
-  const onTimeComplete = useCallback(() => {
-    navigation.navigate(...route.params.nextScreenArgs);
-  }, [navigation, route.params.nextScreenArgs]);
 
   return (
     <View style={styles.root}>
       <ProgressBar
         maxSeconds={TOTAL_TIME}
         redThreshold={30}
-        onTimeComplete={onTimeComplete}
+        onTimeComplete={() => onTimeComplete(false)}
       />
       <Text style={styles.instructions}>Read the passage aloud.</Text>
       <ScrollView contentContainerStyle={styles.articleWrapper}>
@@ -83,8 +88,8 @@ export default function ReadingMain({ navigation, route }: Props) {
         shouldNotPlay
       />
       <Button
-        title="Skip Article"
-        onPress={nextArticle}
+        title="Skip Section"
+        onPress={nextSection}
         buttonStyle={{ marginBottom: 40 }}
       />
     </View>
