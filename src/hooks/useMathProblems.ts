@@ -1,22 +1,29 @@
 import { useCallback, useState, useRef } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import getProblem from "../scripts/game-logic";
 import gameDescriptions from "../screens/Stacks/gameDescriptions";
+import { RootStackParamList } from "../types";
 
 const MIN_DIFFICULTY_SCORE = 100;
 const MAX_DIFFICULTY_SCORE = 499;
 export const TOTAL_TIME = gameDescriptions.Math.minutes * 60;
 
-export default function useMathQuestions() {
+type Props = NativeStackScreenProps<RootStackParamList, "MathMain">;
+
+export default function useMathQuestions({ route, navigation }: Props) {
   const [problem, setProblem] = useState(getProblem());
   const [difficultyScore, setDifficultyScore] = useState(0);
   const statsMap = useRef({
-    questionsAttemped: 0,
+    questionsAttemped: 1,
     questionsCorrect: 0,
     difficultyScore: 0,
     timePerQuestion: 0.0,
   });
+  const firstTry = useRef(true);
 
   const getNewProblem = useCallback(() => {
+    firstTry.current = true;
+    statsMap.current.questionsAttemped += 1;
     if (difficultyScore < 200) {
       setProblem(getProblem(1));
     } else if (difficultyScore < 300) {
@@ -30,17 +37,14 @@ export default function useMathQuestions() {
     }
   }, [difficultyScore]);
 
-  const onTimeComplete = useCallback(
-    (route, navigation) => {
-      // FIXME: route and navigation type
-
-      statsMap.current.difficultyScore = difficultyScore;
-      statsMap.current.timePerQuestion =
-        TOTAL_TIME / statsMap.current.questionsAttemped;
-      navigation.navigate(...route.params.nextScreenArgs);
-    },
-    [difficultyScore],
-  );
+  const onTimeComplete = useCallback(() => {
+    statsMap.current.difficultyScore = difficultyScore;
+    statsMap.current.timePerQuestion =
+      statsMap.current.questionsAttemped === 0
+        ? 0
+        : TOTAL_TIME / statsMap.current.questionsAttemped;
+    navigation.replace(...route.params.nextScreenArgs);
+  }, [navigation, route.params.nextScreenArgs, difficultyScore]);
 
   const updateStatsOnAnswer = useCallback(
     (isCorrect: boolean, timeTaken: number) => {
@@ -49,6 +53,10 @@ export default function useMathQuestions() {
         if (isCorrect) {
           newDifficultyScore += 10;
         }
+        if (firstTry.current) {
+          statsMap.current.questionsCorrect += 1;
+        }
+        firstTry.current = false;
 
         if (timeTaken > 60) {
           newDifficultyScore -= 10;
@@ -76,6 +84,5 @@ export default function useMathQuestions() {
     updateStatsOnAnswer,
     updateStatsOnSkip,
     onTimeComplete,
-    statsMap,
   };
 }

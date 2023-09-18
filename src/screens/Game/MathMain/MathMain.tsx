@@ -17,8 +17,6 @@ type Props = NativeStackScreenProps<RootStackParamList, "MathMain">;
 function MathMain({ route, navigation }: Props) {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const [skipped, setSkipped] = useState(false);
-  const firstTry = useRef(true);
-  // const statsMap = useRef({"QUESTION_ATTEMPT": 0, "QUESTION_CORRECT": 0, "AVERAGE_TIME": 0});
 
   const remainingTimeRef = useRef<RemainingTimeGetter>();
   const prevProblemRemainingTimeRef = useRef<number>(TOTAL_TIME);
@@ -28,8 +26,7 @@ function MathMain({ route, navigation }: Props) {
     updateStatsOnAnswer,
     updateStatsOnSkip,
     onTimeComplete,
-    statsMap,
-  } = useMathProblems();
+  } = useMathProblems({ route, navigation });
 
   const resetAndNewProblem = useCallback(
     (waitSeconds: number) => {
@@ -37,7 +34,6 @@ function MathMain({ route, navigation }: Props) {
       setTimeout(() => {
         setButtonsDisabled(false);
         setSkipped(false);
-        firstTry.current = true;
         getNewProblem();
         prevProblemRemainingTimeRef.current =
           remainingTimeRef.current.getRemainingTime();
@@ -54,20 +50,12 @@ function MathMain({ route, navigation }: Props) {
         remainingTimeRef.current.getRemainingTime(),
     );
     if (isCorrect) {
-      if (firstTry.current) {
-        statsMap.current.questionsAttemped += 1;
-        statsMap.current.questionsCorrect += 1;
-      }
       Toast.show({
         type: "success",
         text1: "Correct!",
       });
       resetAndNewProblem(1);
     } else {
-      if (firstTry.current) {
-        statsMap.current.questionsAttemped += 1;
-      }
-      firstTry.current = false;
       Toast.show({
         type: "error",
         text1: "Wrong. Please Try Again!",
@@ -77,10 +65,8 @@ function MathMain({ route, navigation }: Props) {
 
   const onPressSkip = () => {
     if (remainingTimeRef.current.getRemainingTime() === 0) {
-      onTimeComplete(route, navigation);
+      onTimeComplete();
     }
-
-    // FIXME: I have created such that skip questions are not counted in numAttempted
 
     updateStatsOnSkip();
     resetAndNewProblem(2);
@@ -113,7 +99,7 @@ function MathMain({ route, navigation }: Props) {
         maxSeconds={TOTAL_TIME}
         remainingTimeRef={remainingTimeRef}
         redThreshold={60}
-        onTimeComplete={() => onTimeComplete(route, navigation)}
+        onTimeComplete={() => onTimeComplete()}
       />
       <Toast visibilityTime={1000} position="bottom" bottomOffset={120} />
       <View style={styles.textContainer}>
