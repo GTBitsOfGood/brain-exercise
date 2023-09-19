@@ -96,10 +96,13 @@ export default function TriviaScreen({ navigation, route }: Props) {
     }
   }, [answered, getNewProblem]);
 
-  const onAnswerClick = useCallback((isCorrect: boolean) => {
-    updateStatsOnAnswer(isCorrect);
-    getNewProblem();
-  }, [getNewProblem, updateStatsOnAnswer]);
+  const onAnswerClick = useCallback(
+    (isCorrect: boolean) => {
+      updateStatsOnAnswer(isCorrect);
+      getNewProblem();
+    },
+    [getNewProblem, updateStatsOnAnswer],
+  );
 
   return (
     <View style={styles.root}>
