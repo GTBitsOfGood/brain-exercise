@@ -81,14 +81,11 @@ export default function TriviaScreen({ navigation, route }: Props) {
     navigation,
     route,
   });
-
-  const elapsedTimeRef = useRef<number>(0);
   const remainingTimeRef = useRef<RemainingTimeGetter>();
 
   const getNewProblem = useCallback(() => {
     setProblem(getProblem());
     setAnswered(false);
-    elapsedTimeRef.current = 0;
   }, []);
 
   const onPressShowButton = useCallback(() => {
@@ -99,18 +96,8 @@ export default function TriviaScreen({ navigation, route }: Props) {
     }
   }, [answered, getNewProblem]);
 
-  const onPressYesButton = useCallback(() => {
-    elapsedTimeRef.current =
-      remainingTimeRef.current.getRemainingTime() - TOTAL_TIME;
-    updateStatsOnAnswer(true, elapsedTimeRef.current);
-    getNewProblem();
-  }, [getNewProblem, updateStatsOnAnswer]);
-
-  const onPressNoButton = useCallback(() => {
-    elapsedTimeRef.current =
-      remainingTimeRef.current.getRemainingTime() - TOTAL_TIME;
-    updateStatsOnAnswer(false, elapsedTimeRef.current);
-    setAnswered(true);
+  const onAnswerClick = useCallback((isCorrect: boolean) => {
+    updateStatsOnAnswer(isCorrect);
     getNewProblem();
   }, [getNewProblem, updateStatsOnAnswer]);
 
@@ -140,13 +127,13 @@ export default function TriviaScreen({ navigation, route }: Props) {
               title="Yes"
               buttonStyle={styles.yesButton}
               titleStyle={styles.buttonTitle}
-              onPress={onPressYesButton}
+              onPress={() => onAnswerClick(true)}
             />
             <Button
               title="No"
               buttonStyle={styles.noButton}
               titleStyle={styles.buttonTitle}
-              onPress={onPressNoButton}
+              onPress={() => onAnswerClick(false)}
             />
           </View>
         </>
