@@ -6,13 +6,15 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
+    "runtimeVersion": "1.0.0",
     "splash": {
       "image": "./src/assets/bei.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/ca2c4db8-1c32-43e8-98b4-c6a3ad5f5daf"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
