@@ -46,7 +46,10 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 100,
-    height: Platform.OS === "ios" && Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
+    height:
+      Platform.OS === "ios" && Platform.isPad
+        ? 200
+        : Dimensions.get("window").height * 0.1,
   },
   textInput: {
     height: 55,
