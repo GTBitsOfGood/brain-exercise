@@ -172,7 +172,7 @@ function SignInScreen({ navigation }: Props) {
                 // !! Should add call to backend to retrieve rest of the information !!
 
                 const userObject: AuthUser = {
-                  _id: res.uid,
+                  idToken: res.uid,
                   email: res.email,
                   authenticated: res.emailVerified,
                   patientDetails: {
