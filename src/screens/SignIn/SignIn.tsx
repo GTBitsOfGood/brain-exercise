@@ -1,5 +1,3 @@
-/* eslint-disable react-native-a11y/has-valid-accessibility-descriptors */
-import "react-native-gesture-handler";
 import React, { useState } from "react";
 import {
   View,
@@ -12,12 +10,12 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import PropTypes from "prop-types";
 import { Button } from "react-native-elements";
 import { useDispatch } from "react-redux";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Text from "../../components/Text";
 import { emailSignIn } from "../../firebase/email_signin";
-import { Role } from "../../types";
+import { Role, RootStackParamList } from "../../types";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
 import { login } from "../../redux/reducers/authReducer";
 
@@ -48,7 +46,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 100,
-    height: Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
+    height: Platform.OS === "ios" && Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
   },
   textInput: {
     height: 55,
@@ -71,8 +69,10 @@ const styles = StyleSheet.create({
 
 const logo = require("../../assets/bei.jpg");
 
+type Props = NativeStackScreenProps<RootStackParamList, "SignInScreen">;
+
 //  Home Screen Navigation
-function SignInScreen({ navigation }) {
+function SignInScreen({ navigation }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -122,6 +122,8 @@ function SignInScreen({ navigation }) {
               style={styles.textInput}
               onChangeText={setEmail}
               value={email}
+              accessibilityLabel="Input field for email of user"
+              accessibilityHint="The text written in this input field will be saved as the user's email address"
             />
 
             <Text style={styles.textInputTitle}>Password</Text>
@@ -130,7 +132,9 @@ function SignInScreen({ navigation }) {
               style={styles.textInput}
               onChangeText={setPassword}
               value={password}
-              accessibilityHint="d"
+              secureTextEntry={true}
+              accessibilityLabel="Input field for password of user's account"
+              accessibilityHint="The text typed here is the password of the user's account"
             />
             <Text style={styles.errorTitle}>{error}</Text>
           </SafeAreaView>
@@ -208,6 +212,7 @@ function SignInScreen({ navigation }) {
           onPress={() => {
             navigation.navigate("SignUpScreen");
           }}
+          accessibilityRole="button"
         >
           <Text style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}>
             Sign Up
@@ -217,9 +222,5 @@ function SignInScreen({ navigation }) {
     </View>
   );
 }
-
-SignInScreen.propTypes = {
-  navigation: PropTypes.object,
-};
 
 export default SignInScreen;

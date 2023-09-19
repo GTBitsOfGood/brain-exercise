@@ -5,15 +5,14 @@ import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
 // Need to be updated once google login screen is finalised
 export default function firebaseInit() {
-  console.log("Initialising firebase");
   const firebaseConfig: { [key: string]: string } = {
-    apiKey: "YOUR_KEY_HERE_AIzaSyAOWH",
-    authDomain: "your-auth-domain-b1234.firebaseapp.com",
-    databaseURL: "https://your-database-name.firebaseio.com",
-    projectId: "your-project-id-1234",
-    storageBucket: "your-project-id-1234.appspot.com",
-    messagingSenderId: "12345-insert-yourse",
-    appId: "insert yours: 1:1234:web:ee873bd1234c0deb7eba61ce",
+    apiKey: "AIzaSyBn23BYVmwbT495z9bHeZGBYo8BFvFL0e8",
+    authDomain: "brain-exercise-initiative.firebaseapp.com",
+    projectId: "brain-exercise-initiative",
+    storageBucket: "brain-exercise-initiative.appspot.com",
+    messagingSenderId: "233330185060",
+    appId: "1:233330185060:web:78b791c94841270deba071",
+    measurementId: "G-R26M2TPMGR",
   };
 
   const app = initializeApp(firebaseConfig);

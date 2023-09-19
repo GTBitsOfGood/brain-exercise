@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -6,7 +5,7 @@ import {
   User,
 } from "firebase/auth";
 
-async function emailSignUp(email, password) {
+async function emailSignUp(email: string, password: string) {
   const auth = getAuth();
   const userCredential = await createUserWithEmailAndPassword(
     auth,
@@ -18,7 +17,7 @@ async function emailSignUp(email, password) {
   return user;
   // ...
 }
-async function emailSignIn(email, password): Promise<User> {
+async function emailSignIn(email: string, password: string): Promise<User> {
   const auth = getAuth();
   const userCredential = await signInWithEmailAndPassword(
     auth,

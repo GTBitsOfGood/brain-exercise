@@ -60,7 +60,13 @@ export type RootStackParamList = {
   FontSize: undefined;
   StreakLength: undefined;
   SignInScreen: undefined;
-  PersonalInfoScreen: undefined;
+  PersonalInfoScreen: {
+    userInfo: {
+      _id: string;
+      email: string;
+      emailVerified: boolean;
+    };
+  };
 };
 
 export type NavigationArgs = {

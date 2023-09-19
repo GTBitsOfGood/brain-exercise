@@ -12,10 +12,11 @@ import PropTypes from "prop-types";
 import Text from "../../components/Text";
 import { Button } from "react-native-elements";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
-import { Role } from "../../types";
+import { Role, RootStackParamList } from "../../types";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/reducers/authReducer";
 import { getAuth } from "firebase/auth";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 const styles = StyleSheet.create({
   root: {
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 100,
-    height: Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
+    height: Platform.OS === "ios" && Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
   },
   textInput: {
     height: 55,
@@ -65,33 +66,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const customStyles = {
-  stepIndicatorSize: 30,
-  currentStepIndicatorSize: 30,
-  separatorStrokeWidth: 8,
-  separatorStrokeUnfinishedWidth: 8,
-  separatorStrokeFinishedWidth: 8,
-  stepStrokeWidth: 0,
-  currentStepStrokeWidth: 5,
-  stepStrokeCurrentColor: "#005AA3",
-  stepStrokeFinishedColor: "#005AA3",
-  stepStrokeUnfinishedColor: "#005AA3",
-  separatorFinishedColor: "#005AA3",
-  separatorUnFinishedColor: "#dbdbdb",
-  stepIndicatorFinishedColor: "#005AA3",
-  stepIndicatorUnFinishedColor: "#dbdbdb",
-  stepIndicatorCurrentColor: "#ffffff",
-  stepIndicatorLabelFontSize: 15,
-  currentStepIndicatorLabelFontSize: 15,
-  stepIndicatorLabelCurrentColor: "#000000",
-  stepIndicatorLabelFinishedColor: "#ffffff",
-  stepIndicatorLabelUnfinishedColor: "#000000",
-};
-
-const logo = require("../../assets/bei.jpg");
+type Props = NativeStackScreenProps<RootStackParamList, "PersonalInfoScreen">;
 
 //  Home Screen Navigation
-function PersonalInfoScreen({ navigation, route }) {
+function PersonalInfoScreen({ navigation }: Props) {
   const auth = getAuth();
   const userInfo = auth.currentUser;
   const [fullName, setFullName] = useState("");

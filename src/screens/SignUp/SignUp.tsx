@@ -4,27 +4,18 @@ import {
   View,
   StyleSheet,
   Image,
-  TouchableOpacity,
-  Linking,
   Platform,
   Dimensions,
   TextInput,
   SafeAreaView,
   Pressable,
   ScrollView,
-  FlatList
 } from "react-native";
-import PropTypes from "prop-types";
-import StepIndicator from "react-native-step-indicator";
-import FeatherIcon from "react-native-vector-icons/Feather";
-import { useFocusEffect } from "@react-navigation/native";
-import { getStreak } from "../../scripts/progressbar-logic";
-import { Input } from "react-native-elements";
 import Text from "../../components/Text";
 import { Button } from "react-native-elements";
 import { emailSignUp } from "../../firebase/email_signin";
-import authReducer from "../../redux/reducers/authReducer";
-import { useDispatch } from "react-redux";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../types";
 
 const styles = StyleSheet.create({
   root: {
@@ -53,7 +44,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 100,
-    height: Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
+    height: Platform.OS === "ios" && Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
   },
   textInput: {
     height: 55,
@@ -74,38 +65,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const customStyles = {
-  stepIndicatorSize: 30,
-  currentStepIndicatorSize: 30,
-  separatorStrokeWidth: 8,
-  separatorStrokeUnfinishedWidth: 8,
-  separatorStrokeFinishedWidth: 8,
-  stepStrokeWidth: 0,
-  currentStepStrokeWidth: 5,
-  stepStrokeCurrentColor: "#005AA3",
-  stepStrokeFinishedColor: "#005AA3",
-  stepStrokeUnfinishedColor: "#005AA3",
-  separatorFinishedColor: "#005AA3",
-  separatorUnFinishedColor: "#dbdbdb",
-  stepIndicatorFinishedColor: "#005AA3",
-  stepIndicatorUnFinishedColor: "#dbdbdb",
-  stepIndicatorCurrentColor: "#ffffff",
-  stepIndicatorLabelFontSize: 15,
-  currentStepIndicatorLabelFontSize: 15,
-  stepIndicatorLabelCurrentColor: "#000000",
-  stepIndicatorLabelFinishedColor: "#ffffff",
-  stepIndicatorLabelUnfinishedColor: "#000000",
-};
-
 const logo = require("../../assets/bei.jpg");
 
+type Props = NativeStackScreenProps<RootStackParamList, "SignUpScreen">;
+
 //  Home Screen Navigation
-function SignUpOption3({ navigation }) {
+function SignUpScreen({ navigation }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState("");
-  const dispatch = useDispatch();
 
   const isFormValid = () => {
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/.test(email)) {
@@ -203,7 +172,6 @@ function SignUpOption3({ navigation }) {
             setError("");
             emailSignUp(email, password)
               .then((res) => {
-                console.log(typeof (res));
                 navigation.navigate("PersonalInfoScreen", {
                   userInfo: {
                     _id: res.uid,
@@ -221,7 +189,7 @@ function SignUpOption3({ navigation }) {
                 } else {
                   setError("Unexpected error occured. Check your info");
                 }
-                console.log("error popped", error.code)
+                console.log("error popped", err.code)
               })
           }}
         />
@@ -236,12 +204,12 @@ function SignUpOption3({ navigation }) {
         }}
       >
         <Text style={{ fontSize: 14, color: "#4A4B57" }}>
-          Already Have an Account?{" "}
+          Already Have an Account?&nbsp;
         </Text>
 
         {/* TODO: change navigation to navigate to the login screen */}
         <Pressable
-          style={styles.button}
+          style={styles.buttonTitle}
           onPress={() => {
             navigation.navigate("SignInScreen")
           }}
@@ -255,8 +223,4 @@ function SignUpOption3({ navigation }) {
   );
 }
 
-SignUpOption3.propTypes = {
-  navigation: PropTypes.object,
-};
-
-export default SignUpOption3;
+export default SignUpScreen;
