@@ -2,7 +2,6 @@ import "react-native-gesture-handler";
 import React, { useState } from "react";
 import { View, Image, TouchableOpacity, Linking } from "react-native";
 import PropTypes from "prop-types";
-import { useAuth0 } from "react-native-auth0";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import StepIndicator from "react-native-step-indicator";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -11,7 +10,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getStreak } from "../../scripts/progressbar-logic";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
-import LoginButton from "../../components/Auth/LoginButton/LoginButton";
 import LogoutButton from "../../components/Auth/LogoutButton";
 import defaultSettings from "../../components/DefaultSettings";
 import { styles, streakStyles } from "./HomeScreen.styles";
@@ -22,7 +20,6 @@ const logo = require("../../assets/bei.jpg");
 function HomeScreen({ navigation }) {
   const [settings, setSettings] = useState(defaultSettings);
   const [streak, setStreak] = useState(0);
-  const { user } = useAuth0();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -77,7 +74,8 @@ function HomeScreen({ navigation }) {
 
       {
         // if user is null, show login button, else show logout button
-        !user ? <LoginButton /> : <LogoutButton />
+        // !user ? <LoginButton navigation={navigation}/> : <LogoutButton />
+        <LogoutButton />
       }
 
       <View style={styles.buttonsContainer}>

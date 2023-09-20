@@ -4,23 +4,18 @@ import {
   View,
   StyleSheet,
   Image,
-  TouchableOpacity,
-  Linking,
   Platform,
   Dimensions,
   TextInput,
   SafeAreaView,
   Pressable,
+  ScrollView,
 } from "react-native";
-import PropTypes from "prop-types";
-import StepIndicator from "react-native-step-indicator";
-import FeatherIcon from "react-native-vector-icons/Feather";
-import { useFocusEffect } from "@react-navigation/native";
-import { getStreak } from "../../scripts/progressbar-logic";
-import { Input } from "react-native-elements";
 import Text from "../../components/Text";
 import { Button } from "react-native-elements";
-// import Button from "../../components/Button";
+import { emailSignUp } from "../../firebase/email_signin";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../types";
 
 const styles = StyleSheet.create({
   root: {
@@ -49,10 +44,10 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 100,
-    height: Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
+    height: Platform.OS === "ios" && Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
   },
   textInput: {
-    height: "20%",
+    height: 55,
     width: "100%",
     marginBottom: "5%",
     borderWidth: 1,
@@ -64,41 +59,25 @@ const styles = StyleSheet.create({
     color: "#4A4B57",
     fontSize: 14,
   },
+  errorTitle: {
+    color: "#ed0707",
+    fontSize: 14,
+  },
 });
-
-const customStyles = {
-  stepIndicatorSize: 30,
-  currentStepIndicatorSize: 30,
-  separatorStrokeWidth: 8,
-  separatorStrokeUnfinishedWidth: 8,
-  separatorStrokeFinishedWidth: 8,
-  stepStrokeWidth: 0,
-  currentStepStrokeWidth: 5,
-  stepStrokeCurrentColor: "#005AA3",
-  stepStrokeFinishedColor: "#005AA3",
-  stepStrokeUnfinishedColor: "#005AA3",
-  separatorFinishedColor: "#005AA3",
-  separatorUnFinishedColor: "#dbdbdb",
-  stepIndicatorFinishedColor: "#005AA3",
-  stepIndicatorUnFinishedColor: "#dbdbdb",
-  stepIndicatorCurrentColor: "#ffffff",
-  stepIndicatorLabelFontSize: 15,
-  currentStepIndicatorLabelFontSize: 15,
-  stepIndicatorLabelCurrentColor: "#000000",
-  stepIndicatorLabelFinishedColor: "#ffffff",
-  stepIndicatorLabelUnfinishedColor: "#000000",
-};
 
 const logo = require("../../assets/bei.jpg");
 
+type Props = NativeStackScreenProps<RootStackParamList, "SignUpScreen">;
+
 //  Home Screen Navigation
-function SignUpOption2({ navigation }) {
-  const [phoneNumber, setPhoneNumber] = useState("");
+function SignUpScreen({ navigation }: Props) {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [error, setError] = useState("");
 
   const isFormValid = () => {
-    if (!/^\(\d{3}\)\s\d{3}-\d{4}/.test(phoneNumber)) {
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/.test(email)) {
       return false;
     }
 
@@ -115,7 +94,7 @@ function SignUpOption2({ navigation }) {
 
   return (
     <View style={styles.root}>
-      <View style={{ flex: 1 }}>
+      <View style={{ height: 127 }}>
         <Image style={styles.image} source={logo} />
         <Text
           style={{
@@ -133,36 +112,39 @@ function SignUpOption2({ navigation }) {
       <View
         style={{
           flex: 3,
-          paddingVertical: "5%",
+          paddingVertical: 3,
           paddingHorizontal: "3%",
           width: "100%",
         }}
       >
-        <SafeAreaView>
-          <Text style={styles.textInputTitle}>Phone Number</Text>
-          <TextInput
-            placeholder="(XXX) XXX-XXXX"
-            style={styles.textInput}
-            onChangeText={setPhoneNumber}
-            value={phoneNumber}
-          />
+        <ScrollView>
+          <SafeAreaView>
+            <Text style={styles.textInputTitle}>Email</Text>
+            <TextInput
+              placeholder="username@email.com"
+              style={styles.textInput}
+              onChangeText={setEmail}
+              value={email}
+            />
 
-          <Text style={styles.textInputTitle}>Password</Text>
-          <TextInput
-            placeholder="Password"
-            style={styles.textInput}
-            onChangeText={setPassword}
-            value={password}
-          />
+            <Text style={styles.textInputTitle}>Password</Text>
+            <TextInput
+              placeholder="Password"
+              style={styles.textInput}
+              onChangeText={setPassword}
+              value={password}
+            />
 
-          <Text style={styles.textInputTitle}>Repeat Password</Text>
-          <TextInput
-            placeholder="Password"
-            style={styles.textInput}
-            onChangeText={setRepeatPassword}
-            value={repeatPassword}
-          />
-        </SafeAreaView>
+            <Text style={styles.textInputTitle}>Repeat Password</Text>
+            <TextInput
+              placeholder="Password"
+              style={styles.textInput}
+              onChangeText={setRepeatPassword}
+              value={repeatPassword}
+            />
+            <Text style={styles.errorTitle}>{error}</Text>
+          </SafeAreaView>
+        </ScrollView>
       </View>
 
       <View
@@ -186,7 +168,30 @@ function SignUpOption2({ navigation }) {
           titleStyle={styles.buttonTitle}
           disabled={!isFormValid()}
           title="Sign Up"
-          onPress={() => navigation.navigate("PersonalInfo")}
+          onPress={() => {
+            setError("");
+            emailSignUp(email, password)
+              .then((res) => {
+                navigation.navigate("PersonalInfoScreen", {
+                  userInfo: {
+                    _id: res.uid,
+                    email: res.email,
+                    emailVerified: res.emailVerified
+                  }
+                });
+              })
+              .catch((err) => {
+                setError("Email is already in use");
+                if (err.code === "auth/email-already-in-use") {
+                  setError("Email is already in use");
+                } else if (err.code === "auth/weak-password") {
+                  setError("Password is too short");
+                } else {
+                  setError("Unexpected error occured. Check your info");
+                }
+                console.log("error popped", err.code)
+              })
+          }}
         />
       </View>
 
@@ -199,13 +204,15 @@ function SignUpOption2({ navigation }) {
         }}
       >
         <Text style={{ fontSize: 14, color: "#4A4B57" }}>
-          Already Have an Account?{" "}
+          Already Have an Account?&nbsp;
         </Text>
 
         {/* TODO: change navigation to navigate to the login screen */}
         <Pressable
-          style={styles.button}
-          onPress={() => navigation.navigate("HomeScreen")}
+          style={styles.buttonTitle}
+          onPress={() => {
+            navigation.navigate("SignInScreen")
+          }}
         >
           <Text style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}>
             Log In
@@ -216,8 +223,4 @@ function SignUpOption2({ navigation }) {
   );
 }
 
-SignUpOption2.propTypes = {
-  navigation: PropTypes.object,
-};
-
-export default SignUpOption2;
+export default SignUpScreen;

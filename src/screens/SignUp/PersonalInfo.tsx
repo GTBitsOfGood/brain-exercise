@@ -1,26 +1,22 @@
-import "react-native-gesture-handler";
 import React, { useState } from "react";
 import {
   View,
   StyleSheet,
-  Image,
-  TouchableOpacity,
-  Linking,
   Platform,
   Dimensions,
   TextInput,
   SafeAreaView,
-  Pressable,
+  ScrollView,
 } from "react-native";
 import PropTypes from "prop-types";
-import StepIndicator from "react-native-step-indicator";
-import FeatherIcon from "react-native-vector-icons/Feather";
-import { useFocusEffect } from "@react-navigation/native";
-import { getStreak } from "../../scripts/progressbar-logic";
-import { Input } from "react-native-elements";
 import Text from "../../components/Text";
 import { Button } from "react-native-elements";
-// import Button from "../../components/Button";
+import { AuthUser } from "../../redux/reducers/authReducer/types";
+import { Role, RootStackParamList } from "../../types";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/reducers/authReducer";
+import { getAuth } from "firebase/auth";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 const styles = StyleSheet.create({
   root: {
@@ -49,10 +45,10 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 100,
-    height: Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
+    height: Platform.OS === "ios" && Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
   },
   textInput: {
-    height: "15%",
+    height: 55,
     width: "100%",
     marginBottom: "5%",
     borderWidth: 1,
@@ -64,39 +60,28 @@ const styles = StyleSheet.create({
     color: "#4A4B57",
     fontSize: 14,
   },
+  errorTitle: {
+    color: "#ed0707",
+    fontSize: 14,
+  },
 });
 
-const customStyles = {
-  stepIndicatorSize: 30,
-  currentStepIndicatorSize: 30,
-  separatorStrokeWidth: 8,
-  separatorStrokeUnfinishedWidth: 8,
-  separatorStrokeFinishedWidth: 8,
-  stepStrokeWidth: 0,
-  currentStepStrokeWidth: 5,
-  stepStrokeCurrentColor: "#005AA3",
-  stepStrokeFinishedColor: "#005AA3",
-  stepStrokeUnfinishedColor: "#005AA3",
-  separatorFinishedColor: "#005AA3",
-  separatorUnFinishedColor: "#dbdbdb",
-  stepIndicatorFinishedColor: "#005AA3",
-  stepIndicatorUnFinishedColor: "#dbdbdb",
-  stepIndicatorCurrentColor: "#ffffff",
-  stepIndicatorLabelFontSize: 15,
-  currentStepIndicatorLabelFontSize: 15,
-  stepIndicatorLabelCurrentColor: "#000000",
-  stepIndicatorLabelFinishedColor: "#ffffff",
-  stepIndicatorLabelUnfinishedColor: "#000000",
-};
-
-const logo = require("../../assets/bei.jpg");
+type Props = NativeStackScreenProps<RootStackParamList, "PersonalInfoScreen">;
 
 //  Home Screen Navigation
-function PersonalInfoScreen({ navigation }) {
+function PersonalInfoScreen({ navigation }: Props) {
+  const auth = getAuth();
+  const userInfo = auth.currentUser;
   const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [dateofBirth, setDateofBirth] = useState("");
   const [secondContactName, setSecondContactName] = useState("");
   const [secondContactNumber, setSecondContactNumber] = useState("");
+  const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
+
+  console.log(userInfo)
 
   const isFormValid = () => {
     if (fullName.length == 0) {
@@ -120,7 +105,7 @@ function PersonalInfoScreen({ navigation }) {
 
   return (
     <View style={styles.root}>
-      <View style={{ flex: 1, paddingLeft: "3%", paddingTop: "2%" }}>
+      <View style={{ height: 80, paddingLeft: "3%", paddingTop: "2%" }}>
         <Text style={{ fontWeight: "bold", fontSize: 20, color: "#4A4B57" }}>
           Tell Us About Yourself!
         </Text>
@@ -129,15 +114,15 @@ function PersonalInfoScreen({ navigation }) {
           sentence or two.
         </Text>
       </View>
-
       <View
         style={{
           flex: 4,
-          paddingVertical: "5%",
+          paddingVertical: 5,
           paddingHorizontal: "3%",
           width: "100%",
         }}
       >
+        <ScrollView>
         <SafeAreaView>
           <Text style={styles.textInputTitle}>Full Name</Text>
           <TextInput
@@ -145,6 +130,14 @@ function PersonalInfoScreen({ navigation }) {
             style={styles.textInput}
             onChangeText={setFullName}
             value={fullName}
+          />
+
+          <Text style={styles.textInputTitle}>Phone Number</Text>
+          <TextInput
+            placeholder="(XXX) XXX-XXXX"
+            onChangeText={setPhoneNumber}
+            style={styles.textInput}
+            value={phoneNumber}
           />
 
           <Text style={styles.textInputTitle}>Date of Birth</Text>
@@ -170,7 +163,9 @@ function PersonalInfoScreen({ navigation }) {
             style={styles.textInput}
             value={secondContactNumber}
           />
+          <Text style={styles.errorTitle}>{error}</Text>
         </SafeAreaView>
+        </ScrollView>
       </View>
 
       <View
@@ -194,7 +189,40 @@ function PersonalInfoScreen({ navigation }) {
           titleStyle={styles.buttonTitle}
           title="Start"
           disabled={!isFormValid()}
-          onPress={() => navigation.navigate("HomeScreen")}
+          onPress={async () => {
+            console.log(userInfo)
+            setError("")
+            let userObject: AuthUser = {
+              _id: userInfo.uid,
+              name: fullName,
+              email: userInfo.email,
+              phoneNumber,
+              authenticated: userInfo.emailVerified,
+              patientDetails: {
+                signedUp: true,
+                birthdate: dateofBirth,
+                secondaryContactName: secondContactName,
+                secondaryContactPhone: secondContactNumber
+              },
+              role: Role.NONPROFIT_USER
+            }
+            try {
+              // !! Uncomment when the api endpoint is implemented !!
+              
+              // await axios.post('/api/patient/auth/signUp', {
+              //   email: userObject.email,
+              //   name: userObject.name,
+              //   phoneNumber: userObject.phoneNumber,
+              //   birthDate: userObject.patientDetails.birthdate,
+              //   secondaryContactName: userObject.patientDetails.secondaryContactName,
+              //   secondaryContactPhone: userObject.patientDetails.secondaryContactPhone
+              // });
+              dispatch(login(userObject));
+              navigation.navigate("HomeScreen");
+            } catch (e) {
+              setError("An error occured\n" + e)
+            }
+          }}
         />
       </View>
     </View>

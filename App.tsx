@@ -6,6 +6,8 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import axios from "axios";
 import Constants from "expo-constants";
+import { useEffect } from "react";
+import firebaseInit from "./src/firebase/config";
 import { logAxiosError } from "./src/utils";
 
 import Stack from "./src/screens/Stacks/StackNavigator";
@@ -23,7 +25,9 @@ const persistor = persistStore(store);
 export default function App() {
   // For local testing add your IP address here
   const { isLoadingComplete } = useCachedResources();
-
+  useEffect(() => {
+    firebaseInit();
+  }, []);
   if (!isLoadingComplete) {
     return null;
   }

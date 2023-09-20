@@ -13,10 +13,12 @@ export interface User {
   name: string;
   email: string;
   phoneNumber: string;
-  birthdate: string;
-  signedUp: boolean;
-  secondaryContactName: string;
-  secondaryContactPhone: string;
+  patientDetails: {
+    signedUp: boolean;
+    birthdate: string;
+    secondaryContactName: string;
+    secondaryContactPhone: string;
+  };
   role: Role;
 }
 
@@ -57,6 +59,14 @@ export type RootStackParamList = {
   SoundScreen: undefined;
   FontSize: undefined;
   StreakLength: undefined;
+  SignInScreen: undefined;
+  PersonalInfoScreen: {
+    userInfo: {
+      _id: string;
+      email: string;
+      emailVerified: boolean;
+    };
+  };
 };
 
 export type NavigationArgs = {
