@@ -170,14 +170,9 @@ function SignInScreen({ navigation }: Props) {
             emailSignIn(email, password)
               .then((res) => {
                 // !! Should add call to backend to retrieve rest of the information !!
-
-                const userObject: AuthUser = {
-                  idToken: res.uid,
+                const userObject: Partial<AuthUser> = {
                   email: res.email,
-                  authenticated: res.emailVerified,
-                  patientDetails: {
-                    signedUp: true,
-                  },
+                  authenticated: true,
                   role: Role.NONPROFIT_USER,
                 };
                 dispatch(login(userObject));

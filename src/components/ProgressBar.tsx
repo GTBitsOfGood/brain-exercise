@@ -20,7 +20,9 @@ export default function ProgressBar({
   remainingTimeRef,
 }: Props) {
   const [remainingTime, setRemainingTime] = useState(maxSeconds);
-  const paused = useSelector<RootState>((state) => state.paused.paused);
+  const paused = useSelector<RootState>(
+    (state) => state.paused.paused,
+  ) as boolean;
 
   useEffect(() => {
     if (remainingTimeRef) {
