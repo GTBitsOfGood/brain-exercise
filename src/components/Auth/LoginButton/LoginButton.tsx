@@ -10,10 +10,10 @@ import { AuthUser } from "../../../redux/reducers/authReducer/types";
 import { getAuth } from "firebase/auth";
 
 function LoginButton({ navigation }) {
-    const userInfo: AuthUser | any = useSelector<RootState>((state) => state.auth);
+    const userInfo = useSelector<RootState>((state) => state.auth) as AuthUser;
     return (
         <>
-            {userInfo && userInfo.patientDetails.signedUp ? (
+            {userInfo && userInfo.signedUp ? (
                 <Text style={styles.loggedInLabel}>Logged in: {userInfo.email}</Text>
             ) : (
                 <Button

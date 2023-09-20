@@ -4,6 +4,7 @@ import { ImageSourcePropType } from "react-native";
 
 export enum Role {
   NONPROFIT_ADMIN = "Nonprofit Admin",
+  NONPROFIT_VOLUNTEER = "Nonprofit Volunteer",
   NONPROFIT_USER = "Nonprofit User",
 }
 export interface User {
@@ -14,11 +15,11 @@ export interface User {
   email: string;
   phoneNumber: string;
   patientDetails: {
-    signedUp: boolean;
     birthdate: string;
     secondaryContactName: string;
     secondaryContactPhone: string;
   };
+  signedUp: boolean;
   role: Role;
 }
 

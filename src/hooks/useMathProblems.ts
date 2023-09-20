@@ -4,8 +4,8 @@ import getProblem from "../scripts/game-logic";
 import gameDescriptions from "../screens/Stacks/gameDescriptions";
 import { RootStackParamList } from "../types";
 
-const MIN_DIFFICULTY_SCORE = 100;
-const MAX_DIFFICULTY_SCORE = 499;
+const MIN_DIFFICULTY_SCORE = 0;
+const MAX_DIFFICULTY_SCORE = 99;
 export const TOTAL_TIME = gameDescriptions.Math.minutes * 60;
 
 type Props = NativeStackScreenProps<RootStackParamList, "MathMain">;
@@ -24,13 +24,13 @@ export default function useMathQuestions({ route, navigation }: Props) {
   const getNewProblem = useCallback(() => {
     firstTry.current = true;
     statsMap.current.questionsAttemped += 1;
-    if (difficultyScore < 200) {
+    if (difficultyScore < 25) {
       setProblem(getProblem(1));
-    } else if (difficultyScore < 300) {
+    } else if (difficultyScore < 50) {
       setProblem(getProblem(2));
-    } else if (difficultyScore < 400) {
+    } else if (difficultyScore < 75) {
       setProblem(getProblem(3));
-    } else if (difficultyScore < 500) {
+    } else if (difficultyScore < 100) {
       setProblem(getProblem(4));
     } else {
       setProblem(getProblem());
@@ -51,7 +51,7 @@ export default function useMathQuestions({ route, navigation }: Props) {
       setDifficultyScore((prevDifficultyScore) => {
         let newDifficultyScore = prevDifficultyScore;
         if (isCorrect) {
-          newDifficultyScore += 10;
+          newDifficultyScore += 2.5;
         }
         if (firstTry.current) {
           statsMap.current.questionsCorrect += 1;
@@ -59,11 +59,11 @@ export default function useMathQuestions({ route, navigation }: Props) {
         firstTry.current = false;
 
         if (timeTaken > 60) {
-          newDifficultyScore -= 10;
+          newDifficultyScore -= 2.5;
         } else if (timeTaken < 10) {
-          newDifficultyScore += 5;
+          newDifficultyScore += 1.25;
         } else {
-          newDifficultyScore += 2;
+          newDifficultyScore += 0.5;
         }
         return Math.min(
           Math.max(newDifficultyScore, MIN_DIFFICULTY_SCORE),
@@ -75,7 +75,7 @@ export default function useMathQuestions({ route, navigation }: Props) {
   );
 
   const updateStatsOnSkip = useCallback(() => {
-    setDifficultyScore((prevDifficultyScore) => prevDifficultyScore - 10);
+    setDifficultyScore((prevDifficultyScore) => prevDifficultyScore - 2.5);
   }, []);
 
   return {

@@ -199,11 +199,11 @@ function PersonalInfoScreen({ navigation }: Props) {
               phoneNumber,
               authenticated: userInfo.emailVerified,
               patientDetails: {
-                signedUp: true,
                 birthdate: dateofBirth,
                 secondaryContactName: secondContactName,
                 secondaryContactPhone: secondContactNumber
               },
+              signedUp: true,
               role: Role.NONPROFIT_USER
             }
             try {
