@@ -99,7 +99,7 @@ function MathMain({ route, navigation }: Props) {
         maxSeconds={TOTAL_TIME}
         remainingTimeRef={remainingTimeRef}
         redThreshold={60}
-        onTimeComplete={() => onTimeComplete()}
+        onTimeComplete={onTimeComplete}
       />
       <Toast visibilityTime={1000} position="bottom" bottomOffset={120} />
       <View style={styles.textContainer}>
