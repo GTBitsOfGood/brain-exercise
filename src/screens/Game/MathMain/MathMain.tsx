@@ -8,12 +8,10 @@ import Toast from "react-native-toast-message";
 import CustomButton from "../../../components/Button";
 import ProgressBar from "../../../components/ProgressBar";
 import Text from "../../../components/Text";
-import gameDescriptions from "../../Stacks/gameDescriptions";
-import useMathProblems from "../../../hooks/useMathProblems";
+import useMathProblems, { TOTAL_TIME } from "../../../hooks/useMathProblems";
 import { RemainingTimeGetter, RootStackParamList } from "../../../types";
 import styles from "./MathMain.style";
 
-const TOTAL_TIME = gameDescriptions.Math.minutes * 60;
 type Props = NativeStackScreenProps<RootStackParamList, "MathMain">;
 
 function MathMain({ route, navigation }: Props) {
@@ -22,8 +20,13 @@ function MathMain({ route, navigation }: Props) {
 
   const remainingTimeRef = useRef<RemainingTimeGetter>();
   const prevProblemRemainingTimeRef = useRef<number>(TOTAL_TIME);
-  const { problem, getNewProblem, updateStatsOnAnswer, updateStatsOnSkip } =
-    useMathProblems();
+  const {
+    problem,
+    getNewProblem,
+    updateStatsOnAnswer,
+    updateStatsOnSkip,
+    onTimeComplete,
+  } = useMathProblems({ route, navigation });
 
   const resetAndNewProblem = useCallback(
     (waitSeconds: number) => {
@@ -60,14 +63,11 @@ function MathMain({ route, navigation }: Props) {
     }
   };
 
-  const onTimeComplete = useCallback(() => {
-    navigation.navigate(...route.params.nextScreenArgs);
-  }, [navigation, route.params.nextScreenArgs]);
-
   const onPressSkip = () => {
     if (remainingTimeRef.current.getRemainingTime() === 0) {
       onTimeComplete();
     }
+
     updateStatsOnSkip();
     resetAndNewProblem(2);
   };
