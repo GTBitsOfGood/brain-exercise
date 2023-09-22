@@ -63,7 +63,7 @@ const authReducer = createSlice({
     setFirstTimeLogin(state, action: PayloadAction<boolean>) {
       state.signedUp = action.payload;
       AsyncStorage.getItem("User")
-        .then((user) => JSON.parse(user))
+        .then((user) => JSON.parse(user) as AuthUser)
         .then((user: AuthUser) => {
           user.signedUp = action.payload;
           AsyncStorage.setItem("User", JSON.stringify(user));

@@ -6,10 +6,10 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "prettier --write .",
-    "lint:check": "prettier --check .",
-    "format": "eslint --fix .",
-    "format:check": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint --fix .",
+    "lint:check": "eslint .",
     "prepare": "husky install"
   },
   "dependencies": {

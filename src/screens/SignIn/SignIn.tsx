@@ -9,9 +9,11 @@ import {
   SafeAreaView,
   Pressable,
   ScrollView,
+  ImageRequireSource,
 } from "react-native";
 import { Button } from "react-native-elements";
 import { useDispatch } from "react-redux";
+import { AuthError } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Text from "../../components/Text";
 import { emailSignIn } from "../../firebase/email_signin";
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const logo = require("../../assets/bei.jpg");
+const logo = require("../../assets/bei.jpg") as ImageRequireSource;
 
 type Props = NativeStackScreenProps<RootStackParamList, "SignInScreen">;
 
@@ -179,7 +181,7 @@ function SignInScreen({ navigation }: Props) {
 
                 // navigation.navigate("HomeScreen");
               })
-              .catch((err) => {
+              .catch((err: AuthError) => {
                 console.debug(err);
                 if (err.code === "auth/wrong-password") {
                   setError("Incorrect password");

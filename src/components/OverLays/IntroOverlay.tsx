@@ -79,7 +79,10 @@ function IntroOverlay({
       <Text style={styles.timeText}>{`Total time: ${time} minutes`}</Text>
       <Button
         title={buttonTitle}
-        onPress={() => unloadSound() && navigation.navigate(...navigationArgs)}
+        onPress={() => {
+          unloadSound();
+          navigation.navigate(...navigationArgs);
+        }}
         buttonStyle={{ marginBottom: 40 }}
       />
     </View>

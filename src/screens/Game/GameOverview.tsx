@@ -1,3 +1,4 @@
+import { AVPlaybackSource } from "expo-av";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View, StyleSheet } from "react-native";
 import Button from "../../components/Button";
@@ -6,7 +7,7 @@ import "react-native-gesture-handler";
 import useSound from "../../hooks/useSound";
 import { RootStackParamList, SoundSetting } from "../../types";
 
-const sound = require("../../assets/intro.mp3");
+const sound = require("../../assets/intro.mp3") as AVPlaybackSource;
 
 const styles = StyleSheet.create({
   root: {
@@ -44,7 +45,10 @@ function GameOverview({ navigation }: Props) {
       <Text style={styles.time}>Total time: 30 minutes</Text>
       <Button
         title="Begin"
-        onPress={() => unloadSound() && navigation.navigate("MathIntro")}
+        onPress={() => {
+          unloadSound();
+          navigation.navigate("MathIntro");
+        }}
         buttonStyle={{ marginBottom: 30 }}
       />
     </View>

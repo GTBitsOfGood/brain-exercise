@@ -6,6 +6,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import StepIndicator from "react-native-step-indicator";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { useFocusEffect } from "@react-navigation/native";
+import { AVPlaybackSource } from "expo-av";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { getStreak } from "../../scripts/progressbar-logic";
 import Text from "../../components/Text";
@@ -13,21 +15,24 @@ import Button from "../../components/Button";
 import LogoutButton from "../../components/Auth/LogoutButton";
 import defaultSettings from "../../components/DefaultSettings";
 import { styles, streakStyles } from "./HomeScreen.styles";
+import { RootStackParamList, Settings } from "../../types";
 
-const logo = require("../../assets/bei.jpg");
+const logo = require("../../assets/bei.jpg") as AVPlaybackSource;
+
+type Props = NativeStackScreenProps<RootStackParamList, "GameOverview">;
 
 //  Home Screen Navigation
-function HomeScreen({ navigation }) {
+function HomeScreen({ navigation }: Props) {
   const [settings, setSettings] = useState(defaultSettings);
   const [streak, setStreak] = useState(0);
 
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
-      getStreak().then((retrievedStreak) => setStreak(retrievedStreak));
+      getStreak().then((retrievedStreak: number) => setStreak(retrievedStreak));
       const fetchSettings = async () => {
         const storedSettings = await AsyncStorage.getItem("SETTINGS");
-        if (storedSettings) setSettings(JSON.parse(storedSettings));
+        if (storedSettings) setSettings(JSON.parse(storedSettings) as Settings);
       };
       fetchSettings();
     }, []),

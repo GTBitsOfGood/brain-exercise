@@ -30,15 +30,19 @@ export type TimeAnalyticsTypes =
   | "readingTime";
 
 export enum SoundSetting {
-  animationOn = "animationOn",
-  fontSize = "fontSize",
-  notificationsActive = "notificationsActive",
-  scheduledTime = "scheduledTime",
   soundEffectsOn = "soundEffectsOn",
-  streakLength = "streakLength",
   voiceOverOn = "voiceOverOn",
 }
-export type SoundSettings = Record<SoundSetting, boolean>;
+
+export interface Settings {
+  notificationsActive: boolean;
+  scheduledTime: Date;
+  fontSize: number;
+  soundEffectsOn: boolean;
+  voiceOverOn: boolean;
+  animationOn: boolean;
+  streakLength: number;
+}
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -58,7 +62,7 @@ export type RootStackParamList = {
   SettingsScreen: undefined;
   TimePicker: undefined;
   SoundScreen: undefined;
-  FontSize: undefined;
+  FontSize: { settings: Settings };
   StreakLength: undefined;
   SignInScreen: undefined;
   PersonalInfoScreen: {

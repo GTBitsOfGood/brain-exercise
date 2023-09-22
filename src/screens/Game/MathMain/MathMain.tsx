@@ -72,7 +72,7 @@ function MathMain({ route, navigation }: Props) {
     resetAndNewProblem(2);
   };
 
-  const choices = problem.choices.map((choiceValue, i) => (
+  const choices = problem.choices.map((choiceValue: number, i) => (
     <Button
       title={`${choiceValue}`} // Formatted like this because 0 number is not displayed otherwise
       buttonStyle={styles.button}

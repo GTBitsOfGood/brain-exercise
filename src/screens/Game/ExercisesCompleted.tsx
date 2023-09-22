@@ -2,15 +2,16 @@ import { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import ConfettiCannon from "react-native-confetti-cannon";
+import { AVPlaybackSource } from "expo-av";
 
 import { incrementStreak } from "../../scripts/progressbar-logic";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
 import useAsyncStorage from "../../hooks/useAsyncStorage";
-import { RootStackParamList, SoundSetting, SoundSettings } from "../../types";
+import { RootStackParamList, SoundSetting, Settings } from "../../types";
 import useSound from "../../hooks/useSound";
 
-const sound = require("../../assets/congrats.mp3");
+const sound = require("../../assets/congrats.mp3") as AVPlaybackSource;
 
 const styles = StyleSheet.create({
   root: {
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
 type Props = NativeStackScreenProps<RootStackParamList, "ExercisesCompleted">;
 
 function ExercisesCompleted({ navigation }: Props) {
-  const { storageValue: settings } = useAsyncStorage<SoundSettings>("SETTINGS");
+  const { storageValue: settings } = useAsyncStorage<Settings>("SETTINGS");
   const { unloadSound } = useSound(sound, SoundSetting.voiceOverOn);
 
   useEffect(() => {
@@ -66,11 +67,17 @@ function ExercisesCompleted({ navigation }: Props) {
         <Button
           buttonStyle={{ marginBottom: 10 }}
           title="Return to Home"
-          onPress={() => unloadSound() && navigation.navigate("HomeScreen")}
+          onPress={() => {
+            unloadSound();
+            navigation.navigate("HomeScreen");
+          }}
         />
         <Button
           title="More Practice"
-          onPress={() => unloadSound() && navigation.navigate("ExtraPractice")}
+          onPress={() => {
+            unloadSound();
+            navigation.navigate("ExtraPractice");
+          }}
         />
       </View>
     </View>

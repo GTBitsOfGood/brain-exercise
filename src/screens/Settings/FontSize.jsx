@@ -30,9 +30,7 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = NativeStackScreenProps<RootStackParamList, "FontSize">;
-
-function FontSize({ route, navigation }: Props) {
+function FontSize({ route, navigation }) {
   const settingsObj = route.params;
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(false);

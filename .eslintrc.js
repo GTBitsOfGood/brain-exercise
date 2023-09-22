@@ -16,12 +16,18 @@ module.exports = {
   extends: [
     "airbnb-base",
     "airbnb/hooks",
-    "prettier",
+    "plugin:prettier/recommended",
     "plugin:react/recommended",
     "plugin:react-native-a11y/basic",
   ],
   rules: {
     "no-restricted-globals": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
   },
   settings: {
     react: {
@@ -34,10 +40,9 @@ module.exports = {
       env: { browser: true, node: true, es6: true },
       extends: [
         "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-type-checked",
         "airbnb-typescript",
-        "prettier",
+        "plugin:prettier/recommended",
       ],
       globals: { Atomics: "readonly", SharedArrayBuffer: "readonly" },
       parser: "@typescript-eslint/parser",
@@ -57,6 +62,20 @@ module.exports = {
         "no-underscore-dangle": "off",
         "import/prefer-default-export": "off",
         "import/extensions": "off",
+        "global-require": "off",
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/no-misused-promises": [
+          "error",
+          {
+            checksVoidReturn: false,
+          },
+        ],
+        "prettier/prettier": [
+          "error",
+          {
+            endOfLine: "auto",
+          },
+        ],
       },
     },
   ],

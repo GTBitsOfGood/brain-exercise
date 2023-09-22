@@ -1,11 +1,7 @@
 import { useMemo, useCallback, useEffect } from "react";
 import { AVPlaybackSource, Audio } from "expo-av";
-import { SoundSetting } from "../types";
+import { SoundSetting, Settings } from "../types";
 import useAsyncStorage from "./useAsyncStorage";
-
-type SoundSettings = {
-  [key in SoundSetting]: string;
-};
 
 export default function useSound(
   sound: AVPlaybackSource,
@@ -13,7 +9,7 @@ export default function useSound(
   playAutomatic: boolean = true,
 ) {
   const soundObject = useMemo(() => new Audio.Sound(), []);
-  const { storageValue: settings } = useAsyncStorage<SoundSettings>("SETTINGS");
+  const { storageValue: settings } = useAsyncStorage<Settings>("SETTINGS");
 
   const loadSound = useCallback(async () => {
     if (settings && settings[setting]) {

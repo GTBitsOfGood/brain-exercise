@@ -8,7 +8,7 @@ export default function useAsyncStorage<T>(key: AsyncStorageKey) {
 
   useEffect(() => {
     AsyncStorage.getItem(key).then((valueJSON) => {
-      const value: T = JSON.parse(valueJSON);
+      const value = JSON.parse(valueJSON) as T;
       setStorageValue(value);
     });
   }, [key]);

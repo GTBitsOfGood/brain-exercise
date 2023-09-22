@@ -1,10 +1,11 @@
 import { Platform } from "react-native";
 import { Button as BaseButton, ButtonProps } from "react-native-elements";
 import { GestureResponderEvent } from "react-native-modal";
+import { AVPlaybackSource } from "expo-av";
 import useSound from "../hooks/useSound";
 import { SoundSetting } from "../types";
 
-const sound = require("../assets/button.mp3");
+const sound = require("../assets/button.mp3") as AVPlaybackSource;
 
 interface Props extends ButtonProps {
   title: string;

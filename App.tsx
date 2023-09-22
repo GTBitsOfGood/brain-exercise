@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Constants from "expo-constants";
 import { useEffect } from "react";
 import firebaseInit from "./src/firebase/config";
@@ -66,12 +66,12 @@ export default function App() {
   );
 }
 
-axios.defaults.baseURL = Constants.expoConfig.extra.AXIOS_BASEURL;
+axios.defaults.baseURL = Constants.expoConfig.extra.AXIOS_BASEURL as string;
 
 // Add a request interceptor
 axios.interceptors.request.use(
   (config) => config,
-  (error) => {
+  (error: AxiosError) => {
     // Do something with request error
     logAxiosError(error);
     return Promise.reject(error);

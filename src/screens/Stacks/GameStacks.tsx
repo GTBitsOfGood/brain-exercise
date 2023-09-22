@@ -16,7 +16,7 @@ export const gameComponents: Record<GameTypes, React.FC> = {
   Writing: PromptScreen,
 };
 
-const GameStacks = [];
+const GameStacks: React.JSX.Element[] = [];
 
 Object.keys(GameTypes).forEach((game: GameTypes) => {
   const gameDescription = gameDescriptions[game];

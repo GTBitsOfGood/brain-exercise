@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { initializeApp } from "firebase/app";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,6 +16,7 @@ export default function firebaseInit() {
 
   const app = initializeApp(firebaseConfig);
   initializeAuth(app, {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     persistence: getReactNativePersistence(ReactNativeAsyncStorage),
   });
 }

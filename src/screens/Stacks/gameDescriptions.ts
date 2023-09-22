@@ -1,13 +1,17 @@
+import { AVPlaybackSource } from "expo-av";
 import { GameDescriptions } from "../../types";
 
-const mathSound = require("../../assets/math.mp3");
-const mathImage = require("../../assets/Mathematics_Icon.png");
-const readingSound = require("../../assets/reading.mp3");
-const readingImage = require("../../assets/Reading_Icon.png");
-const writingSound = require("../../assets/writing.mp3");
-const writingImage = require("../../assets/Prompts_Icon.png");
-const triviaSound = require("../../assets/writing.mp3");
-const triviaImage = require("../../assets/Trivia_Icon.png");
+const mathSound = require("../../assets/math.mp3") as AVPlaybackSource;
+const mathImage =
+  require("../../assets/Mathematics_Icon.png") as AVPlaybackSource;
+const readingSound = require("../../assets/reading.mp3") as AVPlaybackSource;
+const readingImage =
+  require("../../assets/Reading_Icon.png") as AVPlaybackSource;
+const writingSound = require("../../assets/writing.mp3") as AVPlaybackSource;
+const writingImage =
+  require("../../assets/Prompts_Icon.png") as AVPlaybackSource;
+const triviaSound = require("../../assets/writing.mp3") as AVPlaybackSource;
+const triviaImage = require("../../assets/Trivia_Icon.png") as AVPlaybackSource;
 
 const gameDescriptions: GameDescriptions = {
   Math: {
