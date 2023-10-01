@@ -17,7 +17,6 @@ import { useDispatch } from "react-redux";
 import { User } from "../../types";
 import { getAuth } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import axios from "axios";
 import { login } from "../../redux/reducers/authReducer";
 import { internalRequest } from "../../requests";
 
@@ -68,8 +67,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
-
-type Props = NativeStackScreenProps<RootStackParamList, "PersonalInfoScreen">;
 
 //  Home Screen Navigation
 function PersonalInfoScreen() {

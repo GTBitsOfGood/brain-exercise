@@ -6,6 +6,7 @@ import { persistReducer } from "redux-persist";
 import authReducer from "./reducers/authReducer";
 import loadingReducer from "./reducers/loadingReducer";
 import pauseReducer from "./reducers/pauseReducer";
+import gameDetailsReducer from "./reducers/gameDetailsReducer";
 
 const persistConfig = {
   key: "root",
@@ -19,6 +20,7 @@ const rootReducer = persistReducer(
     auth: authReducer,
     loading: loadingReducer,
     paused: pauseReducer,
+    game: gameDetailsReducer,
   }),
 );
 

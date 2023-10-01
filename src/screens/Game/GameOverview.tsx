@@ -1,11 +1,13 @@
 import { AVPlaybackSource } from "expo-av";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View, StyleSheet } from "react-native";
+import { useDispatch } from "react-redux";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
 import "react-native-gesture-handler";
 import useSound from "../../hooks/useSound";
 import { RootStackParamList, SoundSetting } from "../../types";
+import { resetCompleted } from "../../redux/reducers/gameDetailsReducer";
 
 const sound = require("../../assets/intro.mp3") as AVPlaybackSource;
 
@@ -35,6 +37,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "GameOverview">;
 
 function GameOverview({ navigation }: Props) {
   const { unloadSound } = useSound(sound, SoundSetting.voiceOverOn);
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.root}>
@@ -47,6 +50,7 @@ function GameOverview({ navigation }: Props) {
         title="Begin"
         onPress={() => {
           unloadSound();
+          dispatch(resetCompleted());
           navigation.navigate("MathIntro");
         }}
         buttonStyle={{ marginBottom: 30 }}
