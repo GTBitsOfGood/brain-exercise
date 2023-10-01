@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { GameDetails } from "./types";
 
 export const initialState: GameDetails = {
-  streak: 0,
+  streak: [],
   math: {
     difficultyScore: 0,
   },
@@ -18,16 +18,19 @@ const gameDetailsReducer = createSlice({
   name: "GameDetailsState",
   initialState,
   reducers: {
-    resetCompleted(state, action: PayloadAction<GameDetails>) {
-      state.completed = false;
-      state.completed = false;
-      state.completed= false;
+    resetCompleted(state) {
+      state.completed.math = false;
+      state.completed.reading = false;
+      state.completed.trivia = false;
     },
-    pause(state) {
-      state.paused = true;
-    },
-    unpause(state) {
-      state.paused = false;
+    updateGame(state, action: { payload: GameDetails; type: string }) {
+      state.streak = [];
+      for (let i = 0; i < action.payload.streak.length; i += 1) {
+        state.streak.push(action.payload.streak[i]);
+      }
+      state.completed.math = action.payload.completed.math;
+      state.completed.reading = action.payload.completed.reading;
+      state.completed.trivia = action.payload.completed.trivia;
     },
   },
 });
@@ -35,4 +38,4 @@ const gameDetailsReducer = createSlice({
 // make sure to add your reducer to the root reducer and store
 export default gameDetailsReducer.reducer;
 
-export const { setPaused, pause, unpause } = pauseReducer.actions;
+export const { resetCompleted, updateGame } = gameDetailsReducer.actions;

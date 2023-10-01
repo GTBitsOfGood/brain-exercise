@@ -1,6 +1,7 @@
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { AVPlaybackSource } from "expo-av";
 import { ImageSourcePropType } from "react-native";
+import { GameDetails } from "./redux/reducers/gameDetailsReducer/types";
 
 export enum Role {
   NONPROFIT_ADMIN = "Nonprofit Admin",
@@ -142,3 +143,5 @@ export interface InternalResponseData<T> {
   message?: string;
   payload?: T;
 }
+
+export type Analytics = { user: User; gameDetails: GameDetails };

@@ -13,13 +13,14 @@ import {
 } from "react-native";
 import { Button } from "react-native-elements";
 import { useDispatch } from "react-redux";
-import { AuthError } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Text from "../../components/Text";
 import { emailSignIn } from "../../firebase/email_signin";
-import { Role, RootStackParamList } from "../../types";
+import { RootStackParamList } from "../../types";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
 import { login } from "../../redux/reducers/authReducer";
+import { updateGame } from "../../redux/reducers/gameDetailsReducer";
+import { AxiosError } from "axios";
 
 const styles = StyleSheet.create({
   root: {
@@ -123,17 +124,17 @@ function SignInScreen({ navigation }: Props) {
           <SafeAreaView>
             <Text style={styles.textInputTitle}>Email</Text>
             <TextInput
-              placeholder="username@email.com"
+              placeholder='username@email.com'
               style={styles.textInput}
               onChangeText={setEmail}
               value={email}
-              accessibilityLabel="Input field for email of user"
+              accessibilityLabel='Input field for email of user'
               accessibilityHint="The text written in this input field will be saved as the user's email address"
             />
 
             <Text style={styles.textInputTitle}>Password</Text>
             <TextInput
-              placeholder="Password"
+              placeholder='Password'
               style={styles.textInput}
               onChangeText={setPassword}
               value={password}
@@ -166,23 +167,23 @@ function SignInScreen({ navigation }: Props) {
           }}
           titleStyle={styles.buttonTitle}
           disabled={!isFormValid()}
-          title="Sign In"
+          title='Sign In'
           onPress={() => {
             setError("");
             emailSignIn(email, password)
               .then((res) => {
+                console.log("Object returned from sign in: ", res)
                 // !! Should add call to backend to retrieve rest of the information !!
                 const userObject: Partial<AuthUser> = {
-                  email: res.email,
+                  ...res.user,
                   authenticated: true,
-                  role: Role.NONPROFIT_USER,
                 };
                 dispatch(login(userObject));
-
+                dispatch(updateGame(res.gameDetails));
                 // navigation.navigate("HomeScreen");
               })
-              .catch((err: AuthError) => {
-                console.debug(err);
+              .catch((err: AxiosError) => {
+                console.error("Error at sign in button: ", err.message);
                 if (err.code === "auth/wrong-password") {
                   setError("Incorrect password");
                 } else if (err.code === "auth/user-not-found") {
@@ -212,7 +213,7 @@ function SignInScreen({ navigation }: Props) {
           onPress={() => {
             navigation.navigate("SignUpScreen");
           }}
-          accessibilityRole="button"
+          accessibilityRole='button'
         >
           <Text style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}>
             Sign Up

@@ -12,11 +12,14 @@ import PropTypes from "prop-types";
 import Text from "../../components/Text";
 import { Button } from "react-native-elements";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
-import { Role, RootStackParamList } from "../../types";
+import { Analytics, HttpMethod, Role, RootStackParamList } from "../../types";
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/reducers/authReducer";
+import { User } from "../../types";
 import { getAuth } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import axios from "axios";
+import { login } from "../../redux/reducers/authReducer";
+import { internalRequest } from "../../requests";
 
 const styles = StyleSheet.create({
   root: {
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
 type Props = NativeStackScreenProps<RootStackParamList, "PersonalInfoScreen">;
 
 //  Home Screen Navigation
-function PersonalInfoScreen({ navigation }: Props) {
+function PersonalInfoScreen() {
   const auth = getAuth();
   const userInfo = auth.currentUser;
   const [fullName, setFullName] = useState("");
@@ -81,13 +84,15 @@ function PersonalInfoScreen({ navigation }: Props) {
 
   const dispatch = useDispatch();
 
-  console.log(userInfo)
-
   const isFormValid = () => {
     if (fullName.length == 0) {
       return false;
     }
-
+    
+    if (!/^\(\d{3}\)\s\d{3}-\d{4}/.test(phoneNumber)) {
+      return false;
+    }
+    
     if (!/^\d{2}-\d{2}-\d{4}/.test(dateofBirth)) {
       return false;
     }
@@ -190,7 +195,6 @@ function PersonalInfoScreen({ navigation }: Props) {
           title="Start"
           disabled={!isFormValid()}
           onPress={async () => {
-            console.log(userInfo)
             setError("")
             let userObject: AuthUser = {
               _id: userInfo.uid,
@@ -209,16 +213,27 @@ function PersonalInfoScreen({ navigation }: Props) {
             try {
               // !! Uncomment when the api endpoint is implemented !!
               
-              // await axios.post('/api/patient/auth/signUp', {
-              //   email: userObject.email,
-              //   name: userObject.name,
-              //   phoneNumber: userObject.phoneNumber,
-              //   birthDate: userObject.patientDetails.birthdate,
-              //   secondaryContactName: userObject.patientDetails.secondaryContactName,
-              //   secondaryContactPhone: userObject.patientDetails.secondaryContactPhone
-              // });
-              dispatch(login(userObject));
-              navigation.navigate("HomeScreen");
+              const params: User = {
+                email: userObject.email,
+                name: userObject.name,
+                phoneNumber: userObject.phoneNumber,
+                patientDetails: {
+                  birthdate: userObject.patientDetails.birthdate,
+                  secondaryContactName: userObject.patientDetails.secondaryContactName,
+                  secondaryContactPhone: userObject.patientDetails.secondaryContactPhone
+                },
+                signedUp: true,
+                role: Role.NONPROFIT_USER
+              }
+              const res = await internalRequest<Analytics>({
+                url: '/api/patient/auth/signup',
+                queryParams: params,
+                method: HttpMethod.POST
+              })
+              console.log("Int req: ", res)
+              // const res = (await axios.post(, params)).data.payload;
+              dispatch(login(res));
+              // navigation.navigate("HomeScreen");
             } catch (e) {
               setError("An error occured\n" + e)
             }

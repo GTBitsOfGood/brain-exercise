@@ -1,5 +1,14 @@
+export enum Days {
+  Sunday,
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+}
 interface GameDetails {
-  streak: number;
+  streak: Days[];
   math: {
     difficultyScore: number;
   };

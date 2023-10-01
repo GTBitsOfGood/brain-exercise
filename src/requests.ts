@@ -1,3 +1,8 @@
+import axios, {
+  AxiosRequestConfig,
+  AxiosRequestHeaders,
+  AxiosResponse,
+} from "axios";
 import { getAuth } from "firebase/auth";
 import { InternalRequestData, InternalResponseData } from "./types";
 
@@ -5,43 +10,25 @@ export async function internalRequest<T>({
   url,
   queryParams,
   method,
-  body,
-  authRequired,
 }: InternalRequestData): Promise<T> {
-  const auth = getAuth();
-  const requestInfo: RequestInit = {
+  const idToken: string = await getAuth().currentUser.getIdToken();
+  const response: AxiosResponse<InternalResponseData<object>> = await axios({
     method,
-    mode: "cors",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      accesstoken: authRequired
-        ? ((await auth.currentUser?.getIdToken()) as string)
-        : "",
+    url,
+    params: {
+      ...queryParams,
+      idToken,
     },
-  };
-
-  if (body) {
-    requestInfo.body = JSON.stringify(body);
+    headers: {
+      withCredentials: true,
+      mode: "cors",
+    },
+  });
+  // const responseBody = (await response.json()) as InternalResponseData<T>;
+  console.log("Internal request responded: ", response.data.payload);
+  if (response.data.success === false) {
+    console.error("errrr")
+    throw new Error(`Unable to connect to API: ${  response.data.message}`);
   }
-  if (queryParams) {
-    Object.entries(queryParams)
-      .filter(([, value]) => value !== undefined && value !== null)
-      .map(([key, value]) => {
-        url = `${url}?${key}=${(
-          value as string | number | boolean
-        ).toString()}&`;
-      });
-  }
-  const response = await fetch(url, requestInfo);
-  const responseBody = (await response.json()) as InternalResponseData<T>;
-
-  if (!responseBody) {
-    throw new Error("Unable to connect to API.");
-  } else if (!responseBody.success) {
-    const errorMessage = responseBody.message;
-    throw new Error(errorMessage);
-  }
-
-  return responseBody.payload as T;
+  return response.data.payload;
 }
