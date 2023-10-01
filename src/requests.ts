@@ -1,8 +1,4 @@
-import axios, {
-  AxiosRequestConfig,
-  AxiosRequestHeaders,
-  AxiosResponse,
-} from "axios";
+import axios, { AxiosResponse } from "axios";
 import { getAuth } from "firebase/auth";
 import { InternalRequestData, InternalResponseData } from "./types";
 
@@ -25,10 +21,8 @@ export async function internalRequest<T>({
     },
   });
   // const responseBody = (await response.json()) as InternalResponseData<T>;
-  console.log("Internal request responded: ", response.data.payload);
   if (response.data.success === false) {
-    console.error("errrr")
-    throw new Error(`Unable to connect to API: ${  response.data.message}`);
+    throw new Error(`Unable to connect to API: ${response.data.message}`);
   }
   return response.data.payload;
 }

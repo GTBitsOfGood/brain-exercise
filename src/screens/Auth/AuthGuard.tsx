@@ -38,7 +38,7 @@ function AuthGuard({ children }: Props) {
           dispatch(logout());
         }
       }),
-    [auth, dispatch]
+    [auth, dispatch],
   );
 
   return (

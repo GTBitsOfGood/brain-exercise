@@ -3,7 +3,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import axios, { AxiosResponse } from "axios";
 import { internalRequest } from "../requests";
 import { Analytics, HttpMethod, Role, User } from "../types";
 import { GameDetails } from "../redux/reducers/gameDetailsReducer/types";
@@ -14,7 +13,7 @@ async function emailSignUp(email: string, password: string) {
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,
-    password
+    password,
   );
   // Signed in
   const { user } = userCredential;
@@ -32,13 +31,11 @@ async function getAnalytics(email: string): Promise<Analytics> {
 
 async function emailSignIn(
   email: string,
-  password: string
+  password: string,
 ): Promise<{ user: User; gameDetails: GameDetails }> {
   const auth = getAuth();
   await signInWithEmailAndPassword(auth, email, password);
-  console.debug("Signed  into firebase");
   const userAnalytics = await getAnalytics(email);
-  console.debug("Signed  into analytics: ", userAnalytics);
   return {
     user: {
       _id: userAnalytics.user._id,
