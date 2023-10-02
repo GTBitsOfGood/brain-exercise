@@ -14,9 +14,7 @@ import { Button } from "react-native-elements";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
 import { Analytics, HttpMethod, Role, RootStackParamList } from "../../types";
 import { useDispatch } from "react-redux";
-import { User } from "../../types";
 import { getAuth } from "firebase/auth";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { login } from "../../redux/reducers/authReducer";
 import { internalRequest } from "../../requests";
 
@@ -210,17 +208,13 @@ function PersonalInfoScreen() {
             try {
               // !! Uncomment when the api endpoint is implemented !!
               
-              const params: User = {
+              const params: object = {
                 email: userObject.email,
                 name: userObject.name,
                 phoneNumber: userObject.phoneNumber,
-                patientDetails: {
-                  birthdate: userObject.patientDetails.birthdate,
-                  secondaryContactName: userObject.patientDetails.secondaryContactName,
-                  secondaryContactPhone: userObject.patientDetails.secondaryContactPhone
-                },
-                signedUp: true,
-                role: Role.NONPROFIT_USER
+                birthDate: userObject.patientDetails.birthdate,
+                secondaryContactName: userObject.patientDetails.secondaryContactName,
+                secondaryContactPhone: userObject.patientDetails.secondaryContactPhone,
               }
               const res = await internalRequest<Analytics>({
                 url: '/api/patient/auth/signup',

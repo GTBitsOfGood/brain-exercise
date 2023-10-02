@@ -21,11 +21,11 @@ async function emailSignUp(email: string, password: string) {
   // ...
 }
 
-async function getAnalytics(email: string): Promise<Analytics> {
+async function getAnalytics(): Promise<Analytics> {
   return internalRequest<Analytics>({
     method: HttpMethod.GET,
     url: patientUrl,
-    queryParams: { email },
+    authRequired: true,
   });
 }
 
@@ -35,7 +35,7 @@ async function emailSignIn(
 ): Promise<{ user: User; gameDetails: GameDetails }> {
   const auth = getAuth();
   await signInWithEmailAndPassword(auth, email, password);
-  const userAnalytics = await getAnalytics(email);
+  const userAnalytics = await getAnalytics();
   return {
     user: {
       _id: userAnalytics.user._id,

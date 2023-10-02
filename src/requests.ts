@@ -6,20 +6,35 @@ export async function internalRequest<T>({
   url,
   queryParams,
   method,
+  body,
+  authRequired = true,
 }: InternalRequestData): Promise<T> {
   try {
     const idToken: string = await getAuth().currentUser.getIdToken();
+    let newParams = queryParams;
+    let newBody = body;
+    if (authRequired) {
+      const { email } = getAuth().currentUser;
+      newParams = {
+        ...queryParams,
+        email,
+      };
+      newBody = {
+        ...body,
+        email,
+      };
+    }
+
     const response: AxiosResponse<InternalResponseData<object>> = await axios({
       method,
       url,
-      params: {
-        ...queryParams,
-        idToken,
-      },
+      params: newParams,
       headers: {
         withCredentials: true,
         mode: "cors",
+        accesstoken: idToken,
       },
+      data: newBody,
     });
     // const responseBody = (await response.json()) as InternalResponseData<T>;
     if (response.data.success === false) {

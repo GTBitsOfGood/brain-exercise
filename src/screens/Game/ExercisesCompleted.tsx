@@ -58,6 +58,7 @@ function ExercisesCompleted({ navigation }: Props) {
       internalRequest({
         url: "/api/patient/analytics/recordSessionComplete",
         method: HttpMethod.POST,
+        authRequired: true,
       });
     }
   }, [completed.math, completed.reading, completed.trivia]);
