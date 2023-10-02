@@ -2,10 +2,8 @@ import { AVPlaybackSource } from "expo-av";
 import { ImageSourcePropType, View, Image, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { HeaderBackButton } from "@react-navigation/elements";
 import "react-native-gesture-handler";
 
-import { useEffect } from "react";
 import Button from "../Button";
 import Text from "../Text";
 import useSound from "../../hooks/useSound";
@@ -68,14 +66,6 @@ function IntroOverlay({
 }: Props) {
   const { unloadSound } = useSound(sound, SoundSetting.voiceOverOn);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <HeaderBackButton onPress={() => navigation.navigate("HomeScreen")} />
-      ),
-      headerBackVisible: false,
-    });
-  }, [navigation]);
 
   return (
     <View style={styles.root}>
