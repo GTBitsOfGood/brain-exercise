@@ -2,8 +2,9 @@ import { useState, useCallback } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 import getStoryArray from "../assets/stories";
-import { RootStackParamList } from "../types";
+import { HttpMethod, RootStackParamList } from "../types";
 import { completedReading } from "../redux/reducers/gameDetailsReducer";
+import { internalRequest } from "../requests";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ReadingMain">;
 
@@ -27,6 +28,11 @@ export default function useReadingProblems({ navigation, route }: Props) {
   const onTimeComplete = useCallback(
     (skipped: boolean) => {
       const statistics = { passagesRead, completed: !skipped }; // eslint-disable-line
+      internalRequest({
+        url: "/api/patient/analytics/recordReading",
+        method: HttpMethod.POST,
+        authRequired: true,
+      });
       dispatch(completedReading());
       navigation.replace(...route.params.nextScreenArgs);
     },

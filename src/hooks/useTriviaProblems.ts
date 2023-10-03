@@ -1,11 +1,12 @@
 import { useCallback, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
-import { RootStackParamList } from "../types";
+import { HttpMethod, RootStackParamList } from "../types";
 import getProblem from "../assets/trivia";
 
 import gameDescriptions from "../screens/Stacks/gameDescriptions";
 import { completedTrivia } from "../redux/reducers/gameDetailsReducer";
+import { internalRequest } from "../requests";
 
 type Props = NativeStackScreenProps<RootStackParamList, "TriviaMain">;
 
@@ -36,6 +37,11 @@ export default function useTriviaProblems({ navigation, route }: Props) {
       questionsCorrect,
       timePerQuestions: average,
     };
+    internalRequest({
+      url: "/api/patient/analytics/recordTrivia",
+      method: HttpMethod.POST,
+      authRequired: true,
+    });
     dispatch(completedTrivia());
     navigation.replace(...route.params.nextScreenArgs);
   }, [

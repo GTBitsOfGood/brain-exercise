@@ -3,13 +3,14 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useDispatch, useSelector } from "react-redux";
 import getProblem from "../scripts/game-logic";
 import gameDescriptions from "../screens/Stacks/gameDescriptions";
-import { RootStackParamList } from "../types";
+import { HttpMethod, RootStackParamList } from "../types";
 import {
   completedMath,
   setDifficultyScore,
 } from "../redux/reducers/gameDetailsReducer";
 import { RootState } from "../redux/rootReducer";
 import { GameDetails } from "../redux/reducers/gameDetailsReducer/types";
+import { internalRequest } from "../requests";
 
 const MIN_DIFFICULTY_SCORE = 0;
 const MAX_DIFFICULTY_SCORE = 99;
@@ -54,6 +55,11 @@ export default function useMathQuestions({ route, navigation }: Props) {
       statsMap.current.questionsAttemped === 0
         ? 0
         : TOTAL_TIME / statsMap.current.questionsAttemped;
+    internalRequest({
+      url: "/api/patient/analytics/recordMath",
+      method: HttpMethod.POST,
+      authRequired: true,
+    });
     dispatch(completedMath());
     navigation.replace(...route.params.nextScreenArgs);
   }, [navigation, route.params.nextScreenArgs, difficultyScore, dispatch]);
