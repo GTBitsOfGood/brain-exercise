@@ -25,7 +25,7 @@ export default function useMathQuestions({ route, navigation }: Props) {
     useSelector<RootState>((state) => state.game) as GameDetails
   ).math;
   const statsMap = useRef({
-    questionsAttemped: 1,
+    questionsAttempted: 1,
     questionsCorrect: 0,
     difficultyScore: 0,
     timePerQuestion: 0.0,
@@ -35,7 +35,7 @@ export default function useMathQuestions({ route, navigation }: Props) {
 
   const getNewProblem = useCallback(() => {
     firstTry.current = true;
-    statsMap.current.questionsAttemped += 1;
+    statsMap.current.questionsAttempted += 1;
     if (difficultyScore < 25) {
       setProblem(getProblem(1));
     } else if (difficultyScore < 50) {
@@ -52,12 +52,13 @@ export default function useMathQuestions({ route, navigation }: Props) {
   const onTimeComplete = useCallback(() => {
     statsMap.current.difficultyScore = difficultyScore;
     statsMap.current.timePerQuestion =
-      statsMap.current.questionsAttemped === 0
+      statsMap.current.questionsAttempted === 0
         ? 0
-        : TOTAL_TIME / statsMap.current.questionsAttemped;
+        : TOTAL_TIME / statsMap.current.questionsAttempted;
     internalRequest({
       url: "/api/patient/analytics/recordMath",
       method: HttpMethod.POST,
+      body: statsMap.current,
       authRequired: true,
     });
     dispatch(completedMath());

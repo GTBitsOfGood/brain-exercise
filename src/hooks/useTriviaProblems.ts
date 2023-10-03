@@ -35,11 +35,12 @@ export default function useTriviaProblems({ navigation, route }: Props) {
     const statistics = {
       questionsAttempted,
       questionsCorrect,
-      timePerQuestions: average,
+      timePerQuestion: average,
     };
     internalRequest({
       url: "/api/patient/analytics/recordTrivia",
       method: HttpMethod.POST,
+      body: statistics,
       authRequired: true,
     });
     dispatch(completedTrivia());

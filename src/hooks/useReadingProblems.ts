@@ -31,6 +31,7 @@ export default function useReadingProblems({ navigation, route }: Props) {
       internalRequest({
         url: "/api/patient/analytics/recordReading",
         method: HttpMethod.POST,
+        body: statistics,
         authRequired: true,
       });
       dispatch(completedReading());
