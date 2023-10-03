@@ -11,7 +11,7 @@ import Stack from "../Stacks/StackNavigator";
 import SignUpScreen from "../SignUp/SignUp";
 import PersonalInfoScreen from "../SignUp/PersonalInfo";
 import { RootState } from "../../redux/rootReducer";
-import { getAnalytics } from "../../firebase/email_signin";
+import { getUserAnalytics } from "../../firebase/email_signin";
 import { updateGame } from "../../redux/reducers/gameDetailsReducer";
 
 type Props = { children: React.ReactNode };
@@ -26,7 +26,7 @@ function AuthGuard({ children }: Props) {
       onAuthStateChanged(auth, (user) => {
         // !! Should add code to get additional info from user from Analytics and check for Personal Info !!
         if (user) {
-          getAnalytics(user.email).then((userAnalytics) => {
+          getUserAnalytics().then((userAnalytics) => {
             const newState: Partial<AuthUser> = {
               ...userAnalytics.user,
               authenticated: true,

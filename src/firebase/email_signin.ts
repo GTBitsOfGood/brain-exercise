@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { internalRequest } from "../requests";
-import { Analytics, HttpMethod, Role, User } from "../types";
+import { UserAnalytics, HttpMethod, Role, User } from "../types";
 import { GameDetails } from "../redux/reducers/gameDetailsReducer/types";
 
 const patientUrl = "api/patient/auth/login";
@@ -21,8 +21,8 @@ async function emailSignUp(email: string, password: string) {
   // ...
 }
 
-async function getAnalytics(): Promise<Analytics> {
-  return internalRequest<Analytics>({
+async function getUserAnalytics(): Promise<UserAnalytics> {
+  return internalRequest<UserAnalytics>({
     method: HttpMethod.GET,
     url: patientUrl,
     authRequired: true,
@@ -35,7 +35,7 @@ async function emailSignIn(
 ): Promise<{ user: User; gameDetails: GameDetails }> {
   const auth = getAuth();
   await signInWithEmailAndPassword(auth, email, password);
-  const userAnalytics = await getAnalytics();
+  const userAnalytics = await getUserAnalytics();
   return {
     user: {
       _id: userAnalytics.user._id,
@@ -50,4 +50,4 @@ async function emailSignIn(
   };
 }
 
-export { emailSignUp, emailSignIn, getAnalytics };
+export { emailSignUp, emailSignIn, getUserAnalytics };

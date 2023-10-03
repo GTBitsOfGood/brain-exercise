@@ -25,7 +25,7 @@ export async function internalRequest<T>({
       };
     }
 
-    const response: AxiosResponse<InternalResponseData<object>> = await axios({
+    const response: AxiosResponse<InternalResponseData<T>> = await axios({
       method,
       url,
       params: newParams,
@@ -36,7 +36,6 @@ export async function internalRequest<T>({
       },
       data: newBody,
     });
-    // const responseBody = (await response.json()) as InternalResponseData<T>;
     if (response.data.success === false) {
       throw new Error(`Unable to connect to API: ${response.data.message}`);
     }

@@ -144,4 +144,4 @@ export interface InternalResponseData<T> {
   payload?: T;
 }
 
-export type Analytics = { user: User; gameDetails: GameDetails };
+export type UserAnalytics = { user: User; gameDetails: GameDetails };
