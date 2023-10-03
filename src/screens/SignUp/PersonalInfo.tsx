@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 import Text from "../../components/Text";
 import { Button } from "react-native-elements";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
-import { Analytics, HttpMethod, Role, RootStackParamList } from "../../types";
+import { UserAnalytics, HttpMethod, Role, RootStackParamList } from "../../types";
 import { useDispatch } from "react-redux";
 import { getAuth } from "firebase/auth";
 import { login } from "../../redux/reducers/authReducer";
@@ -208,7 +208,7 @@ function PersonalInfoScreen() {
             try {
               // !! Uncomment when the api endpoint is implemented !!
               
-              const params: object = {
+              const body: Record<string,string> = {
                 email: userObject.email,
                 name: userObject.name,
                 phoneNumber: userObject.phoneNumber,
@@ -216,9 +216,9 @@ function PersonalInfoScreen() {
                 secondaryContactName: userObject.patientDetails.secondaryContactName,
                 secondaryContactPhone: userObject.patientDetails.secondaryContactPhone,
               }
-              const res = await internalRequest<Analytics>({
+              const res = await internalRequest<UserAnalytics>({
                 url: '/api/patient/auth/signup',
-                queryParams: params,
+                body: body,
                 method: HttpMethod.POST
               })
               console.log("Int req: ", res)
