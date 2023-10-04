@@ -101,31 +101,31 @@ function SignUpScreen({ navigation }: Props) {
 
   return (
     <View style={styles.root}>
-      <View style={{ height: 127 }}>
-        <Image style={styles.image} source={logo} />
-        <Text
-          style={{
-            fontWeight: "bold",
-            fontSize: 20,
-            color: "#4A4B57",
-            paddingLeft: "3%",
-            paddingTop: "2%",
-          }}
-        >
-          Sign Up
-        </Text>
-      </View>
+      <ScrollView>
+        <SafeAreaView>
+          <View style={{ height: 127 }}>
+            <Image style={styles.image} source={logo} />
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 20,
+                color: "#4A4B57",
+                paddingLeft: "3%",
+                paddingTop: "2%",
+              }}
+            >
+              Sign Up
+            </Text>
+          </View>
 
-      <View
-        style={{
-          flex: 3,
-          paddingVertical: 3,
-          paddingHorizontal: "3%",
-          width: "100%",
-        }}
-      >
-        <ScrollView>
-          <SafeAreaView>
+          <View
+            style={{
+              flex: 3,
+              paddingVertical: 3,
+              paddingHorizontal: "3%",
+              width: "100%",
+            }}
+          >
             <Text style={styles.textInputTitle}>Email</Text>
             <TextInput
               accessibilityRole="text"
@@ -153,82 +153,74 @@ function SignUpScreen({ navigation }: Props) {
               value={repeatPassword}
             />
             <Text style={styles.errorTitle}>{error}</Text>
-          </SafeAreaView>
-        </ScrollView>
-      </View>
+          </View>
 
-      <View
-        style={{
-          flex: 1,
-          alignSelf: "center",
-          paddingHorizontal: "3%",
-          margin: 0,
-        }}
-      >
-        <Button
-          containerStyle={{
-            width: 0.85 * Dimensions.get("window").width,
-            padding: "1%",
-          }}
-          buttonStyle={{
-            backgroundColor: "#005AA3",
-            borderRadius: 4,
-            height: 0.13 * Dimensions.get("window").width,
-          }}
-          titleStyle={styles.buttonTitle}
-          disabled={!isFormValid()}
-          title="Sign Up"
-          onPress={() => {
-            setError("");
-            emailSignUp(email, password)
-              .then((res) => {
-                navigation.navigate("PersonalInfoScreen", {
-                  userInfo: {
-                    _id: res.uid,
-                    email: res.email,
-                    emailVerified: res.emailVerified,
-                  },
-                });
-              })
-              .catch((err: FirebaseError) => {
-                setError("Email is already in use");
-                if (err.code === "auth/email-already-in-use") {
+          <View
+            style={{
+              flex: 1,
+              alignSelf: "center",
+              paddingHorizontal: "3%",
+              margin: 0,
+            }}
+          >
+            <Button
+              containerStyle={{
+                width: 0.85 * Dimensions.get("window").width,
+                padding: "1%",
+              }}
+              buttonStyle={{
+                backgroundColor: "#005AA3",
+                borderRadius: 4,
+                height: 0.13 * Dimensions.get("window").width,
+              }}
+              titleStyle={styles.buttonTitle}
+              disabled={!isFormValid()}
+              title="Sign Up"
+              onPress={() => {
+                setError("");
+                emailSignUp(email, password).catch((err: FirebaseError) => {
                   setError("Email is already in use");
-                } else if (err.code === "auth/weak-password") {
-                  setError("Password is too short");
-                } else {
-                  setError("Unexpected error occured. Check your info");
-                }
-              });
-          }}
-        />
-      </View>
+                  if (err.code === "auth/email-already-in-use") {
+                    setError("Email is already in use");
+                  } else if (err.code === "auth/weak-password") {
+                    setError("Password is too short");
+                  } else {
+                    setError("Unexpected error occured. Check your info");
+                  }
+                });
+              }}
+            />
+          </View>
 
-      <View
-        style={{
-          flex: 1,
-          paddingHorizontal: "5%",
-          flexDirection: "row",
-          alignItems: "flex-end",
-        }}
-      >
-        <Text style={{ fontSize: 14, color: "#4A4B57" }}>
-          Already Have an Account?&nbsp;
-        </Text>
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: "5%",
+              flexDirection: "row",
+              alignItems: "flex-end",
+            }}
+          >
+            <Text style={{ fontSize: 14, color: "#4A4B57" }}>
+              Already Have an Account?&nbsp;
+            </Text>
 
-        {/* TODO: change navigation to navigate to the login screen */}
-        <Pressable
-          accessibilityRole="button"
-          style={styles.buttonTitle}
-          onPress={() => {
-            navigation.navigate("SignInScreen");
-          }}
-        >
-          <Text style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}>
-            Log In
-          </Text>
-        </Pressable>
-      </View>
+            {/* TODO: change navigation to navigate to the login screen */}
+            <Pressable
+              accessibilityRole="button"
+              style={styles.buttonTitle}
+              onPress={() => {
+                navigation.navigate("SignInScreen");
+              }}
+            >
+              <Text
+                style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}
+              >
+                Log In
+              </Text>
+            </Pressable>
+          </View>
+        </SafeAreaView>
+      </ScrollView>
     </View>
   );
 }
