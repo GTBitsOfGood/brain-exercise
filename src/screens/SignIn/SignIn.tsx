@@ -96,31 +96,31 @@ function SignInScreen({ navigation }: Props) {
 
   return (
     <View style={styles.root}>
-      <View style={{ height: 127 }}>
-        <Image style={styles.image} source={logo} />
-        <Text
-          style={{
-            fontWeight: "bold",
-            fontSize: 20,
-            color: "#4A4B57",
-            paddingLeft: "3%",
-            paddingTop: "2%",
-          }}
-        >
-          Sign In
-        </Text>
-      </View>
+      <ScrollView>
+        <SafeAreaView>
+          <View style={{ height: 127 }}>
+            <Image style={styles.image} source={logo} />
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 20,
+                color: "#4A4B57",
+                paddingLeft: "3%",
+                paddingTop: "2%",
+              }}
+            >
+              Sign In
+            </Text>
+          </View>
 
-      <View
-        style={{
-          flex: 3,
-          paddingVertical: 5,
-          paddingHorizontal: "3%",
-          width: "100%",
-        }}
-      >
-        <ScrollView>
-          <SafeAreaView>
+          <View
+            style={{
+              flex: 3,
+              paddingVertical: 5,
+              paddingHorizontal: "3%",
+              width: "100%",
+            }}
+          >
             <Text style={styles.textInputTitle}>Email</Text>
             <TextInput
               placeholder="username@email.com"
@@ -142,79 +142,80 @@ function SignInScreen({ navigation }: Props) {
               accessibilityHint="The text typed here is the password of the user's account"
             />
             <Text style={styles.errorTitle}>{error}</Text>
-          </SafeAreaView>
-        </ScrollView>
-      </View>
+          </View>
 
-      <View
-        style={{
-          flex: 1,
-          alignSelf: "center",
-          paddingHorizontal: "3%",
-          margin: 0,
-        }}
-      >
-        <Button
-          containerStyle={{
-            width: 0.85 * Dimensions.get("window").width,
-            padding: "1%",
-          }}
-          buttonStyle={{
-            backgroundColor: "#005AA3",
-            borderRadius: 4,
-            height: 0.13 * Dimensions.get("window").width,
-          }}
-          titleStyle={styles.buttonTitle}
-          disabled={!isFormValid()}
-          title="Sign In"
-          onPress={() => {
-            setError("");
-            emailSignIn(email, password)
-              .then((res) => {
-                const userObject: Partial<AuthUser> = {
-                  ...res.user,
-                  authenticated: true,
-                };
-                dispatch(login(userObject));
-                // navigation.navigate("HomeScreen");
-              })
-              .catch((err: FirebaseError) => {
-                if (err.code === "auth/wrong-password") {
-                  setError("Incorrect password");
-                } else if (err.code === "auth/user-not-found") {
-                  setError("Email not found");
-                } else {
-                  setError("Unexpected error occured. Check your info");
-                }
-              });
-          }}
-        />
-      </View>
+          <View
+            style={{
+              flex: 1,
+              alignSelf: "center",
+              paddingHorizontal: "3%",
+              margin: 0,
+            }}
+          >
+            <Button
+              containerStyle={{
+                width: 0.85 * Dimensions.get("window").width,
+                padding: "1%",
+              }}
+              buttonStyle={{
+                backgroundColor: "#005AA3",
+                borderRadius: 4,
+                height: 0.13 * Dimensions.get("window").width,
+              }}
+              titleStyle={styles.buttonTitle}
+              disabled={!isFormValid()}
+              title="Sign In"
+              onPress={() => {
+                setError("");
+                emailSignIn(email, password)
+                  .then((res) => {
+                    const userObject: Partial<AuthUser> = {
+                      ...res.user,
+                      authenticated: true,
+                    };
+                    dispatch(login(userObject));
+                  })
+                  .catch((err: FirebaseError) => {
+                    if (err.code === "auth/wrong-password") {
+                      setError("Incorrect password");
+                    } else if (err.code === "auth/user-not-found") {
+                      setError("Email not found");
+                    } else {
+                      setError("Unexpected error occured. Check your info");
+                    }
+                  });
+              }}
+            />
+          </View>
 
-      <View
-        style={{
-          flex: 1,
-          paddingHorizontal: "5%",
-          flexDirection: "row",
-          alignItems: "flex-end",
-        }}
-      >
-        <Text style={{ fontSize: 14, color: "#4A4B57" }}>
-          Don&apos;t Have an Account?&nbsp;
-        </Text>
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: "5%",
+              flexDirection: "row",
+              alignItems: "flex-end",
+            }}
+          >
+            <Text style={{ fontSize: 14, color: "#4A4B57" }}>
+              Don&apos;t Have an Account?&nbsp;
+            </Text>
 
-        {/* TODO: change navigation to navigate to the login screen */}
-        <Pressable
-          onPress={() => {
-            navigation.navigate("SignUpScreen");
-          }}
-          accessibilityRole="button"
-        >
-          <Text style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}>
-            Sign Up
-          </Text>
-        </Pressable>
-      </View>
+            {/* TODO: change navigation to navigate to the login screen */}
+            <Pressable
+              onPress={() => {
+                navigation.navigate("SignUpScreen");
+              }}
+              accessibilityRole="button"
+            >
+              <Text
+                style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}
+              >
+                Sign Up
+              </Text>
+            </Pressable>
+          </View>
+        </SafeAreaView>
+      </ScrollView>
     </View>
   );
 }

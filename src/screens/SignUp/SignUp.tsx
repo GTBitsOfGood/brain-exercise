@@ -11,10 +11,13 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import Text from "../../components/Text";
+import { AVPlaybackSource } from "expo-av";
 import { Button } from "react-native-elements";
-import { emailSignUp } from "../../firebase/email_signin";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { FirebaseError } from "firebase/app";
+
+import Text from "../../components/Text";
+import { emailSignUp } from "../../firebase/email_signin";
 import { RootStackParamList } from "../../types";
 
 const styles = StyleSheet.create({
@@ -44,7 +47,10 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 100,
-    height: Platform.OS === "ios" && Platform.isPad ? 200 : Dimensions.get("window").height * 0.1,
+    height:
+      Platform.OS === "ios" && Platform.isPad
+        ? 200
+        : Dimensions.get("window").height * 0.1,
   },
   textInput: {
     height: 55,
@@ -65,7 +71,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const logo = require("../../assets/bei.jpg");
+const logo = require("../../assets/bei.jpg") as AVPlaybackSource;
 
 type Props = NativeStackScreenProps<RootStackParamList, "SignUpScreen">;
 
@@ -77,11 +83,12 @@ function SignUpScreen({ navigation }: Props) {
   const [error, setError] = useState("");
 
   const isFormValid = () => {
+    // eslint-disable-next-line no-useless-escape
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/.test(email)) {
       return false;
     }
 
-    if (password.length == 0) {
+    if (password.length === 0) {
       return false;
     }
 
@@ -121,6 +128,7 @@ function SignUpScreen({ navigation }: Props) {
           <SafeAreaView>
             <Text style={styles.textInputTitle}>Email</Text>
             <TextInput
+              accessibilityRole="text"
               placeholder="username@email.com"
               style={styles.textInput}
               onChangeText={setEmail}
@@ -129,6 +137,7 @@ function SignUpScreen({ navigation }: Props) {
 
             <Text style={styles.textInputTitle}>Password</Text>
             <TextInput
+              accessibilityRole="text"
               placeholder="Password"
               style={styles.textInput}
               onChangeText={setPassword}
@@ -137,6 +146,7 @@ function SignUpScreen({ navigation }: Props) {
 
             <Text style={styles.textInputTitle}>Repeat Password</Text>
             <TextInput
+              accessibilityRole="text"
               placeholder="Password"
               style={styles.textInput}
               onChangeText={setRepeatPassword}
@@ -176,11 +186,11 @@ function SignUpScreen({ navigation }: Props) {
                   userInfo: {
                     _id: res.uid,
                     email: res.email,
-                    emailVerified: res.emailVerified
-                  }
+                    emailVerified: res.emailVerified,
+                  },
                 });
               })
-              .catch((err) => {
+              .catch((err: FirebaseError) => {
                 setError("Email is already in use");
                 if (err.code === "auth/email-already-in-use") {
                   setError("Email is already in use");
@@ -189,8 +199,7 @@ function SignUpScreen({ navigation }: Props) {
                 } else {
                   setError("Unexpected error occured. Check your info");
                 }
-                console.log("error popped", err.code)
-              })
+              });
           }}
         />
       </View>
@@ -209,9 +218,10 @@ function SignUpScreen({ navigation }: Props) {
 
         {/* TODO: change navigation to navigate to the login screen */}
         <Pressable
+          accessibilityRole="button"
           style={styles.buttonTitle}
           onPress={() => {
-            navigation.navigate("SignInScreen")
+            navigation.navigate("SignInScreen");
           }}
         >
           <Text style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}>

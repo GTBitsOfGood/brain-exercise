@@ -3,9 +3,9 @@ import { StyleSheet } from "react-native";
 
 import { useDispatch } from "react-redux";
 
+import { getAuth, signOut } from "firebase/auth";
 import { logout } from "../../redux/reducers/authReducer";
 import Button from "../Button";
-import { getAuth, signOut } from "firebase/auth"
 
 const styles = StyleSheet.create({
   buttonsContainer: {

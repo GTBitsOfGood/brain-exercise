@@ -10,6 +10,4 @@ metro.config.js
 
 # Remove once refactored:
 src/components/Auth/LoginButton/LoginButton.tsx
-src/components/Auth/LogoutButton.tsx
-src/screens/SignUp/
 src/screens/Settings/
