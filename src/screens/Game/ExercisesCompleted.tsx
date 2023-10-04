@@ -4,7 +4,7 @@ import ConfettiCannon from "react-native-confetti-cannon";
 import { AVPlaybackSource } from "expo-av";
 
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
 import useAsyncStorage from "../../hooks/useAsyncStorage";
@@ -18,6 +18,7 @@ import useSound from "../../hooks/useSound";
 import { RootState } from "../../redux/rootReducer";
 import { GameDetails } from "../../redux/reducers/gameDetailsReducer/types";
 import { internalRequest } from "../../requests";
+import { resetCompleted } from "../../redux/reducers/gameDetailsReducer";
 
 const sound = require("../../assets/congrats.mp3") as AVPlaybackSource;
 
@@ -53,15 +54,18 @@ function ExercisesCompleted({ navigation }: Props) {
   const { completed } = useSelector<RootState>(
     (state) => state.game,
   ) as GameDetails;
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (completed.math && completed.reading && completed.trivia) {
       internalRequest({
-        url: "/api/patient/analytics/recordSessionComplete",
+        url: "/api/patient/analytics/record-session-complete",
         method: HttpMethod.POST,
         authRequired: true,
       });
+      dispatch(resetCompleted());
     }
-  }, [completed.math, completed.reading, completed.trivia]);
+  }, [completed.math, completed.reading, completed.trivia, dispatch]);
   const correct = 1;
   const total = 1;
 

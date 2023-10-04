@@ -38,7 +38,7 @@ export default function useTriviaProblems({ navigation, route }: Props) {
       timePerQuestion: average,
     };
     internalRequest({
-      url: "/api/patient/analytics/recordTrivia",
+      url: "/api/patient/analytics/record-trivia",
       method: HttpMethod.POST,
       body: statistics,
       authRequired: true,

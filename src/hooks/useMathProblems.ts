@@ -56,7 +56,7 @@ export default function useMathQuestions({ route, navigation }: Props) {
         ? 0
         : TOTAL_TIME / statsMap.current.questionsAttempted;
     internalRequest({
-      url: "/api/patient/analytics/recordMath",
+      url: "/api/patient/analytics/record-math",
       method: HttpMethod.POST,
       body: statsMap.current,
       authRequired: true,
@@ -70,9 +70,9 @@ export default function useMathQuestions({ route, navigation }: Props) {
       let newDifficultyScore = difficultyScore;
       if (isCorrect) {
         newDifficultyScore += 2.5;
-      }
-      if (firstTry.current) {
-        statsMap.current.questionsCorrect += 1;
+        if (firstTry.current) {
+          statsMap.current.questionsCorrect += 1;
+        }
       }
       firstTry.current = false;
 

@@ -29,7 +29,7 @@ export default function useReadingProblems({ navigation, route }: Props) {
     (skipped: boolean) => {
       const statistics = { passagesRead, completed: !skipped }; // eslint-disable-line
       internalRequest({
-        url: "/api/patient/analytics/recordReading",
+        url: "/api/patient/analytics/record-reading",
         method: HttpMethod.POST,
         body: statistics,
         authRequired: true,
