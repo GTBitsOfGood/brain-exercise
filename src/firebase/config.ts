@@ -14,9 +14,13 @@ export default function firebaseInit() {
     measurementId: "G-R26M2TPMGR",
   };
 
-  const app = initializeApp(firebaseConfig);
-  initializeAuth(app, {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-  });
+  try {
+    const app = initializeApp(firebaseConfig);
+    initializeAuth(app, {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+      persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+    });
+  } catch (err) {
+    console.log(err);
+  }
 }
