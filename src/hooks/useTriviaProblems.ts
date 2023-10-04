@@ -1,14 +1,18 @@
 import { useCallback, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types";
+import { useDispatch } from "react-redux";
+import { HttpMethod, RootStackParamList } from "../types";
 import getProblem from "../assets/trivia";
 
 import gameDescriptions from "../screens/Stacks/gameDescriptions";
+import { completedTrivia } from "../redux/reducers/gameDetailsReducer";
+import { internalRequest } from "../requests";
 
 type Props = NativeStackScreenProps<RootStackParamList, "TriviaMain">;
 
 const TOTAL_TIME = gameDescriptions.Trivia.minutes * 60;
 export default function useTriviaProblems({ navigation, route }: Props) {
+  const dispatch = useDispatch();
   const [problem, setProblem] = useState(getProblem());
   const [questionsAttempted, setQuestionsAttempted] = useState(0);
   const [questionsCorrect, setQuestionsCorrect] = useState(0);
@@ -31,14 +35,22 @@ export default function useTriviaProblems({ navigation, route }: Props) {
     const statistics = {
       questionsAttempted,
       questionsCorrect,
-      timePerQuestions: average,
+      timePerQuestion: average,
     };
+    internalRequest({
+      url: "/api/patient/analytics/recordTrivia",
+      method: HttpMethod.POST,
+      body: statistics,
+      authRequired: true,
+    });
+    dispatch(completedTrivia());
     navigation.replace(...route.params.nextScreenArgs);
   }, [
     questionsAttempted,
     questionsCorrect,
     navigation,
     route.params.nextScreenArgs,
+    dispatch,
   ]);
 
   return {

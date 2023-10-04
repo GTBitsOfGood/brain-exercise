@@ -1,6 +1,7 @@
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { AVPlaybackSource } from "expo-av";
 import { ImageSourcePropType } from "react-native";
+import { GameDetails } from "./redux/reducers/gameDetailsReducer/types";
 
 export enum Role {
   NONPROFIT_ADMIN = "Nonprofit Admin",
@@ -122,3 +123,25 @@ export type AsyncStorageKey = "SETTINGS";
 export type RemainingTimeGetter = {
   getRemainingTime: () => number;
 };
+
+export enum HttpMethod {
+  GET = "GET",
+  POST = "POST",
+  PATCH = "PATCH",
+  PUT = "PUT",
+  DELETE = "DELETE",
+}
+export interface InternalRequestData {
+  url: string;
+  method: HttpMethod;
+  body?: { [key: string]: unknown };
+  queryParams?: { [key: string]: string | number | boolean | undefined };
+  authRequired?: boolean;
+}
+export interface InternalResponseData<T> {
+  success: boolean;
+  message?: string;
+  payload?: T;
+}
+
+export type UserAnalytics = { user: User; gameDetails: GameDetails };

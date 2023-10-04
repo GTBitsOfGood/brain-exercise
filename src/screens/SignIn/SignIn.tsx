@@ -13,11 +13,11 @@ import {
 } from "react-native";
 import { Button } from "react-native-elements";
 import { useDispatch } from "react-redux";
-import { AuthError } from "firebase/auth";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { FirebaseError } from "firebase/app";
 import Text from "../../components/Text";
 import { emailSignIn } from "../../firebase/email_signin";
-import { Role, RootStackParamList } from "../../types";
+import { RootStackParamList } from "../../types";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
 import { login } from "../../redux/reducers/authReducer";
 
@@ -171,18 +171,14 @@ function SignInScreen({ navigation }: Props) {
             setError("");
             emailSignIn(email, password)
               .then((res) => {
-                // !! Should add call to backend to retrieve rest of the information !!
                 const userObject: Partial<AuthUser> = {
-                  email: res.email,
+                  ...res.user,
                   authenticated: true,
-                  role: Role.NONPROFIT_USER,
                 };
                 dispatch(login(userObject));
-
                 // navigation.navigate("HomeScreen");
               })
-              .catch((err: AuthError) => {
-                console.debug(err);
+              .catch((err: FirebaseError) => {
                 if (err.code === "auth/wrong-password") {
                   setError("Incorrect password");
                 } else if (err.code === "auth/user-not-found") {
