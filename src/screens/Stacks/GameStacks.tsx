@@ -8,6 +8,7 @@ import PauseButton from "../../components/PauseButton";
 import { GameTypes } from "../../types";
 import Stack from "./StackNavigator";
 import gameDescriptions from "./gameDescriptions";
+import WritingMain from "../Game/WritingMain";
 
 export const gameComponents: Record<GameTypes, React.FC> = {
   Math: MathMain,

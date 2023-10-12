@@ -20,6 +20,11 @@ import { emailSignIn } from "../../firebase/email_signin";
 import { RootStackParamList } from "../../types";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
 import { login } from "../../redux/reducers/authReducer";
+import PersonalInfoScreen from "../SignUp/PersonalInfo";
+import ReadingMain from "../Game/ReadingMain";
+import MathMain from "../Game/MathMain/MathMain";
+import GameOverview from "../Game/GameOverview";
+import HomeScreen from "../Home/HomeScreen";
 
 const styles = StyleSheet.create({
   root: {
@@ -109,19 +114,19 @@ function SignInScreen({ navigation }: Props) {
                 paddingTop: "2%",
               }}
             >
-              Sign In
+              Log In
             </Text>
           </View>
 
           <View
             style={{
               flex: 3,
-              paddingVertical: 5,
+              paddingVertical: "5%",
               paddingHorizontal: "3%",
               width: "100%",
             }}
           >
-            <Text style={styles.textInputTitle}>Email</Text>
+            <Text style={styles.textInputTitle}>Email Address*</Text>
             <TextInput
               placeholder="username@email.com"
               style={styles.textInput}
@@ -131,7 +136,7 @@ function SignInScreen({ navigation }: Props) {
               accessibilityHint="The text written in this input field will be saved as the user's email address"
             />
 
-            <Text style={styles.textInputTitle}>Password</Text>
+            <Text style={styles.textInputTitle}>Password*</Text>
             <TextInput
               placeholder="Password"
               style={styles.textInput}
@@ -156,6 +161,7 @@ function SignInScreen({ navigation }: Props) {
               containerStyle={{
                 width: 0.85 * Dimensions.get("window").width,
                 padding: "1%",
+                paddingTop: 0,
               }}
               buttonStyle={{
                 backgroundColor: "#005AA3",
@@ -164,7 +170,7 @@ function SignInScreen({ navigation }: Props) {
               }}
               titleStyle={styles.buttonTitle}
               disabled={!isFormValid()}
-              title="Sign In"
+              title="Continue"
               onPress={() => {
                 setError("");
                 emailSignIn(email, password)
@@ -181,6 +187,7 @@ function SignInScreen({ navigation }: Props) {
                     } else if (err.code === "auth/user-not-found") {
                       setError("Email not found");
                     } else {
+                      console.log(err.name);
                       setError("Unexpected error occured. Check your info");
                     }
                   });
@@ -190,10 +197,10 @@ function SignInScreen({ navigation }: Props) {
 
           <View
             style={{
-              flex: 1,
               paddingHorizontal: "5%",
               flexDirection: "row",
-              alignItems: "flex-end",
+              justifyContent: "center",
+              paddingTop: "5%",
             }}
           >
             <Text style={{ fontSize: 14, color: "#4A4B57" }}>

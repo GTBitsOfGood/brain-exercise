@@ -87,7 +87,7 @@ function PersonalInfoScreen() {
       return false;
     }
 
-    if (!/^\(\d{3}\)\s\d{3}-\d{4}/.test(phoneNumber)) {
+    if (!/^\d{10}$/.test(phoneNumber)) {
       return false;
     }
 
@@ -99,11 +99,67 @@ function PersonalInfoScreen() {
       return false;
     }
 
-    if (!/^\(\d{3}\)\s\d{3}-\d{4}/.test(secondContactNumber)) {
+    if (!/^\d{10}$/.test(secondContactNumber)) {
       return false;
     }
 
     return true;
+  };
+
+  const formatPhoneNumber = (currentNumber: string) => {
+    const digitsOnly = currentNumber.replace(/\D/g, "");
+
+    if (digitsOnly.length < 3) {
+      return digitsOnly;
+    }
+    if (digitsOnly.length < 6) {
+      return `(${digitsOnly.slice(0, 3)})${digitsOnly.slice(3)}`;
+    }
+    return `(${digitsOnly.slice(0, 3)})${digitsOnly.slice(
+      3,
+      6,
+    )}-${digitsOnly.slice(6)}`;
+  };
+
+  const handlePhoneNumberChange = (
+    input: string,
+    setNumber: (changeNumber: string) => void,
+    currentNumber: string,
+  ) => {
+    const inputDigitsOnly = input.replace(/[()-]/g, "");
+    const phoneNumberDigitsOnly = currentNumber.replace(/\D/g, "");
+
+    if (inputDigitsOnly.length <= phoneNumberDigitsOnly.length) {
+      // there was a backspace
+      setNumber(phoneNumberDigitsOnly.slice(0, -1));
+    } else {
+      setNumber(inputDigitsOnly);
+    }
+  };
+
+  const formatDOB = (input: string) => {
+    const digitsOnly = input.replace(/-/g, "");
+    if (digitsOnly.length <= 2) {
+      return digitsOnly;
+    }
+    if (digitsOnly.length <= 4) {
+      return `${digitsOnly.slice(0, 2)}-${digitsOnly.slice(2)}`;
+    }
+    return `${digitsOnly.slice(0, 2)}-${digitsOnly.slice(
+      2,
+      4,
+    )}-${digitsOnly.slice(4)}`;
+  };
+
+  const handleDOBChange = (input: string) => {
+    if (input.length <= dateofBirth.length) {
+      // backspace
+      let digitsOnlyDOB = dateofBirth.replace(/-/g, "");
+      digitsOnlyDOB = digitsOnlyDOB.slice(0, -1);
+      setDateofBirth(formatDOB(digitsOnlyDOB));
+    } else {
+      setDateofBirth(formatDOB(input));
+    }
   };
 
   return (
@@ -129,7 +185,7 @@ function PersonalInfoScreen() {
               width: "100%",
             }}
           >
-            <Text style={styles.textInputTitle}>Full Name</Text>
+            <Text style={styles.textInputTitle}>Name*</Text>
             <TextInput
               accessibilityRole="text"
               placeholder="Full Name"
@@ -138,25 +194,32 @@ function PersonalInfoScreen() {
               value={fullName}
             />
 
-            <Text style={styles.textInputTitle}>Phone Number</Text>
+            <Text style={styles.textInputTitle}>Phone Number*</Text>
             <TextInput
               accessibilityRole="text"
               placeholder="(XXX) XXX-XXXX"
-              onChangeText={setPhoneNumber}
+              onChangeText={(input) =>
+                handlePhoneNumberChange(input, setPhoneNumber, phoneNumber)
+              }
               style={styles.textInput}
-              value={phoneNumber}
+              value={formatPhoneNumber(phoneNumber)}
+              textContentType="telephoneNumber"
+              keyboardType="numeric"
+              maxLength={13}
             />
 
-            <Text style={styles.textInputTitle}>Date of Birth</Text>
+            <Text style={styles.textInputTitle}>Date of Birth*</Text>
             <TextInput
               accessibilityRole="text"
               placeholder="MM-DD-YYYY"
-              onChangeText={setDateofBirth}
+              onChangeText={(input) => handleDOBChange(input)}
               style={styles.textInput}
               value={dateofBirth}
+              keyboardType="numeric"
+              maxLength={10}
             />
 
-            <Text style={styles.textInputTitle}>Secondary Contact Name</Text>
+            <Text style={styles.textInputTitle}>Secondary Contact Name*</Text>
             <TextInput
               accessibilityRole="text"
               placeholder="Full Name"
@@ -165,13 +228,22 @@ function PersonalInfoScreen() {
               value={secondContactName}
             />
 
-            <Text style={styles.textInputTitle}>Secondary Contact Phone</Text>
+            <Text style={styles.textInputTitle}>Secondary Contact Phone*</Text>
             <TextInput
               accessibilityRole="text"
               placeholder="(XXX) XXX-XXXX"
-              onChangeText={setSecondContactNumber}
+              onChangeText={(input) =>
+                handlePhoneNumberChange(
+                  input,
+                  setSecondContactNumber,
+                  secondContactNumber,
+                )
+              }
               style={styles.textInput}
-              value={secondContactNumber}
+              textContentType="telephoneNumber"
+              value={formatPhoneNumber(secondContactNumber)}
+              keyboardType="numeric"
+              maxLength={13}
             />
             <Text style={styles.errorTitle}>{error}</Text>
           </View>

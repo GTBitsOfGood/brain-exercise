@@ -9,6 +9,7 @@ export const initialState: GameDetails = {
   },
   completed: {
     math: false,
+    writing: false,
     reading: false,
     trivia: false,
   },
@@ -22,6 +23,7 @@ const gameDetailsReducer = createSlice({
       state.completed = {
         math: false,
         reading: false,
+        writing: false,
         trivia: false,
       };
     },
@@ -37,6 +39,7 @@ const gameDetailsReducer = createSlice({
       state.completed = {
         math: action.payload.completed.math,
         reading: action.payload.completed.reading,
+        writing: action.payload.completed.writing,
         trivia: action.payload.completed.trivia,
       };
     },
@@ -45,6 +48,9 @@ const gameDetailsReducer = createSlice({
     },
     completedReading(state) {
       state.completed.reading = true;
+    },
+    completedWriting(state) {
+      state.completed.writing = true;
     },
     completedTrivia(state) {
       state.completed.trivia = true;
@@ -64,5 +70,6 @@ export const {
   completedMath,
   completedReading,
   completedTrivia,
+  completedWriting,
   setDifficultyScore,
 } = gameDetailsReducer.actions;

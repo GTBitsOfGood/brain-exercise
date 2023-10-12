@@ -5,6 +5,7 @@ import getStoryArray from "../assets/stories";
 import { HttpMethod, RootStackParamList } from "../types";
 import { completedReading } from "../redux/reducers/gameDetailsReducer";
 import { internalRequest } from "../requests";
+import gameDescriptions from "../screens/Stacks/gameDescriptions";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ReadingMain">;
 
@@ -14,6 +15,7 @@ export default function useReadingProblems({ navigation, route }: Props) {
   const [page, setPage] = useState(0);
   const [passagesRead, setPassagesRead] = useState(0);
   const paragraph = storyArray[page];
+  const TOTAL_TIME = gameDescriptions.Reading.minutes * 60;
 
   const nextParagraph = () => {
     if (storyArray.length - 1 === page) {

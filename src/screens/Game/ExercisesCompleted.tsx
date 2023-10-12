@@ -57,7 +57,12 @@ function ExercisesCompleted({ navigation }: Props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (completed.math && completed.reading && completed.trivia) {
+    if (
+      completed.math &&
+      completed.reading &&
+      completed.trivia &&
+      completed.writing
+    ) {
       internalRequest({
         url: "/api/patient/analytics/record-session-complete",
         method: HttpMethod.POST,
@@ -65,7 +70,13 @@ function ExercisesCompleted({ navigation }: Props) {
       });
       dispatch(resetCompleted());
     }
-  }, [completed.math, completed.reading, completed.trivia, dispatch]);
+  }, [
+    completed.math,
+    completed.reading,
+    completed.trivia,
+    completed.writing,
+    dispatch,
+  ]);
   const correct = 1;
   const total = 1;
 
