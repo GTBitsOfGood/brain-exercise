@@ -31,7 +31,7 @@ function LogoutButton() {
       const auth = getAuth();
       await signOut(auth);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

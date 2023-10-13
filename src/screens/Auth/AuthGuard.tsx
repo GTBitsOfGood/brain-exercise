@@ -9,13 +9,10 @@ import SignInScreen from "../SignIn/SignIn";
 import NavigationContainerWithTracking from "../../components/NavigationContainerWithTracking";
 import Stack from "../Stacks/StackNavigator";
 import SignUpScreen from "../SignUp/SignUp";
-// import PersonalInfoScreen from "../SignUp/PersonalInfo";
+import PersonalInfoScreen from "../SignUp/PersonalInfo";
 import { RootState } from "../../redux/rootReducer";
 import { getUserAnalytics } from "../../firebase/email_signin";
 import { updateGame } from "../../redux/reducers/gameDetailsReducer";
-import GameOverview from "../Game/GameOverview";
-import HomeScreen from "../Home/HomeScreen";
-import PersonalInfoScreen from "../SignUp/PersonalInfo";
 
 type Props = { children: React.ReactNode };
 

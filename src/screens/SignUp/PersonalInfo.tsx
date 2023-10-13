@@ -17,7 +17,6 @@ import { AuthUser } from "../../redux/reducers/authReducer/types";
 import { UserAnalytics, HttpMethod, Role } from "../../types";
 import { login } from "../../redux/reducers/authReducer";
 import { internalRequest } from "../../requests";
-import { getUserAnalytics } from "../../firebase/email_signin";
 
 const styles = StyleSheet.create({
   root: {
