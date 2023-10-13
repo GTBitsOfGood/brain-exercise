@@ -74,17 +74,24 @@ function ExtraPractice({ navigation }: Props) {
             })
           }
         />
-        {/* <Button
-        title="Writing Prompts"
-        icon={{
-          name: 'pencil',
-          type: 'font-awesome',
-          size: 20,
-          color: "white",
-        }}
-        buttonStyle={styles.button}
-        onPress={() => navigation.navigate("WritingIntro", { nextScreenArgs: ["WritingMain", { nextScreenArgs: ["ExtraPractice"] }] })}
-      /> */}
+        <Button
+          title="Writing Prompts"
+          icon={{
+            name: "pencil",
+            type: "font-awesome",
+            size: 20,
+            color: "white",
+          }}
+          buttonStyle={styles.button}
+          onPress={() =>
+            navigation.navigate("WritingIntro", {
+              nextScreenArgs: [
+                "WritingMain",
+                { nextScreenArgs: ["ExtraPractice"] },
+              ],
+            })
+          }
+        />
         <Button
           title="Trivia"
           icon={{

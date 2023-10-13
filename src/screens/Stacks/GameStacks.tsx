@@ -1,7 +1,6 @@
 import MathMain from "../Game/MathMain/MathMain";
 import ReadingMain from "../Game/ReadingMain";
 import TriviaMain from "../Game/TriviaMain";
-import PromptScreen from "../Game/PromptScreen";
 
 import IntroOverlay from "../../components/OverLays/IntroOverlay";
 import PauseButton from "../../components/PauseButton";
@@ -14,7 +13,7 @@ export const gameComponents: Record<GameTypes, React.FC> = {
   Math: MathMain,
   Reading: ReadingMain,
   Trivia: TriviaMain,
-  Writing: PromptScreen,
+  Writing: WritingMain,
 };
 
 const GameStacks: React.JSX.Element[] = [];

@@ -14,10 +14,12 @@ export default function useReadingProblems({ navigation, route }: Props) {
   const [storyArray, setStoryArray] = useState(getStoryArray());
   const [page, setPage] = useState(0);
   const [passagesRead, setPassagesRead] = useState(0);
+  const [wordsRead, setWordsRead] = useState(0);
   const paragraph = storyArray[page];
   const TOTAL_TIME = gameDescriptions.Reading.minutes * 60;
 
   const nextParagraph = () => {
+    setWordsRead(storyArray[page].split(/\s+/).length);
     if (storyArray.length - 1 === page) {
       setStoryArray(getStoryArray());
       setPage(0);
@@ -29,7 +31,15 @@ export default function useReadingProblems({ navigation, route }: Props) {
 
   const onTimeComplete = useCallback(
     (skipped: boolean) => {
-      const statistics = { passagesRead, completed: !skipped }; // eslint-disable-line
+      const averageTime =
+        passagesRead === 0 || skipped ? 0 : TOTAL_TIME / passagesRead;
+      const statistics = {
+        passagesRead,
+        completed: !skipped,
+        wordsPerMinute: wordsRead / TOTAL_TIME,
+        timePerPassage: averageTime,
+      }; // eslint-disable-line
+
       internalRequest({
         url: "/api/patient/analytics/record-reading",
         method: HttpMethod.POST,
@@ -39,7 +49,14 @@ export default function useReadingProblems({ navigation, route }: Props) {
       dispatch(completedReading());
       navigation.replace(...route.params.nextScreenArgs);
     },
-    [navigation, route.params.nextScreenArgs, passagesRead, dispatch],
+    [
+      navigation,
+      route.params.nextScreenArgs,
+      passagesRead,
+      dispatch,
+      wordsRead,
+      TOTAL_TIME,
+    ],
   );
 
   return {

@@ -17,6 +17,7 @@ import { AuthUser } from "../../redux/reducers/authReducer/types";
 import { UserAnalytics, HttpMethod, Role } from "../../types";
 import { login } from "../../redux/reducers/authReducer";
 import { internalRequest } from "../../requests";
+import { getUserAnalytics } from "../../firebase/email_signin";
 
 const styles = StyleSheet.create({
   root: {
@@ -103,7 +104,40 @@ function PersonalInfoScreen() {
       return false;
     }
 
-    return true;
+    // Following check if the date matches number of days in a month
+    const [monthString, dateString, yearString] = dateofBirth.split("-");
+    const [month, date, year] = [
+      parseInt(monthString, 10),
+      parseInt(dateString, 10),
+      parseInt(yearString, 10),
+    ];
+
+    if (month > 12 || date > 31 || year < 1900) {
+      return false;
+    }
+
+    if (month === 2) {
+      const isLeapYear =
+        (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+      if (isLeapYear && date <= 29) {
+        return true;
+      }
+      if (!isLeapYear && date <= 28) {
+        return true;
+      }
+      return false;
+    }
+
+    if (month < 8) {
+      if (month % 2 === 0) {
+        return date <= 30;
+      }
+      return date <= 31;
+    }
+    if (month % 2 === 0) {
+      return date <= 31;
+    }
+    return date <= 30;
   };
 
   const formatPhoneNumber = (currentNumber: string) => {

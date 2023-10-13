@@ -20,11 +20,6 @@ import { emailSignIn } from "../../firebase/email_signin";
 import { RootStackParamList } from "../../types";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
 import { login } from "../../redux/reducers/authReducer";
-import PersonalInfoScreen from "../SignUp/PersonalInfo";
-import ReadingMain from "../Game/ReadingMain";
-import MathMain from "../Game/MathMain/MathMain";
-import GameOverview from "../Game/GameOverview";
-import HomeScreen from "../Home/HomeScreen";
 
 const styles = StyleSheet.create({
   root: {
