@@ -142,6 +142,7 @@ function SignInScreen({ navigation }: Props) {
               style={styles.textInput}
               onChangeText={setPassword}
               value={password}
+              autoCapitalize="none"
               secureTextEntry={true}
               accessibilityLabel="Input field for password of user's account"
               accessibilityHint="The text typed here is the password of the user's account"

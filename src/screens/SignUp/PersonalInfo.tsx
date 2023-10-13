@@ -152,13 +152,14 @@ function PersonalInfoScreen() {
   };
 
   const handleDOBChange = (input: string) => {
-    if (input.length <= dateofBirth.length) {
+    const cleanInput = input.replace(/\./g, "");
+    let digitsOnlyDOB = dateofBirth.replace(/-/g, "");
+    if (cleanInput.length < dateofBirth.length) {
       // backspace
-      let digitsOnlyDOB = dateofBirth.replace(/-/g, "");
       digitsOnlyDOB = digitsOnlyDOB.slice(0, -1);
       setDateofBirth(formatDOB(digitsOnlyDOB));
     } else {
-      setDateofBirth(formatDOB(input));
+      setDateofBirth(formatDOB(cleanInput));
     }
   };
 
@@ -166,7 +167,7 @@ function PersonalInfoScreen() {
     <View style={styles.root}>
       <ScrollView>
         <SafeAreaView>
-          <View style={{ height: 80, paddingLeft: "3%", paddingTop: "2%" }}>
+          <View style={{ paddingLeft: "3%", paddingTop: "15%" }}>
             <Text
               style={{ fontWeight: "bold", fontSize: 20, color: "#4A4B57" }}
             >
@@ -180,7 +181,7 @@ function PersonalInfoScreen() {
           <View
             style={{
               flex: 4,
-              paddingVertical: 5,
+              paddingTop: "5%",
               paddingHorizontal: "3%",
               width: "100%",
             }}
