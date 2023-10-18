@@ -1,10 +1,10 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-
+import { useRef } from "react";
 import Button from "../../components/Button";
 import ProgressBar from "../../components/ProgressBar";
 import Text from "../../components/Text";
-import { RootStackParamList } from "../../types";
+import { RootStackParamList, RemainingTimeGetter } from "../../types";
 import gameDescriptions from "../Stacks/gameDescriptions";
 import useWritingProblems from "../../hooks/useWritingProblems";
 
@@ -47,13 +47,16 @@ export default function WritingMain({ navigation, route }: Props) {
       route,
     });
 
+  const remainingTimeRef = useRef<RemainingTimeGetter>();
+
   return (
     <View style={styles.root}>
       <View>
         <ProgressBar
           maxSeconds={TOTAL_TIME}
           redThreshold={30}
-          onTimeComplete={() => onTimeComplete()}
+          onTimeComplete={() => onTimeComplete(0)}
+          remainingTimeRef={remainingTimeRef}
         />
         <Text style={styles.instructions}>
           Write the question, then you answer.
@@ -65,16 +68,17 @@ export default function WritingMain({ navigation, route }: Props) {
           title="Next Question"
           onPress={() => {
             getNewProblem();
-            updateStatsOnAnswer(true);
+            updateStatsOnAnswer();
           }}
           buttonStyle={{ marginBottom: 10 }}
           shouldNotPlay
         />
         <Button
-          title="Skip Question"
+          title="Skip Section"
           onPress={() => {
-            getNewProblem();
-            updateStatsOnAnswer(false);
+            // getNewProblem();
+            onTimeComplete(remainingTimeRef.current.getRemainingTime());
+            updateStatsOnAnswer();
           }}
           buttonStyle={{ marginBottom: 40 }}
         />

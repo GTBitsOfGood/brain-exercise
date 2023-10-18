@@ -104,39 +104,18 @@ function PersonalInfoScreen() {
     }
 
     // Following check if the date matches number of days in a month
-    const [monthString, dateString, yearString] = dateofBirth.split("-");
-    const [month, date, year] = [
-      parseInt(monthString, 10),
-      parseInt(dateString, 10),
-      parseInt(yearString, 10),
-    ];
 
-    if (month > 12 || date > 31 || year < 1900) {
+    const checkDate = new Date(dateofBirth);
+    if (checkDate.toString() === "Invalid Date") {
       return false;
     }
 
-    if (month === 2) {
-      const isLeapYear =
-        (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-      if (isLeapYear && date <= 29) {
-        return true;
-      }
-      if (!isLeapYear && date <= 28) {
-        return true;
-      }
+    const today = new Date();
+    if (checkDate >= today) {
       return false;
     }
 
-    if (month < 8) {
-      if (month % 2 === 0) {
-        return date <= 30;
-      }
-      return date <= 31;
-    }
-    if (month % 2 === 0) {
-      return date <= 31;
-    }
-    return date <= 30;
+    return true;
   };
 
   const formatPhoneNumber = (currentNumber: string) => {
@@ -146,7 +125,7 @@ function PersonalInfoScreen() {
       return digitsOnly;
     }
     if (digitsOnly.length < 6) {
-      return `(${digitsOnly.slice(0, 3)})${digitsOnly.slice(3)}`;
+      return `(${digitsOnly.slice(0, 3)}) ${digitsOnly.slice(3)}`;
     }
     return `(${digitsOnly.slice(0, 3)})${digitsOnly.slice(
       3,
@@ -159,7 +138,7 @@ function PersonalInfoScreen() {
     setNumber: (changeNumber: string) => void,
     currentNumber: string,
   ) => {
-    const inputDigitsOnly = input.replace(/[()-]/g, "");
+    const inputDigitsOnly = input.replace(/[()\-\s]/g, "");
     const phoneNumberDigitsOnly = currentNumber.replace(/\D/g, "");
 
     if (inputDigitsOnly.length <= phoneNumberDigitsOnly.length) {
@@ -239,7 +218,7 @@ function PersonalInfoScreen() {
               value={formatPhoneNumber(phoneNumber)}
               textContentType="telephoneNumber"
               keyboardType="numeric"
-              maxLength={13}
+              maxLength={14}
             />
 
             <Text style={styles.textInputTitle}>Date of Birth*</Text>
