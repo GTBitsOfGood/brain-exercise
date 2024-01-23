@@ -15,6 +15,7 @@ interface GameDetails {
   completed: {
     math: boolean;
     reading: boolean;
+    writing: boolean;
     trivia: boolean;
   };
 }

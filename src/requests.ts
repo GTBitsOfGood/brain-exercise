@@ -31,7 +31,8 @@ export async function internalRequest<T>({
       params: newParams,
       headers: {
         withCredentials: true,
-        mode: "cors",
+        /** PersonalInfo POST doesn't work with mode: "cors"  */
+        // mode: "cors",
         accesstoken: idToken,
       },
       data: newBody,

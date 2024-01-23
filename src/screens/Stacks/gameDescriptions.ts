@@ -43,7 +43,7 @@ const gameDescriptions: GameDescriptions = {
     },
     game: {
       name: "ReadingMain",
-      nextScreenArgs: ["TriviaIntro"], // Intentionally skipping Writing section
+      nextScreenArgs: ["WritingIntro"],
     },
   },
   Writing: {

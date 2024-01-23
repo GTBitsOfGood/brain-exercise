@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: "#4A4B57",
     padding: "2%",
+    paddingTop: "2%",
   },
   textInputTitle: {
     color: "#4A4B57",
@@ -121,12 +122,15 @@ function SignUpScreen({ navigation }: Props) {
           <View
             style={{
               flex: 3,
-              paddingVertical: 3,
+              paddingVertical: "5%",
               paddingHorizontal: "3%",
               width: "100%",
             }}
           >
-            <Text style={styles.textInputTitle}>Email</Text>
+            <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
+              <Text style={styles.textInputTitle}>Email Address*</Text>
+            </View>
+
             <TextInput
               accessibilityRole="text"
               placeholder="username@email.com"
@@ -135,22 +139,29 @@ function SignUpScreen({ navigation }: Props) {
               value={email}
             />
 
-            <Text style={styles.textInputTitle}>Password</Text>
+            <Text style={styles.textInputTitle}>Password*</Text>
             <TextInput
               accessibilityRole="text"
               placeholder="Password"
               style={styles.textInput}
               onChangeText={setPassword}
               value={password}
+              autoCapitalize="none"
+              autoCorrect={false}
+              textContentType="password"
+              secureTextEntry={true}
             />
 
-            <Text style={styles.textInputTitle}>Repeat Password</Text>
+            <Text style={styles.textInputTitle}>Repeat Password*</Text>
             <TextInput
               accessibilityRole="text"
               placeholder="Password"
               style={styles.textInput}
               onChangeText={setRepeatPassword}
               value={repeatPassword}
+              autoCapitalize="none"
+              autoCorrect={false}
+              secureTextEntry={true}
             />
             <Text style={styles.errorTitle}>{error}</Text>
           </View>
@@ -175,7 +186,7 @@ function SignUpScreen({ navigation }: Props) {
               }}
               titleStyle={styles.buttonTitle}
               disabled={!isFormValid()}
-              title="Sign Up"
+              title="Continue"
               onPress={() => {
                 setError("");
                 emailSignUp(email, password).catch((err: FirebaseError) => {
@@ -194,10 +205,10 @@ function SignUpScreen({ navigation }: Props) {
 
           <View
             style={{
-              flex: 1,
               paddingHorizontal: "5%",
               flexDirection: "row",
-              alignItems: "flex-end",
+              justifyContent: "center",
+              paddingTop: "5%",
             }}
           >
             <Text style={{ fontSize: 14, color: "#4A4B57" }}>
