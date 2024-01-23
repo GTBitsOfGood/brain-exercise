@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { TimeAnalyticsTypes } from "./types";
 
 // From https://github.com/axios/axios#handling-errors, which is by Matt Zabriskie and is under the MIT license
@@ -34,14 +34,16 @@ export const wait = (timeout: number) =>
   });
 
 export async function reportTimeAnalytics(
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   startTime: Date,
   timeType: TimeAnalyticsTypes,
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 ) {
-  const deltaTime = (Date.now() - startTime.getTime()) / 1000;
-  await axios
-    .post(`/analytics/screen-times`, {
-      type: timeType,
-      time: deltaTime,
-    })
-    .catch((err) => console.log(err));
+  // const deltaTime = (Date.now() - startTime.getTime()) / 1000;
+  // await axios
+  //   .post(`/analytics/screen-times`, {
+  //     type: timeType,
+  //     time: deltaTime,
+  //   })
+  //   .catch((err) => console.log(err));
 }

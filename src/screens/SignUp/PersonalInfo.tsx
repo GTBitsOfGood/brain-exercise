@@ -127,7 +127,7 @@ function PersonalInfoScreen() {
     if (digitsOnly.length < 6) {
       return `(${digitsOnly.slice(0, 3)}) ${digitsOnly.slice(3)}`;
     }
-    return `(${digitsOnly.slice(0, 3)})${digitsOnly.slice(
+    return `(${digitsOnly.slice(0, 3)}) ${digitsOnly.slice(
       3,
       6,
     )}-${digitsOnly.slice(6)}`;
@@ -256,7 +256,7 @@ function PersonalInfoScreen() {
               textContentType="telephoneNumber"
               value={formatPhoneNumber(secondContactNumber)}
               keyboardType="numeric"
-              maxLength={13}
+              maxLength={14}
             />
             <Text style={styles.errorTitle}>{error}</Text>
           </View>
