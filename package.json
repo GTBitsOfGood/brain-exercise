@@ -11,7 +11,11 @@
     "format:check": "prettier --check .",
     "lint": "eslint --fix .",
     "lint:check": "eslint .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "secrets:linux": "echo Enter Bitwarden Password: && read BW_PASSWORD && (bw logout || exit 0) && export BW_SESSION=`bw login product@bitsofgood.org $BW_PASSWORD --raw` && npm run secrets:get",
+    "secrets:windows": "set /p BW_PASSWORD=Enter Bitwarden Password:&& (bw logout || VER>NUL) && npm run secrets:login",
+    "secrets:login": "FOR /F %a IN ('bw login product@bitsofgood.org %BW_PASSWORD% --raw') DO SET BW_SESSION=%a && npm run secrets:get",
+    "secrets:get": "bw sync && bw get item c187f74b-9b9c-402b-9999-af2b0020cc70 | fx .notes > \".env\""
   },
   "dependencies": {
     "@babel/preset-env": "^7.22.14",
@@ -74,6 +78,7 @@
     "@babel/core": "^7.22.11",
     "@babel/eslint-parser": "^7.22.11",
     "@babel/plugin-transform-private-property-in-object": "^7.22.11",
+    "@bitwarden/cli": "^2024.1.0",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "babel-preset-expo": "^9.5.0",
@@ -88,6 +93,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-native": "^4.0.0",
     "eslint-plugin-react-native-a11y": "^3.3.0",
+    "fx": "^31.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
