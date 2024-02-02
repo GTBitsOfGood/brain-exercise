@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { getAuth } from "firebase/auth";
 import { InternalRequestData, InternalResponseData } from "./types";
-//import firebaseInit from "./firebase/config";
+// import firebaseInit from "./firebase/config";
 
 export async function internalRequest<T>({
   url,
