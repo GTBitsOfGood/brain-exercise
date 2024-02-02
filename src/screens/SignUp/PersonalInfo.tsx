@@ -119,6 +119,7 @@ function PersonalInfoScreen() {
   };
 
   const formatPhoneNumber = (currentNumber: string) => {
+    console.log("curr", currentNumber);
     const digitsOnly = currentNumber.replace(/\D/g, "");
 
     if (digitsOnly.length < 3) {
@@ -141,7 +142,7 @@ function PersonalInfoScreen() {
     const inputDigitsOnly = input.replace(/[()\-\s]/g, "");
     const phoneNumberDigitsOnly = currentNumber.replace(/\D/g, "");
 
-    if (inputDigitsOnly.length <= phoneNumberDigitsOnly.length) {
+    if (inputDigitsOnly.length < phoneNumberDigitsOnly.length) {
       // there was a backspace
       setNumber(phoneNumberDigitsOnly.slice(0, -1));
     } else {
