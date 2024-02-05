@@ -6,6 +6,7 @@ import { HttpMethod, RootStackParamList } from "../types";
 import { completedReading } from "../redux/reducers/gameDetailsReducer";
 import { internalRequest } from "../requests";
 import gameDescriptions from "../screens/Stacks/gameDescriptions";
+import { useEffect } from 'react';
 
 type Props = NativeStackScreenProps<RootStackParamList, "ReadingMain">;
 
@@ -17,7 +18,7 @@ export default function useReadingProblems({ navigation, route }: Props) {
   const [wordsRead, setWordsRead] = useState(0);
   const paragraph = storyArray[page];
   const TOTAL_TIME = gameDescriptions.Reading.minutes * 60;
-
+  
   const nextParagraph = () => {
     setWordsRead(storyArray[page].split(/\s+/).length);
     if (storyArray.length - 1 === page) {
@@ -28,7 +29,7 @@ export default function useReadingProblems({ navigation, route }: Props) {
     }
     setPassagesRead((prev) => prev + 1);
   };
-
+  
   const onTimeComplete = useCallback(
     (skipped: boolean) => {
       const averageTime =
@@ -39,7 +40,6 @@ export default function useReadingProblems({ navigation, route }: Props) {
         wordsPerMinute: wordsRead / TOTAL_TIME,
         timePerPassage: averageTime,
       }; // eslint-disable-line
-
       internalRequest({
         url: "/api/patient/analytics/record-reading",
         method: HttpMethod.POST,

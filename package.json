@@ -72,7 +72,8 @@
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
     "updates": "^14.5.0",
-    "upgrade": "^1.1.0"
+    "upgrade": "^1.1.0",
+    "yarn": "^1.22.21"
   },
   "devDependencies": {
     "@babel/core": "^7.22.11",
