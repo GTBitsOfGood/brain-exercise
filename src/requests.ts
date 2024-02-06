@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { getAuth } from "firebase/auth";
+import { User, getAuth } from "firebase/auth";
 import { InternalRequestData, InternalResponseData } from "./types";
+import firebaseInit from "./firebase/config";
 // import firebaseInit from "./firebase/config";
 
 export async function internalRequest<T>({
@@ -11,11 +12,29 @@ export async function internalRequest<T>({
   authRequired = true,
 }: InternalRequestData): Promise<T> {
   try {
-    const idToken: string = await getAuth().currentUser.getIdToken();
+    let idToken: string | undefined;
     let newParams = queryParams;
     let newBody = body;
     if (authRequired) {
-      const { email } = getAuth().currentUser;
+      firebaseInit();
+      const auth = getAuth();
+
+      const currentUser: User = await new Promise((resolve, reject) => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+          unsubscribe();
+          if (user) {
+            resolve(user);
+          } else {
+            reject(new Error("Unable to get user"));
+          }
+        }, reject);
+      });
+
+      idToken = await currentUser.getIdToken();
+      const { email } = currentUser;
+      if (email === null) {
+        throw new Error("Email does not exist on user");
+      }
       newParams = {
         ...queryParams,
         email,
@@ -41,12 +60,10 @@ export async function internalRequest<T>({
     });
 
     if (response.data.success === false) {
-      console.log(response.data);
       throw new Error(`Unable to connect to API: ${response.data.message}`);
     }
     return response.data.payload;
   } catch (e) {
-    console.log(e);
     throw new Error(`Unable to connect to API: ${e}`);
   }
 }
