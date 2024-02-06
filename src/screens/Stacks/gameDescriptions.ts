@@ -16,7 +16,7 @@ const triviaImage = require("../../assets/Trivia_Icon.png") as AVPlaybackSource;
 const gameDescriptions: GameDescriptions = {
   Math: {
     title: "Math",
-    minutes: 0.1,
+    minutes: 5,
     intro: {
       name: "MathIntro",
       sound: mathSound,

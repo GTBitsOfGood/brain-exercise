@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, View, Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import Button from "../../components/Button";
 import ProgressBar from "../../components/ProgressBar";
 import Text from "../../components/Text";
@@ -41,16 +41,18 @@ const TOTAL_TIME = gameDescriptions.Reading.minutes * 60;
 type Props = NativeStackScreenProps<RootStackParamList, "ReadingMain">;
 
 export default function ReadingMain({ navigation, route }: Props) {
-  const memoizedOnTimeComplete = useCallback(
-    () => onTimeComplete(false),
-    []
-  );
   const dispatch = useDispatch();
 
   const { paragraph, nextParagraph, onTimeComplete } = useReadingProblems({
     navigation,
     route,
   });
+
+  const memoizedOnTimeComplete = useCallback(
+    () => onTimeComplete(false),
+    [onTimeComplete],
+  );
+
   const nextSection = () => {
     dispatch(pause());
     Alert.alert(
@@ -80,7 +82,6 @@ export default function ReadingMain({ navigation, route }: Props) {
         maxSeconds={TOTAL_TIME}
         redThreshold={30}
         onTimeComplete={memoizedOnTimeComplete}
-        // onTimeComplete={() => onTimeComplete(false)}
       />
       <Text style={styles.instructions}>Read the passage aloud.</Text>
       <ScrollView contentContainerStyle={styles.articleWrapper}>

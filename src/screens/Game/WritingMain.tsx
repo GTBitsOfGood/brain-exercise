@@ -1,13 +1,13 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import Button from "../../components/Button";
 import ProgressBar from "../../components/ProgressBar";
 import Text from "../../components/Text";
 import { RootStackParamList, RemainingTimeGetter } from "../../types";
 import gameDescriptions from "../Stacks/gameDescriptions";
 import useWritingProblems from "../../hooks/useWritingProblems";
-import { useCallback } from "react";
+
 const styles = StyleSheet.create({
   root: {
     flex: 1,
@@ -41,16 +41,16 @@ const TOTAL_TIME = gameDescriptions.Writing.minutes * 60;
 type Props = NativeStackScreenProps<RootStackParamList, "WritingMain">;
 
 export default function WritingMain({ navigation, route }: Props) {
-  const memoizedOnTimeComplete = useCallback(
-    () => onTimeComplete(false),
-    []
-  );
-
   const { problem, updateStatsOnAnswer, onTimeComplete, getNewProblem } =
     useWritingProblems({
       navigation,
       route,
     });
+
+  const memoizedOnTimeComplete = useCallback(
+    () => onTimeComplete(0),
+    [onTimeComplete],
+  );
 
   const remainingTimeRef = useRef<RemainingTimeGetter>();
 
@@ -61,7 +61,6 @@ export default function WritingMain({ navigation, route }: Props) {
           maxSeconds={TOTAL_TIME}
           redThreshold={30}
           onTimeComplete={memoizedOnTimeComplete}
-          // onTimeComplete={() => onTimeComplete(0)}
           remainingTimeRef={remainingTimeRef}
         />
         <Text style={styles.instructions}>
@@ -82,7 +81,6 @@ export default function WritingMain({ navigation, route }: Props) {
         <Button
           title="Skip Section"
           onPress={() => {
-            // getNewProblem();
             onTimeComplete(remainingTimeRef.current.getRemainingTime());
             updateStatsOnAnswer();
           }}
