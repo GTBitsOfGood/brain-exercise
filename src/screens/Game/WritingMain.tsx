@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import Button from "../../components/Button";
 import ProgressBar from "../../components/ProgressBar";
 import Text from "../../components/Text";
@@ -47,6 +47,11 @@ export default function WritingMain({ navigation, route }: Props) {
       route,
     });
 
+  const memoizedOnTimeComplete = useCallback(
+    () => onTimeComplete(0),
+    [onTimeComplete],
+  );
+
   const remainingTimeRef = useRef<RemainingTimeGetter>();
 
   return (
@@ -55,7 +60,7 @@ export default function WritingMain({ navigation, route }: Props) {
         <ProgressBar
           maxSeconds={TOTAL_TIME}
           redThreshold={30}
-          onTimeComplete={() => onTimeComplete(0)}
+          onTimeComplete={memoizedOnTimeComplete}
           remainingTimeRef={remainingTimeRef}
         />
         <Text style={styles.instructions}>
@@ -76,7 +81,6 @@ export default function WritingMain({ navigation, route }: Props) {
         <Button
           title="Skip Section"
           onPress={() => {
-            // getNewProblem();
             onTimeComplete(remainingTimeRef.current.getRemainingTime());
             updateStatsOnAnswer();
           }}

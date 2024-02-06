@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, View, Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 
+import { useCallback } from "react";
 import Button from "../../components/Button";
 import ProgressBar from "../../components/ProgressBar";
 import Text from "../../components/Text";
@@ -47,6 +48,11 @@ export default function ReadingMain({ navigation, route }: Props) {
     route,
   });
 
+  const memoizedOnTimeComplete = useCallback(
+    () => onTimeComplete(false),
+    [onTimeComplete],
+  );
+
   const nextSection = () => {
     dispatch(pause());
     Alert.alert(
@@ -75,7 +81,7 @@ export default function ReadingMain({ navigation, route }: Props) {
       <ProgressBar
         maxSeconds={TOTAL_TIME}
         redThreshold={30}
-        onTimeComplete={() => onTimeComplete(false)}
+        onTimeComplete={memoizedOnTimeComplete}
       />
       <Text style={styles.instructions}>Read the passage aloud.</Text>
       <ScrollView contentContainerStyle={styles.articleWrapper}>

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 import { HttpMethod, RootStackParamList } from "../types";
@@ -14,10 +14,13 @@ const TOTAL_TIME = gameDescriptions.Writing.minutes * 60;
 export default function useWritingProblems({ navigation, route }: Props) {
   const dispatch = useDispatch();
   const [problem, setProblem] = useState(getProblem());
-  const [questionsAttempted, setQuestionsAttempted] = useState(0);
+
+  const stats = useRef({
+    questionsAttempted: 0,
+  });
 
   const updateStatsOnAnswer = useCallback(() => {
-    setQuestionsAttempted((prev) => prev + 1);
+    stats.current.questionsAttempted += 1;
   }, []);
 
   const getNewProblem = useCallback(() => {
@@ -25,14 +28,14 @@ export default function useWritingProblems({ navigation, route }: Props) {
   }, []);
 
   const onTimeComplete = useCallback(
-    (remainingTime) => {
+    (remainingTime: number) => {
       const average =
-        questionsAttempted > 0
-          ? (TOTAL_TIME - remainingTime) / questionsAttempted
+        stats.current.questionsAttempted > 0
+          ? (TOTAL_TIME - remainingTime) / stats.current.questionsAttempted
           : 0;
       const statistics = {
         completed: remainingTime === 0,
-        questionsAnswered: questionsAttempted,
+        questionsAnswered: stats.current.questionsAttempted,
         timePerQuestion: average,
       };
 
@@ -42,11 +45,11 @@ export default function useWritingProblems({ navigation, route }: Props) {
         body: statistics,
         authRequired: true,
       });
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
       dispatch(completedWriting());
       navigation.replace(...route.params.nextScreenArgs);
     },
-    [questionsAttempted, navigation, route.params.nextScreenArgs, dispatch],
+    [navigation, route.params.nextScreenArgs, dispatch],
   );
 
   return {

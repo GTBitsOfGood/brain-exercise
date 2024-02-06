@@ -50,7 +50,6 @@ export default function useMathQuestions({ route, navigation }: Props) {
   }, [difficultyScore]);
 
   const onTimeComplete = useCallback(() => {
-    statsMap.current.difficultyScore = difficultyScore;
     statsMap.current.timePerQuestion =
       statsMap.current.questionsAttempted === 0
         ? 0
@@ -63,7 +62,7 @@ export default function useMathQuestions({ route, navigation }: Props) {
     });
     dispatch(completedMath());
     navigation.replace(...route.params.nextScreenArgs);
-  }, [navigation, route.params.nextScreenArgs, difficultyScore, dispatch]);
+  }, [navigation, route.params.nextScreenArgs, dispatch]);
 
   const updateStatsOnAnswer = useCallback(
     (isCorrect: boolean, timeTaken: number) => {
@@ -73,6 +72,8 @@ export default function useMathQuestions({ route, navigation }: Props) {
         if (firstTry.current) {
           statsMap.current.questionsCorrect += 1;
         }
+      } else {
+        newDifficultyScore -= 2.5;
       }
       firstTry.current = false;
 
@@ -91,6 +92,7 @@ export default function useMathQuestions({ route, navigation }: Props) {
           ),
         ),
       );
+      statsMap.current.difficultyScore = newDifficultyScore;
     },
     [difficultyScore, dispatch],
   );
