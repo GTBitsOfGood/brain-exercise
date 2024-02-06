@@ -35,7 +35,7 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <SafeAreaProvider>
-          {/* <AuthGuard> */}
+          <AuthGuard>
             <NavigationContainerWithTracking>
               <Stack.Navigator
                 // Consistent styling across all stacked screens
@@ -59,7 +59,7 @@ export default function App() {
                 {MergedStacks}
               </Stack.Navigator>
             </NavigationContainerWithTracking>
-          {/* </AuthGuard> */}
+          </AuthGuard>
         </SafeAreaProvider>
       </PersistGate>
     </Provider>
