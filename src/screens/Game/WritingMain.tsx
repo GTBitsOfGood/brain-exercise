@@ -7,7 +7,7 @@ import Text from "../../components/Text";
 import { RootStackParamList, RemainingTimeGetter } from "../../types";
 import gameDescriptions from "../Stacks/gameDescriptions";
 import useWritingProblems from "../../hooks/useWritingProblems";
-
+import { useCallback } from "react";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
@@ -41,6 +41,11 @@ const TOTAL_TIME = gameDescriptions.Writing.minutes * 60;
 type Props = NativeStackScreenProps<RootStackParamList, "WritingMain">;
 
 export default function WritingMain({ navigation, route }: Props) {
+  const memoizedOnTimeComplete = useCallback(
+    () => onTimeComplete(false),
+    []
+  );
+
   const { problem, updateStatsOnAnswer, onTimeComplete, getNewProblem } =
     useWritingProblems({
       navigation,
@@ -55,7 +60,8 @@ export default function WritingMain({ navigation, route }: Props) {
         <ProgressBar
           maxSeconds={TOTAL_TIME}
           redThreshold={30}
-          onTimeComplete={() => onTimeComplete(0)}
+          onTimeComplete={memoizedOnTimeComplete}
+          // onTimeComplete={() => onTimeComplete(0)}
           remainingTimeRef={remainingTimeRef}
         />
         <Text style={styles.instructions}>

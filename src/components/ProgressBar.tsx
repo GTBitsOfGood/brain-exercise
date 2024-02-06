@@ -42,7 +42,7 @@ export default function ProgressBar({
       }
     }, 1000);
     return () => clearInterval(timer);
-  }, [remainingTime, setRemainingTime, paused]);
+  }, [remainingTime, setRemainingTime, paused, onTimeComplete]);
 
   const seconds = remainingTime % 60;
   const minutes = Math.floor(remainingTime / 60);
