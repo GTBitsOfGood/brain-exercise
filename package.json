@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start:tunnel": "expo start --tunnel",
-    "start": "expo start --localhost --go",
+    "start": "expo start --go",
     "dev": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
