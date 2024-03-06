@@ -13,8 +13,7 @@ import { useDispatch } from "react-redux";
 import { getAuth } from "firebase/auth";
 
 import Text from "../../components/Text";
-import { AuthUser } from "../../redux/reducers/authReducer/types";
-import { UserAnalytics, HttpMethod, Role } from "../../types";
+import { UserAnalytics, HttpMethod } from "../../types";
 import { login } from "../../redux/reducers/authReducer";
 import { internalRequest } from "../../requests";
 
@@ -284,30 +283,14 @@ function PersonalInfoScreen() {
               disabled={!isFormValid()}
               onPress={async () => {
                 setError("");
-                const userObject: AuthUser = {
-                  _id: userInfo.uid,
-                  name: fullName,
-                  email: userInfo.email,
-                  phoneNumber,
-                  authenticated: userInfo.emailVerified,
-                  patientDetails: {
-                    birthdate: dateofBirth,
-                    secondaryContactName: secondContactName,
-                    secondaryContactPhone: secondContactNumber,
-                  },
-                  signedUp: true,
-                  role: Role.NONPROFIT_USER,
-                };
                 try {
                   const body: Record<string, string> = {
-                    email: userObject.email,
-                    name: userObject.name,
-                    phoneNumber: userObject.phoneNumber,
-                    birthDate: userObject.patientDetails.birthdate,
-                    secondaryContactName:
-                      userObject.patientDetails.secondaryContactName,
-                    secondaryContactPhone:
-                      userObject.patientDetails.secondaryContactPhone,
+                    email: userInfo.email,
+                    name: fullName,
+                    phoneNumber,
+                    birthDate: dateofBirth,
+                    secondaryContactName: secondContactName,
+                    secondaryContactPhone: secondContactNumber,
                   };
                   const res = await internalRequest<UserAnalytics>({
                     url: "/api/patient/auth/signup",

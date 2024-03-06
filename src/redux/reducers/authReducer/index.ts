@@ -2,21 +2,34 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthUser } from "./types";
-import { Role } from "../../../types";
+import { AdminApprovalStatus, Role } from "../../../types";
 
 const initialState: AuthUser = {
   _id: "",
   name: "",
   email: "",
   phoneNumber: "",
+  startDate: new Date(),
+  birthDate: new Date(),
   patientDetails: {
-    birthdate: Date(),
     secondaryContactName: "",
     secondaryContactPhone: "",
+    additionalAffiliation: "",
+  },
+  adminDetails: {
+    active: true,
+  },
+  chapter: "",
+  location: {
+    country: "",
+    state: "",
+    city: "",
   },
   signedUp: false,
+  verified: false,
+  approved: AdminApprovalStatus.PENDING,
   authenticated: false,
-  role: Role.NONPROFIT_USER,
+  role: Role.NONPROFIT_PATIENT,
 };
 
 // Helper function to copy all properties from newState over to the existing state
@@ -26,23 +39,38 @@ const setState = (state: AuthUser, newState: Partial<AuthUser>): AuthUser => {
   state.name = newState.name ?? state.name;
   state.email = newState.email ?? state.email;
   state.phoneNumber = newState.phoneNumber ?? state.phoneNumber;
+  state.startDate = newState.startDate ?? state.startDate;
+  state.birthDate = newState.birthDate ?? state.birthDate;
   state.patientDetails = {
-    birthdate:
-      newState.patientDetails?.birthdate ?? state.patientDetails.birthdate,
     secondaryContactName:
       newState.patientDetails?.secondaryContactName ??
       state.patientDetails.secondaryContactName,
     secondaryContactPhone:
       newState.patientDetails?.secondaryContactPhone ??
       state.patientDetails.secondaryContactPhone,
+    additionalAffiliation:
+      newState.patientDetails?.additionalAffiliation ??
+      state.patientDetails.additionalAffiliation,
+  };
+  state.adminDetails = {
+    active: newState.adminDetails?.active ?? state.adminDetails.active,
+  };
+  state.chapter = newState.chapter ?? state.chapter;
+  state.location = {
+    country: newState.location?.country ?? state.location.country,
+    state: newState.location?.state ?? state.location.state,
+    city: newState.location?.city ?? state.location.city,
   };
   state.signedUp =
     newState.signedUp === undefined ? state.signedUp : newState.signedUp;
+  state.verified =
+    newState.verified === undefined ? state.verified : newState.verified;
+  state.approved = newState.approved ?? state.approved;
+  state.role = newState.role ?? state.role;
   state.authenticated =
     newState.authenticated === undefined
       ? state.authenticated
       : newState.authenticated;
-  state.role = newState.role ?? state.role;
   return state;
 };
 

@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { internalRequest } from "../requests";
-import { UserAnalytics, HttpMethod, Role, User } from "../types";
+import { UserAnalytics, HttpMethod, IUser } from "../types";
 import { GameDetails } from "../redux/reducers/gameDetailsReducer/types";
 
 const patientUrl = "api/patient/auth/login";
@@ -32,20 +32,12 @@ async function getUserAnalytics(): Promise<UserAnalytics> {
 async function emailSignIn(
   email: string,
   password: string,
-): Promise<{ user: User; gameDetails: GameDetails }> {
+): Promise<{ user: IUser; gameDetails: GameDetails }> {
   const auth = getAuth();
   await signInWithEmailAndPassword(auth, email, password);
   const userAnalytics = await getUserAnalytics();
   return {
-    user: {
-      _id: userAnalytics.user._id,
-      name: userAnalytics.user.name,
-      email: userAnalytics.user.email,
-      phoneNumber: userAnalytics.user.phoneNumber,
-      patientDetails: userAnalytics.user.patientDetails,
-      signedUp: userAnalytics.user.signedUp,
-      role: Role.NONPROFIT_USER,
-    },
+    user: userAnalytics.user,
     gameDetails: userAnalytics.gameDetails,
   };
 }

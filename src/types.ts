@@ -4,23 +4,46 @@ import { ImageSourcePropType } from "react-native";
 import { GameDetails } from "./redux/reducers/gameDetailsReducer/types";
 
 export enum Role {
-  NONPROFIT_ADMIN = "Nonprofit Admin",
+  NONPROFIT_PATIENT = "Nonprofit Patient",
   NONPROFIT_VOLUNTEER = "Nonprofit Volunteer",
-  NONPROFIT_USER = "Nonprofit User",
+  NONPROFIT_ADMIN = "Nonprofit Admin",
+  NONPROFIT_CHAPTER_PRESIDENT = "Nonprofit Chapter President",
+  NONPROFIT_REGIONAL_COMMITTEE_MEMBER = "Nonprofit Regional Committee Member",
+  NONPROFIT_DIRECTOR = "Nonprofit Director",
 }
-export interface User {
+
+export enum AdminApprovalStatus {
+  PENDING = "Pending",
+  APPROVED = "Approved",
+  REJECTED = "Rejected",
+}
+
+export interface IUser {
   // the unqiue id assigned to a user. Let MongoDB create this when you insert a document
   // without any_id attribute
-  _id?: string;
+  _id: string;
   name: string;
   email: string;
   phoneNumber: string;
+  birthDate: Date;
+  startDate: Date;
   patientDetails: {
-    birthdate: string;
     secondaryContactName: string;
     secondaryContactPhone: string;
+    additionalAffiliation: string;
+  };
+  adminDetails: {
+    active: boolean;
+  };
+  chapter: string;
+  location: {
+    country: string;
+    state: string;
+    city: string;
   };
   signedUp: boolean;
+  verified: boolean;
+  approved: AdminApprovalStatus;
   role: Role;
 }
 
@@ -144,4 +167,4 @@ export interface InternalResponseData<T> {
   payload?: T;
 }
 
-export type UserAnalytics = { user: User; gameDetails: GameDetails };
+export type UserAnalytics = { user: IUser; gameDetails: GameDetails };
