@@ -6,7 +6,8 @@ import { AdminApprovalStatus, Role } from "../../../types";
 
 const initialState: AuthUser = {
   _id: "",
-  name: "",
+  firstName: "",
+  lastName: "",
   email: "",
   phoneNumber: "",
   startDate: new Date(),
@@ -36,7 +37,8 @@ const initialState: AuthUser = {
 const setState = (state: AuthUser, newState: Partial<AuthUser>): AuthUser => {
   AsyncStorage.setItem("User", JSON.stringify(newState));
   state._id = newState._id ?? state._id;
-  state.name = newState.name ?? state.name;
+  state.firstName = newState.firstName ?? state.firstName;
+  state.lastName = newState.lastName ?? state.lastName;
   state.email = newState.email ?? state.email;
   state.phoneNumber = newState.phoneNumber ?? state.phoneNumber;
   state.startDate = newState.startDate ?? state.startDate;

@@ -72,7 +72,8 @@ const styles = StyleSheet.create({
 function PersonalInfoScreen() {
   const auth = getAuth();
   const userInfo = auth.currentUser;
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [dateofBirth, setDateofBirth] = useState("");
   const [secondContactName, setSecondContactName] = useState("");
@@ -82,7 +83,11 @@ function PersonalInfoScreen() {
   const dispatch = useDispatch();
 
   const isFormValid = () => {
-    if (fullName.length === 0) {
+    if (firstName.length === 0) {
+      return false;
+    }
+
+    if (lastName.length === 0) {
       return false;
     }
 
@@ -197,13 +202,22 @@ function PersonalInfoScreen() {
               width: "100%",
             }}
           >
-            <Text style={styles.textInputTitle}>Name*</Text>
+            <Text style={styles.textInputTitle}>First Name*</Text>
             <TextInput
               accessibilityRole="text"
-              placeholder="Full Name"
+              placeholder="First Name"
               style={styles.textInput}
-              onChangeText={setFullName}
-              value={fullName}
+              onChangeText={setFirstName}
+              value={firstName}
+            />
+
+            <Text style={styles.textInputTitle}>Last Name*</Text>
+            <TextInput
+              accessibilityRole="text"
+              placeholder="Last Name"
+              style={styles.textInput}
+              onChangeText={setLastName}
+              value={lastName}
             />
 
             <Text style={styles.textInputTitle}>Phone Number*</Text>
@@ -286,7 +300,8 @@ function PersonalInfoScreen() {
                 try {
                   const body: Record<string, string> = {
                     email: userInfo.email,
-                    name: fullName,
+                    firstName,
+                    lastName,
                     phoneNumber,
                     birthDate: dateofBirth,
                     secondaryContactName: secondContactName,
