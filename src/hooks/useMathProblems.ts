@@ -9,7 +9,6 @@ import {
   setDifficultyScore,
 } from "../redux/reducers/gameDetailsReducer";
 import { RootState } from "../redux/rootReducer";
-import { GameDetails } from "../redux/reducers/gameDetailsReducer/types";
 import { internalRequest } from "../requests";
 
 const MIN_DIFFICULTY_SCORE = 0;
@@ -21,9 +20,10 @@ type Props = NativeStackScreenProps<RootStackParamList, "MathMain">;
 export default function useMathQuestions({ route, navigation }: Props) {
   const dispatch = useDispatch();
   const [problem, setProblem] = useState(getProblem());
-  const { difficultyScore } = (
-    useSelector<RootState>((state) => state.game) as GameDetails
-  ).math;
+  const difficultyScore = useSelector<RootState>(
+    (state) => state.game.lastSessionsMetrics[0].math.finalDifficultyScore,
+  ) as number;
+
   const statsMap = useRef({
     questionsAttempted: 1,
     questionsCorrect: 0,

@@ -3,22 +3,11 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import ConfettiCannon from "react-native-confetti-cannon";
 import { AVPlaybackSource } from "expo-av";
 
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Button from "../../components/Button";
 import Text from "../../components/Text";
 import useAsyncStorage from "../../hooks/useAsyncStorage";
-import {
-  RootStackParamList,
-  SoundSetting,
-  Settings,
-  HttpMethod,
-} from "../../types";
+import { RootStackParamList, SoundSetting, Settings } from "../../types";
 import useSound from "../../hooks/useSound";
-import { RootState } from "../../redux/rootReducer";
-import { GameDetails } from "../../redux/reducers/gameDetailsReducer/types";
-import { internalRequest } from "../../requests";
-import { resetCompleted } from "../../redux/reducers/gameDetailsReducer";
 
 const sound = require("../../assets/congrats.mp3") as AVPlaybackSource;
 
@@ -51,32 +40,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "ExercisesCompleted">;
 function ExercisesCompleted({ navigation }: Props) {
   const { storageValue: settings } = useAsyncStorage<Settings>("SETTINGS");
   const { unloadSound } = useSound(sound, SoundSetting.voiceOverOn);
-  const { completed } = useSelector<RootState>(
-    (state) => state.game,
-  ) as GameDetails;
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (
-      completed.math &&
-      completed.reading &&
-      completed.trivia &&
-      completed.writing
-    ) {
-      internalRequest({
-        url: "/api/patient/analytics/record-session-complete",
-        method: HttpMethod.POST,
-        authRequired: true,
-      });
-      dispatch(resetCompleted());
-    }
-  }, [
-    completed.math,
-    completed.reading,
-    completed.trivia,
-    completed.writing,
-    dispatch,
-  ]);
   const correct = 1;
   const total = 1;
 

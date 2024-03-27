@@ -12,7 +12,7 @@ import SignUpScreen from "../SignUp/SignUp";
 import PersonalInfoScreen from "../SignUp/PersonalInfo";
 import { RootState } from "../../redux/rootReducer";
 import { getUserAnalytics } from "../../firebase/email_signin";
-import { updateGame } from "../../redux/reducers/gameDetailsReducer";
+import { updateFullState } from "../../redux/reducers/gameDetailsReducer";
 
 type Props = { children: React.ReactNode };
 
@@ -32,7 +32,7 @@ function AuthGuard({ children }: Props) {
               authenticated: true,
             };
             dispatch(login(newState));
-            dispatch(updateGame(userAnalytics.gameDetails));
+            dispatch(updateFullState(userAnalytics.gameDetails));
           });
         } else {
           dispatch(logout());

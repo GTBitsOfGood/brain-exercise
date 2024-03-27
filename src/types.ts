@@ -1,7 +1,6 @@
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { AVPlaybackSource } from "expo-av";
 import { ImageSourcePropType } from "react-native";
-import { GameDetails } from "./redux/reducers/gameDetailsReducer/types";
 
 export enum Role {
   NONPROFIT_PATIENT = "Nonprofit Patient",
@@ -16,6 +15,16 @@ export enum AdminApprovalStatus {
   PENDING = "Pending",
   APPROVED = "Approved",
   REJECTED = "Rejected",
+}
+
+export enum Days {
+  Sunday,
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
 }
 
 export interface IUser {
@@ -46,6 +55,77 @@ export interface IUser {
   verified: boolean;
   approved: AdminApprovalStatus;
   role: Role;
+}
+
+export interface IAnalytics {
+  _id?: string;
+  userID: string;
+  totalSessionsCompleted: number;
+  active: boolean;
+  streak: Days[];
+  lastSessionsMetrics: {
+    date: Date;
+    math: {
+      attempted: boolean;
+      questionsAttempted: number;
+      questionsCorrect: number;
+      finalDifficultyScore: number;
+      timePerQuestion: number;
+    };
+    trivia: {
+      attempted: boolean;
+      questionsAttempted: number;
+      questionsCorrect: number;
+      timePerQuestion: number;
+    };
+    reading: {
+      attempted: boolean; // should be true if the user attempts the section but skips without completing
+      passagesRead: number;
+      timePerPassage: number;
+      wordsPerMinute: number;
+      skipped: boolean;
+    };
+    writing: {
+      attempted: boolean; // should be true if the user attempts the section but skips without completing
+      questionsAnswered: number;
+      timePerQuestion: number;
+      skipped: boolean;
+    };
+  }[];
+  weeklyMetrics: [
+    {
+      date: Date;
+      sessionsCompleted: number;
+      streakLength: number;
+      active: boolean;
+      math: {
+        sessionsCompleted: number;
+        questionsAttempted: number;
+        questionsCorrect: number;
+        finalDifficultyScore: number;
+        timePerQuestion: number;
+      };
+      trivia: {
+        sessionsCompleted: number;
+        questionsAttempted: number;
+        questionsCorrect: number;
+        timePerQuestion: number;
+      };
+      reading: {
+        sessionsAttempted: number;
+        sessionsCompleted: number;
+        passagesRead: number;
+        timePerPassage: number;
+        wordsPerMinute: number;
+      };
+      writing: {
+        sessionsAttempted: number;
+        sessionsCompleted: number;
+        questionsAnswered: number;
+        timePerQuestion: number;
+      };
+    },
+  ];
 }
 
 export type TimeAnalyticsTypes =
@@ -169,3 +249,11 @@ export interface InternalResponseData<T> {
 }
 
 export type UserAnalytics = { user: IUser; gameDetails: GameDetails };
+
+/* gameDetailsReducer type */
+
+export interface GameDetails {
+  active: IAnalytics["active"];
+  streak: IAnalytics["streak"];
+  lastSessionsMetrics: IAnalytics["lastSessionsMetrics"];
+}

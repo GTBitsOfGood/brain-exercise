@@ -4,8 +4,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { internalRequest } from "../requests";
-import { UserAnalytics, HttpMethod, IUser } from "../types";
-import { GameDetails } from "../redux/reducers/gameDetailsReducer/types";
+import { UserAnalytics, HttpMethod, IUser, GameDetails } from "../types";
 
 const patientUrl = "api/patient/auth/login";
 async function emailSignUp(email: string, password: string) {

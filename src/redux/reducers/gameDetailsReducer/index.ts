@@ -1,62 +1,71 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import { GameDetails } from "./types";
+import { GameDetails } from "../../../types";
 
 export const initialState: GameDetails = {
+  active: false,
   streak: [],
-  math: {
-    difficultyScore: 0,
-  },
-  completed: {
-    math: false,
-    writing: false,
-    reading: false,
-    trivia: false,
-  },
+  lastSessionsMetrics: Array<GameDetails["lastSessionsMetrics"][0]>(2).fill({
+    date: new Date(),
+    math: {
+      attempted: false,
+      questionsAttempted: 0,
+      questionsCorrect: 0,
+      finalDifficultyScore: 0,
+      timePerQuestion: 0,
+    },
+    trivia: {
+      attempted: false,
+      questionsAttempted: 0,
+      questionsCorrect: 0,
+      timePerQuestion: 0,
+    },
+    reading: {
+      attempted: false, // should be true if the user attempts the section but skips without completing
+      passagesRead: 0,
+      timePerPassage: 0,
+      wordsPerMinute: 0,
+      skipped: false,
+    },
+    writing: {
+      attempted: false, // should be true if the user attempts the section but skips without completing
+      questionsAnswered: 0,
+      timePerQuestion: 0,
+      skipped: false,
+    },
+  }),
 };
 
 const gameDetailsReducer = createSlice({
   name: "GameDetailsState",
   initialState,
   reducers: {
-    resetCompleted(state) {
-      state.completed = {
-        math: false,
-        reading: false,
-        writing: false,
-        trivia: false,
-      };
+    resetAttempted(state) {
+      state.lastSessionsMetrics[0].math.attempted = false;
+      state.lastSessionsMetrics[0].reading.attempted = false;
+      state.lastSessionsMetrics[0].writing.attempted = false;
+      state.lastSessionsMetrics[0].trivia.attempted = false;
     },
-    updateGame(state, action: { payload: GameDetails; type: string }) {
-      action.payload = {
+    updateFullState(state, action: { payload: GameDetails; type: string }) {
+      state = {
         ...initialState,
         ...action.payload,
       };
-      state.streak = [];
-      for (let i = 0; i < action.payload.streak.length; i += 1) {
-        state.streak.push(action.payload.streak[i]);
-      }
-      state.completed = {
-        math: action.payload.completed.math,
-        reading: action.payload.completed.reading,
-        writing: action.payload.completed.writing,
-        trivia: action.payload.completed.trivia,
-      };
     },
     completedMath(state) {
-      state.completed.math = true;
+      state.lastSessionsMetrics[0].math.attempted = true;
     },
     completedReading(state) {
-      state.completed.reading = true;
+      state.lastSessionsMetrics[0].reading.attempted = true;
     },
     completedWriting(state) {
-      state.completed.writing = true;
+      state.lastSessionsMetrics[0].writing.attempted = true;
     },
     completedTrivia(state) {
-      state.completed.trivia = true;
+      state.lastSessionsMetrics[0].trivia.attempted = true;
     },
     setDifficultyScore(state, action: { payload: number; type: string }) {
-      state.math.difficultyScore = action.payload;
+      state.lastSessionsMetrics[0].math.finalDifficultyScore = action.payload;
     },
   },
 });
@@ -65,8 +74,8 @@ const gameDetailsReducer = createSlice({
 export default gameDetailsReducer.reducer;
 
 export const {
-  resetCompleted,
-  updateGame,
+  resetAttempted,
+  updateFullState,
   completedMath,
   completedReading,
   completedTrivia,

@@ -7,7 +7,7 @@ import Text from "../../components/Text";
 import "react-native-gesture-handler";
 import useSound from "../../hooks/useSound";
 import { RootStackParamList, SoundSetting } from "../../types";
-import { resetCompleted } from "../../redux/reducers/gameDetailsReducer";
+import { resetAttempted } from "../../redux/reducers/gameDetailsReducer";
 
 const sound = require("../../assets/intro.mp3") as AVPlaybackSource;
 
@@ -50,7 +50,7 @@ function GameOverview({ navigation }: Props) {
         title="Begin"
         onPress={() => {
           unloadSound();
-          dispatch(resetCompleted());
+          dispatch(resetAttempted());
           navigation.navigate("MathIntro");
         }}
         buttonStyle={{ marginBottom: 30 }}
