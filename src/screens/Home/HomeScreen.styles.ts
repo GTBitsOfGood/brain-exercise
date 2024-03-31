@@ -14,6 +14,36 @@ export const styles = StyleSheet.create({
     marginVertical: 8,
     color: '#4A4B57',
   },
+  welcomeContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    width: 300,
+    marginLeft: -20,
+    // alignItems: 'center',
+  },
+  greeting: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginVertical: 8,
+    color: '#2B3674',
+    fontWeight: '600',
+  }, 
+  motivation: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginVertical: 8,
+    color: '#4A4B57',
+    fontWeight: '400',
+    marginLeft: -20,
+  },
+  name: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginVertical: 8,
+    color: '#008AFC',
+    fontWeight: '600',
+  },
   squareButton: {
     width: Platform.OS === 'ios' && Platform.isPad ? 150 : 99,
     height: Platform.OS === 'ios' && Platform.isPad ? 150 : 99,
@@ -25,9 +55,37 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  headerContainer: {},
+  footerButton: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  headerContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 35,
+  },
   bodyContainer: {},
-  footerContainer: {},
+  footerContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 10,
+    marginRight: 10,
+    paddingBottom: 20,
+  },
+  footerTextSelected: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#2B3674',
+  },
+  footerTextUnselected: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#9CA5C2',
+  },
   buttonsContainer: {
     paddingLeft: 10,
     paddingRight: 10,
@@ -60,7 +118,7 @@ export const styles = StyleSheet.create({
     height:
       Platform.OS === 'ios' && Platform.isPad
         ? 400
-        : Dimensions.get('window').height * 0.2,
+        : Dimensions.get('window').height * 0.15,
     resizeMode: 'contain',
   },
   icon: {

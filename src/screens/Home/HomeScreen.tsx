@@ -16,6 +16,13 @@ import LogoutButton from '../../components/Auth/LogoutButton';
 import defaultSettings from '../../components/DefaultSettings';
 import { styles, streakStyles } from './HomeScreen.styles';
 import { RootStackParamList, Settings } from '../../types';
+import HomeIcon from '../../assets/HomeIcon'
+import ProfileIcon from '../../assets/ProfileIcon'
+import SettingsIcon from '../../assets/SettingsIcon'
+import VideoIcon from '../../assets/VideoIcon'
+
+// import Home from "../../assets/home.svg";
+
 const logo = require('../../assets/bei.jpg') as AVPlaybackSource;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'GameOverview'>;
@@ -54,9 +61,13 @@ function HomeScreen({ navigation }: Props) {
       {/* title image  + title text*/}
       <View style={styles.headerContainer}>
         <Image style={styles.image} source={logo} />
-        <Text style={styles.title}>
-          Good morning John, Let's achieve your goals together.
-        </Text>
+        <View style={styles.welcomeContainer}>
+          <Text style={styles.greeting}>Good morning </Text>
+          <Text style={styles.name}>John</Text>
+          <Text style={styles.greeting}>,</Text>
+        </View>
+        <Text style={styles.motivation}>Let's achieve your goals together.</Text>
+        
       </View>
 
       {/* verticle button bodies */}
@@ -83,23 +94,24 @@ function HomeScreen({ navigation }: Props) {
 
         {/* footer buttons*/}
         <View style={styles.footerContainer}>
-          <TouchableOpacity>
-            <FeatherIcon name='home' size={24} />
-            <Text>Home</Text>
+          <TouchableOpacity style={styles.footerButton}>
+            <HomeIcon></HomeIcon>
+            <Text style={styles.footerTextSelected}>Home</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => Linking.openURL(youtubeChannelURL)}>
-            <FeatherIcon name='video' size={24} />
+          <TouchableOpacity style={styles.footerButton} onPress={() => Linking.openURL(youtubeChannelURL)}>
+            <VideoIcon></VideoIcon>
+            <Text style={styles.footerTextUnselected}>Video</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity>
-            <FeatherIcon name='user' size={24} />
-            <Text>Profile</Text>
+          <TouchableOpacity style={styles.footerButton}>
+            <ProfileIcon></ProfileIcon>
+            <Text style={styles.footerTextUnselected}>Profile</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity>
-            <FeatherIcon name='settings' size={24} />
-            <Text>Settings</Text>
+          <TouchableOpacity style={styles.footerButton}>
+            <SettingsIcon></SettingsIcon>
+            <Text style={styles.footerTextUnselected}>Settings</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -112,3 +124,7 @@ HomeScreen.propTypes = {
 };
 
 export default HomeScreen;
+
+HomeScreen.options = {
+  headerShown: false,
+};

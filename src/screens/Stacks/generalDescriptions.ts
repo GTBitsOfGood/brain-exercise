@@ -9,7 +9,8 @@ const generalDescriptions: ScreenDescription[] = [
   {
     name: "HomeScreen",
     component: HomeScreen,
-    title: "Home",
+    title: "",
+    options: {headerShown: false}
   },
   {
     name: "GameOverview",
