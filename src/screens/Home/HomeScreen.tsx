@@ -74,27 +74,34 @@ function HomeScreen({ navigation }: Props) {
 
       {/* verticle button bodies */}
       <View style={styles.bodyContainer}>
-      <View style={styles.exercisesContainer}>
-          <Subject
-            iconName='book-open'
-            iconBackgroundColor='#EA4335CC'
-            subjectText='Math'
-          />
-          <Subject
-            iconName='book-open'
-            iconBackgroundColor='#FE7D35'
-            subjectText='Reading'
-          />
-          <Subject
-            iconName='file-text'
-            iconBackgroundColor='#A066FF'
-            subjectText='Writing'
-          />
-          <Subject
-            iconName='help-circle'
-            iconBackgroundColor='#34BC99'
-            subjectText='Trivia'
-          />
+        <View style={styles.exercisesContainer}>
+            <Subject
+              iconName='book-open'
+              iconBackgroundColor='#EA4335CC'
+              subjectText='Math'
+            />
+            <Subject
+              iconName='book-open'
+              iconBackgroundColor='#FE7D35'
+              subjectText='Reading'
+            />
+            <Subject
+              iconName='file-text'
+              iconBackgroundColor='#A066FF'
+              subjectText='Writing'
+            />
+            <Subject
+              iconName='help-circle'
+              iconBackgroundColor='#34BC99'
+              subjectText='Trivia'
+            />
+        </View>
+        {/* completion summary button */}
+        <View>
+          <TouchableOpacity style={styles.summaryButton}>
+            <FeatherIcon name='bar-chart-2' size={20} color='#008AFC' />
+            <Text style={styles.summaryText}>Completion Summary</Text>
+          </TouchableOpacity>
         </View>
       </View>
 

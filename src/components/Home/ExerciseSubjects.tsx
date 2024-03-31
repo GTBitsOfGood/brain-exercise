@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-
 const Subject = ({ iconName, iconBackgroundColor, subjectText }) => {
   const [isCompleted, setIsCompleted] = useState(false);
-
   return (
     <View style={styles.subjectContainer}>
       {/* icon */}
@@ -16,7 +14,6 @@ const Subject = ({ iconName, iconBackgroundColor, subjectText }) => {
           {/* Adjusted for visibility */}
         </View>
       </View>
-
       {/* text & start button */}
       <View style={styles.textContainer}>
         <Text style={styles.subjectText}>{subjectText}</Text>
@@ -37,7 +34,6 @@ const Subject = ({ iconName, iconBackgroundColor, subjectText }) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   subjectContainer: {
     flexDirection: 'row',
@@ -49,7 +45,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginTop: 10,
   },
-
   iconContainer: {
     flex: 1,
     alignItems: 'center',
@@ -102,5 +97,4 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
-
 export default Subject;
