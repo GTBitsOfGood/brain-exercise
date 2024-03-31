@@ -74,45 +74,7 @@ function HomeScreen({ navigation }: Props) {
 
       {/* verticle button bodies */}
       <View style={styles.bodyContainer}>
-        <Text style={styles.headingText}>Today’s exercises</Text>
-
-        <TouchableOpacity style={styles.squareButton}>
-          <FeatherIcon name='book-open' style={styles.icon} />
-          <Text style={styles.squareButtonTitle}>Reading</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.squareButton}>
-          <FeatherIcon name='edit' style={styles.icon} />
-          <Text style={styles.squareButtonTitle}>Writing</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.squareButton}>
-          <FeatherIcon name='bulb' style={styles.icon} />
-          <Text style={styles.squareButtonTitle}>Trivia</Text>
-        </TouchableOpacity>
-
-        {/* footer buttons*/}
-        <View style={styles.footerContainer}>
-          <TouchableOpacity style={styles.footerButton}>
-            <HomeIcon></HomeIcon>
-            <Text style={styles.footerTextSelected}>Home</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.footerButton} onPress={() => Linking.openURL(youtubeChannelURL)}>
-            <VideoIcon></VideoIcon>
-            <Text style={styles.footerTextUnselected}>Video</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.footerButton}>
-            <ProfileIcon></ProfileIcon>
-            <Text style={styles.footerTextUnselected}>Profile</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.footerButton}>
-            <SettingsIcon></SettingsIcon>
-            <Text style={styles.footerTextUnselected}>Settings</Text>
-          </TouchableOpacity>
-        <View style={styles.exercisesContainer}>
+      <View style={styles.exercisesContainer}>
           <Subject
             iconName='book-open'
             iconBackgroundColor='#EA4335CC'
@@ -136,38 +98,32 @@ function HomeScreen({ navigation }: Props) {
         </View>
       </View>
 
-      {/* completion summary button */}
-      <View>
-        <TouchableOpacity style={styles.summaryButton}>
-          <FeatherIcon name='bar-chart-2' size={20} color='#008AFC' />
-          <Text style={styles.summaryText}>Completion Summary</Text>
-        </TouchableOpacity>
+        {/* footer buttons*/}
+        <View style={styles.footerContainer}>
+          <TouchableOpacity style={styles.footerButton}>
+            <HomeIcon></HomeIcon>
+            <Text style={styles.footerTextSelected}>Home</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.footerButton} onPress={() => Linking.openURL(youtubeChannelURL)}>
+            <VideoIcon></VideoIcon>
+            <Text style={styles.footerTextUnselected}>Video</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.footerButton}>
+            <ProfileIcon></ProfileIcon>
+            <Text style={styles.footerTextUnselected}>Profile</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.footerButton}>
+            <SettingsIcon></SettingsIcon>
+            <Text style={styles.footerTextUnselected}>Settings</Text>
+          </TouchableOpacity>
+        
       </View>
 
-      {/* footer buttons*/}
-      <View style={styles.footerContainer}>
-        <TouchableOpacity>
-          <FeatherIcon name='home' size={24} />
-          <Text>Home</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => Linking.openURL(youtubeChannelURL)}>
-          <FeatherIcon name='video' size={24} />
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <FeatherIcon name='user' size={24} />
-          <Text>Profile</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <FeatherIcon name='settings' size={24} />
-          <Text>Settings</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   
-  </View>
   );
 }
 
