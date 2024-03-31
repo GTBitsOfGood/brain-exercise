@@ -51,13 +51,16 @@ function HomeScreen({ navigation }: Props) {
 
   return (
     <View style={styles.root}>
-      <Image style={styles.image} source={logo} />
+      {/* title image  + title text*/}
+      <View style={styles.headerContainer}>
+        <Image style={styles.image} source={logo} />
+        <Text style={styles.title}>
+          Good morning John, Let's achieve your goals together.
+        </Text>
+      </View>
 
-      <Text style={styles.title}>
-        Good morning John, Let's achieve your goals together.
-      </Text>
-
-      <View style={styles.buttonsContainer}>
+      {/* verticle button bodies */}
+      <View style={styles.bodyContainer}>
         <TouchableOpacity style={styles.squareButton}>
           <FeatherIcon name='calculator' style={styles.icon} />
           <Text style={styles.squareButtonTitle}>Math</Text>
@@ -78,8 +81,8 @@ function HomeScreen({ navigation }: Props) {
           <Text style={styles.squareButtonTitle}>Trivia</Text>
         </TouchableOpacity>
 
-        {/* Bottom Navigation */}
-        <View>
+        {/* footer buttons*/}
+        <View style={styles.footerContainer}>
           <TouchableOpacity>
             <FeatherIcon name='home' size={24} />
             <Text>Home</Text>
