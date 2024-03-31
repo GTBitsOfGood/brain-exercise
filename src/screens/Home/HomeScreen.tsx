@@ -1,25 +1,24 @@
-import "react-native-gesture-handler";
-import React, { useState } from "react";
-import { View, Image, TouchableOpacity, Linking } from "react-native";
-import PropTypes from "prop-types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import StepIndicator from "react-native-step-indicator";
-import FeatherIcon from "react-native-vector-icons/Feather";
-import { useFocusEffect } from "@react-navigation/native";
-import { AVPlaybackSource } from "expo-av";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import 'react-native-gesture-handler';
+import React, { useState } from 'react';
+import { View, Image, TouchableOpacity, Linking } from 'react-native';
+import PropTypes from 'prop-types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import StepIndicator from 'react-native-step-indicator';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import { useFocusEffect } from '@react-navigation/native';
+import { AVPlaybackSource } from 'expo-av';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { getStreak } from "../../scripts/progressbar-logic";
-import Text from "../../components/Text";
-import Button from "../../components/Button";
-import LogoutButton from "../../components/Auth/LogoutButton";
-import defaultSettings from "../../components/DefaultSettings";
-import { styles, streakStyles } from "./HomeScreen.styles";
-import { RootStackParamList, Settings } from "../../types";
+import { getStreak } from '../../scripts/progressbar-logic';
+import Text from '../../components/Text';
+import Button from '../../components/Button';
+import LogoutButton from '../../components/Auth/LogoutButton';
+import defaultSettings from '../../components/DefaultSettings';
+import { styles, streakStyles } from './HomeScreen.styles';
+import { RootStackParamList, Settings } from '../../types';
+const logo = require('../../assets/bei.jpg') as AVPlaybackSource;
 
-const logo = require("../../assets/bei.jpg") as AVPlaybackSource;
-
-type Props = NativeStackScreenProps<RootStackParamList, "GameOverview">;
+type Props = NativeStackScreenProps<RootStackParamList, 'GameOverview'>;
 
 //  Home Screen Navigation
 function HomeScreen({ navigation }: Props) {
@@ -31,79 +30,74 @@ function HomeScreen({ navigation }: Props) {
       // Do something when the screen is focused
       getStreak().then((retrievedStreak: number) => setStreak(retrievedStreak));
       const fetchSettings = async () => {
-        const storedSettings = await AsyncStorage.getItem("SETTINGS");
+        const storedSettings = await AsyncStorage.getItem('SETTINGS');
         if (storedSettings) setSettings(JSON.parse(storedSettings) as Settings);
       };
       fetchSettings();
-    }, []),
+    }, [])
   );
 
   let message: string;
   if (streak === 0) {
     message = "Let's Get Started!";
   } else if (streak < 5) {
-    message = "Keep Going!";
+    message = 'Keep Going!';
   } else if (streak === 5) {
-    message = "Well Done!";
+    message = 'Well Done!';
   }
 
   const youtubeChannelURL =
-    "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
+    'https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA';
 
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>{`${
-        streak < settings.streakLength ? streak : settings.streakLength
-      } of ${settings.streakLength} Days`}</Text>
-
-      <StepIndicator
-        customStyles={streakStyles}
-        currentPosition={
-          streak < settings.streakLength ? streak : settings.streakLength
-        }
-        stepCount={settings.streakLength}
-      />
-
-      <Text style={styles.title}>{message}</Text>
-      {/* Home Screen Step Indicator */}
-
       <Image style={styles.image} source={logo} />
 
-      {/* Home Screen Navigation Buttons: */}
-
-      <Button
-        titleStyle={styles.buttonTitle}
-        title="Start Exercises"
-        onPress={() => navigation.navigate("GameOverview")}
-      />
-
-      {
-        // if user is null, show login button, else show logout button
-        // !user ? <LoginButton navigation={navigation}/> : <LogoutButton />
-        <LogoutButton />
-      }
+      <Text style={styles.title}>
+        Good morning John, Let's achieve your goals together.
+      </Text>
 
       <View style={styles.buttonsContainer}>
-        <View>
-          <TouchableOpacity
-            accessibilityRole="none"
-            style={styles.squareButton}
-            onPress={() => navigation.navigate("SettingsScreen")}
-          >
-            <FeatherIcon style={styles.icon} name="settings" />
-          </TouchableOpacity>
-          <Text style={styles.squareButtonTitle}>{"Settings"}</Text>
-        </View>
+        <TouchableOpacity style={styles.squareButton}>
+          <FeatherIcon name='calculator' style={styles.icon} />
+          <Text style={styles.squareButtonTitle}>Math</Text>
+        </TouchableOpacity>
 
+        <TouchableOpacity style={styles.squareButton}>
+          <FeatherIcon name='book-open' style={styles.icon} />
+          <Text style={styles.squareButtonTitle}>Reading</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.squareButton}>
+          <FeatherIcon name='edit' style={styles.icon} />
+          <Text style={styles.squareButtonTitle}>Writing</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.squareButton}>
+          <FeatherIcon name='bulb' style={styles.icon} />
+          <Text style={styles.squareButtonTitle}>Trivia</Text>
+        </TouchableOpacity>
+
+        {/* Bottom Navigation */}
         <View>
-          <TouchableOpacity
-            accessibilityRole="none"
-            style={styles.squareButton}
-            onPress={() => Linking.openURL(youtubeChannelURL)}
-          >
-            <FeatherIcon style={styles.icon} name="youtube" />
+          <TouchableOpacity>
+            <FeatherIcon name='home' size={24} />
+            <Text>Home</Text>
           </TouchableOpacity>
-          <Text style={styles.squareButtonTitle}>{"Video"}</Text>
+
+          <TouchableOpacity onPress={() => Linking.openURL(youtubeChannelURL)}>
+            <FeatherIcon name='video' size={24} />
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <FeatherIcon name='user' size={24} />
+            <Text>Profile</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <FeatherIcon name='settings' size={24} />
+            <Text>Settings</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
