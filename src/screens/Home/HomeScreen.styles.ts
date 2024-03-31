@@ -26,8 +26,38 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerContainer: {},
-  bodyContainer: {},
+
+  bodyContainer: {
+    justifyContent: 'space-between',
+    paddingTop: 16,
+    paddingBottom: 16,
+  },
+
+  headingText: { fontSize: 20, fontWeight: 'bold' },
+
+  exercisesContainer: { marginBottom: 24 },
+
+  summaryButton: {
+    backgroundColor: '#E3EAFC',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+    flexDirection: 'row',
+    padding: 10,
+    marginLeft: 60,
+    marginRight: 60,
+    gap: 10,
+  },
+
+  summaryText: {
+    backgroundColor: '#E3EAFC',
+    color: '#008AFC',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
   footerContainer: {},
+
   buttonsContainer: {
     paddingLeft: 10,
     paddingRight: 10,
