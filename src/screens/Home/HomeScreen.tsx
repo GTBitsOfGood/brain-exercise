@@ -8,6 +8,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import { useFocusEffect } from '@react-navigation/native';
 import { AVPlaybackSource } from 'expo-av';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useSelector } from 'react-redux';
 
 import { getStreak } from '../../scripts/progressbar-logic';
 import Text from '../../components/Text';
@@ -25,6 +26,8 @@ import VideoIcon from '../../assets/VideoIcon';
 
 import Subject from '../../components/Home/ExerciseSubjects';
 import { GestureResponderEvent } from 'react-native-modal';
+import { RootState } from '../../redux/rootReducer';
+import { AuthUser } from '../../redux/reducers/authReducer/types';
 const logo = require('../../assets/bei.jpg') as AVPlaybackSource;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'GameOverview'>;
@@ -33,6 +36,8 @@ type Props = NativeStackScreenProps<RootStackParamList, 'GameOverview'>;
 function HomeScreen({ navigation }: Props) {
   const [settings, setSettings] = useState(defaultSettings);
   const [streak, setStreak] = useState(0);
+
+  const userInfo = useSelector<RootState>((state) => state.auth) as AuthUser;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -65,7 +70,7 @@ function HomeScreen({ navigation }: Props) {
         <Image style={styles.image} source={logo} />
         <View style={styles.welcomeContainer}>
           <Text style={styles.greeting}>Good morning </Text>
-          <Text style={styles.name}>John</Text>
+          <Text style={styles.name}>{userInfo.firstName}</Text>
           <Text style={styles.greeting}>,</Text>
         </View>
         <Text style={styles.motivation}>
@@ -75,6 +80,7 @@ function HomeScreen({ navigation }: Props) {
 
       {/* verticle button bodies */}
       <View style={styles.bodyContainer}>
+        <Text style={styles.headingText}>Today’s exercises</Text>
         <View style={styles.exercisesContainer}>
           <Subject
             iconName='book-open'

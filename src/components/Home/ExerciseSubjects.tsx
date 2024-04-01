@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+
 const Subject = ({ iconName, iconBackgroundColor, subjectText }) => {
   const [isCompleted, setIsCompleted] = useState(false);
+
   return (
     <View style={styles.subjectContainer}>
       {/* icon */}
