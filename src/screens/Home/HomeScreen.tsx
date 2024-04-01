@@ -16,10 +16,10 @@ import LogoutButton from '../../components/Auth/LogoutButton';
 import defaultSettings from '../../components/DefaultSettings';
 import { styles, streakStyles } from './HomeScreen.styles';
 import { RootStackParamList, Settings } from '../../types';
-import HomeIcon from '../../assets/HomeIcon'
-import ProfileIcon from '../../assets/ProfileIcon'
-import SettingsIcon from '../../assets/SettingsIcon'
-import VideoIcon from '../../assets/VideoIcon'
+import HomeIcon from '../../assets/HomeIcon';
+import ProfileIcon from '../../assets/ProfileIcon';
+import SettingsIcon from '../../assets/SettingsIcon';
+import VideoIcon from '../../assets/VideoIcon';
 
 // import Home from "../../assets/home.svg";
 
@@ -68,33 +68,34 @@ function HomeScreen({ navigation }: Props) {
           <Text style={styles.name}>John</Text>
           <Text style={styles.greeting}>,</Text>
         </View>
-        <Text style={styles.motivation}>Let's achieve your goals together.</Text>
-        
+        <Text style={styles.motivation}>
+          Let's achieve your goals together.
+        </Text>
       </View>
 
       {/* verticle button bodies */}
       <View style={styles.bodyContainer}>
         <View style={styles.exercisesContainer}>
-            <Subject
-              iconName='book-open'
-              iconBackgroundColor='#EA4335CC'
-              subjectText='Math'
-            />
-            <Subject
-              iconName='book-open'
-              iconBackgroundColor='#FE7D35'
-              subjectText='Reading'
-            />
-            <Subject
-              iconName='file-text'
-              iconBackgroundColor='#A066FF'
-              subjectText='Writing'
-            />
-            <Subject
-              iconName='help-circle'
-              iconBackgroundColor='#34BC99'
-              subjectText='Trivia'
-            />
+          <Subject
+            iconName='book-open'
+            iconBackgroundColor='#EA4335CC'
+            subjectText='Math'
+          />
+          <Subject
+            iconName='book-open'
+            iconBackgroundColor='#FE7D35'
+            subjectText='Reading'
+          />
+          <Subject
+            iconName='file-text'
+            iconBackgroundColor='#A066FF'
+            subjectText='Writing'
+          />
+          <Subject
+            iconName='help-circle'
+            iconBackgroundColor='#34BC99'
+            subjectText='Trivia'
+          />
         </View>
         {/* completion summary button */}
         <View>
@@ -105,32 +106,32 @@ function HomeScreen({ navigation }: Props) {
         </View>
       </View>
 
-        {/* footer buttons*/}
-        <View style={styles.footerContainer}>
-          <TouchableOpacity style={styles.footerButton}>
-            <HomeIcon></HomeIcon>
-            <Text style={styles.footerTextSelected}>Home</Text>
-          </TouchableOpacity>
+      {/* footer buttons*/}
+      <View style={styles.footerContainer}>
+        <TouchableOpacity style={styles.footerButton}>
+          <HomeIcon></HomeIcon>
+          <Text style={styles.footerTextSelected}>Home</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity style={styles.footerButton} onPress={() => Linking.openURL(youtubeChannelURL)}>
-            <VideoIcon></VideoIcon>
-            <Text style={styles.footerTextUnselected}>Video</Text>
-          </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.footerButton}
+          onPress={() => Linking.openURL(youtubeChannelURL)}
+        >
+          <VideoIcon></VideoIcon>
+          <Text style={styles.footerTextUnselected}>Video</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity style={styles.footerButton}>
-            <ProfileIcon></ProfileIcon>
-            <Text style={styles.footerTextUnselected}>Profile</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.footerButton}>
+          <ProfileIcon></ProfileIcon>
+          <Text style={styles.footerTextUnselected}>Profile</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity style={styles.footerButton}>
-            <SettingsIcon></SettingsIcon>
-            <Text style={styles.footerTextUnselected}>Settings</Text>
-          </TouchableOpacity>
-        
+        <TouchableOpacity style={styles.footerButton}>
+          <SettingsIcon></SettingsIcon>
+          <Text style={styles.footerTextUnselected}>Settings</Text>
+        </TouchableOpacity>
       </View>
-
     </View>
-  
   );
 }
 
