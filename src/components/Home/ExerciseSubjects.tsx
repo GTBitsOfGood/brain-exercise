@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Subject = ({ iconName, iconBackgroundColor, subjectText }) => {
   const [isCompleted, setIsCompleted] = useState(false);
@@ -13,10 +15,10 @@ const Subject = ({ iconName, iconBackgroundColor, subjectText }) => {
         style={[styles.iconContainer, { backgroundColor: iconBackgroundColor }]}
       >
         <View style={styles.whiteCircle}>
-          <FeatherIcon name={iconName} size={24} color='black' />
-          {/* Adjusted for visibility */}
+          <FontAwesome5 name={iconName} size={24} color={iconBackgroundColor} />
         </View>
       </View>
+
       {/* text & start button */}
       <View style={styles.textContainer}>
         <Text style={styles.subjectText}>{subjectText}</Text>
@@ -29,7 +31,7 @@ const Subject = ({ iconName, iconBackgroundColor, subjectText }) => {
           </TouchableOpacity>
         ) : (
           <View style={styles.completedContainer}>
-            <FeatherIcon name='check-circle' size={24} color='#05CD99' />
+            <FontAwesome name='check-circle' size={24} color='#05CD99' />
             <Text style={styles.completedText}>Completed</Text>
           </View>
         )}

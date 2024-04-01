@@ -38,6 +38,7 @@ function HomeScreen({ navigation }: Props) {
   const [streak, setStreak] = useState(0);
 
   const userInfo = useSelector<RootState>((state) => state.auth) as AuthUser;
+  userInfo.firstName;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -83,7 +84,7 @@ function HomeScreen({ navigation }: Props) {
         <Text style={styles.headingText}>Today’s exercises</Text>
         <View style={styles.exercisesContainer}>
           <Subject
-            iconName='book-open'
+            iconName='square-root-alt'
             iconBackgroundColor='#EA4335CC'
             subjectText='Math'
           />
@@ -93,12 +94,12 @@ function HomeScreen({ navigation }: Props) {
             subjectText='Reading'
           />
           <Subject
-            iconName='file-text'
+            iconName='file-alt'
             iconBackgroundColor='#A066FF'
             subjectText='Writing'
           />
           <Subject
-            iconName='help-circle'
+            iconName='question-circle'
             iconBackgroundColor='#34BC99'
             subjectText='Trivia'
           />
