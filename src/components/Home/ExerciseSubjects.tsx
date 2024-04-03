@@ -9,7 +9,9 @@ const Subject = ({ iconName, iconBackgroundColor, subjectText }) => {
   const [isCompleted, setIsCompleted] = useState(false);
 
   return (
-    <View style={styles.subjectContainer}>
+    <View
+      style={[styles.subjectContainer, isCompleted ? { opacity: 0.5 } : {}]}
+    >
       {/* icon */}
       <View
         style={[styles.iconContainer, { backgroundColor: iconBackgroundColor }]}
