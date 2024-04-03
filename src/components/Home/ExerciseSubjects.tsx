@@ -5,9 +5,12 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-const Subject = ({ iconName, iconBackgroundColor, subjectText }) => {
-  const [isCompleted, setIsCompleted] = useState(false);
-
+const Subject = ({
+  iconName,
+  iconBackgroundColor,
+  subjectText,
+  isCompleted,
+}) => {
   return (
     <View
       style={[styles.subjectContainer, isCompleted ? { opacity: 0.5 } : {}]}
@@ -25,10 +28,7 @@ const Subject = ({ iconName, iconBackgroundColor, subjectText }) => {
       <View style={styles.textContainer}>
         <Text style={styles.subjectText}>{subjectText}</Text>
         {!isCompleted ? (
-          <TouchableOpacity
-            style={styles.startButton}
-            onPress={() => setIsCompleted(true)}
-          >
+          <TouchableOpacity style={styles.startButton}>
             <Text style={styles.startButtonText}>Start</Text>
           </TouchableOpacity>
         ) : (

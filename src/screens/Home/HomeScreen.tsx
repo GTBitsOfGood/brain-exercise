@@ -38,7 +38,9 @@ function HomeScreen({ navigation }: Props) {
   const [streak, setStreak] = useState(0);
 
   const userInfo = useSelector<RootState>((state) => state.auth) as AuthUser;
-  userInfo.firstName;
+  const gameDetails = useSelector<RootState>(
+    (state) => state.game.lastSessionsMetrics[0]
+  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -64,6 +66,16 @@ function HomeScreen({ navigation }: Props) {
   const youtubeChannelURL =
     'https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA';
 
+  const getSubjectStatus = (subject) => {
+    return gameDetails[subject].completed ? 'Completed' : 'Not Completed';
+  };
+
+  // hard coded rn (fix it later)
+  const subjects = ['math', 'reading', 'writing', 'trivia'];
+  const incompleteCount = subjects.reduce((acc, subject) => {
+    return acc + (!gameDetails[subject].completed ? 1 : 0);
+  }, 0);
+
   return (
     <View style={styles.root}>
       {/* title image  + title text*/}
@@ -74,11 +86,17 @@ function HomeScreen({ navigation }: Props) {
           <Text style={styles.name}>{userInfo.firstName}</Text>
           <Text style={styles.greeting}>,</Text>
         </View>
-        <Text style={styles.motivation}>
-          Let's achieve your goals together.
-        </Text>
+        {incompleteCount === 0 || incompleteCount === subjects.length ? (
+          <Text style={styles.motivation}>
+            Let's achieve your goals together.
+          </Text>
+        ) : (
+          // enlish words not numbers
+          <Text style={styles.motivation}>
+            Only {incompleteCount} sections away!
+          </Text>
+        )}
       </View>
-
       {/* verticle button bodies */}
       <View style={styles.bodyContainer}>
         <Text style={styles.headingText}>Today’s exercises</Text>
@@ -87,21 +105,25 @@ function HomeScreen({ navigation }: Props) {
             iconName='square-root-alt'
             iconBackgroundColor='#EA4335CC'
             subjectText='Math'
+            isCompleted={gameDetails['math'].completed}
           />
           <Subject
             iconName='book-open'
             iconBackgroundColor='#FE7D35'
             subjectText='Reading'
+            isCompleted={gameDetails['reading'].completed}
           />
           <Subject
             iconName='file-alt'
             iconBackgroundColor='#A066FF'
             subjectText='Writing'
+            isCompleted={gameDetails['writing'].completed}
           />
           <Subject
             iconName='question-circle'
             iconBackgroundColor='#34BC99'
             subjectText='Trivia'
+            isCompleted={gameDetails['trivia'].completed}
           />
         </View>
         {/* completion summary button */}
@@ -112,7 +134,6 @@ function HomeScreen({ navigation }: Props) {
           </TouchableOpacity>
         </View>
       </View>
-
       {/* footer buttons*/}
       <View style={styles.footerContainer}>
         <TouchableOpacity style={styles.footerButton}>
