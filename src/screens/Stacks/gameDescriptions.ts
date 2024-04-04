@@ -16,7 +16,7 @@ const triviaImage = require("../../assets/Trivia_Icon.png") as AVPlaybackSource;
 const gameDescriptions: GameDescriptions = {
   Math: {
     title: "Math",
-    minutes: 5,
+    minutes: 0.1,
     intro: {
       name: "MathIntro",
       sound: mathSound,
@@ -27,12 +27,12 @@ const gameDescriptions: GameDescriptions = {
     },
     game: {
       name: "MathMain",
-      nextScreenArgs: ["ReadingIntro"],
+      nextScreenArgs: ["ExercisesCompleted"],
     },
   },
   Reading: {
     title: "Reading",
-    minutes: 5,
+    minutes: 0.1,
     intro: {
       name: "ReadingIntro",
       sound: readingSound,
@@ -43,12 +43,12 @@ const gameDescriptions: GameDescriptions = {
     },
     game: {
       name: "ReadingMain",
-      nextScreenArgs: ["WritingIntro"],
+      nextScreenArgs: ["ExercisesCompleted"],
     },
   },
   Writing: {
     title: "Writing",
-    minutes: 5,
+    minutes: 0.1,
     intro: {
       name: "WritingIntro",
       sound: writingSound,
@@ -59,12 +59,12 @@ const gameDescriptions: GameDescriptions = {
     },
     game: {
       name: "WritingMain",
-      nextScreenArgs: ["TriviaIntro"],
+      nextScreenArgs: ["ExercisesCompleted"],
     },
   },
   Trivia: {
     title: "Writing (Trivia)",
-    minutes: 5,
+    minutes: 0.1,
     intro: {
       name: "TriviaIntro",
       sound: triviaSound,

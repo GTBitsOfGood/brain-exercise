@@ -39,7 +39,7 @@ function MathMain({ route, navigation }: Props) {
           remainingTimeRef.current.getRemainingTime();
       }, waitSeconds * 1000);
     },
-    [getNewProblem, remainingTimeRef],
+    [getNewProblem, remainingTimeRef]
   );
 
   const onPressChoice = (choiceValue: number) => {
@@ -47,7 +47,7 @@ function MathMain({ route, navigation }: Props) {
     updateStatsOnAnswer(
       isCorrect,
       prevProblemRemainingTimeRef.current -
-        remainingTimeRef.current.getRemainingTime(),
+        remainingTimeRef.current.getRemainingTime()
     );
     if (isCorrect) {
       Toast.show({
