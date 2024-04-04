@@ -8,7 +8,6 @@ import Text from "../../components/Text";
 import useAsyncStorage from "../../hooks/useAsyncStorage";
 import { RootStackParamList, SoundSetting, Settings } from "../../types";
 import useSound from "../../hooks/useSound";
-import { GameTypes } from "../../types";
 
 const sound = require("../../assets/congrats.mp3") as AVPlaybackSource;
 
@@ -41,7 +40,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "ExercisesCompleted">;
 function ExercisesCompleted({ navigation }: Props) {
   const { storageValue: settings } = useAsyncStorage<Settings>("SETTINGS");
   const { unloadSound } = useSound(sound, SoundSetting.voiceOverOn);
-  const gameCompleted = "Math";
+
   const correct = 1;
   const total = 1;
 

@@ -35,31 +35,31 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <SafeAreaProvider>
-          {/* <AuthGuard> */}
-          <NavigationContainerWithTracking>
-            <Stack.Navigator
-              // Consistent styling across all stacked screens
-              screenOptions={{
-                headerBackTitleVisible: false,
-                gestureEnabled: false,
-                headerTintColor: "black",
-                headerLeft: null,
-                headerStyle: {
-                  backgroundColor: "white",
-                },
-                headerTitleStyle: {
-                  fontWeight: "bold",
-                  fontSize: 22,
-                  color: "black",
-                },
-                headerTitleAlign: "center",
-                animation: "fade",
-              }}
-            >
-              {MergedStacks}
-            </Stack.Navigator>
-          </NavigationContainerWithTracking>
-          {/* </AuthGuard> */}
+          <AuthGuard>
+            <NavigationContainerWithTracking>
+              <Stack.Navigator
+                // Consistent styling across all stacked screens
+                screenOptions={{
+                  headerBackTitleVisible: false,
+                  gestureEnabled: false,
+                  headerTintColor: "black",
+                  headerLeft: null,
+                  headerStyle: {
+                    backgroundColor: "white",
+                  },
+                  headerTitleStyle: {
+                    fontWeight: "bold",
+                    fontSize: 22,
+                    color: "black",
+                  },
+                  headerTitleAlign: "center",
+                  animation: "fade",
+                }}
+              >
+                {MergedStacks}
+              </Stack.Navigator>
+            </NavigationContainerWithTracking>
+          </AuthGuard>
         </SafeAreaProvider>
       </PersistGate>
     </Provider>
@@ -75,5 +75,5 @@ axios.interceptors.request.use(
     // Do something with request error
     logAxiosError(error);
     return Promise.reject(error);
-  }
+  },
 );

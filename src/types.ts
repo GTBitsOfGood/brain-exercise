@@ -162,8 +162,8 @@ export type RootStackParamList = {
   TriviaIntro: { nextScreenArgs: NavigationArgs } | undefined;
   TriviaMain: { nextScreenArgs: NavigationArgs } | undefined;
   Pause: undefined;
-  ExercisesCompleted: {nextScreenArgs: NavigationArgs} | undefined;
-  SectionSummary:{nextScreenArgs: NavigationArgs} | undefined;
+  ExercisesCompleted: { nextScreenArgs: NavigationArgs } | undefined;
+  SectionSummary: { nextScreenArgs: NavigationArgs } | undefined;
   // SectionSummary: {gameCompleted: string};
   // SectionSummary:{gameCompleted: GameTypes} | undefined;
 
