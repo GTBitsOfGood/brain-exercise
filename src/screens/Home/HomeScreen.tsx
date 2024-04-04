@@ -52,6 +52,11 @@ function HomeScreen({ navigation }: Props) {
 
   return (
     <View style={styles.root}>
+      <Button
+        titleStyle={styles.buttonTitle}
+        title="Completion Summary Screen"
+        onPress={() => navigation.navigate("CompletionSummaryScreen")}
+      />
       <Text style={styles.title}>{`${
         streak < settings.streakLength ? streak : settings.streakLength
       } of ${settings.streakLength} Days`}</Text>

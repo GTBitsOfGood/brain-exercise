@@ -151,6 +151,7 @@ export interface Settings {
 
 export type RootStackParamList = {
   HomeScreen: undefined;
+  CompletionSummaryScreen: undefined;
   SignUpScreen: undefined;
   GameOverview: undefined;
   MathIntro: { nextScreenArgs: NavigationArgs } | undefined;
