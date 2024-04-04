@@ -8,19 +8,12 @@ export const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: 'white',
   },
-  title: {
-    fontSize: 34,
-    textAlign: 'center',
-    marginVertical: 8,
-    color: '#4A4B57',
-  },
   welcomeContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: 300,
-    marginLeft: -20,
-    // alignItems: 'center',
+    alignItems: 'center',
   },
   greeting: {
     fontSize: 24,
@@ -35,7 +28,7 @@ export const styles = StyleSheet.create({
     marginVertical: 8,
     color: '#4A4B57',
     fontWeight: '400',
-    marginLeft: -20,
+    paddingLeft: 4,
   },
   name: {
     fontSize: 24,
@@ -43,17 +36,6 @@ export const styles = StyleSheet.create({
     marginVertical: 8,
     color: '#008AFC',
     fontWeight: '600',
-  },
-  squareButton: {
-    width: Platform.OS === 'ios' && Platform.isPad ? 150 : 99,
-    height: Platform.OS === 'ios' && Platform.isPad ? 150 : 99,
-    backgroundColor: 'white',
-    borderColor: '#005AA3',
-    borderWidth: 5,
-    borderRadius: 25,
-    marginTop: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   footerButton: {
     flexDirection: 'column',
@@ -64,8 +46,8 @@ export const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 35,
+    alignItems: 'flex-start',
+    paddingTop: 10,
   },
   bodyContainer: {
     justifyContent: 'space-between',
@@ -78,17 +60,25 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginLeft: 10,
     marginRight: 10,
-    paddingBottom: 20,
+    paddingBottom: 4,
+  },
+  divider: {
+    width: '100%',
+    minWidth: 230,
+    height: 1.5,
+    backgroundColor: '#E3EAFC',
   },
   footerTextSelected: {
     fontSize: 16,
     fontWeight: '600',
     color: '#2B3674',
+    paddingTop: 4,
   },
   footerTextUnselected: {
     fontSize: 16,
     fontWeight: '500',
     color: '#9CA5C2',
+    paddingTop: 4,
   },
 
 
@@ -114,36 +104,9 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-
-  buttonsContainer: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    justifyContent: 'space-around',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignContent: 'stretch',
-  },
-  buttonTitle: {
-    alignSelf: 'center',
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  squareButtonTitle: {
-    alignSelf: 'center',
-    fontSize: 20,
-    fontWeight: '400',
-  },
-  imageContainer: {
-    flex: 2,
-    width: '100%',
-    height: 150,
-    borderRadius: 2,
-    flexDirection: 'column',
-    padding: 8,
-  },
   image: {
     alignSelf: 'center',
-    width: Dimensions.get('window').width - 50,
+    width: Dimensions.get('window').width - 200,
     height:
       Platform.OS === 'ios' && Platform.isPad
         ? 400

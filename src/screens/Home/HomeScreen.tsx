@@ -38,10 +38,17 @@ function HomeScreen({ navigation }: Props) {
   const [streak, setStreak] = useState(0);
 
   const userInfo = useSelector<RootState>((state) => state.auth) as AuthUser;
-  const gameDetails = useSelector<RootState>(
-    (state) => state.game.lastSessionsMetrics[0]
-  );
-
+  // const gameDetails = useSelector<RootState>(
+  //   (state) => state.game.lastSessionsMetrics[0]
+  // );
+  const gameDetails = useSelector<RootState>((state) => {
+    const lastSessionsMetrics = state.game.lastSessionsMetrics;
+    if (lastSessionsMetrics && lastSessionsMetrics.length > 0) {
+      return lastSessionsMetrics[0];
+    } else {
+      return null; 
+    }
+  });
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
@@ -66,14 +73,11 @@ function HomeScreen({ navigation }: Props) {
   const youtubeChannelURL =
     'https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA';
 
-  const getSubjectStatus = (subject) => {
-    return gameDetails[subject].completed ? 'Completed' : 'Not Completed';
-  };
-
-  // hard coded rn (fix it later)
   const subjects = ['math', 'reading', 'writing', 'trivia'];
+
   const incompleteCount = subjects.reduce((acc, subject) => {
-    return acc + (!gameDetails[subject].completed ? 1 : 0);
+    const gameDetail = gameDetails && gameDetails[subject];
+    return acc + (gameDetail && !gameDetail.completed ? 1 : 0);
   }, 0);
 
   return (
@@ -91,12 +95,12 @@ function HomeScreen({ navigation }: Props) {
             Let's achieve your goals together.
           </Text>
         ) : (
-          // enlish words not numbers
-          <Text style={styles.motivation}>
-            Only {incompleteCount} sections away!
-          </Text>
+          <View style={styles.motivation}>
+            Only {integerToWords(incompleteCount)} sections away!
+          </View>
         )}
       </View>
+      <View style={styles.divider}></View>
       {/* verticle button bodies */}
       <View style={styles.bodyContainer}>
         <Text style={styles.headingText}>Today’s exercises</Text>
@@ -105,25 +109,25 @@ function HomeScreen({ navigation }: Props) {
             iconName='square-root-alt'
             iconBackgroundColor='#EA4335CC'
             subjectText='Math'
-            isCompleted={gameDetails['math'].completed}
+            isCompleted={gameDetails && gameDetails['math'].completed}
           />
           <Subject
             iconName='book-open'
             iconBackgroundColor='#FE7D35'
             subjectText='Reading'
-            isCompleted={gameDetails['reading'].completed}
+            isCompleted={gameDetails && gameDetails['reading'].completed}
           />
           <Subject
             iconName='file-alt'
             iconBackgroundColor='#A066FF'
             subjectText='Writing'
-            isCompleted={gameDetails['writing'].completed}
+            isCompleted={gameDetails && gameDetails['writing'].completed}
           />
           <Subject
             iconName='question-circle'
             iconBackgroundColor='#34BC99'
             subjectText='Trivia'
-            isCompleted={gameDetails['trivia'].completed}
+            isCompleted={gameDetails && gameDetails['trivia'].completed}
           />
         </View>
         {/* completion summary button */}
@@ -161,6 +165,45 @@ function HomeScreen({ navigation }: Props) {
       </View>
     </View>
   );
+}
+
+function integerToWords(number: number): string {
+  const ones: string[] = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  const teens: string[] = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+  const tens: string[] = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+  if (number === 0) return 'zero';
+
+  let words = '';
+
+  if (number >= 1000000) {
+    words += integerToWords(Math.floor(number / 1000000)) + ' million ';
+    number %= 1000000;
+  }
+
+  if (number >= 1000) {
+    words += integerToWords(Math.floor(number / 1000)) + ' thousand ';
+    number %= 1000;
+  }
+
+  if (number >= 100) {
+    words += ones[Math.floor(number / 100)] + ' hundred ';
+    number %= 100;
+  }
+
+  if (number >= 20) {
+    words += tens[Math.floor(number / 10)] + ' ';
+    number %= 10;
+  } else if (number >= 10) {
+    words += teens[number - 10] + ' ';
+    number = 0;
+  }
+
+  if (number > 0) {
+    words += ones[number] + ' ';
+  }
+
+  return words.trim();
 }
 
 HomeScreen.propTypes = {
