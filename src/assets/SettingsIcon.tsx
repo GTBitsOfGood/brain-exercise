@@ -1,5 +1,5 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
+import * as React from "react";
+import Svg, { Path } from "react-native-svg";
 
 function SettingsIcon(props) {
   return (
@@ -16,7 +16,7 @@ function SettingsIcon(props) {
         fill="#9CA5C2"
       />
     </Svg>
-  )
+  );
 }
 
-export default SettingsIcon
+export default SettingsIcon;

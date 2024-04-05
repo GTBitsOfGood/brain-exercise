@@ -22,7 +22,6 @@ export default HomeIcon;
 //   return (
 //     <View>
 
-    
 //     <Svg
 //       width={37}
 //       height={37}

@@ -36,29 +36,29 @@ export default function App() {
       <PersistGate persistor={persistor} loading={null}>
         <SafeAreaProvider>
           {/* <AuthGuard> */}
-            <NavigationContainerWithTracking>
-              <Stack.Navigator
-                // Consistent styling across all stacked screens
-                screenOptions={{
-                  headerBackTitleVisible: false,
-                  gestureEnabled: false,
-                  headerTintColor: "black",
-                  headerLeft: null,
-                  headerStyle: {
-                    backgroundColor: "white",
-                  },
-                  headerTitleStyle: {
-                    fontWeight: "bold",
-                    fontSize: 22,
-                    color: "black",
-                  },
-                  headerTitleAlign: "center",
-                  animation: "fade",
-                }}
-              >
-                {MergedStacks}
-              </Stack.Navigator>
-            </NavigationContainerWithTracking>
+          <NavigationContainerWithTracking>
+            <Stack.Navigator
+              // Consistent styling across all stacked screens
+              screenOptions={{
+                headerBackTitleVisible: false,
+                gestureEnabled: false,
+                headerTintColor: "black",
+                headerLeft: null,
+                headerStyle: {
+                  backgroundColor: "white",
+                },
+                headerTitleStyle: {
+                  fontWeight: "bold",
+                  fontSize: 22,
+                  color: "black",
+                },
+                headerTitleAlign: "center",
+                animation: "fade",
+              }}
+            >
+              {MergedStacks}
+            </Stack.Navigator>
+          </NavigationContainerWithTracking>
           {/* </AuthGuard> */}
         </SafeAreaProvider>
       </PersistGate>

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, Linking } from 'react-native';
 import PropTypes from 'prop-types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import StepIndicator from 'react-native-step-indicator';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { useFocusEffect } from '@react-navigation/native';
 import { AVPlaybackSource } from 'expo-av';
@@ -12,10 +11,8 @@ import { useSelector } from 'react-redux';
 
 import { getStreak } from '../../scripts/progressbar-logic';
 import Text from '../../components/Text';
-import Button from '../../components/Button';
-import LogoutButton from '../../components/Auth/LogoutButton';
 import defaultSettings from '../../components/DefaultSettings';
-import { styles, streakStyles } from './HomeScreen.styles';
+import { styles } from './HomeScreen.styles';
 import { RootStackParamList, Settings } from '../../types';
 import HomeIcon from '../../assets/HomeIcon';
 import ProfileIcon from '../../assets/ProfileIcon';
@@ -25,7 +22,6 @@ import VideoIcon from '../../assets/VideoIcon';
 // import Home from "../../assets/home.svg";
 
 import Subject from '../../components/Home/ExerciseSubjects';
-import { GestureResponderEvent } from 'react-native-modal';
 import { RootState } from '../../redux/rootReducer';
 import { AuthUser } from '../../redux/reducers/authReducer/types';
 const logo = require('../../assets/bei.jpg') as AVPlaybackSource;
@@ -46,7 +42,7 @@ function HomeScreen({ navigation }: Props) {
     if (lastSessionsMetrics && lastSessionsMetrics.length > 0) {
       return lastSessionsMetrics[0];
     } else {
-      return null; 
+      return null;
     }
   });
   useFocusEffect(
@@ -77,7 +73,7 @@ function HomeScreen({ navigation }: Props) {
 
   const incompleteCount = subjects.reduce((acc, subject) => {
     const gameDetail = gameDetails && gameDetails[subject];
-    return acc + (gameDetail && !gameDetail.completed ? 1 : 0);
+    return acc + (gameDetail && !gameDetail.attempted ? 1 : 0);
   }, 0);
 
   return (
@@ -109,25 +105,25 @@ function HomeScreen({ navigation }: Props) {
             iconName='square-root-alt'
             iconBackgroundColor='#EA4335CC'
             subjectText='Math'
-            isCompleted={gameDetails && gameDetails['math'].completed}
+            isCompleted={gameDetails && gameDetails['math'].attempted}
           />
           <Subject
             iconName='book-open'
             iconBackgroundColor='#FE7D35'
             subjectText='Reading'
-            isCompleted={gameDetails && gameDetails['reading'].completed}
+            isCompleted={gameDetails && gameDetails['reading'].attempted}
           />
           <Subject
             iconName='file-alt'
             iconBackgroundColor='#A066FF'
             subjectText='Writing'
-            isCompleted={gameDetails && gameDetails['writing'].completed}
+            isCompleted={gameDetails && gameDetails['writing'].attempted}
           />
           <Subject
             iconName='question-circle'
             iconBackgroundColor='#34BC99'
             subjectText='Trivia'
-            isCompleted={gameDetails && gameDetails['trivia'].completed}
+            isCompleted={gameDetails && gameDetails['trivia'].attempted}
           />
         </View>
         {/* completion summary button */}
@@ -168,9 +164,42 @@ function HomeScreen({ navigation }: Props) {
 }
 
 function integerToWords(number: number): string {
-  const ones: string[] = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-  const teens: string[] = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
-  const tens: string[] = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  const ones: string[] = [
+    '',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  const teens: string[] = [
+    'ten',
+    'eleven',
+    'twelve',
+    'thirteen',
+    'fourteen',
+    'fifteen',
+    'sixteen',
+    'seventeen',
+    'eighteen',
+    'nineteen',
+  ];
+  const tens: string[] = [
+    '',
+    '',
+    'twenty',
+    'thirty',
+    'forty',
+    'fifty',
+    'sixty',
+    'seventy',
+    'eighty',
+    'ninety',
+  ];
 
   if (number === 0) return 'zero';
 

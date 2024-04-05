@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
-import FeatherIcon from 'react-native-vector-icons/Feather';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
+import FeatherIcon from "react-native-vector-icons/Feather";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const Subject = ({
   iconName,
@@ -28,12 +28,15 @@ const Subject = ({
       <View style={styles.textContainer}>
         <Text style={styles.subjectText}>{subjectText}</Text>
         {!isCompleted ? (
-          <TouchableOpacity style={styles.startButton}>
+          <TouchableOpacity
+            accessibilityRole="button"
+            style={styles.startButton}
+          >
             <Text style={styles.startButtonText}>Start</Text>
           </TouchableOpacity>
         ) : (
           <View style={styles.completedContainer}>
-            <FontAwesome name='check-circle' size={24} color='#05CD99' />
+            <FontAwesome name="check-circle" size={24} color="#05CD99" />
             <Text style={styles.completedText}>Completed</Text>
           </View>
         )}
@@ -43,18 +46,18 @@ const Subject = ({
 };
 const styles = StyleSheet.create({
   subjectContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
     marginBottom: 5,
     borderWidth: 1,
-    borderColor: '#E3EAFC',
+    borderColor: "#E3EAFC",
     borderRadius: 12,
     marginTop: 10,
   },
   iconContainer: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     padding: 8,
     borderTopLeftRadius: 12,
     borderBottomLeftRadius: 12,
@@ -65,43 +68,43 @@ const styles = StyleSheet.create({
     width: 39,
     height: 38,
     borderRadius: 19,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
   },
   textContainer: {
     flex: 7,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingLeft: 16,
     paddingRight: 16,
   },
   subjectText: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     lineHeight: 36,
-    textAlign: 'left',
-    color: '#2B3674',
+    textAlign: "left",
+    color: "#2B3674",
   },
   startButton: {
     paddingVertical: 8,
     paddingHorizontal: 24,
-    backgroundColor: '#E3EAFC',
+    backgroundColor: "#E3EAFC",
     borderRadius: 12,
   },
   startButtonText: {
-    color: '#008AFC',
-    fontWeight: 'bold',
+    color: "#008AFC",
+    fontWeight: "bold",
   },
   completedContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 5,
   },
   completedText: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
 });
 export default Subject;
