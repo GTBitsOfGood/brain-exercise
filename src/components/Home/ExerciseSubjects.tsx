@@ -68,7 +68,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const Subject = ({
+interface SubjectProps {
+  iconName: string;
+  iconBackgroundColor: string;
+  subjectText: string;
+  isCompleted: boolean;
+}
+
+const Subject: React.FC<SubjectProps> = ({
   iconName,
   iconBackgroundColor,
   subjectText,
