@@ -18,7 +18,6 @@ import { store } from "./src/redux/store";
 
 // Time Analytics
 import NavigationContainerWithTracking from "./src/components/NavigationContainerWithTracking";
-import AuthGuard from "./src/screens/Auth/AuthGuard";
 
 const persistor = persistStore(store);
 
@@ -35,7 +34,6 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <SafeAreaProvider>
-          {/* <AuthGuard> */}
           <NavigationContainerWithTracking>
             <Stack.Navigator
               // Consistent styling across all stacked screens

@@ -26,6 +26,7 @@ const logo = require("../../assets/bei.jpg") as AVPlaybackSource;
 type Props = NativeStackScreenProps<RootStackParamList, "GameOverview">;
 
 //  Home Screen Navigation
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function HomeScreen({ navigation }: Props) {
   const userInfo = useSelector<RootState>((state) => state.auth) as AuthUser;
   const gameDetails = useSelector<
@@ -39,14 +40,79 @@ function HomeScreen({ navigation }: Props) {
     return null;
   });
 
+  function integerToWords(num: number): string {
+    let number = num;
+    const ones: string[] = [
+      "",
+      "one",
+      "two",
+      "three",
+      "four",
+      "five",
+      "six",
+      "seven",
+      "eight",
+      "nine",
+    ];
+    const teens: string[] = [
+      "ten",
+      "eleven",
+      "twelve",
+      "thirteen",
+      "fourteen",
+      "fifteen",
+      "sixteen",
+      "seventeen",
+      "eighteen",
+      "nineteen",
+    ];
+    const tens: string[] = [
+      "",
+      "",
+      "twenty",
+      "thirty",
+      "forty",
+      "fifty",
+      "sixty",
+      "seventy",
+      "eighty",
+      "ninety",
+    ];
+    if (number === 0 || number <= 0) return "zero";
+    let words = "";
+    if (number >= 1000000) {
+      words += `${integerToWords(Math.floor(number / 1000000))} million `;
+      number %= 1000000;
+    }
+    if (number >= 1000) {
+      words += `${integerToWords(Math.floor(number / 1000))} thousand `;
+      number %= 1000;
+    }
+    if (number >= 100) {
+      words += `${ones[Math.floor(number / 100)]} hundred `;
+      number %= 100;
+    }
+    if (number >= 20) {
+      words += `${tens[Math.floor(number / 10)]} `;
+      number %= 10;
+    } else if (number >= 10) {
+      words += `${teens[number - 10]} `;
+      number = 0;
+    }
+    if (number > 0) {
+      words += `${ones[number]} `;
+    }
+    return words.trim();
+  }
+
   const youtubeChannelURL =
     "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
 
   const subjects = ["math", "reading", "writing", "trivia"];
-
   const incompleteCount = subjects.reduce((acc, subject) => {
-    const gameDetail = gameDetails && gameDetails[subject];
-    return acc + (gameDetail && !gameDetail.attempted ? 1 : 0);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    const gameDetailAttempted = gameDetails?.[subject]?.attempted;
+    return acc + (!gameDetailAttempted ? 1 : 0);
   }, 0);
 
   const motivationText = `Only ${integerToWords(
@@ -150,78 +216,6 @@ function HomeScreen({ navigation }: Props) {
       </View>
     </View>
   );
-}
-
-function integerToWords(number: number): string {
-  const ones: string[] = [
-    "",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-  ];
-  const teens: string[] = [
-    "ten",
-    "eleven",
-    "twelve",
-    "thirteen",
-    "fourteen",
-    "fifteen",
-    "sixteen",
-    "seventeen",
-    "eighteen",
-    "nineteen",
-  ];
-  const tens: string[] = [
-    "",
-    "",
-    "twenty",
-    "thirty",
-    "forty",
-    "fifty",
-    "sixty",
-    "seventy",
-    "eighty",
-    "ninety",
-  ];
-
-  if (number === 0) return "zero";
-
-  let words = "";
-
-  if (number >= 1000000) {
-    words += `${integerToWords(Math.floor(number / 1000000))} million `;
-    number %= 1000000;
-  }
-
-  if (number >= 1000) {
-    words += `${integerToWords(Math.floor(number / 1000))} thousand `;
-    number %= 1000;
-  }
-
-  if (number >= 100) {
-    words += `${ones[Math.floor(number / 100)]} hundred `;
-    number %= 100;
-  }
-
-  if (number >= 20) {
-    words += `${tens[Math.floor(number / 10)]} `;
-    number %= 10;
-  } else if (number >= 10) {
-    words += `${teens[number - 10]} `;
-    number = 0;
-  }
-
-  if (number > 0) {
-    words += `${ones[number]} `;
-  }
-
-  return words.trim();
 }
 
 HomeScreen.propTypes = {
