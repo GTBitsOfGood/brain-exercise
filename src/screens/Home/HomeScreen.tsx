@@ -1,21 +1,18 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { View, Image, TouchableOpacity, Linking } from "react-native";
+import { View, Image, TouchableOpacity, Linking, Text } from "react-native";
 import PropTypes from "prop-types";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { AVPlaybackSource } from "expo-av";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSelector } from "react-redux";
 
-import Text from "../../components/Text";
 import { styles } from "./HomeScreen.styles";
 import { GameDetails, RootStackParamList } from "../../types";
 import HomeIcon from "../../assets/HomeIcon";
 import ProfileIcon from "../../assets/ProfileIcon";
 import SettingsIcon from "../../assets/SettingsIcon";
 import VideoIcon from "../../assets/VideoIcon";
-
-// import Home from "../../assets/home.svg";
 
 import Subject from "../../components/Home/ExerciseSubjects";
 import { RootState } from "../../redux/rootReducer";
@@ -26,6 +23,7 @@ const logo = require("../../assets/bei.jpg") as AVPlaybackSource;
 type Props = NativeStackScreenProps<RootStackParamList, "GameOverview">;
 
 //  Home Screen Navigation
+// TODO: Remove the following eslint-disable rule after using navigation
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function HomeScreen({ navigation }: Props) {
   const userInfo = useSelector<RootState>((state) => state.auth) as AuthUser;
@@ -40,84 +38,17 @@ function HomeScreen({ navigation }: Props) {
     return null;
   });
 
-  function integerToWords(num: number): string {
-    let number = num;
-    const ones: string[] = [
-      "",
-      "one",
-      "two",
-      "three",
-      "four",
-      "five",
-      "six",
-      "seven",
-      "eight",
-      "nine",
-    ];
-    const teens: string[] = [
-      "ten",
-      "eleven",
-      "twelve",
-      "thirteen",
-      "fourteen",
-      "fifteen",
-      "sixteen",
-      "seventeen",
-      "eighteen",
-      "nineteen",
-    ];
-    const tens: string[] = [
-      "",
-      "",
-      "twenty",
-      "thirty",
-      "forty",
-      "fifty",
-      "sixty",
-      "seventy",
-      "eighty",
-      "ninety",
-    ];
-    if (number === 0 || number <= 0) return "zero";
-    let words = "";
-    if (number >= 1000000) {
-      words += `${integerToWords(Math.floor(number / 1000000))} million `;
-      number %= 1000000;
-    }
-    if (number >= 1000) {
-      words += `${integerToWords(Math.floor(number / 1000))} thousand `;
-      number %= 1000;
-    }
-    if (number >= 100) {
-      words += `${ones[Math.floor(number / 100)]} hundred `;
-      number %= 100;
-    }
-    if (number >= 20) {
-      words += `${tens[Math.floor(number / 10)]} `;
-      number %= 10;
-    } else if (number >= 10) {
-      words += `${teens[number - 10]} `;
-      number = 0;
-    }
-    if (number > 0) {
-      words += `${ones[number]} `;
-    }
-    return words.trim();
-  }
-
   const youtubeChannelURL =
     "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
 
   const subjects = ["math", "reading", "writing", "trivia"];
   const incompleteCount = subjects.reduce((acc, subject) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    const gameDetailAttempted = gameDetails?.[subject]?.attempted;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const gameDetailAttempted = gameDetails[subject]?.attempted as boolean;
     return acc + (!gameDetailAttempted ? 1 : 0);
   }, 0);
 
-  const motivationText = `Only ${integerToWords(
-    incompleteCount,
-  )} sections away!`;
+  const motivationText = `Only ${incompleteCount} sections away!`;
 
   return (
     <View style={styles.root}>

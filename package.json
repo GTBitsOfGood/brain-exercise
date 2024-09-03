@@ -1,9 +1,8 @@
 {
   "scripts": {
     "start:tunnel": "expo start --tunnel",
-    "start:go:windows": "expo start --localhost --go",
-    "start:go:linux": "expo start --go",
-    "start:go:macos": "yarn start:go:linux",
+    "start:go": "expo start --go",
+    "start:go:usb": "expo start --localhost --go",
     "dev": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
