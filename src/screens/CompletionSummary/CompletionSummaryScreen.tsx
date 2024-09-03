@@ -1,15 +1,15 @@
 import React from "react";
 import { View } from "react-native";
-// import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import OneLineComponent from "../../components/OneLineComponent";
 import TwoLineComponent from "../../components/TwoLineComponent";
-// import { RootStackParamList } from "../../types";
+import { RootStackParamList } from "../../types";
 import ContinueButton from "../../components/ContinueButton";
 import QuestionMarkCircleIcon from "../../assets/QuestionMarkCircleIcon";
 import TwoThirdsPieChartIcon from "../../assets/TwoThirdsPieChartIcon";
 import OneSixthPieChartIcon from "../../assets/OneSixthPieChartIcon";
 
-// type Props = NativeStackScreenProps<RootStackParamList>;
+type Props = NativeStackScreenProps<RootStackParamList>;
 
 const EnclosedQuestionIcon = (
   <View
@@ -58,8 +58,8 @@ const EnclosedOneSixthPieChartIcon = (
     <OneSixthPieChartIcon color="#EA4335" />
   </View>
 );
-
-function CompletionSummaryScreen() {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function CompletionSummaryScreen({ navigation }: Props) {
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
       <OneLineComponent
