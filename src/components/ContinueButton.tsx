@@ -1,23 +1,20 @@
-import { GestureResponderEvent } from "react-native";
-import Button from "./Button";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+// import { useDispatch } from "react-redux";
 import { RootStackParamList } from "../types";
-import { useDispatch } from "react-redux";
+import Button from "./Button";
 
 type Props = {
-    titleColor: string;
-    backgroundColor: string;
+  titleColor: string;
+  backgroundColor: string;
 };
 
 export default function ContinueButton({ titleColor, backgroundColor }: Props) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const onPressButton = () => (
-    console.log("Continue Button Pressed")
-  )
+  const onPressButton = () => navigation.navigate("HomeScreen");
 
   return (
     <Button
@@ -28,7 +25,6 @@ export default function ContinueButton({ titleColor, backgroundColor }: Props) {
         fontSize: 16,
         fontWeight: "600",
         textAlign: "center",
-
       }}
       buttonStyle={{
         backgroundColor: `${backgroundColor}`,

@@ -1,44 +1,89 @@
 import React from "react";
 import { View } from "react-native";
+// import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import OneLineComponent from "../../components/OneLineComponent";
 import TwoLineComponent from "../../components/TwoLineComponent";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types";
+// import { RootStackParamList } from "../../types";
 import ContinueButton from "../../components/ContinueButton";
 import QuestionMarkCircleIcon from "../../assets/QuestionMarkCircleIcon";
 import TwoThirdsPieChartIcon from "../../assets/TwoThirdsPieChartIcon";
 import OneSixthPieChartIcon from "../../assets/OneSixthPieChartIcon";
 
-type Props = NativeStackScreenProps<RootStackParamList>;
+// type Props = NativeStackScreenProps<RootStackParamList>;
 
 const EnclosedQuestionIcon = (
-  <View style={{ borderRadius: 50, backgroundColor: '#F4F7FE', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 40, width: 40 }}>
+  <View
+    style={{
+      borderRadius: 50,
+      backgroundColor: "#F4F7FE",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: 40,
+      width: 40,
+    }}
+  >
     <QuestionMarkCircleIcon color="#EA4335" />
   </View>
-)
+);
 
 const EnclosedTwoThirdsPieChartIcon = (
-  <View style={{ borderRadius: 50, backgroundColor: '#F4F7FE', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 40, width: 40 }}>
+  <View
+    style={{
+      borderRadius: 50,
+      backgroundColor: "#F4F7FE",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: 40,
+      width: 40,
+    }}
+  >
     <TwoThirdsPieChartIcon color="#EA4335" />
   </View>
-)
+);
 
 const EnclosedOneSixthPieChartIcon = (
-  <View style={{ borderRadius: 50, backgroundColor: '#F4F7FE', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 40, width: 40 }}>
+  <View
+    style={{
+      borderRadius: 50,
+      backgroundColor: "#F4F7FE",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: 40,
+      width: 40,
+    }}
+  >
     <OneSixthPieChartIcon color="#EA4335" />
   </View>
-)
+);
 
-function CompletionSummaryScreen( { navigation }: Props ) {
+function CompletionSummaryScreen() {
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
-      <OneLineComponent icon={EnclosedQuestionIcon} title="Questions Completed" stat={10} statColor="#EA4335" />
-      <View style={{ height: '2%' }} />
-      <TwoLineComponent icon={EnclosedTwoThirdsPieChartIcon} title="Total time spent" stat="13 min 10 sec" statColor="#EA4335" />
-      <View style={{ height: '2%'}} />
-      <TwoLineComponent icon={EnclosedOneSixthPieChartIcon} title="Average time per question" stat="1 min 30 sec" statColor="#EA4335" />
-      <View style={{ paddingTop: "50%"}} />
-      <ContinueButton titleColor="white" backgroundColor="#EA4335"/>
+      <OneLineComponent
+        icon={EnclosedQuestionIcon}
+        title="Questions Completed"
+        stat={10}
+        statColor="#EA4335"
+      />
+      <View style={{ height: "2%" }} />
+      <TwoLineComponent
+        icon={EnclosedTwoThirdsPieChartIcon}
+        title="Total time spent"
+        stat="13 min 10 sec"
+        statColor="#EA4335"
+      />
+      <View style={{ height: "2%" }} />
+      <TwoLineComponent
+        icon={EnclosedOneSixthPieChartIcon}
+        title="Average time per question"
+        stat="1 min 30 sec"
+        statColor="#EA4335"
+      />
+      <View style={{ paddingTop: "50%" }} />
+      <ContinueButton titleColor="white" backgroundColor="#EA4335" />
     </View>
   );
 }

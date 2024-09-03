@@ -1,5 +1,5 @@
-import * as React from "react"
-import Svg, { G, Path, Defs, ClipPath } from "react-native-svg"
+import * as React from "react";
+import Svg, { G, Path, Defs, ClipPath } from "react-native-svg";
 
 const OneSixthPieChartIcon = ({ color, ...props }) => (
   <Svg
@@ -21,5 +21,5 @@ const OneSixthPieChartIcon = ({ color, ...props }) => (
       </ClipPath>
     </Defs>
   </Svg>
-)
-export default OneSixthPieChartIcon
+);
+export default OneSixthPieChartIcon;
