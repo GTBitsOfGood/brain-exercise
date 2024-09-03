@@ -20,7 +20,6 @@ import { store } from "./src/redux/store";
 import NavigationContainerWithTracking from "./src/components/NavigationContainerWithTracking";
 import AuthGuard from "./src/screens/Auth/AuthGuard";
 
-
 const persistor = persistStore(store);
 
 export default function App() {
