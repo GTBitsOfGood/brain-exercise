@@ -73,6 +73,12 @@ function ExercisesCompleted({ navigation }: Props) {
             navigation.navigate("ExtraPractice");
           }}
         />
+        <Button
+          title="To Section Summary"
+          onPress={() => {
+            navigation.navigate("SectionSummary");
+          }}
+        />
       </View>
     </View>
   );
