@@ -18,7 +18,6 @@ import { store } from "./src/redux/store";
 
 // Time Analytics
 import NavigationContainerWithTracking from "./src/components/NavigationContainerWithTracking";
-import AuthGuard from "./src/screens/Auth/AuthGuard";
 
 const persistor = persistStore(store);
 
@@ -35,31 +34,30 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <SafeAreaProvider>
-          <AuthGuard>
-            <NavigationContainerWithTracking>
-              <Stack.Navigator
-                // Consistent styling across all stacked screens
-                screenOptions={{
-                  headerBackTitleVisible: false,
-                  gestureEnabled: false,
-                  headerTintColor: "black",
-                  headerLeft: null,
-                  headerStyle: {
-                    backgroundColor: "white",
-                  },
-                  headerTitleStyle: {
-                    fontWeight: "bold",
-                    fontSize: 22,
-                    color: "black",
-                  },
-                  headerTitleAlign: "center",
-                  animation: "fade",
-                }}
-              >
-                {MergedStacks}
-              </Stack.Navigator>
-            </NavigationContainerWithTracking>
-          </AuthGuard>
+          <NavigationContainerWithTracking>
+            <Stack.Navigator
+              // Consistent styling across all stacked screens
+              screenOptions={{
+                headerBackTitleVisible: false,
+                gestureEnabled: false,
+                headerTintColor: "black",
+                headerLeft: null,
+                headerStyle: {
+                  backgroundColor: "white",
+                },
+                headerTitleStyle: {
+                  fontWeight: "bold",
+                  fontSize: 22,
+                  color: "black",
+                },
+                headerTitleAlign: "center",
+                animation: "fade",
+              }}
+            >
+              {MergedStacks}
+            </Stack.Navigator>
+          </NavigationContainerWithTracking>
+          {/* </AuthGuard> */}
         </SafeAreaProvider>
       </PersistGate>
     </Provider>

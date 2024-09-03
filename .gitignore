@@ -110,3 +110,4 @@ dist/
 .expo
 dist/
 web-build/
+bitwarden.env

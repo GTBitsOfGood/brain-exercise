@@ -8,56 +8,108 @@ export const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "white",
   },
-  title: {
-    fontSize: 34,
+  welcomeContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    width: 300,
+    alignItems: "center",
+  },
+  greeting: {
+    fontSize: 24,
+    textAlign: "center",
+    marginVertical: 8,
+    color: "#2B3674",
+    fontWeight: "600",
+  },
+  motivation: {
+    fontSize: 20,
     textAlign: "center",
     marginVertical: 8,
     color: "#4A4B57",
+    fontWeight: "400",
+    paddingLeft: 4,
   },
-  squareButton: {
-    width: Platform.OS === "ios" && Platform.isPad ? 150 : 99,
-    height: Platform.OS === "ios" && Platform.isPad ? 150 : 99,
-    backgroundColor: "white",
-    borderColor: "#005AA3",
-    borderWidth: 5,
-    borderRadius: 25,
-    marginTop: 20,
+  name: {
+    fontSize: 24,
+    textAlign: "center",
+    marginVertical: 8,
+    color: "#008AFC",
+    fontWeight: "600",
+  },
+  footerButton: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  headerContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    paddingTop: 10,
+  },
+  bodyContainer: {
+    justifyContent: "space-between",
+    paddingTop: 16,
+    paddingBottom: 16,
+  },
+  footerContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: 10,
+    marginRight: 10,
+    paddingBottom: 4,
+  },
+  divider: {
+    width: "100%",
+    minWidth: 230,
+    height: 1.5,
+    backgroundColor: "#E3EAFC",
+  },
+  footerTextSelected: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#2B3674",
+    paddingTop: 4,
+  },
+  footerTextUnselected: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#9CA5C2",
+    paddingTop: 4,
+  },
+
+  headingText: { fontSize: 20, fontWeight: "bold" },
+
+  exercisesContainer: { marginBottom: 24 },
+
+  summaryButton: {
+    backgroundColor: "#E3EAFC",
     justifyContent: "center",
     alignItems: "center",
-  },
-  buttonsContainer: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    justifyContent: "space-around",
+    borderRadius: 12,
     flexDirection: "row",
-    flexWrap: "wrap",
-    alignContent: "stretch",
+    padding: 10,
+    marginLeft: 60,
+    marginRight: 60,
+    gap: 10,
   },
-  buttonTitle: {
-    alignSelf: "center",
+
+  summaryText: {
+    backgroundColor: "#E3EAFC",
+    color: "#008AFC",
+    fontSize: 16,
     fontWeight: "bold",
-    color: "white",
-  },
-  squareButtonTitle: {
-    alignSelf: "center",
-    fontSize: 20,
-    fontWeight: "400",
-  },
-  imageContainer: {
-    flex: 2,
-    width: "100%",
-    height: 150,
-    borderRadius: 2,
-    flexDirection: "column",
-    padding: 8,
   },
   image: {
     alignSelf: "center",
-    width: Dimensions.get("window").width - 50,
+    width: Dimensions.get("window").width - 200,
     height:
       Platform.OS === "ios" && Platform.isPad
         ? 400
-        : Dimensions.get("window").height * 0.2,
+        : Dimensions.get("window").height * 0.15,
     resizeMode: "contain",
   },
   icon: {
