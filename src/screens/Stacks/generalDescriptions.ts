@@ -4,6 +4,7 @@ import ExercisesCompleted from "../Game/ExercisesCompleted";
 import Pause from "../Game/Pause";
 import SectionSummary from "../Game/SectionSummary/SectionSummary";
 import HomeScreen from "../Home/HomeScreen";
+import CompletionSummaryScreen from "../CompletionSummary/CompletionSummaryScreen";
 
 const generalDescriptions: ScreenDescription[] = [
   {
@@ -11,6 +12,11 @@ const generalDescriptions: ScreenDescription[] = [
     component: HomeScreen,
     title: "",
     options: { headerShown: false },
+  },
+  {
+    name: "CompletionSummaryScreen",
+    component: CompletionSummaryScreen,
+    title: "Completion Summary",
   },
   {
     name: "GameOverview",
