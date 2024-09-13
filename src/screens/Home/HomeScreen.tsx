@@ -17,6 +17,7 @@ import VideoIcon from "../../assets/VideoIcon";
 import Subject from "../../components/Home/ExerciseSubjects";
 import { RootState } from "../../redux/rootReducer";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
+import CompletionSummaryScreen from "../CompletionSummary/CompletionSummaryScreen";
 
 const logo = require("../../assets/bei.jpg") as AVPlaybackSource;
 
@@ -104,6 +105,7 @@ function HomeScreen({ navigation }: Props) {
           <TouchableOpacity
             accessibilityRole="button"
             style={styles.summaryButton}
+            onPress={() => navigation.navigate("CompletionSummaryScreen")}
           >
             <FeatherIcon name="bar-chart-2" size={20} color="#008AFC" />
             <Text style={styles.summaryText}>Completion Summary</Text>
