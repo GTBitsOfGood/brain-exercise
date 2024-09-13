@@ -41,7 +41,10 @@ export default function SubjectComponent({
         const minutes = Math.floor((seconds % 3600) / 60);
         const secs = seconds % 60;
 
-        if (hours <= 0) {
+
+        if (hours <= 0 && minutes <= 0) {
+            return `${secs} sec`;
+        } else if (hours <= 0) {
             return `${minutes} min ${secs} sec`;
         } else {
             return `${hours} hr ${minutes} min ${secs} sec`;
@@ -92,7 +95,11 @@ export default function SubjectComponent({
             {title}
             </Text>
         </View>
-        <View
+        
+        {
+            questionsCompleted > 0 ?
+            <>
+            <View
             style={{
             display: "flex",
             flexDirection: "row",
@@ -123,6 +130,14 @@ export default function SubjectComponent({
         >
             {questionsCompleted}
         </Text>
+        </>
+        :
+        <></>
+        }
+
+        {
+        totalTimeSpent > 0 ? 
+        <>
         <View
             style={{
             display: "flex",
@@ -131,7 +146,6 @@ export default function SubjectComponent({
             paddingBottom: "3%",
             }}
         >
-
             <Text
             style={{
                 color: "#2B3674",
@@ -154,14 +168,13 @@ export default function SubjectComponent({
         >
             {secondsToTime(totalTimeSpent)}
         </Text>
-        {/* <View
-            style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            paddingBottom: "3%",
-            }}
-        > */}
+        </> :
+        <></>
+        }
+        {
+
+            averageTimePerQuestion > 0 ?
+            <>
             <Text
             style={{
                 color: "#2B3674",
@@ -183,8 +196,12 @@ export default function SubjectComponent({
             paddingTop: "3%"
             }}
         >
-            {averageTimePerQuestion}
+            {secondsToTime(averageTimePerQuestion)} 
         </Text>
+        </>
+        :
+        <></>
+        }  
         </>
         :
         <>
@@ -219,7 +236,7 @@ export default function SubjectComponent({
             fontWeight: "400",
             }}
         >
-            Please complete the Math exercise to view the completion summary. 
+            Please complete the {title} exercise to view the completion summary. 
         </Text>
         </>
 

@@ -28,7 +28,8 @@ export default function ContinueButton({ title, titleColor, backgroundColor }: P
         textAlign: "center",
       }}
       buttonStyle={{
-        marginTop: 50,
+        marginTop: 20,
+        marginBottom: 20,
         backgroundColor: `${backgroundColor}`,
         borderRadius: 12,
         justifyContent: "center",

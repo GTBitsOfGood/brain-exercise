@@ -90,13 +90,13 @@ function CompletionSummaryScreen({ navigation }: Props) {
 
     <ScrollView>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
-      <SubjectComponent
+      <SubjectComponent //HARDCODED VALUES
         title="Math"
         iconName="square-root-alt"
         attempted={true}
         questionsCompleted={8}
         totalTimeSpent={222}
-        averageTimePerQuestion={gameDetails.math.timePerQuestion}
+        averageTimePerQuestion={0}
         statColor="#EA4335"
       >
       </SubjectComponent>
@@ -120,13 +120,13 @@ function CompletionSummaryScreen({ navigation }: Props) {
         statColor="#9747FF"
       >
       </SubjectComponent>
-      <SubjectComponent
+      <SubjectComponent //HARDCODED VALUES
         title="Trivia"
         iconName="question-circle"
-        attempted={gameDetails.math.attempted}
-        questionsCompleted={gameDetails.math.questionsAttempted}
-        totalTimeSpent={gameDetails.math.timePerQuestion * gameDetails.math.questionsAttempted}
-        averageTimePerQuestion={gameDetails.math.timePerQuestion}
+        attempted={true}
+        questionsCompleted={100}
+        totalTimeSpent={12120}
+        averageTimePerQuestion={85}
         statColor="#34BC99"
       >
       </SubjectComponent>
