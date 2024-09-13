@@ -17,9 +17,6 @@ import { RootState } from "../../redux/rootReducer";
 import ProfileIcon from "../../assets/ProfileIcon";
 import SettingsIcon from "../../assets/SettingsIcon";
 
-
-
-
 type Props = NativeStackScreenProps<RootStackParamList>;
 
 const EnclosedQuestionIcon = (
@@ -71,7 +68,6 @@ const EnclosedOneSixthPieChartIcon = (
 );
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function CompletionSummaryScreen({ navigation }: Props) {
-
   const gameDetails = useSelector<
     RootState,
     GameDetails["lastSessionsMetrics"][0] | null
@@ -83,54 +79,56 @@ function CompletionSummaryScreen({ navigation }: Props) {
     return null;
   });
 
-
-
-
   return (
-
     <ScrollView>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
-      <SubjectComponent //HARDCODED VALUES
-        title="Math"
-        iconName="square-root-alt"
-        attempted={true}
-        questionsCompleted={8}
-        totalTimeSpent={222}
-        averageTimePerQuestion={0}
-        statColor="#EA4335"
-      >
-      </SubjectComponent>
-      <SubjectComponent
-        title="Reading"
-        iconName="book-open"
-        attempted={gameDetails.math.attempted}
-        questionsCompleted={gameDetails.math.questionsAttempted}
-        totalTimeSpent={gameDetails.math.timePerQuestion * gameDetails.math.questionsAttempted}
-        averageTimePerQuestion={gameDetails.math.timePerQuestion}
-        statColor="#FE7D35"
-      >
-      </SubjectComponent>
-      <SubjectComponent
-        title="Writing"
-        iconName="file-alt"
-        attempted={gameDetails.math.attempted}
-        questionsCompleted={gameDetails.math.questionsAttempted}
-        totalTimeSpent={gameDetails.math.timePerQuestion * gameDetails.math.questionsAttempted}
-        averageTimePerQuestion={gameDetails.math.timePerQuestion}
-        statColor="#9747FF"
-      >
-      </SubjectComponent>
-      <SubjectComponent //HARDCODED VALUES
-        title="Trivia"
-        iconName="question-circle"
-        attempted={true}
-        questionsCompleted={100}
-        totalTimeSpent={12120}
-        averageTimePerQuestion={85}
-        statColor="#34BC99"
-      >
-      </SubjectComponent>
-      <ContinueButton title="Return home" titleColor="white" backgroundColor="#008AFC" />
+        <SubjectComponent //HARDCODED VALUES
+          title="Math"
+          iconName="square-root-alt"
+          attempted={true}
+          questionsCompleted={8}
+          totalTimeSpent={222}
+          averageTimePerQuestion={0}
+          statColor="#EA4335"
+        ></SubjectComponent>
+        <SubjectComponent
+          title="Reading"
+          iconName="book-open"
+          attempted={gameDetails.math.attempted}
+          questionsCompleted={gameDetails.math.questionsAttempted}
+          totalTimeSpent={
+            gameDetails.math.timePerQuestion *
+            gameDetails.math.questionsAttempted
+          }
+          averageTimePerQuestion={gameDetails.math.timePerQuestion}
+          statColor="#FE7D35"
+        ></SubjectComponent>
+        <SubjectComponent
+          title="Writing"
+          iconName="file-alt"
+          attempted={gameDetails.math.attempted}
+          questionsCompleted={gameDetails.math.questionsAttempted}
+          totalTimeSpent={
+            gameDetails.math.timePerQuestion *
+            gameDetails.math.questionsAttempted
+          }
+          averageTimePerQuestion={gameDetails.math.timePerQuestion}
+          statColor="#9747FF"
+        ></SubjectComponent>
+        <SubjectComponent //HARDCODED VALUES
+          title="Trivia"
+          iconName="question-circle"
+          attempted={true}
+          questionsCompleted={100}
+          totalTimeSpent={12120}
+          averageTimePerQuestion={85}
+          statColor="#34BC99"
+        ></SubjectComponent>
+        <ContinueButton
+          title="Return home"
+          titleColor="white"
+          backgroundColor="#008AFC"
+        />
       </View>
     </ScrollView>
   );

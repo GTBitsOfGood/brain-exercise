@@ -5,12 +5,16 @@ import { RootStackParamList } from "../types";
 import Button from "./Button";
 
 type Props = {
-  title: string,
+  title: string;
   titleColor: string;
   backgroundColor: string;
 };
 
-export default function ContinueButton({ title, titleColor, backgroundColor }: Props) {
+export default function ContinueButton({
+  title,
+  titleColor,
+  backgroundColor,
+}: Props) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   // const dispatch = useDispatch();
