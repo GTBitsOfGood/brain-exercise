@@ -17,7 +17,6 @@ import VideoIcon from "../../assets/VideoIcon";
 import Subject from "../../components/Home/ExerciseSubjects";
 import { RootState } from "../../redux/rootReducer";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
-import CompletionSummaryScreen from "../CompletionSummary/CompletionSummaryScreen";
 
 const logo = require("../../assets/bei.jpg") as AVPlaybackSource;
 

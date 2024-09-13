@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import OneSixthPieChartIcon from "../assets/OneSixthPieChartIcon";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
 const styles = StyleSheet.create({
@@ -40,11 +39,11 @@ export default function SubjectComponent({
 
     if (hours <= 0 && minutes <= 0) {
       return `${secs} sec`;
-    } else if (hours <= 0) {
-      return `${minutes} min ${secs} sec`;
-    } else {
-      return `${hours} hr ${minutes} min ${secs} sec`;
     }
+    if (hours <= 0) {
+      return `${minutes} min ${secs} sec`;
+    }
+    return `${hours} hr ${minutes} min ${secs} sec`;
   }
 
   return (

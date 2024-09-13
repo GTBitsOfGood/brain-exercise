@@ -1,71 +1,14 @@
 import React from "react";
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import OneLineComponent from "../../components/OneLineComponent";
-import TwoLineComponent from "../../components/TwoLineComponent";
+import { useSelector } from "react-redux";
 import { GameDetails, RootStackParamList } from "../../types";
 import ContinueButton from "../../components/ContinueButton";
-import QuestionMarkCircleIcon from "../../assets/QuestionMarkCircleIcon";
-import TwoThirdsPieChartIcon from "../../assets/TwoThirdsPieChartIcon";
-import OneSixthPieChartIcon from "../../assets/OneSixthPieChartIcon";
-import { styles } from "./CompletionSummaryScreen.styles";
 import SubjectComponent from "../../components/SubjectComponent";
-import VideoIcon from "../../assets/VideoIcon";
-import HomeIcon from "../../assets/HomeIcon";
-import { useSelector } from "react-redux";
 import { RootState } from "../../redux/rootReducer";
-import ProfileIcon from "../../assets/ProfileIcon";
-import SettingsIcon from "../../assets/SettingsIcon";
 
 type Props = NativeStackScreenProps<RootStackParamList>;
 
-const EnclosedQuestionIcon = (
-  <View
-    style={{
-      borderRadius: 50,
-      backgroundColor: "#F4F7FE",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: 40,
-      width: 40,
-    }}
-  >
-    <QuestionMarkCircleIcon color="#EA4335" />
-  </View>
-);
-
-const EnclosedTwoThirdsPieChartIcon = (
-  <View
-    style={{
-      borderRadius: 50,
-      backgroundColor: "#F4F7FE",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: 40,
-      width: 40,
-    }}
-  >
-    <TwoThirdsPieChartIcon color="#EA4335" />
-  </View>
-);
-
-const EnclosedOneSixthPieChartIcon = (
-  <View
-    style={{
-      borderRadius: 50,
-      backgroundColor: "#F4F7FE",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: 40,
-      width: 40,
-    }}
-  >
-    <OneSixthPieChartIcon color="#EA4335" />
-  </View>
-);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function CompletionSummaryScreen({ navigation }: Props) {
   const gameDetails = useSelector<
@@ -82,7 +25,7 @@ function CompletionSummaryScreen({ navigation }: Props) {
   return (
     <ScrollView>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <SubjectComponent //HARDCODED VALUES
+        <SubjectComponent // HARDCODED VALUES
           title="Math"
           iconName="square-root-alt"
           attempted={true}
@@ -115,7 +58,7 @@ function CompletionSummaryScreen({ navigation }: Props) {
           averageTimePerQuestion={gameDetails.math.timePerQuestion}
           statColor="#9747FF"
         ></SubjectComponent>
-        <SubjectComponent //HARDCODED VALUES
+        <SubjectComponent // HARDCODED VALUES
           title="Trivia"
           iconName="question-circle"
           attempted={true}
