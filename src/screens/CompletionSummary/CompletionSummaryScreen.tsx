@@ -130,7 +130,7 @@ function CompletionSummaryScreen({ navigation }: Props) {
         statColor="#34BC99"
       >
       </SubjectComponent>
-      <ContinueButton title="Return to Home" titleColor="white" backgroundColor="#008AFC" />
+      <ContinueButton title="Return home" titleColor="white" backgroundColor="#008AFC" />
       </View>
     </ScrollView>
   );
