@@ -3,6 +3,9 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import PropTypes from "prop-types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../../types";
 
 const styles = StyleSheet.create({
   subjectContainer: {
@@ -81,6 +84,8 @@ const Subject: React.FC<SubjectProps> = ({
   subjectText,
   isCompleted,
 }) => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   return (
     <View
       style={[styles.subjectContainer, isCompleted ? { opacity: 0.5 } : {}]}
@@ -101,6 +106,17 @@ const Subject: React.FC<SubjectProps> = ({
           <TouchableOpacity
             accessibilityRole="button"
             style={styles.startButton}
+            onPress={() => {
+              if (subjectText === "Math") {
+                navigation.navigate("MathMain");
+              } else if (subjectText === "Reading") {
+                navigation.navigate("ReadingMain");
+              } else if (subjectText === "Writing") {
+                navigation.navigate("WritingMain");
+              } else if (subjectText === "Trivia") {
+                navigation.navigate("TriviaMain");
+              }
+            }}
           >
             <Text style={styles.startButtonText}>Start</Text>
           </TouchableOpacity>

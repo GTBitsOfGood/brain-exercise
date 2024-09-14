@@ -76,7 +76,7 @@ function HomeScreen({ navigation }: Props) {
         <View style={styles.exercisesContainer}>
           <Subject
             iconName="square-root-alt"
-            iconBackgroundColor="#EA4335CC"
+            iconBackgroundColor="#EA4335"
             subjectText="Math"
             isCompleted={gameDetails && gameDetails.math.attempted}
           />

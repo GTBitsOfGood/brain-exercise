@@ -47,7 +47,9 @@ export default function useWritingProblems({ navigation, route }: Props) {
       });
 
       dispatch(completedWriting());
-      navigation.replace(...route.params.nextScreenArgs);
+      navigation.replace(route.params.nextScreenArgs[0], {
+        subject: "writing",
+      });
     },
     [navigation, route.params.nextScreenArgs, dispatch],
   );

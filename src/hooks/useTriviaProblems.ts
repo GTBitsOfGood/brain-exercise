@@ -49,7 +49,7 @@ export default function useTriviaProblems({ navigation, route }: Props) {
       authRequired: true,
     });
     dispatch(completedTrivia());
-    navigation.replace(...route.params.nextScreenArgs);
+    navigation.replace(route.params.nextScreenArgs[0], { subject: "trivia" });
   }, [navigation, route.params.nextScreenArgs, dispatch]);
 
   return {
