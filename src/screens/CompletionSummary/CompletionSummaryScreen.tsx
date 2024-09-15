@@ -1,90 +1,94 @@
 import React from "react";
-import { View } from "react-native";
+import { ScrollView, View, StyleSheet, Text } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import OneLineComponent from "../../components/OneLineComponent";
-import TwoLineComponent from "../../components/TwoLineComponent";
-import { RootStackParamList } from "../../types";
+import { useSelector } from "react-redux";
+import { GameDetails, RootStackParamList } from "../../types";
 import ContinueButton from "../../components/ContinueButton";
-import QuestionMarkCircleIcon from "../../assets/QuestionMarkCircleIcon";
-import TwoThirdsPieChartIcon from "../../assets/TwoThirdsPieChartIcon";
-import OneSixthPieChartIcon from "../../assets/OneSixthPieChartIcon";
+import SubjectComponent from "../../components/SubjectComponent";
+import { RootState } from "../../redux/rootReducer";
 
 type Props = NativeStackScreenProps<RootStackParamList>;
 
-const EnclosedQuestionIcon = (
-  <View
-    style={{
-      borderRadius: 50,
-      backgroundColor: "#F4F7FE",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: 40,
-      width: 40,
-    }}
-  >
-    <QuestionMarkCircleIcon color="#EA4335" />
-  </View>
-);
+export const styles = StyleSheet.create({
+  header: {
+    fontSize: 24,
+    textAlign: "left",
+    marginTop: 60,
+    marginStart: "5%",
+    marginBottom: 10,
+    color: "#2B3674",
+    fontWeight: "600",
+  },
+});
 
-const EnclosedTwoThirdsPieChartIcon = (
-  <View
-    style={{
-      borderRadius: 50,
-      backgroundColor: "#F4F7FE",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: 40,
-      width: 40,
-    }}
-  >
-    <TwoThirdsPieChartIcon color="#EA4335" />
-  </View>
-);
-
-const EnclosedOneSixthPieChartIcon = (
-  <View
-    style={{
-      borderRadius: 50,
-      backgroundColor: "#F4F7FE",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: 40,
-      width: 40,
-    }}
-  >
-    <OneSixthPieChartIcon color="#EA4335" />
-  </View>
-);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function CompletionSummaryScreen({ navigation }: Props) {
+  const gameDetails = useSelector<
+    RootState,
+    GameDetails["lastSessionsMetrics"][0] | null
+  >((state) => {
+    const { lastSessionsMetrics } = state.game;
+    if (lastSessionsMetrics && lastSessionsMetrics.length > 0) {
+      return lastSessionsMetrics[0];
+    }
+    return null;
+  });
+
   return (
-    <View style={{ justifyContent: "center", alignItems: "center" }}>
-      <OneLineComponent
-        icon={EnclosedQuestionIcon}
-        title="Questions Completed"
-        stat={10}
-        statColor="#EA4335"
-      />
-      <View style={{ height: "2%" }} />
-      <TwoLineComponent
-        icon={EnclosedTwoThirdsPieChartIcon}
-        title="Total time spent"
-        stat="13 min 10 sec"
-        statColor="#EA4335"
-      />
-      <View style={{ height: "2%" }} />
-      <TwoLineComponent
-        icon={EnclosedOneSixthPieChartIcon}
-        title="Average time per question"
-        stat="1 min 30 sec"
-        statColor="#EA4335"
-      />
-      <View style={{ paddingTop: "50%" }} />
-      <ContinueButton titleColor="white" backgroundColor="#EA4335" />
-    </View>
+    <ScrollView>
+      <View>
+        <Text style={styles.header}>Full completion summary </Text>
+      </View>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <SubjectComponent // HARDCODED VALUES
+          title="Math"
+          iconName="square-root-alt"
+          attempted={true}
+          questionsCompleted={8}
+          totalTimeSpent={222}
+          averageTimePerQuestion={0}
+          statColor="#EA4335"
+        ></SubjectComponent>
+        <SubjectComponent
+          title="Reading"
+          iconName="book-open"
+          attempted={gameDetails.math.attempted}
+          questionsCompleted={gameDetails.math.questionsAttempted}
+          totalTimeSpent={
+            gameDetails.math.timePerQuestion *
+            gameDetails.math.questionsAttempted
+          }
+          averageTimePerQuestion={gameDetails.math.timePerQuestion}
+          statColor="#FE7D35"
+        ></SubjectComponent>
+        <SubjectComponent
+          title="Writing"
+          iconName="file-alt"
+          attempted={gameDetails.math.attempted}
+          questionsCompleted={gameDetails.math.questionsAttempted}
+          totalTimeSpent={
+            gameDetails.math.timePerQuestion *
+            gameDetails.math.questionsAttempted
+          }
+          averageTimePerQuestion={gameDetails.math.timePerQuestion}
+          statColor="#9747FF"
+        ></SubjectComponent>
+        <SubjectComponent // HARDCODED VALUES
+          title="Trivia"
+          iconName="question-circle"
+          attempted={true}
+          questionsCompleted={100}
+          totalTimeSpent={12120}
+          averageTimePerQuestion={85}
+          statColor="#34BC99"
+        ></SubjectComponent>
+        <ContinueButton
+          title="Return home"
+          titleColor="white"
+          backgroundColor="#008AFC"
+        />
+      </View>
+    </ScrollView>
   );
 }
 

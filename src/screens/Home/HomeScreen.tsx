@@ -104,6 +104,7 @@ function HomeScreen({ navigation }: Props) {
           <TouchableOpacity
             accessibilityRole="button"
             style={styles.summaryButton}
+            onPress={() => navigation.navigate("CompletionSummaryScreen")}
           >
             <FeatherIcon name="bar-chart-2" size={20} color="#008AFC" />
             <Text style={styles.summaryText}>Completion Summary</Text>

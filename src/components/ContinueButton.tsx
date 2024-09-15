@@ -5,11 +5,16 @@ import { RootStackParamList } from "../types";
 import Button from "./Button";
 
 type Props = {
+  title: string;
   titleColor: string;
   backgroundColor: string;
 };
 
-export default function ContinueButton({ titleColor, backgroundColor }: Props) {
+export default function ContinueButton({
+  title,
+  titleColor,
+  backgroundColor,
+}: Props) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   // const dispatch = useDispatch();
@@ -19,7 +24,7 @@ export default function ContinueButton({ titleColor, backgroundColor }: Props) {
   return (
     <Button
       onPress={onPressButton}
-      title="Continue"
+      title={title}
       titleStyle={{
         color: `${titleColor}`,
         fontSize: 16,
@@ -27,6 +32,8 @@ export default function ContinueButton({ titleColor, backgroundColor }: Props) {
         textAlign: "center",
       }}
       buttonStyle={{
+        marginTop: 20,
+        marginBottom: 20,
         backgroundColor: `${backgroundColor}`,
         borderRadius: 12,
         justifyContent: "center",

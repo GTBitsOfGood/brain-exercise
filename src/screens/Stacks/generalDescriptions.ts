@@ -17,6 +17,7 @@ const generalDescriptions: ScreenDescription[] = [
     name: "CompletionSummaryScreen",
     component: CompletionSummaryScreen,
     title: "Completion Summary",
+    options: { headerShown: false },
   },
   {
     name: "GameOverview",
