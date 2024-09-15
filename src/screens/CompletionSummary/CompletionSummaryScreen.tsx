@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, StyleSheet, Text } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSelector } from "react-redux";
 import { GameDetails, RootStackParamList } from "../../types";
@@ -8,6 +8,18 @@ import SubjectComponent from "../../components/SubjectComponent";
 import { RootState } from "../../redux/rootReducer";
 
 type Props = NativeStackScreenProps<RootStackParamList>;
+
+export const styles = StyleSheet.create({
+  header: {
+    fontSize: 24,
+    textAlign: "left",
+    marginTop: 60,
+    marginStart: "5%",
+    marginBottom: 10,
+    color: "#2B3674",
+    fontWeight: "600",
+  },
+});
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function CompletionSummaryScreen({ navigation }: Props) {
@@ -24,6 +36,9 @@ function CompletionSummaryScreen({ navigation }: Props) {
 
   return (
     <ScrollView>
+      <View>
+        <Text style={styles.header}>Full completion summary </Text>
+      </View>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <SubjectComponent // HARDCODED VALUES
           title="Math"
