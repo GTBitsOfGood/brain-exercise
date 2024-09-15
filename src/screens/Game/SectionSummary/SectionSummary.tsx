@@ -3,7 +3,6 @@ import { View, Text } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { useSelector } from "react-redux";
-import Button from "../../../components/Button";
 import { GameDetails, RootStackParamList } from "../../../types";
 import { RootState } from "../../../redux/rootReducer";
 
@@ -109,7 +108,7 @@ function TitleComponent({ iconName, iconColor, title }: TitleComponentProps) {
   );
 }
 
-export default function SectionSummary({ navigation, route }: Props) {
+export default function SectionSummary({ route }: Props) {
   const subject = "subject" in route.params ? route.params.subject : null;
 
   const gameDetails = useSelector<
@@ -160,7 +159,7 @@ export default function SectionSummary({ navigation, route }: Props) {
         iconColor={color}
         title={subject.substring(0, 1).toUpperCase() + subject.substring(1)}
       />
-      {"questionsAttempted" in gameDetails ? (
+      {"questionsAttempted" in subjectDetails ? (
         <StatComponent
           title="Question completed"
           stat={String(questions)}
@@ -169,7 +168,7 @@ export default function SectionSummary({ navigation, route }: Props) {
       ) : (
         <></>
       )}
-      {"timePerQuestion" in gameDetails ? (
+      {"timePerQuestion" in subjectDetails ? (
         <StatComponent
           title="Total time spent"
           stat={`${Math.floor((questions * timePer) / 60)} min ${
@@ -180,7 +179,7 @@ export default function SectionSummary({ navigation, route }: Props) {
       ) : (
         <></>
       )}
-      {"timePerQuestion" in gameDetails &&
+      {"timePerQuestion" in subjectDetails &&
       subject !== "writing" &&
       subject !== "reading" ? (
         <StatComponent
@@ -193,12 +192,6 @@ export default function SectionSummary({ navigation, route }: Props) {
       ) : (
         <></>
       )}
-      <Button
-        title="Return to Home"
-        onPress={() => {
-          navigation.navigate("HomeScreen");
-        }}
-      />
     </View>
   ) : (
     <View
@@ -224,12 +217,6 @@ export default function SectionSummary({ navigation, route }: Props) {
         {subject.substring(0, 1).toUpperCase() + subject.substring(1)} exercise
         to view the completion summary
       </Text>
-      <Button
-        title="Return to Home"
-        onPress={() => {
-          navigation.navigate("HomeScreen");
-        }}
-      />
     </View>
   );
 }
