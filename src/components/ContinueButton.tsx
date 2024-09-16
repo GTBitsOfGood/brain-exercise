@@ -31,6 +31,8 @@ export default function ContinueButton({ titleColor, backgroundColor }: Props) {
         borderRadius: 12,
         justifyContent: "center",
         alignItems: "center",
+        marginTop: "2.5%",
+        width: "92%",
       }}
     />
   );

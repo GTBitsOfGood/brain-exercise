@@ -1,112 +1,124 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { useSelector } from "react-redux";
 import { GameDetails, RootStackParamList } from "../../../types";
 import { RootState } from "../../../redux/rootReducer";
+// import PieChart from 'react-native-pie-chart';
+import OneLineComponent from "../../../components/OneLineComponent";
+import TwoLineComponent from "../../../components/TwoLineComponent";
+import ContinueButton from "../../../components/ContinueButton";
 
 type Props = NativeStackScreenProps<RootStackParamList, "SectionSummary">;
 
-interface StatComponentProps {
-  title: string;
-  stat: string;
-  statColor: string;
-}
+// interface PieChartComponentProps {
+//   triviaSubjects: object;
+// }
 
-function StatComponent({ title, stat, statColor }: StatComponentProps) {
-  return (
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        backgroundColor: "#FFF",
-        paddingTop: "2%",
-        paddingBottom: "3%",
-        paddingLeft: "4%",
-        paddingRight: "4%",
-      }}
-    >
-      <View
-        style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-      >
-        <Text
-          style={{
-            color: "#2B3674",
-            fontSize: 16,
-            fontStyle: "normal",
-            fontWeight: "700",
-            paddingBottom: "2%",
-          }}
-        >
-          {title}
-        </Text>
-      </View>
-      <Text
-        style={{
-          color: `${statColor}`,
-          fontSize: 36,
-          fontStyle: "normal",
-          fontWeight: "700",
-        }}
-      >
-        {stat}
-      </Text>
-    </View>
-  );
-}
+// function PieChartComponent({ triviaSubjects }: PieChartComponentProps) {
+//   const widthAndHeight = 265;
+//   interface Subject {
+//     count?: number;
+//     color?: string;
+//     subject?: string;
+//   }
 
-interface TitleComponentProps {
-  iconName: string;
-  iconColor: string;
-  title: string;
-}
+//   const counts = Object.values(triviaSubjects).map((subject: Subject) => subject.count || 0);
+//   const sliceColor = Object.values(triviaSubjects).map((subject: Subject) => subject.color || "");
 
-function TitleComponent({ iconName, iconColor, title }: TitleComponentProps) {
-  return (
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        backgroundColor: "#FFF",
-        paddingTop: "2%",
-        paddingBottom: "2%",
-        paddingLeft: "4%",
-        paddingRight: "4%",
-      }}
-    >
-      <View
-        style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-      >
-        <View
-          style={{
-            width: 46,
-            height: 46,
-            borderRadius: 46,
-            backgroundColor: "#F4F7FE",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {<FontAwesome5 name={iconName} size={24} color={iconColor} />}
-        </View>
-        <Text
-          style={{
-            color: "#2B3674",
-            fontSize: 16,
-            fontStyle: "normal",
-            fontWeight: "700",
-            paddingLeft: "3%",
-          }}
-        >
-          {title}
-        </Text>
-      </View>
-    </View>
-  );
-}
+//   function getSubjectColor(subject: Subject): string {
+//     return subject && subject.color ? subject.color : "#000"; // Default color if none is provided
+//   }
+//   function getSubjectName(subject: Subject): string {
+//     return subject && subject.subject ? subject.subject : "Unknown"; // Default name if none is provided
+//   }
+
+//   function getSubjectCount(subject: Subject): number {
+//     return subject && subject.count ? subject.count : 0; // Default count if none is provided
+//   }
+//   return (
+//     <View
+//       style={{
+//         display: "flex",
+//         width: "92%",
+//         borderRadius: 12,
+//         borderWidth: 1,
+//         borderColor: "#E3EAFC",
+//         backgroundColor: "#FFF",
+//         paddingTop: "5%",
+//         paddingBottom: "5%",
+//         paddingLeft: "4%",
+//         paddingRight: "4%",
+//         marginVertical: "2%",
+//         shadowColor: "#7090B0",
+//         shadowOffset: { width: 14, height: 17 },
+//         shadowOpacity: 0.2,
+//         shadowRadius: 40,
+//         elevation: 5,
+//       }}
+//     >
+//       <View
+//         style={{ display: "flex", flexDirection: "row", alignItems: "center", paddingBottom: "3%" }}
+//       >
+//         <View style={{
+//           padding: 10,
+//           backgroundColor: "#F4F7FE",
+//           borderRadius: 50,
+//         }}>
+//           <FontAwesome5 name="question-circle" size={24} color="#34BC99" />
+//         </View>
+//         <Text
+//           style={{
+//             color: "#2B3674",
+//             fontSize: 16,
+//             fontStyle: "normal",
+//             fontWeight: "600",
+//             paddingLeft: "3%",
+//           }}
+//         >
+//           Question types review
+//         </Text>
+//       </View>
+//       <View style={{
+//         alignItems:"center"
+//       }}>
+//         <PieChart
+//           widthAndHeight={widthAndHeight}
+//           series={counts}
+//           sliceColor={sliceColor}
+//         />
+//         <View style={{
+//           marginTop:"4%"
+//         }}>
+//           {Object.values(triviaSubjects).filter((subject: { count?: number }) => subject.count > 0)
+//             .sort((a: { count?: number }, b: { count?: number }) => b.count - a.count)
+//             .map(subject =>
+//               <View style={{
+//                 display:"flex",
+//                 flexDirection:"row",
+//                 alignItems:"center",
+//                 marginBottom:"2%",
+//               }}>
+//                 <View style={{
+//                     width: 16,
+//                     height: 16,
+//                     backgroundColor: getSubjectColor(subject),
+//                     marginRight: 8,
+//                     borderRadius: 50,
+//                   }} />
+//                 <Text style={{
+//                   color: "#2B3674",
+//                   fontSize: 16,
+//                   fontStyle: "normal",
+//                   fontWeight: "500",
+//                 }}> {getSubjectName(subject)} : {getSubjectCount(subject)}</Text>
+//               </View>)}
+//         </View>
+//       </View>
+//     </View>
+//   );
+// }
 
 export default function SectionSummary({ route }: Props) {
   const subject = "subject" in route.params ? route.params.subject : null;
@@ -132,91 +144,84 @@ export default function SectionSummary({ route }: Props) {
 
   const questions = 10;
   const timePer = 70;
-
-  let icon = "square-root-alt";
   let color = "#EA4335";
 
   if (subject === "reading") {
-    icon = "book-open";
     color = "#FE7D35";
   } else if (subject === "writing") {
-    icon = "file-alt";
     color = "#A066FF";
   } else if (subject === "trivia") {
-    icon = "question-circle";
     color = "#34BC99";
   }
 
-  return subjectDetails.attempted ? (
-    <View
-      style={{
-        backgroundColor: "#FFF",
-        height: "100%",
-      }}
-    >
-      <TitleComponent
-        iconName={icon}
-        iconColor={color}
-        title={subject.substring(0, 1).toUpperCase() + subject.substring(1)}
-      />
-      {"questionsAttempted" in subjectDetails ? (
-        <StatComponent
-          title="Question completed"
-          stat={String(questions)}
-          statColor={color}
-        />
-      ) : (
-        <></>
-      )}
-      {"timePerQuestion" in subjectDetails ? (
-        <StatComponent
-          title="Total time spent"
-          stat={`${Math.floor((questions * timePer) / 60)} min ${
-            questions * timePer - 60 * Math.floor((questions * timePer) / 60)
-          } sec`}
-          statColor={color}
-        />
-      ) : (
-        <></>
-      )}
-      {"timePerQuestion" in subjectDetails &&
-      subject !== "writing" &&
-      subject !== "reading" ? (
-        <StatComponent
-          title="Average time per question"
-          stat={`${Math.floor(timePer / 60)} min ${
-            timePer - 60 * Math.floor(timePer / 60)
-          } sec`}
-          statColor={color}
-        />
-      ) : (
-        <></>
-      )}
-    </View>
-  ) : (
-    <View
-      style={{
-        backgroundColor: "#FFF",
-        height: "100%",
-      }}
-    >
-      <TitleComponent
-        iconName={icon}
-        iconColor={"#9CA5C2"}
-        title={subject.substring(0, 1).toUpperCase() + subject.substring(1)}
-      />
-      <Text
+  return (
+    <ScrollView style={{ backgroundColor: "#FFF", height: "100%" }}>
+      <View
         style={{
-          fontSize: 16,
-          paddingLeft: "5%",
-          paddingRight: "5%",
-          paddingBottom: "5%",
+          alignItems: "center",
+          paddingVertical: "14%",
+          width: "100%",
         }}
       >
-        Please complete the{" "}
-        {subject.substring(0, 1).toUpperCase() + subject.substring(1)} exercise
-        to view the completion summary
-      </Text>
-    </View>
+        <Text
+          style={{
+            alignSelf: "flex-start",
+            paddingLeft: "4%",
+            fontSize: 26,
+            fontWeight: 600,
+            paddingTop: "4%",
+            paddingBottom: "5%",
+          }}
+        >
+          Completion summary
+        </Text>
+        {"questionsAttempted" in subjectDetails ? (
+          <OneLineComponent
+            icon={
+              <FontAwesome5 name="question-circle" size={24} color={color} />
+            }
+            title="Questions Completed"
+            stat={questions}
+            statColor={color}
+          />
+        ) : (
+          <></>
+        )}
+        {"timePerQuestion" in subjectDetails ? (
+          <TwoLineComponent
+            icon={<FontAwesome5 name="clock" size={24} color={color} />}
+            title="Total time spent"
+            stat={`${Math.floor((questions * timePer) / 60)} min ${
+              questions * timePer - 60 * Math.floor((questions * timePer) / 60)
+            } sec`}
+            statColor={color}
+          />
+        ) : (
+          <></>
+        )}
+        {"timePerQuestion" in subjectDetails &&
+        subject !== "writing" &&
+        subject !== "reading" ? (
+          <TwoLineComponent
+            icon={<FontAwesome5 name="clock" size={24} color={color} />}
+            title="Average time per question"
+            stat={`${Math.floor(timePer / 60)} min ${
+              timePer - 60 * Math.floor(timePer / 60)
+            } sec`}
+            statColor={color}
+          />
+        ) : (
+          <></>
+        )}
+        {/* {"subjects" in subjectDetails ? (
+          <PieChartComponent triviaSubjects={subjectDetails.subjects} />
+        ) : (
+          <></>
+        )} */}
+        <View style={{ width: "100%" }}>
+          <ContinueButton titleColor="#FFF" backgroundColor={color} />
+        </View>
+      </View>
+    </ScrollView>
   );
 }

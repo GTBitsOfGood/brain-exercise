@@ -29,12 +29,26 @@ export default function OneLineComponent({
         paddingBottom: "5%",
         paddingLeft: "4%",
         paddingRight: "4%",
+        marginVertical: "2%",
+        shadowColor: "#7090B0",
+        shadowOffset: { width: 14, height: 17 },
+        shadowOpacity: 0.2,
+        shadowRadius: 40,
+        elevation: 5,
       }}
     >
       <View
         style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
       >
-        {icon}
+        <View
+          style={{
+            padding: 10,
+            backgroundColor: "#F4F7FE",
+            borderRadius: 50,
+          }}
+        >
+          {icon}
+        </View>
         <Text
           style={{
             color: "#2B3674",
@@ -51,6 +65,7 @@ export default function OneLineComponent({
         style={{
           color: `${statColor}`,
           fontSize: 36,
+          fontFamily: "Poppins",
           fontStyle: "normal",
           fontWeight: "600",
         }}

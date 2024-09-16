@@ -110,7 +110,9 @@ const Subject: React.FC<SubjectProps> = ({
               if (subjectText === "Math") {
                 navigation.navigate("MathMain");
               } else if (subjectText === "Reading") {
-                navigation.navigate("ReadingMain");
+                navigation.navigate("SectionSummary", {
+                  subject: "trivia",
+                });
               } else if (subjectText === "Writing") {
                 navigation.navigate("WritingMain");
               } else if (subjectText === "Trivia") {

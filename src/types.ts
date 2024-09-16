@@ -77,6 +77,7 @@ export interface IAnalytics {
       questionsAttempted: number;
       questionsCorrect: number;
       timePerQuestion: number;
+      subjects: object;
     };
     reading: {
       attempted: boolean; // should be true if the user attempts the section but skips without completing
