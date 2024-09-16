@@ -187,7 +187,8 @@ export default function SectionSummary({ route }: Props) {
         ) : (
           <></>
         )}
-        {"timePerQuestion" in subjectDetails ? (
+        {"timePerQuestion" in subjectDetails ||
+        "timePerPassage" in subjectDetails ? (
           <TwoLineComponent
             icon={<FontAwesome5 name="clock" size={24} color={color} />}
             title="Total time spent"
