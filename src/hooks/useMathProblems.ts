@@ -61,7 +61,7 @@ export default function useMathQuestions({ route, navigation }: Props) {
       authRequired: true,
     });
     dispatch(completedMath());
-    navigation.replace(...route.params.nextScreenArgs);
+    navigation.replace(route.params.nextScreenArgs[0], { subject: "math" });
   }, [navigation, route.params.nextScreenArgs, dispatch]);
 
   const updateStatsOnAnswer = useCallback(

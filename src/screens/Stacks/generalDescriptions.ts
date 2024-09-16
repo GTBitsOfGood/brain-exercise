@@ -41,6 +41,7 @@ const generalDescriptions: ScreenDescription[] = [
     name: "SectionSummary",
     component: SectionSummary,
     title: "Section Summary",
+    options: { headerShown: false },
   },
 ];
 

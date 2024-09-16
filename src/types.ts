@@ -57,6 +57,12 @@ export interface IUser {
   role: Role;
 }
 
+export interface Subject {
+  subject: string;
+  count: number;
+  color: string;
+}
+
 export interface IAnalytics {
   _id?: string;
   userID: string;
@@ -77,6 +83,7 @@ export interface IAnalytics {
       questionsAttempted: number;
       questionsCorrect: number;
       timePerQuestion: number;
+      subjects: Subject[];
     };
     reading: {
       attempted: boolean; // should be true if the user attempts the section but skips without completing
@@ -164,7 +171,10 @@ export type RootStackParamList = {
   TriviaMain: { nextScreenArgs: NavigationArgs } | undefined;
   Pause: undefined;
   ExercisesCompleted: { nextScreenArgs: NavigationArgs } | undefined;
-  SectionSummary: { nextScreenArgs: NavigationArgs } | undefined;
+  SectionSummary:
+    | { nextScreenArgs: NavigationArgs }
+    | { subject: string }
+    | undefined;
   // SectionSummary: {gameCompleted: string};
   // SectionSummary:{gameCompleted: GameTypes} | undefined;
 

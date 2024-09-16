@@ -52,7 +52,9 @@ export default function useReadingProblems({ navigation, route }: Props) {
         authRequired: true,
       });
       dispatch(completedReading());
-      navigation.replace(...route.params.nextScreenArgs);
+      navigation.replace(route.params.nextScreenArgs[0], {
+        subject: "reading",
+      });
     },
     [navigation, route.params.nextScreenArgs, dispatch],
   );

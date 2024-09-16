@@ -27,6 +27,12 @@ export default function TwoLineComponent({
         paddingBottom: "5%",
         paddingLeft: "4%",
         paddingRight: "4%",
+        marginVertical: "2%",
+        shadowColor: "#7090B0",
+        shadowOffset: { width: 14, height: 17 },
+        shadowOpacity: 0.08,
+        shadowRadius: 40,
+        elevation: 5,
       }}
     >
       <View
@@ -37,7 +43,15 @@ export default function TwoLineComponent({
           paddingBottom: "3%",
         }}
       >
-        {icon}
+        <View
+          style={{
+            padding: 10,
+            backgroundColor: "#F4F7FE",
+            borderRadius: 50,
+          }}
+        >
+          {icon}
+        </View>
         <Text
           style={{
             color: "#2B3674",

@@ -27,7 +27,7 @@ const gameDescriptions: GameDescriptions = {
     },
     game: {
       name: "MathMain",
-      nextScreenArgs: ["ExercisesCompleted"],
+      nextScreenArgs: ["SectionSummary"],
     },
   },
   Reading: {
@@ -43,7 +43,7 @@ const gameDescriptions: GameDescriptions = {
     },
     game: {
       name: "ReadingMain",
-      nextScreenArgs: ["ExercisesCompleted"],
+      nextScreenArgs: ["SectionSummary"],
     },
   },
   Writing: {
@@ -59,7 +59,7 @@ const gameDescriptions: GameDescriptions = {
     },
     game: {
       name: "WritingMain",
-      nextScreenArgs: ["ExercisesCompleted"],
+      nextScreenArgs: ["SectionSummary"],
     },
   },
   Trivia: {
@@ -77,7 +77,7 @@ const gameDescriptions: GameDescriptions = {
     },
     game: {
       name: "TriviaMain",
-      nextScreenArgs: ["ExercisesCompleted"],
+      nextScreenArgs: ["SectionSummary"],
     },
   },
 };
