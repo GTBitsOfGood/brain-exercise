@@ -3,7 +3,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 import getStoryArray from "../assets/stories";
 import { HttpMethod, RootStackParamList } from "../types";
-import { completedReading } from "../redux/reducers/gameDetailsReducer";
+import { updateLastSessionsMetricsState } from "../redux/reducers/gameDetailsReducer";
 import { internalRequest } from "../requests";
 import gameDescriptions from "../screens/Stacks/gameDescriptions";
 
@@ -51,7 +51,11 @@ export default function useReadingProblems({ navigation, route }: Props) {
         body: statistics,
         authRequired: true,
       });
-      dispatch(completedReading());
+      dispatch(
+        updateLastSessionsMetricsState({
+          reading: { attempted: true, ...statistics },
+        }),
+      );
       navigation.replace(route.params.nextScreenArgs[0], {
         subject: "reading",
       });

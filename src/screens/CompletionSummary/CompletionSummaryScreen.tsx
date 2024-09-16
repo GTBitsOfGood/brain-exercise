@@ -40,53 +40,57 @@ function CompletionSummaryScreen({ navigation }: Props) {
         <Text style={styles.header}>Full completion summary </Text>
       </View>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <SubjectComponent // HARDCODED VALUES
+        <SubjectComponent
           title="Math"
           iconName="square-root-alt"
-          attempted={true}
-          questionsCompleted={8}
-          totalTimeSpent={222}
-          averageTimePerQuestion={0}
+          attempted={gameDetails.math.attempted}
+          questionsCompleted={gameDetails.math.questionsAttempted}
+          totalTimeSpent={
+            gameDetails.math.timePerQuestion *
+            gameDetails.math.questionsAttempted
+          }
+          averageTimePerQuestion={gameDetails.math.timePerQuestion}
           statColor="#EA4335"
         ></SubjectComponent>
         <SubjectComponent
           title="Reading"
           iconName="book-open"
-          attempted={gameDetails.math.attempted}
-          questionsCompleted={gameDetails.math.questionsAttempted}
+          attempted={gameDetails.reading.attempted}
           totalTimeSpent={
-            gameDetails.math.timePerQuestion *
-            gameDetails.math.questionsAttempted
+            gameDetails.reading.timePerPassage *
+            gameDetails.reading.passagesRead
           }
-          averageTimePerQuestion={gameDetails.math.timePerQuestion}
           statColor="#FE7D35"
         ></SubjectComponent>
         <SubjectComponent
           title="Writing"
           iconName="file-alt"
-          attempted={gameDetails.math.attempted}
-          questionsCompleted={gameDetails.math.questionsAttempted}
+          attempted={gameDetails.writing.attempted}
           totalTimeSpent={
-            gameDetails.math.timePerQuestion *
-            gameDetails.math.questionsAttempted
+            gameDetails.writing.timePerQuestion *
+            gameDetails.writing.questionsAnswered
           }
-          averageTimePerQuestion={gameDetails.math.timePerQuestion}
           statColor="#9747FF"
         ></SubjectComponent>
-        <SubjectComponent // HARDCODED VALUES
+        <SubjectComponent
           title="Trivia"
           iconName="question-circle"
-          attempted={true}
-          questionsCompleted={100}
-          totalTimeSpent={12120}
-          averageTimePerQuestion={85}
+          attempted={gameDetails.trivia.attempted}
+          questionsCompleted={gameDetails.trivia.questionsAttempted}
+          totalTimeSpent={
+            gameDetails.trivia.timePerQuestion *
+            gameDetails.trivia.questionsAttempted
+          }
+          averageTimePerQuestion={gameDetails.trivia.timePerQuestion}
           statColor="#34BC99"
         ></SubjectComponent>
-        <ContinueButton
-          title="Return home"
-          titleColor="white"
-          backgroundColor="#008AFC"
-        />
+        <View style={{ width: "100%" }}>
+          <ContinueButton
+            title="Return home"
+            titleColor="white"
+            backgroundColor="#008AFC"
+          />
+        </View>
       </View>
     </ScrollView>
   );

@@ -63,42 +63,44 @@ export interface Subject {
   color: string;
 }
 
+export interface LastSessionMetrics {
+  date: Date;
+  math: {
+    attempted: boolean;
+    questionsAttempted: number;
+    questionsCorrect: number;
+    finalDifficultyScore: number;
+    timePerQuestion: number;
+  };
+  trivia: {
+    attempted: boolean;
+    questionsAttempted: number;
+    questionsCorrect: number;
+    timePerQuestion: number;
+    // subjects: Subject[];
+  };
+  reading: {
+    attempted: boolean; // should be true if the user attempts the section but skips without completing
+    passagesRead: number;
+    timePerPassage: number;
+    wordsPerMinute: number;
+    skipped: boolean;
+  };
+  writing: {
+    attempted: boolean; // should be true if the user attempts the section but skips without completing
+    questionsAnswered: number;
+    timePerQuestion: number;
+    skipped: boolean;
+  };
+}
+
 export interface IAnalytics {
   _id?: string;
   userID: string;
   totalSessionsCompleted: number;
   active: boolean;
   streak: Days[];
-  lastSessionsMetrics: {
-    date: Date;
-    math: {
-      attempted: boolean;
-      questionsAttempted: number;
-      questionsCorrect: number;
-      finalDifficultyScore: number;
-      timePerQuestion: number;
-    };
-    trivia: {
-      attempted: boolean;
-      questionsAttempted: number;
-      questionsCorrect: number;
-      timePerQuestion: number;
-      subjects: Subject[];
-    };
-    reading: {
-      attempted: boolean; // should be true if the user attempts the section but skips without completing
-      passagesRead: number;
-      timePerPassage: number;
-      wordsPerMinute: number;
-      skipped: boolean;
-    };
-    writing: {
-      attempted: boolean; // should be true if the user attempts the section but skips without completing
-      questionsAnswered: number;
-      timePerQuestion: number;
-      skipped: boolean;
-    };
-  }[];
+  lastSessionsMetrics: LastSessionMetrics[];
   weeklyMetrics: [
     {
       date: Date;

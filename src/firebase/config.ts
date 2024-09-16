@@ -2,8 +2,11 @@ import { initializeApp } from "firebase/app";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
+let isFirebaseInitialized = false;
 // Need to be updated once google login screen is finalised
 export default function firebaseInit() {
+  if (isFirebaseInitialized) return;
+
   const firebaseConfig: { [key: string]: string } = {
     apiKey: "AIzaSyBn23BYVmwbT495z9bHeZGBYo8BFvFL0e8",
     authDomain: "brain-exercise-initiative.firebaseapp.com",
@@ -20,6 +23,7 @@ export default function firebaseInit() {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
       persistence: getReactNativePersistence(ReactNativeAsyncStorage),
     });
+    isFirebaseInitialized = true;
   } catch (err) {
     console.log(err);
   }

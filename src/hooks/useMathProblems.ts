@@ -5,8 +5,8 @@ import getProblem from "../scripts/game-logic";
 import gameDescriptions from "../screens/Stacks/gameDescriptions";
 import { HttpMethod, RootStackParamList } from "../types";
 import {
-  completedMath,
   setDifficultyScore,
+  updateLastSessionsMetricsState,
 } from "../redux/reducers/gameDetailsReducer";
 import { RootState } from "../redux/rootReducer";
 import { internalRequest } from "../requests";
@@ -60,7 +60,11 @@ export default function useMathQuestions({ route, navigation }: Props) {
       body: statsMap.current,
       authRequired: true,
     });
-    dispatch(completedMath());
+    dispatch(
+      updateLastSessionsMetricsState({
+        math: { attempted: true, ...statsMap.current },
+      }),
+    );
     navigation.replace(route.params.nextScreenArgs[0], { subject: "math" });
   }, [navigation, route.params.nextScreenArgs, dispatch]);
 

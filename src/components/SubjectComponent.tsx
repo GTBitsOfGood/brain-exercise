@@ -17,9 +17,9 @@ interface Props {
   title: string;
   iconName: string;
   attempted: boolean;
-  questionsCompleted: number;
-  totalTimeSpent: number;
-  averageTimePerQuestion: number;
+  questionsCompleted?: number;
+  totalTimeSpent?: number;
+  averageTimePerQuestion?: number;
   statColor: string;
 }
 

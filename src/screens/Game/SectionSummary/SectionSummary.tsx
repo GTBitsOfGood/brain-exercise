@@ -3,8 +3,8 @@ import { View, Text, ScrollView } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { useSelector } from "react-redux";
-import PieChart from "react-native-pie-chart";
-import { GameDetails, RootStackParamList, Subject } from "../../../types";
+// import PieChart from "react-native-pie-chart";
+import { GameDetails, RootStackParamList } from "../../../types";
 import { RootState } from "../../../redux/rootReducer";
 import OneLineComponent from "../../../components/OneLineComponent";
 import TwoLineComponent from "../../../components/TwoLineComponent";
@@ -12,123 +12,123 @@ import ContinueButton from "../../../components/ContinueButton";
 
 type Props = NativeStackScreenProps<RootStackParamList, "SectionSummary">;
 
-interface PieChartComponentProps {
-  triviaSubjects: Subject[];
-}
+// interface PieChartComponentProps {
+//   triviaSubjects: Subject[];
+// }
 
-function PieChartComponent({ triviaSubjects }: PieChartComponentProps) {
-  const widthAndHeight = 265;
+// function PieChartComponent({ triviaSubjects }: PieChartComponentProps) {
+//   const widthAndHeight = 265;
 
-  const counts = Object.values(triviaSubjects).map((subject) => subject.count);
-  const sliceColor = Object.values(triviaSubjects).map(
-    (subject) => subject.color,
-  );
+//   const counts = Object.values(triviaSubjects).map((subject) => subject.count);
+//   const sliceColor = Object.values(triviaSubjects).map(
+//     (subject) => subject.color,
+//   );
 
-  return (
-    <View
-      style={{
-        display: "flex",
-        width: "92%",
-        borderRadius: 12,
-        borderWidth: 1,
-        borderColor: "#E3EAFC",
-        backgroundColor: "#FFF",
-        paddingTop: "5%",
-        paddingBottom: "5%",
-        paddingLeft: "4%",
-        paddingRight: "4%",
-        marginVertical: "2%",
-        shadowColor: "#7090B0",
-        shadowOffset: { width: 14, height: 17 },
-        shadowOpacity: 0.2,
-        shadowRadius: 40,
-        elevation: 5,
-      }}
-    >
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          paddingBottom: "3%",
-        }}
-      >
-        <View
-          style={{
-            padding: 10,
-            backgroundColor: "#F4F7FE",
-            borderRadius: 50,
-          }}
-        >
-          <FontAwesome5 name="question-circle" size={24} color="#34BC99" />
-        </View>
-        <Text
-          style={{
-            color: "#2B3674",
-            fontSize: 16,
-            fontStyle: "normal",
-            fontWeight: "600",
-            paddingLeft: "3%",
-          }}
-        >
-          Question types review
-        </Text>
-      </View>
-      <View
-        style={{
-          alignItems: "center",
-        }}
-      >
-        <PieChart
-          widthAndHeight={widthAndHeight}
-          series={counts}
-          sliceColor={sliceColor}
-        />
-        <View
-          style={{
-            marginTop: "4%",
-          }}
-        >
-          {Object.values(triviaSubjects)
-            .filter((subject) => subject.count > 0)
-            .sort((a, b) => b.count - a.count)
-            .map((subject, index) => (
-              <View
-                key={index}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: "2%",
-                }}
-              >
-                <View
-                  style={{
-                    width: 16,
-                    height: 16,
-                    backgroundColor: subject.color,
-                    marginRight: 8,
-                    borderRadius: 50,
-                  }}
-                />
-                <Text
-                  style={{
-                    color: "#2B3674",
-                    fontSize: 16,
-                    fontStyle: "normal",
-                    fontWeight: "500",
-                  }}
-                >
-                  {" "}
-                  {subject.subject} : {subject.count}
-                </Text>
-              </View>
-            ))}
-        </View>
-      </View>
-    </View>
-  );
-}
+//   return (
+//     <View
+//       style={{
+//         display: "flex",
+//         width: "92%",
+//         borderRadius: 12,
+//         borderWidth: 1,
+//         borderColor: "#E3EAFC",
+//         backgroundColor: "#FFF",
+//         paddingTop: "5%",
+//         paddingBottom: "5%",
+//         paddingLeft: "4%",
+//         paddingRight: "4%",
+//         marginVertical: "2%",
+//         shadowColor: "#7090B0",
+//         shadowOffset: { width: 14, height: 17 },
+//         shadowOpacity: 0.2,
+//         shadowRadius: 40,
+//         elevation: 5,
+//       }}
+//     >
+//       <View
+//         style={{
+//           display: "flex",
+//           flexDirection: "row",
+//           alignItems: "center",
+//           paddingBottom: "3%",
+//         }}
+//       >
+//         <View
+//           style={{
+//             padding: 10,
+//             backgroundColor: "#F4F7FE",
+//             borderRadius: 50,
+//           }}
+//         >
+//           <FontAwesome5 name="question-circle" size={24} color="#34BC99" />
+//         </View>
+//         <Text
+//           style={{
+//             color: "#2B3674",
+//             fontSize: 16,
+//             fontStyle: "normal",
+//             fontWeight: "600",
+//             paddingLeft: "3%",
+//           }}
+//         >
+//           Question types review
+//         </Text>
+//       </View>
+//       <View
+//         style={{
+//           alignItems: "center",
+//         }}
+//       >
+//         <PieChart
+//           widthAndHeight={widthAndHeight}
+//           series={counts}
+//           sliceColor={sliceColor}
+//         />
+//         <View
+//           style={{
+//             marginTop: "4%",
+//           }}
+//         >
+//           {Object.values(triviaSubjects)
+//             .filter((subject) => subject.count > 0)
+//             .sort((a, b) => b.count - a.count)
+//             .map((subject, index) => (
+//               <View
+//                 key={index}
+//                 style={{
+//                   display: "flex",
+//                   flexDirection: "row",
+//                   alignItems: "center",
+//                   marginBottom: "2%",
+//                 }}
+//               >
+//                 <View
+//                   style={{
+//                     width: 16,
+//                     height: 16,
+//                     backgroundColor: subject.color,
+//                     marginRight: 8,
+//                     borderRadius: 50,
+//                   }}
+//                 />
+//                 <Text
+//                   style={{
+//                     color: "#2B3674",
+//                     fontSize: 16,
+//                     fontStyle: "normal",
+//                     fontWeight: "500",
+//                   }}
+//                 >
+//                   {" "}
+//                   {subject.subject} : {subject.count}
+//                 </Text>
+//               </View>
+//             ))}
+//         </View>
+//       </View>
+//     </View>
+//   );
+// }
 
 export default function SectionSummary({ route }: Props) {
   const subject = "subject" in route.params ? route.params.subject : null;
@@ -224,13 +224,17 @@ export default function SectionSummary({ route }: Props) {
         ) : (
           <></>
         )}
-        {"subjects" in subjectDetails ? (
+        {/* {"subjects" in subjectDetails ? (
           <PieChartComponent triviaSubjects={subjectDetails.subjects} />
         ) : (
           <></>
-        )}
+        )} */}
         <View style={{ width: "100%" }}>
-          <ContinueButton titleColor="#FFF" backgroundColor={color} />
+          <ContinueButton
+            title="Continue"
+            titleColor="#FFF"
+            backgroundColor={color}
+          />
         </View>
       </View>
     </ScrollView>

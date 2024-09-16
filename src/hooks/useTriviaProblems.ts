@@ -5,7 +5,7 @@ import { HttpMethod, RootStackParamList } from "../types";
 import getProblem from "../assets/trivia";
 
 import gameDescriptions from "../screens/Stacks/gameDescriptions";
-import { completedTrivia } from "../redux/reducers/gameDetailsReducer";
+import { updateLastSessionsMetricsState } from "../redux/reducers/gameDetailsReducer";
 import { internalRequest } from "../requests";
 
 type Props = NativeStackScreenProps<RootStackParamList, "TriviaMain">;
@@ -48,7 +48,11 @@ export default function useTriviaProblems({ navigation, route }: Props) {
       body: statistics,
       authRequired: true,
     });
-    dispatch(completedTrivia());
+    dispatch(
+      updateLastSessionsMetricsState({
+        trivia: { attempted: true, ...statistics },
+      }),
+    );
     navigation.replace(route.params.nextScreenArgs[0], { subject: "trivia" });
   }, [navigation, route.params.nextScreenArgs, dispatch]);
 

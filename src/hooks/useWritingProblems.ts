@@ -5,7 +5,7 @@ import { HttpMethod, RootStackParamList } from "../types";
 import getProblem from "../assets/prompts";
 
 import gameDescriptions from "../screens/Stacks/gameDescriptions";
-import { completedWriting } from "../redux/reducers/gameDetailsReducer";
+import { updateLastSessionsMetricsState } from "../redux/reducers/gameDetailsReducer";
 import { internalRequest } from "../requests";
 
 type Props = NativeStackScreenProps<RootStackParamList, "WritingMain">;
@@ -46,7 +46,11 @@ export default function useWritingProblems({ navigation, route }: Props) {
         authRequired: true,
       });
 
-      dispatch(completedWriting());
+      dispatch(
+        updateLastSessionsMetricsState({
+          writing: { attempted: true, ...statistics },
+        }),
+      );
       navigation.replace(route.params.nextScreenArgs[0], {
         subject: "writing",
       });
