@@ -152,14 +152,26 @@ export default function SectionSummary({ route }: Props) {
       ? gameDetails[subject]
       : null;
 
-  const questions = 10;
-  const timePer = 70;
+  let questions =
+    "questionsAttempted" in subjectDetails
+      ? subjectDetails.questionsAttempted
+      : 0;
+  let timePer =
+    "timePerQuestion" in subjectDetails ? subjectDetails.timePerQuestion : 0;
   let color = "#EA4335";
 
   if (subject === "reading") {
     color = "#FE7D35";
+    questions =
+      "passagesRead" in subjectDetails ? subjectDetails.passagesRead : 0;
+    timePer =
+      "timePerPassage" in subjectDetails ? subjectDetails.timePerPassage : 0;
   } else if (subject === "writing") {
     color = "#A066FF";
+    questions =
+      "questionsAnswered" in subjectDetails
+        ? subjectDetails.questionsAnswered
+        : 0;
   } else if (subject === "trivia") {
     color = "#34BC99";
   }
@@ -171,6 +183,7 @@ export default function SectionSummary({ route }: Props) {
           alignItems: "center",
           paddingVertical: "14%",
           width: "100%",
+          alignContent: "space-between",
         }}
       >
         <Text

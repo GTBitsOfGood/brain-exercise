@@ -5,6 +5,11 @@ import Pause from "../Game/Pause";
 import SectionSummary from "../Game/SectionSummary/SectionSummary";
 import HomeScreen from "../Home/HomeScreen";
 import CompletionSummaryScreen from "../CompletionSummary/CompletionSummaryScreen";
+import GameFinished from "../Game/GameFinished";
+import MathOverview from "../Game/MathMain/MathOverview";
+import ReadingOverview from "../Game/ReadingMain/ReadingOverview";
+import WritingOverview from "../Game/WritingMain/WritingOverview";
+import TriviaOverview from "../Game/TriviaMain/TriviaOverview";
 
 const generalDescriptions: ScreenDescription[] = [
   {
@@ -42,6 +47,32 @@ const generalDescriptions: ScreenDescription[] = [
     component: SectionSummary,
     title: "Section Summary",
     options: { headerShown: false },
+  },
+  {
+    name: "GameFinished",
+    component: GameFinished,
+    title: "Game Finished",
+    options: { headerShown: false },
+  },
+  {
+    name: "MathOverview",
+    component: MathOverview,
+    title: "Math Exercises",
+  },
+  {
+    name: "ReadingOverview",
+    component: ReadingOverview,
+    title: "Reading Exercises",
+  },
+  {
+    name: "WritingOverview",
+    component: WritingOverview,
+    title: "Writing Exercises",
+  },
+  {
+    name: "TriviaOverview",
+    component: TriviaOverview,
+    title: "Trivia Exercises",
   },
 ];
 

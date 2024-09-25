@@ -1,13 +1,12 @@
 import MathMain from "../Game/MathMain/MathMain";
-import ReadingMain from "../Game/ReadingMain";
-import TriviaMain from "../Game/TriviaMain";
-
+import ReadingMain from "../Game/ReadingMain/ReadingMain";
+import TriviaMain from "../Game/TriviaMain/TriviaMain";
 import IntroOverlay from "../../components/OverLays/IntroOverlay";
 import PauseButton from "../../components/PauseButton";
 import { GameTypes } from "../../types";
 import Stack from "./StackNavigator";
 import gameDescriptions from "./gameDescriptions";
-import WritingMain from "../Game/WritingMain";
+import WritingMain from "../Game/WritingMain/WritingMain";
 
 export const gameComponents: Record<GameTypes, React.FC> = {
   Math: MathMain,

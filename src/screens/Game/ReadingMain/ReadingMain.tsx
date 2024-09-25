@@ -3,13 +3,13 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 
 import { useCallback } from "react";
-import Button from "../../components/Button";
-import ProgressBar from "../../components/ProgressBar";
-import Text from "../../components/Text";
-import useReadingProblems from "../../hooks/useReadingProblems";
-import { RootStackParamList } from "../../types";
-import gameDescriptions from "../Stacks/gameDescriptions";
-import { pause, unpause } from "../../redux/reducers/pauseReducer";
+import Button from "../../../components/Button";
+import ProgressBar from "../../../components/ProgressBar";
+import Text from "../../../components/Text";
+import useReadingProblems from "../../../hooks/useReadingProblems";
+import { RootStackParamList } from "../../../types";
+import gameDescriptions from "../../Stacks/gameDescriptions";
+import { pause, unpause } from "../../../redux/reducers/pauseReducer";
 
 const styles = StyleSheet.create({
   root: {

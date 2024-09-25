@@ -1,12 +1,12 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useRef, useCallback } from "react";
-import Button from "../../components/Button";
-import ProgressBar from "../../components/ProgressBar";
-import Text from "../../components/Text";
-import { RootStackParamList, RemainingTimeGetter } from "../../types";
-import gameDescriptions from "../Stacks/gameDescriptions";
-import useWritingProblems from "../../hooks/useWritingProblems";
+import Button from "../../../components/Button";
+import ProgressBar from "../../../components/ProgressBar";
+import Text from "../../../components/Text";
+import { RootStackParamList, RemainingTimeGetter } from "../../../types";
+import gameDescriptions from "../../Stacks/gameDescriptions";
+import useWritingProblems from "../../../hooks/useWritingProblems";
 
 const styles = StyleSheet.create({
   root: {

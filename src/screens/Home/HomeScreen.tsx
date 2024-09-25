@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { View, Image, TouchableOpacity, Linking, Text } from "react-native";
+import { View, Image, TouchableOpacity, Text } from "react-native";
 import PropTypes from "prop-types";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { AVPlaybackSource } from "expo-av";
@@ -12,7 +12,6 @@ import { GameDetails, RootStackParamList } from "../../types";
 import HomeIcon from "../../assets/HomeIcon";
 import ProfileIcon from "../../assets/ProfileIcon";
 import SettingsIcon from "../../assets/SettingsIcon";
-import VideoIcon from "../../assets/VideoIcon";
 
 import Subject from "../../components/Home/ExerciseSubjects";
 import { RootState } from "../../redux/rootReducer";
@@ -37,9 +36,6 @@ function HomeScreen({ navigation }: Props) {
     }
     return null;
   });
-
-  const youtubeChannelURL =
-    "https://www.youtube.com/channel/UCDl_hKWzF26lNEg73FNVgtA";
 
   const subjects = ["math", "reading", "writing", "trivia"];
   const incompleteCount = subjects.reduce((acc, subject) => {
@@ -119,15 +115,6 @@ function HomeScreen({ navigation }: Props) {
         >
           <HomeIcon></HomeIcon>
           <Text style={styles.footerTextSelected}>Home</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          accessibilityRole="button"
-          style={styles.footerButton}
-          onPress={() => Linking.openURL(youtubeChannelURL)}
-        >
-          <VideoIcon></VideoIcon>
-          <Text style={styles.footerTextUnselected}>Video</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
