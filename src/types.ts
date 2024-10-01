@@ -163,17 +163,25 @@ export type RootStackParamList = {
   CompletionSummaryScreen: undefined;
   SignUpScreen: undefined;
   GameOverview: undefined;
+  MathOverview: undefined;
   MathIntro: { nextScreenArgs: NavigationArgs } | undefined;
   MathMain: { nextScreenArgs: NavigationArgs } | undefined;
+  ReadingOverview: undefined;
   ReadingIntro: { nextScreenArgs: NavigationArgs } | undefined;
   ReadingMain: { nextScreenArgs: NavigationArgs } | undefined;
+  WritingOverview: undefined;
   WritingIntro: { nextScreenArgs: NavigationArgs } | undefined;
   WritingMain: { nextScreenArgs: NavigationArgs } | undefined;
+  TriviaOverview: undefined;
   TriviaIntro: { nextScreenArgs: NavigationArgs } | undefined;
   TriviaMain: { nextScreenArgs: NavigationArgs } | undefined;
   Pause: undefined;
   ExercisesCompleted: { nextScreenArgs: NavigationArgs } | undefined;
   SectionSummary:
+    | { nextScreenArgs: NavigationArgs }
+    | { subject: string }
+    | undefined;
+  GameFinished:
     | { nextScreenArgs: NavigationArgs }
     | { subject: string }
     | undefined;

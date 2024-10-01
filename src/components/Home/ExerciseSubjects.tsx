@@ -108,13 +108,13 @@ const Subject: React.FC<SubjectProps> = ({
             style={styles.startButton}
             onPress={() => {
               if (subjectText === "Math") {
-                navigation.navigate("MathMain");
+                navigation.navigate("MathIntro");
               } else if (subjectText === "Reading") {
-                navigation.navigate("ReadingMain");
+                navigation.navigate("ReadingIntro");
               } else if (subjectText === "Writing") {
-                navigation.navigate("WritingMain");
+                navigation.navigate("WritingIntro");
               } else if (subjectText === "Trivia") {
-                navigation.navigate("TriviaMain");
+                navigation.navigate("TriviaIntro");
               }
             }}
           >

@@ -2,13 +2,13 @@ import { useState, useCallback, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import "react-native-gesture-handler";
-import Button from "../../components/Button";
-import ProgressBar from "../../components/ProgressBar";
-import Text from "../../components/Text";
-import gameDescriptions from "../Stacks/gameDescriptions";
-import { RemainingTimeGetter, RootStackParamList } from "../../types";
+import Button from "../../../components/Button";
+import ProgressBar from "../../../components/ProgressBar";
+import Text from "../../../components/Text";
+import gameDescriptions from "../../Stacks/gameDescriptions";
+import { RemainingTimeGetter, RootStackParamList } from "../../../types";
 
-import useTriviaProblems from "../../hooks/useTriviaProblems";
+import useTriviaProblems from "../../../hooks/useTriviaProblems";
 
 const styles = StyleSheet.create({
   root: {
