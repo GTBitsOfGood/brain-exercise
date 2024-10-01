@@ -8,7 +8,7 @@ type Props = {
   title: string;
   titleColor: string;
   backgroundColor: string;
-  onPressFn: () => void;
+  onPressFn?: () => void;
 };
 
 export default function ContinueButton({
