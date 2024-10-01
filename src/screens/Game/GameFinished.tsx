@@ -3,7 +3,7 @@ import { View, Text, Image } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AVPlaybackSource } from "expo-av";
 import { RootStackParamList } from "../../types";
-import CustomButton from "../../components/Button";
+import ContinueButton from "../../components/ContinueButton";
 
 type Props = NativeStackScreenProps<RootStackParamList, "GameFinished">;
 
@@ -49,24 +49,12 @@ export default function GameFinished({ navigation, route }: Props) {
           You finished one section.
         </Text>
       </View>
-      <View style={{ alignItems: "center", width: "100%" }}>
-        <CustomButton
+      <View style={{ alignItems: "center", width: "185%" }}>
+        <ContinueButton
           title="Resume"
-          buttonStyle={{
-            backgroundColor: "white",
-            borderRadius: 12,
-            shadowColor: "#7090B0",
-            shadowOffset: { width: 14, height: 17 },
-            shadowOpacity: 0.2,
-            shadowRadius: 40,
-            elevation: 5,
-          }}
-          titleStyle={{
-            color: "#008AFC",
-            fontSize: 24,
-            fontWeight: 600,
-          }}
-          onPress={() => {
+          backgroundColor="white"
+          titleColor="#008AFC"
+          onPressFn={() => {
             if (subject === "math") {
               navigation.replace("SectionSummary", { subject: "math" });
             } else if (subject === "reading") {

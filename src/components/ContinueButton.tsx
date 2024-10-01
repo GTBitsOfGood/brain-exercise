@@ -8,18 +8,26 @@ type Props = {
   title: string;
   titleColor: string;
   backgroundColor: string;
+  onPressFn: () => void;
 };
 
 export default function ContinueButton({
   title,
   titleColor,
   backgroundColor,
+  onPressFn,
 }: Props) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   // const dispatch = useDispatch();
 
-  const onPressButton = () => navigation.navigate("HomeScreen");
+  const onPressButton = () => {
+    if (onPressFn) {
+      onPressFn(); // Call the passed in function if it exists
+    } else {
+      navigation.navigate("HomeScreen"); // Default behavior
+    }
+  };
 
   return (
     <Button
@@ -27,7 +35,7 @@ export default function ContinueButton({
       title={title}
       titleStyle={{
         color: `${titleColor}`,
-        fontSize: 16,
+        fontSize: 24,
         fontWeight: "600",
         textAlign: "center",
       }}
