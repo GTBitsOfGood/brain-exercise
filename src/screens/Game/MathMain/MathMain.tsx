@@ -1,16 +1,15 @@
 import React, { useState, useRef, useCallback } from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { Button } from "react-native-elements";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import "react-native-gesture-handler";
 import Toast from "react-native-toast-message";
 
-import CustomButton from "../../../components/Button";
-import ProgressBar from "../../../components/ProgressBar";
 import Text from "../../../components/Text";
 import useMathProblems, { TOTAL_TIME } from "../../../hooks/useMathProblems";
 import { RemainingTimeGetter, RootStackParamList } from "../../../types";
 import styles from "./MathMain.style";
+import PauseButton from "../../../components/PauseButton";
 
 type Props = NativeStackScreenProps<RootStackParamList, "MathMain">;
 
@@ -94,27 +93,122 @@ function MathMain({ route, navigation }: Props) {
   ));
 
   return (
-    <View style={styles.root}>
-      <ProgressBar
-        maxSeconds={TOTAL_TIME}
-        remainingTimeRef={remainingTimeRef}
-        redThreshold={60}
-        onTimeComplete={onTimeComplete}
-      />
-      <Toast visibilityTime={1000} position="bottom" bottomOffset={120} />
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>Tap the answer to the math problem.</Text>
-        <Text style={styles.expressionText}>{problem.expression}</Text>
+    <View
+      style={{
+        display: "flex",
+        alignContent: "center",
+        justifyContent: "space-between",
+        padding: 20,
+        paddingTop: "16%",
+        paddingHorizontal: "4%",
+        paddingBottom: "6%",
+        backgroundColor: "white",
+        height: "100%",
+      }}
+    >
+      <View>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: "bold",
+              color: "#2B3674",
+              alignSelf: "left",
+            }}
+          >
+            Math
+          </Text>
+          <PauseButton
+            maxSeconds={TOTAL_TIME}
+            remainingTimeRef={remainingTimeRef}
+            onTimeComplete={onTimeComplete}
+          />
+        </View>
+        {/* <ProgressBar
+          maxSeconds={TOTAL_TIME}
+          remainingTimeRef={remainingTimeRef}
+          redThreshold={60}
+          onTimeComplete={onTimeComplete}
+        /> */}
+        {/* <Toast visibilityTime={1000} position="bottom" bottomOffset={120} /> */}
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: "#E3EAFC",
+            padding: 16,
+            borderRadius: 12,
+            marginTop: "8%",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: "bold",
+              color: "#2B3674",
+              textAlign: "center",
+            }}
+          >
+            {"Tap the answer to the\nmath problem."}
+          </Text>
+        </View>
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: "#E3EAFC",
+            paddingVertical: 40,
+            paddingHorizontal: 16,
+            borderRadius: 12,
+            marginTop: "8%",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 48,
+              fontWeight: "bold",
+              color: "#EA4335",
+              textAlign: "center",
+            }}
+          >
+            {problem.expression}
+          </Text>
+        </View>
+        <TouchableOpacity
+          accessibilityRole="button"
+          onPress={onPressSkip}
+          style={{
+            alignSelf: "center",
+            marginTop: "8%",
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              color: "#2B3674",
+              fontSize: 24,
+              fontWeight: 600,
+              textDecorationLine: "underline",
+            }}
+          >
+            Skip
+          </Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.container}>{choices}</View>
-      <CustomButton
-        title="Skip"
-        buttonStyle={{
-          marginBottom: "10%",
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginBottom: "30%",
         }}
-        disabled={buttonsDisabled}
-        onPress={onPressSkip}
-      />
+      >
+        {choices}
+      </View>
     </View>
   );
 }

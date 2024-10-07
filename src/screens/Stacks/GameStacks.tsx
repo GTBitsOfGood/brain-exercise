@@ -2,7 +2,7 @@ import MathMain from "../Game/MathMain/MathMain";
 import ReadingMain from "../Game/ReadingMain/ReadingMain";
 import TriviaMain from "../Game/TriviaMain/TriviaMain";
 import IntroOverlay from "../../components/OverLays/IntroOverlay";
-import PauseButton from "../../components/PauseButton";
+// import PauseButton from "../../components/PauseButton";
 import { GameTypes } from "../../types";
 import Stack from "./StackNavigator";
 import gameDescriptions from "./gameDescriptions";
@@ -51,9 +51,10 @@ Object.keys(GameTypes).forEach((game: GameTypes) => {
       name={gameDescription.game.name}
       component={gameComponents[game]}
       options={{
-        title: gameDescription.title,
-        headerBackVisible: false,
-        headerRight: () => <PauseButton />,
+        // title: gameDescription.title,
+        // headerBackVisible: false,
+        // headerRight: () => <PauseButton />,
+        headerShown: false,
       }}
       initialParams={{
         nextScreenArgs: gameDescription.game.nextScreenArgs,

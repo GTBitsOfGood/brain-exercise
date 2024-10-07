@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { useSelector } from "react-redux";
@@ -177,72 +177,85 @@ export default function SectionSummary({ route }: Props) {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: "#FFF", height: "100%" }}>
+    <View style={{ backgroundColor: "#FFF", height: "100%" }}>
       <View
         style={{
+          display: "flex",
+          justifyContent: "space-between",
           alignItems: "center",
-          paddingVertical: "14%",
+          paddingTop: "16%",
+          paddingBottom: "6%",
           width: "100%",
           alignContent: "space-between",
+          height: "100%",
         }}
       >
-        <Text
+        <View
           style={{
-            alignSelf: "flex-start",
-            paddingLeft: "4%",
-            fontSize: 26,
-            fontWeight: 600,
-            paddingTop: "4%",
-            paddingBottom: "5%",
+            alignItems: "center",
+            width: "100%",
+            alignContent: "space-between",
           }}
         >
-          Completion summary
-        </Text>
-        {"questionsAttempted" in subjectDetails ? (
-          <OneLineComponent
-            icon={
-              <FontAwesome5 name="question-circle" size={24} color={color} />
-            }
-            title="Questions Completed"
-            stat={questions}
-            statColor={color}
-          />
-        ) : (
-          <></>
-        )}
-        {"timePerQuestion" in subjectDetails ||
-        "timePerPassage" in subjectDetails ? (
-          <TwoLineComponent
-            icon={<FontAwesome5 name="clock" size={24} color={color} />}
-            title="Total time spent"
-            stat={`${Math.floor((questions * timePer) / 60)} min ${
-              questions * timePer - 60 * Math.floor((questions * timePer) / 60)
-            } sec`}
-            statColor={color}
-          />
-        ) : (
-          <></>
-        )}
-        {"timePerQuestion" in subjectDetails &&
-        subject !== "writing" &&
-        subject !== "reading" ? (
-          <TwoLineComponent
-            icon={<FontAwesome5 name="clock" size={24} color={color} />}
-            title="Average time per question"
-            stat={`${Math.floor(timePer / 60)} min ${
-              timePer - 60 * Math.floor(timePer / 60)
-            } sec`}
-            statColor={color}
-          />
-        ) : (
-          <></>
-        )}
-        {/* {"subjects" in subjectDetails ? (
-          <PieChartComponent triviaSubjects={subjectDetails.subjects} />
-        ) : (
-          <></>
-        )} */}
-        <View style={{ width: "100%" }}>
+          <Text
+            style={{
+              alignSelf: "flex-start",
+              paddingLeft: "4%",
+              fontSize: 26,
+              fontWeight: 600,
+              paddingTop: "4%",
+              paddingBottom: "5%",
+            }}
+          >
+            Completion summary
+          </Text>
+          {"questionsAttempted" in subjectDetails ? (
+            <OneLineComponent
+              icon={
+                <FontAwesome5 name="question-circle" size={24} color={color} />
+              }
+              title="Questions Completed"
+              stat={questions}
+              statColor={color}
+            />
+          ) : (
+            <></>
+          )}
+          {"timePerQuestion" in subjectDetails ||
+          "timePerPassage" in subjectDetails ? (
+            <TwoLineComponent
+              icon={<FontAwesome5 name="clock" size={24} color={color} />}
+              title="Total time spent"
+              stat={`${Math.floor((questions * timePer) / 60)} min ${
+                questions * timePer -
+                60 * Math.floor((questions * timePer) / 60)
+              } sec`}
+              statColor={color}
+            />
+          ) : (
+            <></>
+          )}
+          {"timePerQuestion" in subjectDetails &&
+          subject !== "writing" &&
+          subject !== "reading" ? (
+            <TwoLineComponent
+              icon={<FontAwesome5 name="clock" size={24} color={color} />}
+              title="Average time per question"
+              stat={`${Math.floor(timePer / 60)} min ${
+                timePer - 60 * Math.floor(timePer / 60)
+              } sec`}
+              statColor={color}
+            />
+          ) : (
+            <></>
+          )}
+          {/* {"subjects" in subjectDetails ? (
+            <PieChartComponent triviaSubjects={subjectDetails.subjects} />
+          ) : (
+            <></>
+          )} */}
+        </View>
+        <View style={{ width: "92%" }}>
           <ContinueButton
             title="Continue"
             titleColor="#FFF"
@@ -250,6 +263,6 @@ export default function SectionSummary({ route }: Props) {
           />
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 }

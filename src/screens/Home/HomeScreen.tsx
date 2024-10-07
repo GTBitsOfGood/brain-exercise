@@ -1,11 +1,11 @@
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Image, TouchableOpacity, Text } from "react-native";
 import PropTypes from "prop-types";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { AVPlaybackSource } from "expo-av";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { styles } from "./HomeScreen.styles";
 import { GameDetails, RootStackParamList } from "../../types";
@@ -17,6 +17,8 @@ import Subject from "../../components/Home/ExerciseSubjects";
 import { RootState } from "../../redux/rootReducer";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
 
+import { resetAttempted } from "../../redux/reducers/gameDetailsReducer";
+
 const logo = require("../../assets/bei.jpg") as AVPlaybackSource;
 
 type Props = NativeStackScreenProps<RootStackParamList, "GameOverview">;
@@ -25,6 +27,11 @@ type Props = NativeStackScreenProps<RootStackParamList, "GameOverview">;
 // TODO: Remove the following eslint-disable rule after using navigation
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function HomeScreen({ navigation }: Props) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(resetAttempted());
+  }, [dispatch]);
+
   const userInfo = useSelector<RootState>((state) => state.auth) as AuthUser;
   const gameDetails = useSelector<
     RootState,

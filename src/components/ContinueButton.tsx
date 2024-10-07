@@ -44,10 +44,8 @@ export default function ContinueButton({
         marginBottom: 20,
         backgroundColor: `${backgroundColor}`,
         borderRadius: 12,
-        justifyContent: "center",
-        alignItems: "center",
         // marginTop: "2.5%",
-        width: "92%",
+        width: "100%",
       }}
     />
   );
