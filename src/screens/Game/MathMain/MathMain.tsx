@@ -31,6 +31,9 @@ function MathMain({ route, navigation }: Props) {
     (waitSeconds: number) => {
       setButtonsDisabled(true);
       setTimeout(() => {
+        if (remainingTimeRef.current.getRemainingTime() <= 0) {
+          onTimeComplete();
+        }
         setButtonsDisabled(false);
         setSkipped(false);
         getNewProblem();
@@ -38,7 +41,7 @@ function MathMain({ route, navigation }: Props) {
           remainingTimeRef.current.getRemainingTime();
       }, waitSeconds * 1000);
     },
-    [getNewProblem, remainingTimeRef],
+    [getNewProblem, remainingTimeRef, onTimeComplete],
   );
 
   const onPressChoice = (choiceValue: number) => {
@@ -63,11 +66,11 @@ function MathMain({ route, navigation }: Props) {
   };
 
   const onPressSkip = () => {
-    if (remainingTimeRef.current.getRemainingTime() === 0) {
-      onTimeComplete();
-    }
-
     updateStatsOnSkip();
+    if (remainingTimeRef.current.getRemainingTime() <= 0) {
+      onTimeComplete();
+      return;
+    }
     resetAndNewProblem(2);
   };
 
@@ -127,7 +130,6 @@ function MathMain({ route, navigation }: Props) {
           <PauseButton
             maxSeconds={TOTAL_TIME}
             remainingTimeRef={remainingTimeRef}
-            onTimeComplete={onTimeComplete}
           />
         </View>
         {/* <ProgressBar

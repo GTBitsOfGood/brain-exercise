@@ -83,9 +83,12 @@ export default function TriviaScreen({ navigation, route }: Props) {
   const remainingTimeRef = useRef<RemainingTimeGetter>();
 
   const nextProblem = useCallback(() => {
+    if (remainingTimeRef.current.getRemainingTime() <= 0) {
+      onTimeComplete();
+    }
     getNewProblem();
     setAnswered(false);
-  }, [getNewProblem]);
+  }, [getNewProblem, onTimeComplete]);
 
   const onPressShowButton = useCallback(() => {
     if (!answered) {
@@ -138,7 +141,6 @@ export default function TriviaScreen({ navigation, route }: Props) {
           <PauseButton
             maxSeconds={TOTAL_TIME}
             remainingTimeRef={remainingTimeRef}
-            onTimeComplete={onTimeComplete}
           />
         </View>
         <View

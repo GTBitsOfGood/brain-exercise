@@ -84,7 +84,7 @@ function CompletionSummaryScreen({ navigation }: Props) {
           averageTimePerQuestion={gameDetails.trivia.timePerQuestion}
           statColor="#34BC99"
         ></SubjectComponent>
-        <View style={{ width: "100%" }}>
+        <View style={{ width: "92%" }}>
           <ContinueButton
             title="Return home"
             titleColor="white"
