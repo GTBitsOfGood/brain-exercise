@@ -135,6 +135,7 @@ function HomeScreen({ navigation }: Props) {
         <TouchableOpacity
           accessibilityRole="button"
           style={styles.footerButton}
+          onPress={() => navigation.navigate("SettingsScreen")}
         >
           <SettingsIcon></SettingsIcon>
           <Text style={styles.footerTextUnselected}>Settings</Text>
