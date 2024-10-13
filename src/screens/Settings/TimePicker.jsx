@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Modal } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PropTypes from "prop-types";
@@ -22,13 +22,57 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
   },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(156, 165, 194, 0.5)', // semi-transparent background
+  },
+  modalView: {
+    width: 300,
+    padding: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 24, 
+    fontFamily: "Poppins",
+    color: "#2b3674",
+    marginBottom: 15,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  button: {
+    color: '#008AFC',
+    margin: 10,
+    borderRadius: 12,
+    padding: 10,
+  },
+  buttonText: {
+    color: 'white',
+  },
 });
 
-function TimePicker({ navigation, route }) {
+function TimePicker({ open, setOpen, navigation, route }) {
   const [date, setDate] = useState(
     route.params.scheduledTime || defaultSettings.scheduledTime,
   ); // this always needs to be string
 
+  //const [visible, setVisible] = useState(true);
   const storeSettings = async () => {
     const settingsObj = route.params;
     settingsObj.scheduledTime = date;
@@ -48,28 +92,40 @@ function TimePicker({ navigation, route }) {
     console.log(date);
     scheduleNotifications(new Date(date));
     storeSettings();
-    navigation.goBack();
+    setOpen(false);
   }
 
+
   return (
-    <View style={styles.root}>
-      <Text style={styles.text}>
-        You will receive a notification at this time on Monday through Friday
+    <Modal animationType="slide"
+    transparent={true}
+    visible={open}
+    onRequestClose={confirmTime}>
+      <View style={styles.modalContainer}>
+        <View style={styles.modalView}>
+      <Text style={styles.modalText}>
+        Adjust Time
       </Text>
       <DateTimePicker
         testID="dateTimePicker"
         value={new Date(date)}
         mode="time"
         is24Hour={false}
-        display="default"
+        textColor="#2b3674"
+        display="spinner"
         onChange={onChange}
       />
-      <Button title="Confirm Time" type="solid" onPress={confirmTime} />
-    </View>
+      <Button style={styles.button} titleStyle={[fontSize=24, fontWeight="bold"]} title="Confirm Time" onPress={confirmTime} />
+      </View>
+      </View>
+    </Modal>
   );
 }
 
+
 TimePicker.propTypes = {
+  open: PropTypes.bool,
+  setOpen: PropTypes.func,
   navigation: PropTypes.object,
   route: PropTypes.object,
 };
