@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import '@fontsource/poppins';
+import "@fontsource/poppins";
 
 const SettingsStyle = StyleSheet.create({
   root: {
@@ -49,7 +49,7 @@ const SettingsStyle = StyleSheet.create({
     width: 150,
     height: 30,
     padding: 0,
-    borderColor: "transparent"
+    borderColor: "transparent",
   },
   buttonText: {
     fontFamily: "Poppins",
