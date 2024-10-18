@@ -1,27 +1,33 @@
 import React from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import "react-native-gesture-handler";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { unpause } from "../../redux/reducers/pauseReducer";
-import Button from "../../components/Button";
+// import Button from "../../components/Button";
 import Text from "../../components/Text";
 import { RootStackParamList } from "../../types";
+import ContinueButton from "../../components/ContinueButton";
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "space-between",
     padding: 20,
+    paddingTop: "16%",
+    backgroundColor: "white",
+    height: "100%",
   },
   text: {
-    fontWeight: "bold",
     fontSize: 24,
-    marginBottom: 20,
+    fontWeight: "bold",
+    color: "#2B3674",
     textAlign: "center",
+    marginTop: 12,
+    lineHeight: 32,
   },
   button: {
     marginTop: 20,
@@ -40,18 +46,46 @@ function Pause() {
 
   return (
     <View style={styles.root}>
-      <Text
-        style={styles.text}
-      >{`You're just getting started. Keep going!`}</Text>
-      <Button
+      <View>
+        <Text style={styles.text}>Exercise Paused</Text>
+        <View
+          style={{
+            display: "flex",
+            borderWidth: 1,
+            borderColor: "#E3EAFC",
+            paddingVertical: 64,
+            paddingHorizontal: 32,
+            borderRadius: 12,
+            marginTop: "10%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <View
+            style={{
+              borderWidth: 6,
+              borderRadius: 100,
+              padding: 10,
+              borderColor: "#008AFC",
+            }}
+          >
+            <FontAwesome5 name="pause" size={22} color="#008AFC" />
+          </View>
+          <Text
+            style={styles.text}
+          >{`You're just getting\nstarted. Keep going!`}</Text>
+        </View>
+      </View>
+      <ContinueButton
         title="Resume"
-        buttonStyle={styles.button}
-        onPress={() => {
+        backgroundColor="#008AFC"
+        titleColor="white"
+        onPressFn={() => {
           dispatch(unpause());
           navigation.goBack();
         }}
       />
-      <Button
+      {/* <Button
         title="Quit"
         buttonStyle={styles.quit}
         titleStyle={{ color: "red" }}
@@ -75,7 +109,7 @@ function Pause() {
             { cancelable: false },
           )
         }
-      />
+      /> */}
     </View>
   );
 }

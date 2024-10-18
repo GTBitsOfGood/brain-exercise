@@ -18,7 +18,7 @@ export default function GameFinished({ navigation, route }: Props) {
         alignItems: "center",
         justifyContent: "space-between",
         paddingTop: "30%",
-        paddingBottom: "15%",
+        paddingBottom: "6%",
         backgroundColor: "#008AFC",
       }}
     >
@@ -49,7 +49,7 @@ export default function GameFinished({ navigation, route }: Props) {
           You finished one section.
         </Text>
       </View>
-      <View style={{ alignItems: "center", width: "185%" }}>
+      <View style={{ alignItems: "center", width: "155%" }}>
         <ContinueButton
           title="Resume"
           backgroundColor="white"

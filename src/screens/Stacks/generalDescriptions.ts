@@ -35,6 +35,7 @@ const generalDescriptions: ScreenDescription[] = [
     title: "Paused",
     options: {
       animationTypeForReplace: "pop",
+      headerShown: false,
     },
   },
   {
@@ -58,6 +59,7 @@ const generalDescriptions: ScreenDescription[] = [
     name: "MathOverview",
     component: MathOverview,
     title: "Math Exercises",
+    options: { headerShown: false },
   },
   {
     name: "ReadingOverview",
@@ -73,6 +75,7 @@ const generalDescriptions: ScreenDescription[] = [
     name: "TriviaOverview",
     component: TriviaOverview,
     title: "Trivia Exercises",
+    options: { headerShown: false },
   },
 ];
 
