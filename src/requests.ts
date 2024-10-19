@@ -60,12 +60,12 @@ export async function internalRequest<T>({
     });
 
     if (response.data.success === false) {
-      console.log("Error1:", response.data.message);
+      // console.log("Error1:", response.data.message);
       throw new Error(`Unable to connect to API: ${response.data.message}`);
     }
     return response.data.payload;
   } catch (e) {
-    console.log("Error2:", e);
+    // console.log("Error2:", e);
     throw new Error(`Unable to connect to API: ${e}`);
   }
 }

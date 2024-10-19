@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import "@fontsource/poppins";
 
 const SettingsStyle = StyleSheet.create({
   root: {
@@ -6,6 +7,8 @@ const SettingsStyle = StyleSheet.create({
     alignContent: "center",
     padding: 20,
     backgroundColor: "white",
+    fontFamily: "Poppins",
+    color: "#2b3674",
   },
   notifications: {
     flexDirection: "row",
@@ -16,15 +19,18 @@ const SettingsStyle = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginLeft: 20,
   },
   text: {
-    fontSize: 16,
+    color: "#2b3674",
+    fontFamily: "Poppins",
+    fontSize: 20,
     fontWeight: "bold",
     textAlign: "left",
     marginVertical: 15,
   },
   subtext: {
+    color: "#2b3674",
+    fontFamily: "Poppins",
     fontSize: 16,
     fontWeight: "normal",
     textAlign: "left",
@@ -38,7 +44,18 @@ const SettingsStyle = StyleSheet.create({
     marginVertical: 10,
   },
   timeButton: {
-    borderRadius: 10,
+    backgroundColor: "#e3eafc",
+    borderRadius: "100%",
+    width: 150,
+    height: 30,
+    padding: 0,
+    borderColor: "transparent",
+  },
+  buttonText: {
+    fontFamily: "Poppins",
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "#2b3674",
   },
   touchableRow: {
     flexDirection: "row",
@@ -62,6 +79,28 @@ const SettingsStyle = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  thumbStyle: {
+    backgroundColor: "white",
+    shadowColor: "black",
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  trackStyle: {
+    backgroundColor: "787880",
+  },
+  slider: {
+    marginBottom: 10,
+    width: "75%",
+  },
+  minSize: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  maxSize: {
+    fontSize: 32,
+    marginBottom: 10,
   },
 });
 export default SettingsStyle;

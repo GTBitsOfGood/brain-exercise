@@ -183,7 +183,7 @@ function SignInScreen({ navigation }: Props) {
                     } else if (err.code === "auth/user-not-found") {
                       setError("Email not found");
                     } else {
-                      console.log(err.name);
+                      // console.log(err.name);
                       setError("Unexpected error occured. Check your info");
                     }
                   });

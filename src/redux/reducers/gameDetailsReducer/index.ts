@@ -6,7 +6,7 @@ export const initialState: GameDetails = {
   active: false,
   streak: [],
   lastSessionsMetrics: Array<GameDetails["lastSessionsMetrics"][0]>(2).fill({
-    date: new Date(),
+    date: "",
     math: {
       attempted: false,
       questionsAttempted: 0,

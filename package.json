@@ -21,6 +21,7 @@
   "dependencies": {
     "@babel/preset-env": "^7.22.14",
     "@expo/cli": "^0.10.11",
+    "@fontsource/poppins": "^5.1.0",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/datetimepicker": "8.0.1",
     "@react-native-community/slider": "4.5.2",

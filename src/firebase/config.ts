@@ -25,6 +25,6 @@ export default function firebaseInit() {
     });
     isFirebaseInitialized = true;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 }
