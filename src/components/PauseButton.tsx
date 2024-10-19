@@ -93,6 +93,7 @@ export default function PauseButton({
           fontSize: 20,
           marginLeft: 10,
         }}
+      >
         {remainingTime < 0 ? `+${-minutes}` : minutes}:
         {remainingTime < 0
           ? (-seconds).toString().padStart(2, "0")

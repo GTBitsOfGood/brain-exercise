@@ -1,6 +1,6 @@
 import { View, TouchableOpacity } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useRef, useCallback } from "react";
+import { useRef } from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import PauseButton from "../../../components/PauseButton";
 import ContinueButton from "../../../components/ContinueButton";
@@ -47,11 +47,6 @@ export default function WritingMain({ navigation, route }: Props) {
       navigation,
       route,
     });
-
-  const memoizedOnTimeComplete = useCallback(
-    () => onTimeComplete(0),
-    [onTimeComplete],
-  );
 
   const remainingTimeRef = useRef<RemainingTimeGetter>();
 
@@ -123,7 +118,6 @@ export default function WritingMain({ navigation, route }: Props) {
           <PauseButton
             maxSeconds={TOTAL_TIME}
             remainingTimeRef={remainingTimeRef}
-            onTimeComplete={memoizedOnTimeComplete}
           />
         </View>
       </View>
