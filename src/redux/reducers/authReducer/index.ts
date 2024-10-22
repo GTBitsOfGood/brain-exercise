@@ -10,8 +10,8 @@ const initialState: AuthUser = {
   lastName: "",
   email: "",
   phoneNumber: "",
-  startDate: new Date(),
-  birthDate: new Date(),
+  startDate: "",
+  birthDate: "",
   patientDetails: {
     secondaryContactName: "",
     secondaryContactPhone: "",

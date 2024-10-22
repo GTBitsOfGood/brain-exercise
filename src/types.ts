@@ -35,8 +35,8 @@ export interface IUser {
   lastName: string;
   email: string;
   phoneNumber: string;
-  birthDate: Date;
-  startDate: Date;
+  birthDate: string;
+  startDate: string;
   patientDetails: {
     secondaryContactName: string;
     secondaryContactPhone: string;
@@ -64,7 +64,7 @@ export interface Subject {
 }
 
 export interface LastSessionMetrics {
-  date: Date;
+  date: string;
   math: {
     attempted: boolean;
     questionsAttempted: number;
@@ -103,7 +103,7 @@ export interface IAnalytics {
   lastSessionsMetrics: LastSessionMetrics[];
   weeklyMetrics: [
     {
-      date: Date;
+      date: string;
       sessionsCompleted: number;
       streakLength: number;
       active: boolean;
@@ -150,7 +150,7 @@ export enum SoundSetting {
 
 export interface Settings {
   notificationsActive: boolean;
-  scheduledTime: Date;
+  scheduledTime: string;
   fontSize: number;
   soundEffectsOn: boolean;
   voiceOverOn: boolean;
