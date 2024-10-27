@@ -1,8 +1,9 @@
-# Welcome to 'brain-exercise' 👋
+# Brain Exercise Initative 🧠
 
-> Mobile app for the Brain Exercise Initiative
+## About
+Brain Exercise Initative is a nonprofit focused on preventing memory loss through brain exercise. Through innovative research in Japan, it was found that doing simple math and reading exercises aloud caused improvements in cognitive function. Brain Exercise Initiative builds off of this research, holding brain exercise programs at retirement homes. 
 
-## Pre-requisites
+## Getting Started
 
 1. NodeJS v16+
 2. Expo (on Android/iOS App Store)
