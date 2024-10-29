@@ -14,14 +14,12 @@ import { RootState } from "../redux/rootReducer";
 type Props = {
   onPress?: (e: GestureResponderEvent) => void;
   maxSeconds: number;
-  onTimeComplete?: () => void;
   remainingTimeRef?: MutableRefObject<RemainingTimeGetter>;
 };
 
 export default function PauseButton({
   onPress,
   maxSeconds,
-  onTimeComplete,
   remainingTimeRef,
 }: Props) {
   const navigation =
@@ -55,19 +53,21 @@ export default function PauseButton({
   useEffect(() => {
     const timer = setInterval(() => {
       if (remainingTime <= 0) {
-        clearInterval(timer);
-        if (onTimeComplete) {
-          onTimeComplete();
-        }
+        setRemainingTime(remainingTime - 1);
+        // clearInterval(timer);
+        console.log(remainingTime);
       } else if (!paused) {
         setRemainingTime(remainingTime - 1);
       }
     }, 1000);
     return () => clearInterval(timer);
-  }, [remainingTime, setRemainingTime, paused, onTimeComplete]);
+  }, [remainingTime, setRemainingTime, paused]);
 
   const seconds = remainingTime % 60;
-  const minutes = Math.floor(remainingTime / 60);
+  const minutes =
+    remainingTime < 0
+      ? Math.ceil(remainingTime / 60)
+      : Math.floor(remainingTime / 60);
 
   return (
     <TouchableOpacity
@@ -94,7 +94,10 @@ export default function PauseButton({
           marginLeft: 10,
         }}
       >
-        {minutes}:{seconds.toString().padStart(2, "0")}
+        {remainingTime < 0 ? `+${-minutes}` : minutes}:
+        {remainingTime < 0
+          ? (-seconds).toString().padStart(2, "0")
+          : seconds.toString().padStart(2, "0")}
       </Text>
     </TouchableOpacity>
   );

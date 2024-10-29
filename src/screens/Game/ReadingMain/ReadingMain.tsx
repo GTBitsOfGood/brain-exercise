@@ -2,7 +2,7 @@ import { ScrollView, View, Alert, TouchableOpacity } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 // import Button from "../../../components/Button";
 import ContinueButton from "../../../components/ContinueButton";
@@ -52,11 +52,6 @@ export default function ReadingMain({ navigation, route }: Props) {
   });
 
   const remainingTimeRef = useRef<RemainingTimeGetter>();
-
-  const memoizedOnTimeComplete = useCallback(
-    () => onTimeComplete(false),
-    [onTimeComplete],
-  );
 
   const nextSection = () => {
     dispatch(pause());
@@ -116,7 +111,6 @@ export default function ReadingMain({ navigation, route }: Props) {
           <PauseButton
             maxSeconds={TOTAL_TIME}
             remainingTimeRef={remainingTimeRef}
-            onTimeComplete={memoizedOnTimeComplete}
           />
         </View>
       </View>
