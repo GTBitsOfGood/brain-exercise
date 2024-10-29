@@ -3,12 +3,17 @@ import "@fontsource/poppins";
 
 const SettingsStyle = StyleSheet.create({
   root: {
+    // flex: 1,
+    // alignContent: "center",
+    // padding: 20,
+    // backgroundColor: "white",
+    // fontFamily: "Poppins",
+    // color: "#2b3674",
     flex: 1,
     alignContent: "center",
+    justifyContent: "space-around",
     padding: 20,
     backgroundColor: "white",
-    fontFamily: "Poppins",
-    color: "#2b3674",
   },
   notifications: {
     flexDirection: "row",
@@ -101,6 +106,31 @@ const SettingsStyle = StyleSheet.create({
   maxSize: {
     fontSize: 32,
     marginBottom: 10,
+  },
+  footerButton: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  footerContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: 10,
+    marginRight: 10,
+    paddingBottom: 4,
+  },
+  footerTextSelected: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#2B3674",
+    paddingTop: 4,
+  },
+  footerTextUnselected: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#9CA5C2",
+    paddingTop: 4,
   },
 });
 export default SettingsStyle;

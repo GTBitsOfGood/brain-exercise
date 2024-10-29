@@ -120,7 +120,7 @@ function HomeScreen({ navigation }: Props) {
           accessibilityRole="button"
           style={styles.footerButton}
         >
-          <HomeIcon></HomeIcon>
+          <HomeIcon color="#008AFC"></HomeIcon>
           <Text style={styles.footerTextSelected}>Home</Text>
         </TouchableOpacity>
 

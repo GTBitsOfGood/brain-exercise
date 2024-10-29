@@ -13,6 +13,9 @@ import SettingsStyle from "../../styles/settings";
 import { Slider } from "react-native-elements";
 import '@fontsource/poppins';
 import TimePicker from "./TimePicker";
+import HomeIcon from "../../assets/HomeIcon";
+import ProfileIcon from "../../assets/ProfileIcon";
+import SettingsIcon from "../../assets/SettingsIcon";
 
 const termsURL = "https://gtbitsofgood.github.io/brain-exercise/terms/";
 const privacyURL = "https://gtbitsofgood.github.io/brain-exercise/privacy/";
@@ -47,15 +50,17 @@ const {
   section,
   subtext,
   timeButton,
-  icon,
+  footerContainer,
   rowInfo,
-  touchableRow,
+  footerButton,
   buttonText,
   thumbStyle,
   trackStyle,
   slider,
   minSize,
   maxSize,
+  footerTextSelected,
+  footerTextUnselected
 } = SettingsStyle;
 
 // Settings Navigation
@@ -242,6 +247,32 @@ function SettingsScreen({ navigation }) {
           />
           
         </View>
+      </View>
+      <View style={footerContainer}>
+        <TouchableOpacity
+          accessibilityRole="button"
+          style={footerButton}
+          onPress={() => navigation.navigate("HomeScreen")}
+        >
+          <HomeIcon></HomeIcon>
+          <Text style={footerTextUnselected}>Home</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          accessibilityRole="button"
+          style={footerButton}
+        >
+          <ProfileIcon></ProfileIcon>
+          <Text style={footerTextUnselected}>Profile</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          accessibilityRole="button"
+          style={footerButton}
+        >
+          <SettingsIcon color="#008AFC"></SettingsIcon>
+          <Text style={footerTextSelected}>Settings</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
