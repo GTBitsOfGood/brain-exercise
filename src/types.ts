@@ -1,6 +1,7 @@
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { AVPlaybackSource } from "expo-av";
 import { ImageSourcePropType } from "react-native";
+import { Types } from "mongoose";
 
 export enum Role {
   NONPROFIT_PATIENT = "Nonprofit Patient",
@@ -281,4 +282,19 @@ export interface GameDetails {
   active: IAnalytics["active"];
   streak: IAnalytics["streak"];
   lastSessionsMetrics: IAnalytics["lastSessionsMetrics"];
+}
+
+export interface Chapter {
+  _id: Types.ObjectId;
+  name: string;
+  chapterPresident: Types.ObjectId;
+  patients: number;
+  yearFounded: number;
+  location: {
+    country: string;
+    state: string;
+    city: string;
+  };
+  activeVolunteers: number;
+  inactiveVolunteers: number;
 }
