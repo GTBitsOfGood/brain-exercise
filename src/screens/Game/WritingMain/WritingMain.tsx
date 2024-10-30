@@ -50,6 +50,15 @@ export default function WritingMain({ navigation, route }: Props) {
 
   const remainingTimeRef = useRef<RemainingTimeGetter>();
 
+  const nextParagraph = () => {
+    updateStatsOnAnswer();
+    if (remainingTimeRef.current.getRemainingTime() <= 0) {
+      onTimeComplete(0);
+    } else {
+      getNewProblem();
+    }
+  };
+
   return (
     // <View style={styles.root}>
     //   <View>
@@ -193,10 +202,7 @@ export default function WritingMain({ navigation, route }: Props) {
       </TouchableOpacity>
       <ContinueButton
         title="Next Paragraph"
-        onPressFn={() => {
-          getNewProblem();
-          updateStatsOnAnswer();
-        }}
+        onPressFn={nextParagraph}
         backgroundColor="#9747FF"
         titleColor="white"
       />

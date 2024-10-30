@@ -53,6 +53,14 @@ export default function ReadingMain({ navigation, route }: Props) {
 
   const remainingTimeRef = useRef<RemainingTimeGetter>();
 
+  const nextParagraphTimeCheck = () => {
+    if (remainingTimeRef.current.getRemainingTime() <= 0) {
+      onTimeComplete(false);
+    } else {
+      nextParagraph();
+    }
+  };
+
   const nextSection = () => {
     dispatch(pause());
     Alert.alert(
@@ -189,7 +197,7 @@ export default function ReadingMain({ navigation, route }: Props) {
       </TouchableOpacity>
       <ContinueButton
         title="Next Paragraph"
-        onPressFn={nextParagraph}
+        onPressFn={nextParagraphTimeCheck}
         backgroundColor="#FE7D35"
         titleColor="white"
       />

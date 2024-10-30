@@ -131,6 +131,20 @@ type Props = NativeStackScreenProps<RootStackParamList, "SectionSummary">;
 // }
 
 export default function SectionSummary({ route }: Props) {
+  function secondsToTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    if (hours <= 0 && minutes <= 0) {
+      return `${secs} sec`;
+    }
+    if (hours <= 0) {
+      return `${minutes} min ${secs} sec`;
+    }
+    return `${hours} hr ${minutes} min ${secs} sec`;
+  }
+
   const subject = "subject" in route.params ? route.params.subject : null;
 
   const gameDetails = useSelector<
@@ -226,10 +240,9 @@ export default function SectionSummary({ route }: Props) {
             <TwoLineComponent
               icon={<FontAwesome5 name="clock" size={24} color={color} />}
               title="Total time spent"
-              stat={`${Math.floor((questions * timePer) / 60)} min ${
-                questions * timePer -
-                60 * Math.floor((questions * timePer) / 60)
-              } sec`}
+              stat={secondsToTime(
+                Math.round((timePer * questions + Number.EPSILON) * 100) / 100,
+              )}
               statColor={color}
             />
           ) : (
@@ -241,9 +254,9 @@ export default function SectionSummary({ route }: Props) {
             <TwoLineComponent
               icon={<FontAwesome5 name="clock" size={24} color={color} />}
               title="Average time per question"
-              stat={`${Math.floor(timePer / 60)} min ${
-                timePer - 60 * Math.floor(timePer / 60)
-              } sec`}
+              stat={secondsToTime(
+                Math.round((timePer + Number.EPSILON) * 100) / 100,
+              )}
               statColor={color}
             />
           ) : (

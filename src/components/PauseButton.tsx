@@ -55,7 +55,7 @@ export default function PauseButton({
       if (remainingTime <= 0) {
         setRemainingTime(remainingTime - 1);
         // clearInterval(timer);
-        console.log(remainingTime);
+        // console.log(remainingTime);
       } else if (!paused) {
         setRemainingTime(remainingTime - 1);
       }
