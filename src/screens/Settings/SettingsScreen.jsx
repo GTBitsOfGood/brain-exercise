@@ -72,25 +72,29 @@ const {
 
 // Settings Navigation
 function SettingsScreen({ navigation }) {
-  const [settings, setSettings] = useState(defaultSettings);
-  const [toggleOn, setToggleOn] = useState(settings.notificationsActive);
+  const [settings, setSettings] = useState(null);
+  const [toggleOn, setToggleOn] = useState(null);
   const [animationToggleOn, setAnimationToggleOn] = useState(
-    settings.animationOn,
+    null
   );
-  const [fontSize, setFontSize] = useState(settings.fontSize);
+  const [volume, setVolume] = useState(null);
   const [timePickerOpen, setTimePickerOpen] = useState(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const [soundEffectsToggleOn, setSoundEffectsToggleOn] = useState(
-    settings.soundEffectsOn || defaultSettings.soundEffectsOn,
+    null
   );
   const [voiceOverToggleOn, setVoiceOverToggleOn] = useState(
-    settings.voiceOverOn || defaultSettings.voiceOverOn,
+    null
   );
 
   const setSoundEffectsToggleOnWrapper = async () => {
     setSoundEffectsToggleOn(!soundEffectsToggleOn);
     settings.soundEffectsOn = !soundEffectsToggleOn;
+    if(settings.soundEffectsOn) {
+      setVolume(1);
+    }
+    
     const jsonSettings = JSON.stringify(settings);
     //console.log(settings.soundEffectsOn)
     await AsyncStorage.setItem("SETTINGS", jsonSettings);
@@ -113,11 +117,32 @@ function SettingsScreen({ navigation }) {
   }
 
   useEffect(() => {
-    updateFontSize();
-  }, [fontSize]);
+    updateVolume();
+  }, [volume, soundEffectsToggleOn]);
 
-  const updateFontSize = async () => {
-    settings.fontSize = fontSize;
+  useEffect(() => {
+    pullSettings()
+      .then((item) => {
+        setSettings(item);
+        setToggleOn(item.notificationsActive);
+        setAnimationToggleOn(item.animationOn);
+        setSoundEffectsToggleOn(item.soundEffectsOn);
+        setVoiceOverToggleOn(item.voiceOverOn);
+        setVolume(item.soundEffectsOn ? 1 : item.volume);
+      })
+      .catch((err) => console.log(err));
+    if (settings === null) {
+      setSettings(defaultSettings);
+      setToggleOn(defaultSettings.notificationsActive);
+      setAnimationToggleOn(defaultSettings.animationOn);
+      setVolume(defaultSettings.volume);
+      setSoundEffectsToggleOn(defaultSettings.soundEffectsOn);
+      setVoiceOverToggleOn(defaultSettings.voiceOverOn);
+    }
+  }, []);
+
+  const updateVolume = async () => {
+    settings.volume = volume;
     await storeSettings(settings);
   }
 
@@ -216,7 +241,7 @@ function SettingsScreen({ navigation }) {
         <Text style={text}>Sound</Text>
         </View>
           <View style={notificationChildren}>
-          <Text style={subtext}>Sound Effects</Text>
+          <Text style={subtext}>Mute In-App Sound Effects</Text>
           <Switch
             trackColor={{ false: "#ffffff", true: "#05cd99" }}
             onValueChange={setSoundEffectsToggleOnWrapper}
@@ -231,11 +256,11 @@ function SettingsScreen({ navigation }) {
             thumbStyle={thumbStyle}
             trackStyle={trackStyle}
             allowTouchTrack={true}
-            minimumValue={16}
-            maximumValue={32}
+            minimumValue={1}
+            maximumValue={16}
             step={1}
-            onValueChange={(v) => setFontSize(v)}
-            value={fontSize}
+            onValueChange={(v) => setVolume(v)}
+            value={volume}
           />
           <FontAwesome5 name="volume-up" size={30} color="#2B3674" />
         </View>
