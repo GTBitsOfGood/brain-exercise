@@ -3,16 +3,17 @@ import "@fontsource/poppins";
 
 const SettingsStyle = StyleSheet.create({
   root: {
-    // flex: 1,
-    // alignContent: "center",
-    // padding: 20,
-    // backgroundColor: "white",
-    // fontFamily: "Poppins",
-    // color: "#2b3674",
     flex: 1,
     alignContent: "center",
-    justifyContent: "space-around",
     padding: 20,
+    justifyContent: "space-between",
+    backgroundColor: "white",
+    paddingTop: 44,
+    paddingBottom: 30,
+  },
+  layout: {
+    flex: 1,
+    alignContent: "center",
     backgroundColor: "white",
   },
   notifications: {
@@ -29,6 +30,14 @@ const SettingsStyle = StyleSheet.create({
     color: "#2b3674",
     fontFamily: "Poppins",
     fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "left",
+    marginVertical: 15,
+  },
+  headerText: {
+    color: "#2b3674",
+    fontFamily: "Poppins",
+    fontSize: 42,
     fontWeight: "bold",
     textAlign: "left",
     marginVertical: 15,
@@ -76,6 +85,8 @@ const SettingsStyle = StyleSheet.create({
   section: {
     borderBottomColor: "lightgray",
     borderBottomWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
   },
   icon: {
     marginRight: 10,
@@ -84,6 +95,7 @@ const SettingsStyle = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    alignContent: "center",
   },
   thumbStyle: {
     backgroundColor: "white",
@@ -131,6 +143,20 @@ const SettingsStyle = StyleSheet.create({
     fontWeight: "500",
     color: "#9CA5C2",
     paddingTop: 4,
+  },
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    fontSize: 16,
+    fontWeight: "500",
+    paddingTop: 4,
+  },
+  logoutOpenButton: {
+    backgroundColor: "#008AFC",
+    borderRadius: 12,
+    padding: 4,
   },
 });
 export default SettingsStyle;

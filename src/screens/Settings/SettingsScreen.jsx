@@ -16,6 +16,9 @@ import TimePicker from "./TimePicker";
 import HomeIcon from "../../assets/HomeIcon";
 import ProfileIcon from "../../assets/ProfileIcon";
 import SettingsIcon from "../../assets/SettingsIcon";
+import LogoutButton from "../../components/Auth/LogoutButton";
+import LogoutModal from "./LogoutModal";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const termsURL = "https://gtbitsofgood.github.io/brain-exercise/terms/";
 const privacyURL = "https://gtbitsofgood.github.io/brain-exercise/privacy/";
@@ -60,7 +63,11 @@ const {
   minSize,
   maxSize,
   footerTextSelected,
-  footerTextUnselected
+  footerTextUnselected,
+  headerText,
+  header,
+  logoutOpenButton,
+  layout,
 } = SettingsStyle;
 
 // Settings Navigation
@@ -72,6 +79,8 @@ function SettingsScreen({ navigation }) {
   );
   const [fontSize, setFontSize] = useState(settings.fontSize);
   const [timePickerOpen, setTimePickerOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+
   const [soundEffectsToggleOn, setSoundEffectsToggleOn] = useState(
     settings.soundEffectsOn || defaultSettings.soundEffectsOn,
   );
@@ -161,7 +170,20 @@ function SettingsScreen({ navigation }) {
 
   return (
     <View style={root}>
-      <View style={section}>
+      <View style={layout}>
+      <View>
+      <View>
+        <View style={header}>
+          <Text style={headerText}>Settings</Text>
+          <Button style={logoutOpenButton}
+                color="#2b3674"
+                title="Log Out"
+                onPress={() => setLogoutModalOpen(true)}
+          />
+        </View>
+        <LogoutModal open = {logoutModalOpen} setOpen = {setLogoutModalOpen} route={{ params: settings }} />
+        </View>
+        <View style={section}>
         <View style={notifications}>
           <Text style={text}>Notifications</Text>
         </View>
@@ -188,27 +210,7 @@ function SettingsScreen({ navigation }) {
           </View>
         )}
       </View>
-      <View style={section}>
-        <View style={rowInfo}>
-          <Text style={text}>Font Size</Text>
-        </View>
-        <View style={rowInfo}>
-          <Text style={minSize}>Aa</Text>
-          <Slider
-            style={slider}
-            thumbStyle={thumbStyle}
-            trackStyle={trackStyle}
-            allowTouchTrack={true}
-            minimumValue={16}
-            maximumValue={32}
-            step={1}
-            onValueChange={(v) => setFontSize(v)}
-            value={fontSize}
-          />
-          <Text style={maxSize}>Aa</Text>
-        </View>
-      </View>
-      
+      </View>    
       <View style={section}>
         <View style={notifications}>
         <Text style={text}>Sound</Text>
@@ -222,15 +224,20 @@ function SettingsScreen({ navigation }) {
             accessibilityRole="switch"
           />
         </View>
-        <View style={notificationChildren}>
-          <Text style={subtext}>Voice Over</Text>
-          <Switch
-            trackColor={{ false: "#ffffff", true: "#05cd99" }}
-            onValueChange={setVoiceOverToggleOn}
-            value={voiceOverToggleOn}
-            accessibilityRole="switch"
+        <View style={rowInfo}>
+        <FontAwesome5 name="volume-down" size={30} color="#2B3674" />
+          <Slider
+            style={slider}
+            thumbStyle={thumbStyle}
+            trackStyle={trackStyle}
+            allowTouchTrack={true}
+            minimumValue={16}
+            maximumValue={32}
+            step={1}
+            onValueChange={(v) => setFontSize(v)}
+            value={fontSize}
           />
-          
+          <FontAwesome5 name="volume-up" size={30} color="#2B3674" />
         </View>
       </View>
       <View style={section}>
@@ -247,6 +254,7 @@ function SettingsScreen({ navigation }) {
           />
           
         </View>
+      </View>
       </View>
       <View style={footerContainer}>
         <TouchableOpacity
