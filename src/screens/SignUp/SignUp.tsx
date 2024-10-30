@@ -17,11 +17,10 @@ import { Dropdown } from "react-native-element-dropdown";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FirebaseError } from "firebase/app";
 
-import { useEffect } from "react";
 import Text from "../../components/Text";
 import { emailSignUp } from "../../firebase/email_signin";
 import { RootStackParamList } from "../../types";
-import { getAllChapters } from "../../actions/Chapter";
+// import { getAllChapters } from "../../actions/Chapter";
 
 // Add this state to your component
 
@@ -87,9 +86,9 @@ function SignUpScreen({ navigation }: Props) {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState("");
-  const [chapters, setChapters] = useState<{ label: string; value: string }[]>(
-    [],
-  );
+  // const [chapters, setChapters] = useState<{ label: string; value: string }[]>(
+  //   [],
+  // );
 
   const CHAPTERS = [
     "Arizona State University",
@@ -172,11 +171,6 @@ function SignUpScreen({ navigation }: Props) {
     label: chapter,
     value: chapter,
   }));
-
-  useEffect(() => {
-    setChapters(CHAPTERS);
-  }, []);
-
   // Fetch chapters from the backend API
   // useEffect(() => {
   //   const fetchChapters = async () => {
@@ -275,12 +269,10 @@ function SignUpScreen({ navigation }: Props) {
 
             <Text style={styles.textInputTitle}>Choose Chapter*</Text>
             <Dropdown
-              data={chapters}
+              data={CHAPTERS}
               labelField="label"
               valueField="value"
-              onChange={(item: { label: string; value: string }) => {
-                console.log(item);
-              }}
+              onChange={(item) => console.log("Chapter selected", item)}
             />
             <Text style={styles.errorTitle}>{error}</Text>
           </View>
