@@ -13,9 +13,10 @@ import SlidingUpPanel from "rn-sliding-up-panel";
 import HomeIcon from "../../assets/HomeIcon";
 import ProfileIcon from "../../assets/ProfileIcon";
 import SettingsIcon from "../../assets/SettingsIcon";
-import { RootStackParamList } from "../../types";
+import { RootStackParamList, UserAnalytics, HttpMethod } from "../../types";
 import { RootState } from "../../redux/rootReducer";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
+import { internalRequest } from "../../requests";
 
 import ContinueButton from "../../components/ContinueButton";
 
@@ -26,16 +27,17 @@ function ProfileScreen({ navigation }: Props) {
   const panelRef = useRef<SlidingUpPanel>(null);
 
   const [name, setName] = useState("Johannes Qian");
-  const [dob, setDob] = useState("01 / 01 / 2024");
+  const [dob, setDob] = useState("01-01-2024");
   const [areaCode, setAreaCode] = useState("+1");
   const [phoneNumber, setPhoneNumber] = useState("1231231234");
   const [email, setEmail] = useState("sample@bei.com");
   const [chapter, setChapter] = useState("Georgia Tech Chapter");
   const [location, setLocation] = useState("GA, USA");
+  const [error, setError] = useState("");
 
   const [formData, setFormData] = useState({
     name: "Johannes Qian",
-    dob: "01 / 01 / 2024",
+    dob: "01-01-2024",
     areaCode: "+1",
     phoneNumber: "1231231234",
     email: "sample@bei.com",
@@ -44,6 +46,7 @@ function ProfileScreen({ navigation }: Props) {
   });
 
   useEffect(() => {
+    panelRef.current?.hide();
     if (userInfo.firstName && userInfo.lastName) {
       setName(`${userInfo.firstName} ${userInfo.lastName}`);
     } else {
@@ -53,7 +56,7 @@ function ProfileScreen({ navigation }: Props) {
     if (userInfo.birthDate) {
       setDob(userInfo.birthDate);
     } else {
-      setDob("01 / 01 / 2024");
+      setDob("01-01-2024");
     }
 
     if (userInfo.phoneNumber) {
@@ -91,48 +94,83 @@ function ProfileScreen({ navigation }: Props) {
     }
   }, [userInfo]);
 
-  function getFormattedPhoneNumber() {
-    return `(${phoneNumber.slice(0, 3)})${phoneNumber.slice(
-      3,
-      6,
-    )}-${phoneNumber.slice(6, 10)}`;
-  }
-
   function open() {
+    const formatteddob = dob.replace("-", "");
     setFormData({
       name,
-      dob,
+      dob: formatteddob,
       areaCode,
       phoneNumber,
       email,
       chapter,
       location,
     });
+    setError("");
     panelRef.current?.show();
   }
 
-  function close(save) {
-    if (save) {
-      setName(formData.name);
-      setDob(formData.dob);
-      setAreaCode(formData.areaCode);
-      setPhoneNumber(formData.phoneNumber);
-      setEmail(formData.email);
-      setChapter(formData.chapter);
-      setLocation(formData.location);
-    } else {
-      setFormData({
-        name,
-        dob,
-        areaCode,
-        phoneNumber,
-        email,
-        chapter,
-        location,
-      });
+  const formatPhoneNumber = (currentNumber: string) => {
+    const digitsOnly = currentNumber.replace(/\D/g, "");
+
+    if (digitsOnly.length <= 3) {
+      return digitsOnly;
     }
-    panelRef.current?.hide();
-  }
+    if (digitsOnly.length <= 6) {
+      return `(${digitsOnly.slice(0, 3)}) ${digitsOnly.slice(3)}`;
+    }
+    return `(${digitsOnly.slice(0, 3)}) ${digitsOnly.slice(
+      3,
+      6,
+    )}-${digitsOnly.slice(6)}`;
+  };
+
+  const handlePhoneNumberChange = (
+    input: string,
+    setNumber: (changeNumber: string) => void,
+    currentNumber: string,
+  ) => {
+    const inputDigitsOnly = input.replace(/[()\-\s]/g, "");
+    const phoneNumberDigitsOnly = currentNumber.replace(/\D/g, "");
+
+    if (inputDigitsOnly.length <= phoneNumberDigitsOnly.length) {
+      // there was a backspace
+      setNumber(phoneNumberDigitsOnly.slice(0, -1));
+    } else {
+      setNumber(inputDigitsOnly);
+    }
+  };
+
+  const formatDOB = (input: string) => {
+    const digitsOnly = input.replace(/-/g, "");
+    if (digitsOnly.length <= 2) {
+      return digitsOnly;
+    }
+    if (digitsOnly.length <= 4) {
+      return `${digitsOnly.slice(0, 2)} / ${digitsOnly.slice(2)}`;
+    }
+    return `${digitsOnly.slice(0, 2)} / ${digitsOnly.slice(
+      2,
+      4,
+    )} / ${digitsOnly.slice(4)}`;
+  };
+
+  const handleDOBChange = (input: string) => {
+    const tempSetDob = (newDob: string) => {
+      setFormData((prevData) => ({
+        ...prevData,
+        dob: newDob,
+      }));
+    };
+    const cleanInput = input.replace(/[ ./]/g, "");
+    let digitsOnlyDOB = formData.dob.replace(/-/g, "");
+    if (cleanInput.length < digitsOnlyDOB.length) {
+      // backspace
+      digitsOnlyDOB = digitsOnlyDOB.slice(0, -1);
+      tempSetDob(digitsOnlyDOB);
+    } else {
+      tempSetDob(cleanInput);
+    }
+  };
 
   type FormDataType = {
     [key: string]: string | number | boolean;
@@ -142,11 +180,124 @@ function ProfileScreen({ navigation }: Props) {
     value: string | number | boolean,
     field: keyof FormDataType,
   ) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [field]: value,
-    }));
+    if (field === "phoneNumber") {
+      const tempSetPhoneNumber = (newNum: string) => {
+        setFormData((prevData) => ({
+          ...prevData,
+          phoneNumber: newNum,
+        }));
+      };
+      handlePhoneNumberChange(
+        String(value),
+        tempSetPhoneNumber,
+        formData.phoneNumber,
+      );
+    } else if (field === "dob") {
+      handleDOBChange(String(value));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [field]: value,
+      }));
+    }
+    setError("");
   };
+
+  const isFormValid = () => {
+    if (
+      formData.name.indexOf(" ") === -1 ||
+      formData.name.substring(
+        formData.name.indexOf(" ") + 1,
+        formData.name.length,
+      ).length === 0
+    ) {
+      setError("Please enter a last name");
+      return false;
+    }
+
+    if (formData.name.substring(0, formData.name.indexOf(" ")).length === 0) {
+      setError("Please enter a first name");
+      return false;
+    }
+
+    if (!/^\d{10}$/.test(formData.phoneNumber)) {
+      setError("Please enter a valid phone number");
+      return false;
+    }
+
+    const formatteddob = `${formData.dob.substring(
+      0,
+      2,
+    )}-${formData.dob.substring(2, 4)}-${formData.dob.substring(4)}`;
+
+    if (!/^\d{2}-\d{2}-\d{4}/.test(formatteddob)) {
+      setError("Please enter a valid date of birth");
+      return false;
+    }
+
+    // Following check if the date matches number of days in a month
+
+    const checkDate = new Date(formatteddob);
+    if (checkDate.toString() === "Invalid Date") {
+      setError("Please enter a valid date of birth");
+      return false;
+    }
+
+    const today = new Date();
+    if (checkDate >= today) {
+      setError("Please enter a valid date of birth");
+      return false;
+    }
+
+    return true;
+  };
+
+  async function close(save) {
+    if (save) {
+      if (!isFormValid()) {
+        return;
+      }
+      const firstName = formData.name.substring(0, formData.name.indexOf(" "));
+      const lastName = formData.name.substring(
+        formData.name.indexOf(" ") + 1,
+        formData.name.length,
+      );
+      const secondContactName = userInfo.patientDetails.secondaryContactName;
+      const secondContactNumber = userInfo.patientDetails.secondaryContactPhone;
+      try {
+        const body: Record<string, string> = {
+          email: formData.email,
+          firstName,
+          lastName,
+          phoneNumber: formData.phoneNumber,
+          birthDate: formData.dob,
+          secondaryContactName: secondContactName,
+          secondaryContactPhone: secondContactNumber,
+        };
+        await internalRequest<UserAnalytics>({
+          url: "/api/patient/auth/signup",
+          body,
+          method: HttpMethod.POST,
+        });
+      } catch (e) {
+        setError(`An error occurred: ${e}`);
+        return;
+      }
+      setName(formData.name);
+      setDob(
+        `${formData.dob.substring(0, 2)}-${formData.dob.substring(
+          2,
+          4,
+        )}-${formData.dob.substring(4)}`,
+      );
+      setAreaCode(formData.areaCode);
+      setPhoneNumber(formData.phoneNumber);
+      setEmail(formData.email);
+      setChapter(formData.chapter);
+      setLocation(formData.location);
+    }
+    panelRef.current?.hide();
+  }
 
   return (
     <View
@@ -253,7 +404,7 @@ function ProfileScreen({ navigation }: Props) {
               color: "#2B3674",
             }}
           >
-            {dob}
+            {formatDOB(dob)}
           </Text>
         </View>
         <View
@@ -280,7 +431,7 @@ function ProfileScreen({ navigation }: Props) {
               marginTop: "4%",
               color: "#2B3674",
             }}
-          >{`${areaCode} ${getFormattedPhoneNumber()}`}</Text>
+          >{`${areaCode} ${formatPhoneNumber(phoneNumber)}`}</Text>
         </View>
         <View
           style={{
@@ -432,6 +583,7 @@ function ProfileScreen({ navigation }: Props) {
           top: Dimensions.get("window").height * 0.85,
           bottom: 0,
         }}
+        allowDragging={false}
       >
         <View
           style={{
@@ -508,7 +660,7 @@ function ProfileScreen({ navigation }: Props) {
                 paddingHorizontal: "4%",
                 paddingVertical: "2%",
               }}
-              value={formData.dob}
+              value={formatDOB(formData.dob)}
               onChangeText={(e) => handleChange(e, "dob")}
               placeholder="Enter Date of Birth"
               accessibilityHint='The text written in this input field will be saved as the user"s date of birth'
@@ -571,7 +723,7 @@ function ProfileScreen({ navigation }: Props) {
                   paddingVertical: "2%",
                   width: "82%",
                 }}
-                value={formData.phoneNumber}
+                value={formatPhoneNumber(formData.phoneNumber)}
                 onChangeText={(e) => handleChange(e, "phoneNumber")}
                 placeholder="Enter Phone Number"
                 keyboardType="phone-pad"
@@ -658,12 +810,26 @@ function ProfileScreen({ navigation }: Props) {
               marginBottom: "-2%",
             }}
           >
-            <ContinueButton
-              title="Save Changes"
-              backgroundColor="#008AFC"
-              titleColor="white"
-              onPressFn={() => close(true)}
-            />
+            {error ? (
+              <Text
+                style={{
+                  color: "red",
+                  fontSize: 18,
+                  fontWeight: 400,
+                  textAlign: "center",
+                  paddingVertical: "6%",
+                }}
+              >
+                {error}
+              </Text>
+            ) : (
+              <ContinueButton
+                title="Save Changes"
+                backgroundColor="#008AFC"
+                titleColor="white"
+                onPressFn={() => close(true)}
+              />
+            )}
           </View>
           <TouchableOpacity
             accessibilityRole="button"
