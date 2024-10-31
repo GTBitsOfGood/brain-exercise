@@ -259,12 +259,53 @@ export default function TriviaScreen({ navigation, route }: Props) {
       </View>
       <View>
         {answered ? (
-          <ContinueButton
-            title="Next"
-            backgroundColor="#34BC99"
-            titleColor="white"
-            onPressFn={() => onAnswerClick(true)}
-          />
+          <View>
+            <Text
+              style={{
+                fontSize: 24,
+                fontWeight: "bold",
+                color: "#2B3674",
+                textAlign: "center",
+                marginBottom: 6,
+              }}
+            >
+              Did you get it right?
+            </Text>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                maxWidth: "100%",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <View
+                style={{
+                  width: "48%",
+                }}
+              >
+                <ContinueButton
+                  title="Yes"
+                  backgroundColor="#34BC99"
+                  titleColor="white"
+                  onPressFn={() => onAnswerClick(true)}
+                />
+              </View>
+              <View
+                style={{
+                  width: "48%",
+                }}
+              >
+                <ContinueButton
+                  title="No"
+                  backgroundColor="#34BC99"
+                  titleColor="white"
+                  onPressFn={() => onAnswerClick(false)}
+                />
+              </View>
+            </View>
+          </View>
         ) : (
           <ContinueButton
             title="Show Answer"

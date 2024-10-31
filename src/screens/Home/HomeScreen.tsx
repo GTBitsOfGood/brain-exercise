@@ -127,8 +127,9 @@ function HomeScreen({ navigation }: Props) {
         <TouchableOpacity
           accessibilityRole="button"
           style={styles.footerButton}
+          onPress={() => navigation.navigate("ProfileScreen")}
         >
-          <ProfileIcon></ProfileIcon>
+          <ProfileIcon props={undefined}></ProfileIcon>
           <Text style={styles.footerTextUnselected}>Profile</Text>
         </TouchableOpacity>
 

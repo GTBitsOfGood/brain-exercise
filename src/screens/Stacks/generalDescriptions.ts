@@ -10,6 +10,7 @@ import MathOverview from "../Game/MathMain/MathOverview";
 import ReadingOverview from "../Game/ReadingMain/ReadingOverview";
 import WritingOverview from "../Game/WritingMain/WritingOverview";
 import TriviaOverview from "../Game/TriviaMain/TriviaOverview";
+import ProfileScreen from "../Profile/ProfileScreen";
 
 const generalDescriptions: ScreenDescription[] = [
   {
@@ -75,6 +76,12 @@ const generalDescriptions: ScreenDescription[] = [
     name: "TriviaOverview",
     component: TriviaOverview,
     title: "Trivia Exercises",
+    options: { headerShown: false },
+  },
+  {
+    name: "ProfileScreen",
+    component: ProfileScreen,
+    title: "Profile",
     options: { headerShown: false },
   },
 ];
