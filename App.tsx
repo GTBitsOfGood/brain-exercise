@@ -54,6 +54,7 @@ export default function App() {
                   },
                   headerTitleAlign: "center",
                   animation: "fade",
+                  headerShown: false,
                 }}
               >
                 {MergedStacks}

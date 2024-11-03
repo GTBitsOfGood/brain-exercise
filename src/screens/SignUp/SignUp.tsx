@@ -19,6 +19,9 @@ import { FirebaseError } from "firebase/app";
 import Text from "../../components/Text";
 import { emailSignUp } from "../../firebase/email_signin";
 import { RootStackParamList } from "../../types";
+// import { getAllChapters } from "../../actions/Chapter";
+
+// Add this state to your component
 
 const styles = StyleSheet.create({
   root: {
@@ -82,6 +85,22 @@ function SignUpScreen({ navigation }: Props) {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState("");
+  // const [chapters, setChapters] = useState<{ label: string; value: string }[]>(
+  //   [],
+  // );
+  // Fetch chapters from the backend API
+  // useEffect(() => {
+  //   const fetchChapters = async () => {
+  //     const allChapters = await getAllChapters();
+  //     setChapters(
+  //       allChapters.map((chapter) => ({
+  //         label: chapter.name,
+  //         value: chapter.name,
+  //       })),
+  //     );
+  //   };
+  //   fetchChapters();
+  // }, []);
 
   const isFormValid = () => {
     // eslint-disable-next-line no-useless-escape
@@ -134,6 +153,7 @@ function SignUpScreen({ navigation }: Props) {
             <TextInput
               accessibilityRole="text"
               placeholder="username@email.com"
+              placeholderTextColor="#888"
               style={styles.textInput}
               onChangeText={setEmail}
               value={email}
@@ -143,6 +163,7 @@ function SignUpScreen({ navigation }: Props) {
             <TextInput
               accessibilityRole="text"
               placeholder="Password"
+              placeholderTextColor="#888"
               style={styles.textInput}
               onChangeText={setPassword}
               value={password}
@@ -156,6 +177,7 @@ function SignUpScreen({ navigation }: Props) {
             <TextInput
               accessibilityRole="text"
               placeholder="Password"
+              placeholderTextColor="#888"
               style={styles.textInput}
               onChangeText={setRepeatPassword}
               value={repeatPassword}
@@ -180,8 +202,8 @@ function SignUpScreen({ navigation }: Props) {
                 padding: "1%",
               }}
               buttonStyle={{
-                backgroundColor: "#005AA3",
-                borderRadius: 4,
+                backgroundColor: "#008AFC",
+                borderRadius: 12,
                 height: 0.13 * Dimensions.get("window").width,
               }}
               titleStyle={styles.buttonTitle}
@@ -224,7 +246,7 @@ function SignUpScreen({ navigation }: Props) {
               }}
             >
               <Text
-                style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}
+                style={{ fontSize: 14, color: "#008AFC", fontWeight: "bold" }}
               >
                 Log In
               </Text>

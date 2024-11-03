@@ -31,12 +31,18 @@ function LogoutButton() {
       const auth = getAuth();
       await signOut(auth);
     } catch (e) {
-      // console.error(e);
+      console.error(e);
     }
   };
 
   return (
-    <Button titleStyle={styles.buttonTitle} title="Log Out" onPress={onPress} />
+    <Button
+      titleStyle={styles.buttonTitle}
+      title="Log Out"
+      onPress={onPress}
+      color="#008AFC"
+      adjustedSize={250}
+    />
   );
 }
 

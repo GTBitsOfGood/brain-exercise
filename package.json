@@ -57,6 +57,7 @@
     "react-native": "0.74.5",
     "react-native-confetti-cannon": "^1.5.2",
     "react-native-eject": "^0.2.0",
+    "react-native-element-dropdown": "^2.12.2",
     "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-modal": "^13.0.1",
