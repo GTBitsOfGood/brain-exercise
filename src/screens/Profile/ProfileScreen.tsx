@@ -95,7 +95,7 @@ function ProfileScreen({ navigation }: Props) {
   }, [userInfo]);
 
   function open() {
-    const formatteddob = dob.replace("-", "");
+    const formatteddob = dob.replace(/-/g, "");
     setFormData({
       name,
       dob: formatteddob,

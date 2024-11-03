@@ -54,10 +54,9 @@ export default function ReadingMain({ navigation, route }: Props) {
   const remainingTimeRef = useRef<RemainingTimeGetter>();
 
   const nextParagraphTimeCheck = () => {
+    nextParagraph();
     if (remainingTimeRef.current.getRemainingTime() <= 0) {
       onTimeComplete(false);
-    } else {
-      nextParagraph();
     }
   };
 
