@@ -1,7 +1,6 @@
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { AVPlaybackSource } from "expo-av";
 import { ImageSourcePropType } from "react-native";
-import { Types } from "mongoose";
 
 export enum Role {
   NONPROFIT_PATIENT = "Nonprofit Patient",
