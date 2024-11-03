@@ -86,26 +86,24 @@ function MathMain({ route, navigation }: Props) {
 
   const onPressChoice = (choiceValue: number) => {
     const isCorrect = choiceValue === problem.solution;
-    updateStatsOnAnswer(
-      isCorrect && !chosenIncorrectly,
-      prevProblemRemainingTimeRef.current -
-        remainingTimeRef.current.getRemainingTime(),
-    );
-    console.log("isCorrect", isCorrect);
+    if (!chosenIncorrectly) {
+      updateStatsOnAnswer(
+        isCorrect,
+        prevProblemRemainingTimeRef.current -
+          remainingTimeRef.current.getRemainingTime(),
+      );
+    }
     if (isCorrect) {
       setChosenIncorrectly(false);
       setIncorrectChoices([]);
-      console.log("here");
       Toast.show({
         type: "success",
         text1: "Correct!",
       });
       resetAndNewProblem(1);
     } else {
-      console.log("here");
       setChosenIncorrectly(true);
       setIncorrectChoices([...incorrectChoices, choiceValue]);
-      console.log(incorrectChoices);
       Toast.show({
         type: "error",
         text1: "Wrong. Please Try Again!",
@@ -145,8 +143,6 @@ function MathMain({ route, navigation }: Props) {
       ]}
       key={i}
       onPress={() => {
-        console.log("incorrect", incorrectChoices);
-        console.log("pressed", choiceValue);
         onPressChoice(choiceValue);
       }}
     />
