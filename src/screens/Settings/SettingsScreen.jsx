@@ -117,33 +117,36 @@ function SettingsScreen({ navigation }) {
   }
 
   useEffect(() => {
+    pullSettings()
+      .then((item) => {
+        if (item === null) {
+          setSettings(defaultSettings);
+          setToggleOn(defaultSettings.notificationsActive);
+          setAnimationToggleOn(defaultSettings.animationOn);
+          setVolume(defaultSettings.volume);
+          setSoundEffectsToggleOn(defaultSettings.soundEffectsOn);
+          setVoiceOverToggleOn(defaultSettings.voiceOverOn);
+        } else {
+          setSettings(item);
+          setToggleOn(item.notificationsActive);
+          setAnimationToggleOn(item.animationOn);
+          setSoundEffectsToggleOn(item.soundEffectsOn);
+          setVoiceOverToggleOn(item.voiceOverOn);
+          setVolume(item.soundEffectsOn ? 1 : item.volume);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
     updateVolume();
   }, [volume, soundEffectsToggleOn]);
 
-  useEffect(() => {
-    pullSettings()
-      .then((item) => {
-        setSettings(item);
-        setToggleOn(item.notificationsActive);
-        setAnimationToggleOn(item.animationOn);
-        setSoundEffectsToggleOn(item.soundEffectsOn);
-        setVoiceOverToggleOn(item.voiceOverOn);
-        setVolume(item.soundEffectsOn ? 1 : item.volume);
-      })
-      .catch((err) => console.log(err));
-    if (settings === null) {
-      setSettings(defaultSettings);
-      setToggleOn(defaultSettings.notificationsActive);
-      setAnimationToggleOn(defaultSettings.animationOn);
-      setVolume(defaultSettings.volume);
-      setSoundEffectsToggleOn(defaultSettings.soundEffectsOn);
-      setVoiceOverToggleOn(defaultSettings.voiceOverOn);
-    }
-  }, []);
-
   const updateVolume = async () => {
-    settings.volume = volume;
-    await storeSettings(settings);
+    if (settings !== null) {
+      settings.volume = volume;
+      await storeSettings(settings);
+    }
   }
 
   useFocusEffect(
@@ -201,7 +204,10 @@ function SettingsScreen({ navigation }) {
         <View style={header}>
           <Text style={headerText}>Settings</Text>
           <Button style={logoutOpenButton}
-                color="#2b3674"
+                buttonStyle={{
+                  backgroundColor: 'transparent',
+                  borderColor: 'transparent',
+                }}
                 title="Log Out"
                 onPress={() => setLogoutModalOpen(true)}
           />

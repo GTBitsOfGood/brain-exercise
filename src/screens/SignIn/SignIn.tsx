@@ -160,8 +160,8 @@ function SignInScreen({ navigation }: Props) {
                 paddingTop: 0,
               }}
               buttonStyle={{
-                backgroundColor: "#005AA3",
-                borderRadius: 4,
+                backgroundColor: "#008AFC",
+                borderRadius: 12,
                 height: 0.13 * Dimensions.get("window").width,
               }}
               titleStyle={styles.buttonTitle}
@@ -211,7 +211,7 @@ function SignInScreen({ navigation }: Props) {
               accessibilityRole="button"
             >
               <Text
-                style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}
+                style={{ fontSize: 14, color: "#008AFC", fontWeight: "bold" }}
               >
                 Sign Up
               </Text>

@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import { AVPlaybackSource } from "expo-av";
 import { Button } from "react-native-elements";
-import { Dropdown } from "react-native-element-dropdown";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FirebaseError } from "firebase/app";
 
@@ -89,88 +88,6 @@ function SignUpScreen({ navigation }: Props) {
   // const [chapters, setChapters] = useState<{ label: string; value: string }[]>(
   //   [],
   // );
-
-  const CHAPTERS = [
-    "Arizona State University",
-    "Augusta University",
-    "Carnegie Mellon",
-    "Case Western Reserve University",
-    "Chaminade University of Honolulu",
-    "Claremont Colleges",
-    "Colorado School of Mines",
-    "Columbia University",
-    "Cornell University",
-    "CSU Long Beach",
-    "Dalhousie University",
-    "Duke University",
-    "Emory University",
-    "Florida Institute of Technology",
-    "Florida State University",
-    "Fordham University",
-    "Georgetown University",
-    "Georgia Tech",
-    "Harvard University",
-    "Howard University",
-    "Hunter College in New York City",
-    "Indiana University Bloomington",
-    "Johns Hopkins University",
-    "Lawrence High School",
-    "Louisiana State University",
-    "Loyola University Chicago",
-    "Loyola University New Orleans",
-    "McGill University",
-    "McMaster University",
-    "Michigan State University",
-    "Midwestern State University",
-    "New Canaan High School",
-    "NIH Post-Bacc program",
-    "Northeastern University",
-    "Notre Dame",
-    "New York University",
-    "Oakland University",
-    "Oregon State University",
-    "Princeton Day High School",
-    "Purdue University",
-    "Redeemer University",
-    "Rutgers New Brunswick",
-    "Rutgers University Newark, School of Health Professions",
-    "Smith College",
-    "Stony Brook University",
-    "Syracuse University",
-    "Texas Christian University",
-    "Tufts University",
-    "UC Berkeley",
-    "UC Davis",
-    "UCI",
-    "UCLA",
-    "UCR",
-    "UCSB",
-    "UCSD",
-    "University of Alabama at Birmingham",
-    "University of British Columbia at Okanagan",
-    "University of Florida",
-    "University of Georgia",
-    "University of Maryland",
-    "University of Miami",
-    "University of Michigan",
-    "University of Pennsylvania",
-    "University of Portland",
-    "University of Tennessee",
-    "University of Texas - San Antonio",
-    "University of Texas Dallas",
-    "University of Washington",
-    "University of Waterloo",
-    "University of Western Ontario",
-    "University of Southern California",
-    "University of Texas Austin",
-    "Vanderbilt University",
-    "Wake Forest",
-    "Washington and Lee University",
-    "Washington University in St. Louis",
-  ].map((chapter) => ({
-    label: chapter,
-    value: chapter,
-  }));
   // Fetch chapters from the backend API
   // useEffect(() => {
   //   const fetchChapters = async () => {
@@ -236,6 +153,7 @@ function SignUpScreen({ navigation }: Props) {
             <TextInput
               accessibilityRole="text"
               placeholder="username@email.com"
+              placeholderTextColor="#888"
               style={styles.textInput}
               onChangeText={setEmail}
               value={email}
@@ -245,6 +163,7 @@ function SignUpScreen({ navigation }: Props) {
             <TextInput
               accessibilityRole="text"
               placeholder="Password"
+              placeholderTextColor="#888"
               style={styles.textInput}
               onChangeText={setPassword}
               value={password}
@@ -258,21 +177,13 @@ function SignUpScreen({ navigation }: Props) {
             <TextInput
               accessibilityRole="text"
               placeholder="Password"
+              placeholderTextColor="#888"
               style={styles.textInput}
               onChangeText={setRepeatPassword}
               value={repeatPassword}
               autoCapitalize="none"
               autoCorrect={false}
               secureTextEntry={true}
-            />
-            <Text style={styles.errorTitle}>{error}</Text>
-
-            <Text style={styles.textInputTitle}>Choose Chapter*</Text>
-            <Dropdown
-              data={CHAPTERS}
-              labelField="label"
-              valueField="value"
-              onChange={(item) => console.log("Chapter selected", item)}
             />
             <Text style={styles.errorTitle}>{error}</Text>
           </View>
@@ -291,8 +202,8 @@ function SignUpScreen({ navigation }: Props) {
                 padding: "1%",
               }}
               buttonStyle={{
-                backgroundColor: "#005AA3",
-                borderRadius: 4,
+                backgroundColor: "#008AFC",
+                borderRadius: 12,
                 height: 0.13 * Dimensions.get("window").width,
               }}
               titleStyle={styles.buttonTitle}
@@ -335,7 +246,7 @@ function SignUpScreen({ navigation }: Props) {
               }}
             >
               <Text
-                style={{ fontSize: 14, color: "#005AA3", fontWeight: "bold" }}
+                style={{ fontSize: 14, color: "#008AFC", fontWeight: "bold" }}
               >
                 Log In
               </Text>
