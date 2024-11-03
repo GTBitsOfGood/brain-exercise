@@ -727,46 +727,9 @@ function ProfileScreen({ navigation }: Props) {
                 onChangeText={(e) => handleChange(e, "phoneNumber")}
                 placeholder="Enter Phone Number"
                 keyboardType="phone-pad"
-                accessibilityHint='The text written in this input field will be saved as the user"s phone number'
+                accessibilityHint="The text written in this input field will be saved as the user's phone number"
               />
             </View>
-          </View>
-          <View
-            style={{
-              paddingVertical: "5%",
-              paddingHorizontal: "4%",
-              borderBottomWidth: 1,
-              borderColor: "#9CA5C2",
-              width: "92%",
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 400,
-                color: "#2B3674",
-              }}
-            >
-              Email Address
-            </Text>
-            <TextInput
-              accessibilityLabel="Text input field"
-              style={{
-                fontSize: 22,
-                fontWeight: "600",
-                marginTop: "4%",
-                color: "#2B3674",
-                borderRadius: 12,
-                backgroundColor: "#E3EAFC",
-                paddingHorizontal: "4%",
-                paddingVertical: "2%",
-              }}
-              value={formData.email}
-              onChangeText={(e) => handleChange(e, "email")}
-              placeholder="Enter Email"
-              keyboardType="email-address"
-              accessibilityHint='The text written in this input field will be saved as the user"s email address'
-            />
           </View>
           <View
             style={{
