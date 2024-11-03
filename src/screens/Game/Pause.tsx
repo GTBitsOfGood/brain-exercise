@@ -1,7 +1,10 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Alert, TouchableOpacity } from "react-native";
 import "react-native-gesture-handler";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -39,10 +42,38 @@ const styles = StyleSheet.create({
   },
 });
 
-function Pause() {
+type Props = NativeStackScreenProps<RootStackParamList, "Pause">;
+
+function Pause({ route }: Props) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const dispatch = useDispatch();
+
+  const section = route.params.subject;
+
+  const nextSection = () => {
+    Alert.alert(
+      `Skip ${section.charAt(0).toUpperCase()}${section.slice(1)} Section`,
+      `Are you sure you want to skip the ${section
+        .charAt(0)
+        .toUpperCase()}${section.slice(1)} section?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+          onPress: () => dispatch(unpause()),
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            dispatch(unpause());
+            navigation.navigate("SectionSummary", { subject: section });
+          },
+        },
+      ],
+      { cancelable: false },
+    );
+  };
 
   return (
     <View style={styles.root}>
@@ -75,6 +106,26 @@ function Pause() {
             style={styles.text}
           >{`You're just getting\nstarted. Keep going!`}</Text>
         </View>
+        <TouchableOpacity
+          accessibilityRole="button"
+          onPress={nextSection}
+          style={{
+            alignSelf: "center",
+            marginTop: "8%",
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              color: "#2B3674",
+              fontSize: 24,
+              fontWeight: 600,
+              textDecorationLine: "underline",
+            }}
+          >
+            Skip
+          </Text>
+        </TouchableOpacity>
       </View>
       <ContinueButton
         title="Resume"

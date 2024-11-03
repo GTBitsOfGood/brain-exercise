@@ -15,12 +15,14 @@ type Props = {
   onPress?: (e: GestureResponderEvent) => void;
   maxSeconds: number;
   remainingTimeRef?: MutableRefObject<RemainingTimeGetter>;
+  subject?: string;
 };
 
 export default function PauseButton({
   onPress,
   maxSeconds,
   remainingTimeRef,
+  subject,
 }: Props) {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -32,11 +34,11 @@ export default function PauseButton({
         onPress(e);
       }
       dispatch(pause());
-      navigation.navigate("Pause");
+      navigation.navigate("Pause", { subject });
 
       // Need to implement: Change paused state with Redux
     },
-    [onPress, navigation, dispatch],
+    [onPress, navigation, dispatch, subject],
   );
 
   const [remainingTime, setRemainingTime] = useState(maxSeconds);
@@ -52,11 +54,7 @@ export default function PauseButton({
 
   useEffect(() => {
     const timer = setInterval(() => {
-      if (remainingTime <= 0) {
-        setRemainingTime(remainingTime - 1);
-        // clearInterval(timer);
-        // console.log(remainingTime);
-      } else if (!paused) {
+      if (!paused) {
         setRemainingTime(remainingTime - 1);
       }
     }, 1000);
