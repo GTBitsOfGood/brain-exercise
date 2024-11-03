@@ -58,8 +58,6 @@ const {
   thumbStyle,
   trackStyle,
   slider,
-  minSize,
-  maxSize,
   footerTextSelected,
   footerTextUnselected,
   headerText,
@@ -94,7 +92,6 @@ function SettingsScreen({ navigation }) {
     }
     
     const jsonSettings = JSON.stringify(settings);
-    //console.log(settings.soundEffectsOn)
     await AsyncStorage.setItem("SETTINGS", jsonSettings);
   }
 
@@ -102,7 +99,6 @@ function SettingsScreen({ navigation }) {
     setVoiceOverToggleOn(!voiceOverToggleOn);
     settings.voiceOveron = !voiceOverToggleOn;
     const jsonSettings = JSON.stringify(settings);
-    //console.log(settings.soundEffectsOn)
     await AsyncStorage.setItem("SETTINGS", jsonSettings);
   }
 
@@ -110,7 +106,6 @@ function SettingsScreen({ navigation }) {
     setAnimationToggleOn(!animationToggleOn);
     settings.animationOn = !animationToggleOn;
     const jsonSettings = JSON.stringify(settings);
-    //console.log(settings.soundEffectsOn)
     await AsyncStorage.setItem("SETTINGS", jsonSettings);
   }
 
@@ -149,7 +144,6 @@ function SettingsScreen({ navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      // Do something when the screen is focused
       pullSettings()
         .then((item) => {
           setSettings(item);
@@ -170,12 +164,10 @@ function SettingsScreen({ navigation }) {
 
   const toggleSwitch = () => {
     if (toggleOn) {
-      // going from enabled to disabled
       Notifications.cancelAllScheduledNotificationsAsync();
       setToggleOn(false);
       settings.notificationsActive = false;
     } else {
-      // going from disabled to enabled
       setToggleOn(true);
       settings.notificationsActive = true;
     }
@@ -184,7 +176,6 @@ function SettingsScreen({ navigation }) {
 
   const toggleAnimations = () => {
     if (animationToggleOn) {
-      // going from enabled to disabled
       setAnimationToggleOn(false);
       settings.animationOn = false;
     } else {
