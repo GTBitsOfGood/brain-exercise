@@ -13,7 +13,8 @@ import PauseButton from "../../../components/PauseButton";
 
 type Props = NativeStackScreenProps<RootStackParamList, "MathMain">;
 
-function MathMain({ route, navigation }: Props) {
+// eslint-disable-next-line react/prop-types
+export default function MathMain({ navigation, route }: Props) {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const [skipped, setSkipped] = useState(false);
 
@@ -268,5 +269,3 @@ function MathMain({ route, navigation }: Props) {
     </View>
   );
 }
-
-export default MathMain;
