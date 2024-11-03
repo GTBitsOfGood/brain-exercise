@@ -1,7 +1,8 @@
 # Brain Exercise Initative 🧠
 
 ## About
-Brain Exercise Initative is a nonprofit focused on preventing memory loss through brain exercise. Through innovative research in Japan, it was found that doing simple math and reading exercises aloud caused improvements in cognitive function. Brain Exercise Initiative builds off of this research, holding brain exercise programs at retirement homes. 
+
+Brain Exercise Initative is a nonprofit focused on preventing memory loss through brain exercise. Through innovative research in Japan, it was found that doing simple math and reading exercises aloud caused improvements in cognitive function. Brain Exercise Initiative builds off of this research, holding brain exercise programs at retirement homes.
 
 ## Getting Started
 

@@ -8,6 +8,7 @@ import scheduleNotifications from "../../scripts/notification-logic";
 import defaultSettings from "../../components/DefaultSettings";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
+import LogoutButton from "../../components/Auth/LogoutButton";
 
 const styles = StyleSheet.create({
   root: {
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
-    color: '#008AFC',
+    color: '#9CA5C2',
     margin: 10,
     borderRadius: 12,
     padding: 10,
@@ -67,55 +68,23 @@ const styles = StyleSheet.create({
   },
 });
 
-function TimePicker({ open, setOpen, navigation, route }) {
-  const [date, setDate] = useState(
-    route.params.scheduledTime || defaultSettings.scheduledTime,
-  ); // this always needs to be string
-
-  //const [visible, setVisible] = useState(true);
-  const storeSettings = async () => {
-    const settingsObj = route.params;
-    settingsObj.scheduledTime = date;
-    const jsonSettings = JSON.stringify(settingsObj);
-    await AsyncStorage.setItem("SETTINGS", jsonSettings);
-  };
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || new Date(date);
-    console.log(typeof selectedDate);
-    console.log(selectedDate);
-    setDate(currentDate.toString());
-  };
-
-  function confirmTime() {
-    Notifications.cancelAllScheduledNotificationsAsync();
-    console.log(date);
-    scheduleNotifications(new Date(date));
-    storeSettings();
+function LogoutModal({ open, setOpen, navigation, route }) {
+  function closeModal() {
     setOpen(false);
   }
-
 
   return (
     <Modal animationType="slide"
     transparent={true}
     visible={open}
-    onRequestClose={confirmTime}>
+    onRequestClose={closeModal}>
       <View style={styles.modalContainer}>
         <View style={styles.modalView}>
       <Text style={styles.modalText}>
-        Adjust Time
+        Confirm Log Out
       </Text>
-      <DateTimePicker
-        testID="dateTimePicker"
-        value={new Date(date)}
-        mode="time"
-        is24Hour={false}
-        textColor="#2b3674"
-        display="spinner"
-        onChange={onChange}
-      />
-      <Button style={styles.button} titleStyle={[fontSize=24, fontWeight="bold"]} title="Confirm Time" onPress={confirmTime} color="#008AFC" adjustedSize={250} />
+      <LogoutButton/>
+      <Button style={styles.button} titleStyle={[fontSize=24, fontWeight="bold"]} title="Cancel" onPress={closeModal} color="#9CA5C2" adjustedSize={250}/>
       </View>
       </View>
     </Modal>
@@ -123,11 +92,12 @@ function TimePicker({ open, setOpen, navigation, route }) {
 }
 
 
-TimePicker.propTypes = {
-  open: PropTypes.bool,
-  setOpen: PropTypes.func,
-  navigation: PropTypes.object,
-  route: PropTypes.object,
-};
-
-export default TimePicker;
+LogoutModal.propTypes = {
+    open: PropTypes.bool,
+    setOpen: PropTypes.func,
+    navigation: PropTypes.object,
+    route: PropTypes.object,
+  };
+  
+  export default LogoutModal;
+  

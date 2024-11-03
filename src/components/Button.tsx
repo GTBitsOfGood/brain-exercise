@@ -11,12 +11,16 @@ interface Props extends ButtonProps {
   title: string;
   onPress: (event: GestureResponderEvent) => void;
   shouldNotPlay?: boolean;
+  color?: string;
+  adjustedSize?: number;
 }
 
 const Button = ({
   title,
   onPress,
   shouldNotPlay = false,
+  color = "#005AA3",
+  adjustedSize = 0,
   ...buttonProps
 }: Props) => {
   const { playSound } = useSound(sound, SoundSetting.soundEffectsOn, false);
@@ -40,10 +44,14 @@ const Button = ({
         {
           alignSelf: "center",
           marginVertical: 2,
-          width: Platform.OS === "ios" && Platform.isPad ? 600 : 300,
+          width:
+            Platform.OS === "ios" && Platform.isPad
+              ? 600
+              : 300 * (adjustedSize === 0 ? 1 : 0) +
+                (adjustedSize === 0 ? 0 : adjustedSize),
           height: Platform.OS === "ios" && Platform.isPad ? 100 : 60,
           borderRadius: 5,
-          backgroundColor: "#005AA3",
+          backgroundColor: color,
         },
         buttonProps.buttonStyle,
       ]}
