@@ -283,18 +283,3 @@ export interface GameDetails {
   streak: IAnalytics["streak"];
   lastSessionsMetrics: IAnalytics["lastSessionsMetrics"];
 }
-
-export interface Chapter {
-  _id: Types.ObjectId;
-  name: string;
-  chapterPresident: Types.ObjectId;
-  patients: number;
-  yearFounded: number;
-  location: {
-    country: string;
-    state: string;
-    city: string;
-  };
-  activeVolunteers: number;
-  inactiveVolunteers: number;
-}
