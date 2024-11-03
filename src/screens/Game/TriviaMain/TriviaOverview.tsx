@@ -113,7 +113,9 @@ function TriviaOverview({ navigation }: Props) {
               marginLeft: 10,
             }}
           >
-            {`${gameDescriptions.Trivia.minutes.toString()} minutes`}
+            {gameDescriptions.Trivia.minutes >= 1
+              ? `${gameDescriptions.Trivia.minutes.toString()} minutes`
+              : `${(gameDescriptions.Trivia.minutes * 60).toString()} seconds`}
           </Text>
         </View>
       </View>

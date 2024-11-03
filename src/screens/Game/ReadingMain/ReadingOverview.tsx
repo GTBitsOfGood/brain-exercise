@@ -132,7 +132,9 @@ function ReadingOverview({ navigation }: Props) {
               marginLeft: 10,
             }}
           >
-            {`${gameDescriptions.Reading.minutes.toString()} minutes`}
+            {gameDescriptions.Reading.minutes >= 1
+              ? `${gameDescriptions.Reading.minutes.toString()} minutes`
+              : `${(gameDescriptions.Reading.minutes * 60).toString()} seconds`}
           </Text>
         </View>
       </View>

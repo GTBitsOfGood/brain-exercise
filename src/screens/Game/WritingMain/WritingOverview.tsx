@@ -116,7 +116,9 @@ function WritingOverview({ navigation }: Props) {
               marginLeft: 10,
             }}
           >
-            {`${gameDescriptions.Writing.minutes.toString()} minutes`}
+            {gameDescriptions.Writing.minutes >= 1
+              ? `${gameDescriptions.Writing.minutes.toString()} minutes`
+              : `${(gameDescriptions.Writing.minutes * 60).toString()} seconds`}
           </Text>
         </View>
       </View>

@@ -89,7 +89,9 @@ function MathOverview({ navigation }: Props) {
               marginLeft: 10,
             }}
           >
-            {`${gameDescriptions.Math.minutes.toString()} minutes`}
+            {gameDescriptions.Math.minutes >= 1
+              ? `${gameDescriptions.Math.minutes.toString()} minutes`
+              : `${(gameDescriptions.Math.minutes * 60).toString()} seconds`}
           </Text>
         </View>
       </View>
