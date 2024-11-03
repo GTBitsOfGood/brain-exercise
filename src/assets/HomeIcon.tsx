@@ -5,7 +5,7 @@ const HomeIcon: React.FC<{
   width?: number;
   height?: number;
   color?: string;
-}> = ({ width = 37, height = 37, color = "#9CA5C2" }) => (
+}> = ({ width = 37, height = 37, color = "#008AFC" }) => (
   <Svg width={width} height={height} viewBox="0 0 37 37" fill="none">
     <Path
       fill={color}

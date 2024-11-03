@@ -202,6 +202,7 @@ export type RootStackParamList = {
       emailVerified: boolean;
     };
   };
+  ProfileScreen: undefined;
 };
 
 export type NavigationArgs = {

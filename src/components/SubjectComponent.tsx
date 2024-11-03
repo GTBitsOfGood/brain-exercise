@@ -155,7 +155,9 @@ export default function SubjectComponent({
                   fontWeight: "600",
                 }}
               >
-                {secondsToTime(totalTimeSpent)}
+                {secondsToTime(
+                  Math.round((totalTimeSpent + Number.EPSILON) * 100) / 100,
+                )}
               </Text>
             </>
           ) : (
@@ -184,7 +186,10 @@ export default function SubjectComponent({
                   paddingTop: "3%",
                 }}
               >
-                {secondsToTime(averageTimePerQuestion)}
+                {secondsToTime(
+                  Math.round((averageTimePerQuestion + Number.EPSILON) * 100) /
+                    100,
+                )}
               </Text>
             </>
           ) : (
