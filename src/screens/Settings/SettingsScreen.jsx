@@ -4,7 +4,6 @@ import { View, Switch, TouchableOpacity, Linking } from "react-native";
 import * as Notifications from "expo-notifications";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import Text from "../../components/Text";
@@ -16,7 +15,6 @@ import TimePicker from "./TimePicker";
 import HomeIcon from "../../assets/HomeIcon";
 import ProfileIcon from "../../assets/ProfileIcon";
 import SettingsIcon from "../../assets/SettingsIcon";
-import LogoutButton from "../../components/Auth/LogoutButton";
 import LogoutModal from "./LogoutModal";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
@@ -293,15 +291,16 @@ function SettingsScreen({ navigation }) {
           style={footerButton}
           onPress={() => navigation.navigate("HomeScreen")}
         >
-          <HomeIcon></HomeIcon>
+          <HomeIcon color="#9CA5C2" ></HomeIcon>
           <Text style={footerTextUnselected}>Home</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           accessibilityRole="button"
           style={footerButton}
+          onPress={() => navigation.navigate("ProfileScreen")}
         >
-          <ProfileIcon></ProfileIcon>
+          <ProfileIcon props={undefined}></ProfileIcon>
           <Text style={footerTextUnselected}>Profile</Text>
         </TouchableOpacity>
 

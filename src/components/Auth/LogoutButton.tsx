@@ -23,13 +23,18 @@ const styles = StyleSheet.create({
   },
 });
 
-function LogoutButton() {
+type Props = {
+  closeModal: () => void;
+};
+
+export default function LogoutButton({ closeModal }: Props) {
   const dispatch = useDispatch();
   const onPress = async () => {
     try {
-      dispatch(logout());
+      closeModal();
       const auth = getAuth();
       await signOut(auth);
+      dispatch(logout());
     } catch (e) {
       console.error(e);
     }
@@ -45,5 +50,3 @@ function LogoutButton() {
     />
   );
 }
-
-export default LogoutButton;

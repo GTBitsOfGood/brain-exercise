@@ -83,7 +83,7 @@ function LogoutModal({ open, setOpen, navigation, route }) {
       <Text style={styles.modalText}>
         Confirm Log Out
       </Text>
-      <LogoutButton/>
+      <LogoutButton closeModal={closeModal} />
       <Button style={styles.button} titleStyle={[fontSize=24, fontWeight="bold"]} title="Cancel" onPress={closeModal} color="#9CA5C2" adjustedSize={250}/>
       </View>
       </View>
