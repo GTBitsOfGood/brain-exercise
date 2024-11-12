@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   disabledButtonTitle: {
-    color: "dimgrey",
+    color: "#9e9d9d",
   },
 });
 export default styles;

@@ -4,7 +4,6 @@ import { View, Switch, TouchableOpacity, Linking } from "react-native";
 import * as Notifications from "expo-notifications";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import Text from "../../components/Text";
@@ -16,7 +15,6 @@ import TimePicker from "./TimePicker";
 import HomeIcon from "../../assets/HomeIcon";
 import ProfileIcon from "../../assets/ProfileIcon";
 import SettingsIcon from "../../assets/SettingsIcon";
-import LogoutButton from "../../components/Auth/LogoutButton";
 import LogoutModal from "./LogoutModal";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
@@ -60,8 +58,6 @@ const {
   thumbStyle,
   trackStyle,
   slider,
-  minSize,
-  maxSize,
   footerTextSelected,
   footerTextUnselected,
   headerText,
@@ -96,7 +92,6 @@ function SettingsScreen({ navigation }) {
     }
     
     const jsonSettings = JSON.stringify(settings);
-    //console.log(settings.soundEffectsOn)
     await AsyncStorage.setItem("SETTINGS", jsonSettings);
   }
 
@@ -104,7 +99,6 @@ function SettingsScreen({ navigation }) {
     setVoiceOverToggleOn(!voiceOverToggleOn);
     settings.voiceOveron = !voiceOverToggleOn;
     const jsonSettings = JSON.stringify(settings);
-    //console.log(settings.soundEffectsOn)
     await AsyncStorage.setItem("SETTINGS", jsonSettings);
   }
 
@@ -112,7 +106,6 @@ function SettingsScreen({ navigation }) {
     setAnimationToggleOn(!animationToggleOn);
     settings.animationOn = !animationToggleOn;
     const jsonSettings = JSON.stringify(settings);
-    //console.log(settings.soundEffectsOn)
     await AsyncStorage.setItem("SETTINGS", jsonSettings);
   }
 
@@ -151,7 +144,6 @@ function SettingsScreen({ navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      // Do something when the screen is focused
       pullSettings()
         .then((item) => {
           setSettings(item);
@@ -172,12 +164,10 @@ function SettingsScreen({ navigation }) {
 
   const toggleSwitch = () => {
     if (toggleOn) {
-      // going from enabled to disabled
       Notifications.cancelAllScheduledNotificationsAsync();
       setToggleOn(false);
       settings.notificationsActive = false;
     } else {
-      // going from disabled to enabled
       setToggleOn(true);
       settings.notificationsActive = true;
     }
@@ -186,7 +176,6 @@ function SettingsScreen({ navigation }) {
 
   const toggleAnimations = () => {
     if (animationToggleOn) {
-      // going from enabled to disabled
       setAnimationToggleOn(false);
       settings.animationOn = false;
     } else {
@@ -293,15 +282,16 @@ function SettingsScreen({ navigation }) {
           style={footerButton}
           onPress={() => navigation.navigate("HomeScreen")}
         >
-          <HomeIcon></HomeIcon>
+          <HomeIcon color="#9CA5C2" ></HomeIcon>
           <Text style={footerTextUnselected}>Home</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           accessibilityRole="button"
           style={footerButton}
+          onPress={() => navigation.navigate("ProfileScreen")}
         >
-          <ProfileIcon></ProfileIcon>
+          <ProfileIcon props={undefined}></ProfileIcon>
           <Text style={footerTextUnselected}>Profile</Text>
         </TouchableOpacity>
 

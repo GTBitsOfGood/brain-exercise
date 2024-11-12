@@ -13,12 +13,53 @@ import PauseButton from "../../../components/PauseButton";
 
 type Props = NativeStackScreenProps<RootStackParamList, "MathMain">;
 
-function MathMain({ route, navigation }: Props) {
+// eslint-disable-next-line react/prop-types
+export default function MathMain({ navigation, route }: Props) {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const [skipped, setSkipped] = useState(false);
 
+  const toastConfig = {
+    success: ({ text1 }: { text1?: string }) => (
+      <View
+        style={{
+          height: 80,
+          width: "90%",
+          padding: 15,
+          backgroundColor: "#4caf50",
+          borderRadius: 10,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ fontSize: 24, color: "white", fontWeight: "bold" }}>
+          {text1}
+        </Text>
+      </View>
+    ),
+    error: ({ text1 }: { text1?: string }) => (
+      <View
+        style={{
+          height: 80,
+          width: "90%",
+          padding: 15,
+          backgroundColor: "#f44336",
+          borderRadius: 10,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ fontSize: 24, color: "white", fontWeight: "bold" }}>
+          {text1}
+        </Text>
+      </View>
+    ),
+  };
+
   const remainingTimeRef = useRef<RemainingTimeGetter>();
   const prevProblemRemainingTimeRef = useRef<number>(TOTAL_TIME);
+  const [chosenIncorrectly, setChosenIncorrectly] = useState(false);
+  const [incorrectChoices, setIncorrectChoices] = useState<number[]>([]);
+
   const {
     problem,
     getNewProblem,
@@ -46,18 +87,24 @@ function MathMain({ route, navigation }: Props) {
 
   const onPressChoice = (choiceValue: number) => {
     const isCorrect = choiceValue === problem.solution;
-    updateStatsOnAnswer(
-      isCorrect,
-      prevProblemRemainingTimeRef.current -
-        remainingTimeRef.current.getRemainingTime(),
-    );
+    if (!chosenIncorrectly) {
+      updateStatsOnAnswer(
+        isCorrect,
+        prevProblemRemainingTimeRef.current -
+          remainingTimeRef.current.getRemainingTime(),
+      );
+    }
     if (isCorrect) {
+      setChosenIncorrectly(false);
+      setIncorrectChoices([]);
       Toast.show({
         type: "success",
         text1: "Correct!",
       });
       resetAndNewProblem(1);
     } else {
+      setChosenIncorrectly(true);
+      setIncorrectChoices([...incorrectChoices, choiceValue]);
       Toast.show({
         type: "error",
         text1: "Wrong. Please Try Again!",
@@ -67,6 +114,8 @@ function MathMain({ route, navigation }: Props) {
 
   const onPressSkip = () => {
     updateStatsOnSkip();
+    setChosenIncorrectly(false);
+    setIncorrectChoices([]);
     if (remainingTimeRef.current.getRemainingTime() <= 0) {
       onTimeComplete();
       return;
@@ -79,7 +128,10 @@ function MathMain({ route, navigation }: Props) {
       title={`${choiceValue}`} // Formatted like this because 0 number is not displayed otherwise
       buttonStyle={styles.button}
       titleStyle={styles.buttonTitle}
-      disabled={buttonsDisabled}
+      disabled={
+        buttonsDisabled ||
+        (chosenIncorrectly && incorrectChoices.includes(choiceValue))
+      }
       disabledTitleStyle={[
         styles.buttonTitle,
         choiceValue === problem.solution || skipped
@@ -91,7 +143,9 @@ function MathMain({ route, navigation }: Props) {
         (choiceValue === problem.solution || skipped) && styles.selectedButton,
       ]}
       key={i}
-      onPress={() => onPressChoice(choiceValue)}
+      onPress={() => {
+        onPressChoice(choiceValue);
+      }}
     />
   ));
 
@@ -212,8 +266,7 @@ function MathMain({ route, navigation }: Props) {
       >
         {choices}
       </View>
+      <Toast position="top" config={toastConfig} />
     </View>
   );
 }
-
-export default MathMain;
