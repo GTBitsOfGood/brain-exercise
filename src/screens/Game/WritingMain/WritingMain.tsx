@@ -50,8 +50,10 @@ export default function WritingMain({ navigation, route }: Props) {
 
   const remainingTimeRef = useRef<RemainingTimeGetter>();
 
-  const nextParagraph = () => {
-    updateStatsOnAnswer();
+  const nextParagraph = (skipped) => {
+    if (!skipped) {
+      updateStatsOnAnswer();
+    }
     if (remainingTimeRef.current.getRemainingTime() <= 0) {
       onTimeComplete(0);
     } else {
@@ -127,6 +129,7 @@ export default function WritingMain({ navigation, route }: Props) {
           <PauseButton
             maxSeconds={TOTAL_TIME}
             remainingTimeRef={remainingTimeRef}
+            subject="writing"
           />
         </View>
       </View>
@@ -180,8 +183,7 @@ export default function WritingMain({ navigation, route }: Props) {
       <TouchableOpacity
         accessibilityRole="button"
         onPress={() => {
-          onTimeComplete(remainingTimeRef.current.getRemainingTime());
-          updateStatsOnAnswer();
+          nextParagraph(true);
         }}
         style={{
           alignSelf: "center",
@@ -202,7 +204,9 @@ export default function WritingMain({ navigation, route }: Props) {
       </TouchableOpacity>
       <ContinueButton
         title="Next Paragraph"
-        onPressFn={nextParagraph}
+        onPressFn={() => {
+          nextParagraph(false);
+        }}
         backgroundColor="#9747FF"
         titleColor="white"
       />

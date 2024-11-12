@@ -141,6 +141,7 @@ export default function TriviaScreen({ navigation, route }: Props) {
           <PauseButton
             maxSeconds={TOTAL_TIME}
             remainingTimeRef={remainingTimeRef}
+            subject="trivia"
           />
         </View>
         <View

@@ -63,6 +63,37 @@ const gameDetailsReducer = createSlice({
       state.lastSessionsMetrics[0].writing.attempted = false;
       state.lastSessionsMetrics[0].trivia.attempted = false;
     },
+    resetLastSessionMetrics(state) {
+      state.lastSessionsMetrics[0] = {
+        date: "",
+        math: {
+          attempted: false,
+          questionsAttempted: 0,
+          questionsCorrect: 0,
+          finalDifficultyScore: 0,
+          timePerQuestion: 0,
+        },
+        trivia: {
+          attempted: false,
+          questionsAttempted: 0,
+          questionsCorrect: 0,
+          timePerQuestion: 0,
+        },
+        reading: {
+          attempted: false,
+          passagesRead: 0,
+          timePerPassage: 0,
+          wordsPerMinute: 0,
+          skipped: false,
+        },
+        writing: {
+          attempted: false,
+          questionsAnswered: 0,
+          timePerQuestion: 0,
+          skipped: false,
+        },
+      };
+    },
     updateFullState(state, action: { payload: GameDetails; type: string }) {
       return {
         ...initialState,
@@ -113,6 +144,7 @@ export default gameDetailsReducer.reducer;
 
 export const {
   resetAttempted,
+  resetLastSessionMetrics,
   updateFullState,
   completedMath,
   completedReading,

@@ -130,6 +130,7 @@ function MathMain({ route, navigation }: Props) {
           <PauseButton
             maxSeconds={TOTAL_TIME}
             remainingTimeRef={remainingTimeRef}
+            subject="math"
           />
         </View>
         {/* <ProgressBar

@@ -17,7 +17,7 @@ import Subject from "../../components/Home/ExerciseSubjects";
 import { RootState } from "../../redux/rootReducer";
 import { AuthUser } from "../../redux/reducers/authReducer/types";
 
-import { resetAttempted } from "../../redux/reducers/gameDetailsReducer";
+import { resetLastSessionMetrics } from "../../redux/reducers/gameDetailsReducer";
 
 const logo = require("../../assets/bei.jpg") as AVPlaybackSource;
 
@@ -29,7 +29,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "GameOverview">;
 function HomeScreen({ navigation }: Props) {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(resetAttempted());
+    dispatch(resetLastSessionMetrics());
   }, [dispatch]);
 
   const userInfo = useSelector<RootState>((state) => state.auth) as AuthUser;

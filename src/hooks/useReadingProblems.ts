@@ -21,15 +21,17 @@ export default function useReadingProblems({ navigation, route }: Props) {
   });
   const paragraph = storyArray[page];
 
-  const nextParagraph = () => {
-    stats.current.wordsRead = storyArray[page].split(/\s+/).length;
+  const nextParagraph = (skipped) => {
+    if (!skipped) {
+      stats.current.wordsRead = storyArray[page].split(/\s+/).length;
+      stats.current.passagesRead += 1;
+    }
     if (storyArray.length - 1 === page) {
       setStoryArray(getStoryArray());
       setPage(0);
     } else {
       setPage(page + 1);
     }
-    stats.current.passagesRead += 1;
   };
 
   const onTimeComplete = useCallback(

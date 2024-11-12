@@ -1,6 +1,5 @@
-import { ScrollView, View, Alert, TouchableOpacity } from "react-native";
+import { ScrollView, View, TouchableOpacity } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useDispatch } from "react-redux";
 
 import { useRef } from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -12,7 +11,6 @@ import PauseButton from "../../../components/PauseButton";
 import useReadingProblems from "../../../hooks/useReadingProblems";
 import { RemainingTimeGetter, RootStackParamList } from "../../../types";
 import gameDescriptions from "../../Stacks/gameDescriptions";
-import { pause, unpause } from "../../../redux/reducers/pauseReducer";
 
 // const styles = StyleSheet.create({
 //   root: {
@@ -44,8 +42,6 @@ const TOTAL_TIME = gameDescriptions.Reading.minutes * 60;
 type Props = NativeStackScreenProps<RootStackParamList, "ReadingMain">;
 
 export default function ReadingMain({ navigation, route }: Props) {
-  const dispatch = useDispatch();
-
   const { paragraph, nextParagraph, onTimeComplete } = useReadingProblems({
     navigation,
     route,
@@ -53,35 +49,35 @@ export default function ReadingMain({ navigation, route }: Props) {
 
   const remainingTimeRef = useRef<RemainingTimeGetter>();
 
-  const nextParagraphTimeCheck = () => {
-    nextParagraph();
+  const nextParagraphTimeCheck = (skipped) => {
+    nextParagraph(skipped);
     if (remainingTimeRef.current.getRemainingTime() <= 0) {
       onTimeComplete(false);
     }
   };
 
-  const nextSection = () => {
-    dispatch(pause());
-    Alert.alert(
-      "Skip Reading Section",
-      "Are you sure you want to skip the Reading section?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-          onPress: () => dispatch(unpause()),
-        },
-        {
-          text: "Yes",
-          onPress: () => {
-            dispatch(unpause());
-            onTimeComplete(true);
-          },
-        },
-      ],
-      { cancelable: false },
-    );
-  };
+  // const nextSection = () => {
+  //   dispatch(pause());
+  //   Alert.alert(
+  //     "Skip Reading Section",
+  //     "Are you sure you want to skip the Reading section?",
+  //     [
+  //       {
+  //         text: "Cancel",
+  //         style: "cancel",
+  //         onPress: () => dispatch(unpause()),
+  //       },
+  //       {
+  //         text: "Yes",
+  //         onPress: () => {
+  //           dispatch(unpause());
+  //           onTimeComplete(true);
+  //         },
+  //       },
+  //     ],
+  //     { cancelable: false },
+  //   );
+  // };
 
   return (
     <View
@@ -118,6 +114,7 @@ export default function ReadingMain({ navigation, route }: Props) {
           <PauseButton
             maxSeconds={TOTAL_TIME}
             remainingTimeRef={remainingTimeRef}
+            subject="reading"
           />
         </View>
       </View>
@@ -176,7 +173,9 @@ export default function ReadingMain({ navigation, route }: Props) {
       </View>
       <TouchableOpacity
         accessibilityRole="button"
-        onPress={nextSection}
+        onPress={() => {
+          nextParagraphTimeCheck(true);
+        }}
         style={{
           alignSelf: "center",
           marginTop: "8%",
@@ -196,7 +195,9 @@ export default function ReadingMain({ navigation, route }: Props) {
       </TouchableOpacity>
       <ContinueButton
         title="Next Paragraph"
-        onPressFn={nextParagraphTimeCheck}
+        onPressFn={() => {
+          nextParagraphTimeCheck(false);
+        }}
         backgroundColor="#FE7D35"
         titleColor="white"
       />

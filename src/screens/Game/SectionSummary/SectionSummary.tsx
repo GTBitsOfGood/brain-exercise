@@ -167,23 +167,29 @@ export default function SectionSummary({ route }: Props) {
       : null;
 
   let questions =
-    "questionsAttempted" in subjectDetails
+    "questionsAttempted" in subjectDetails && subjectDetails.attempted
       ? subjectDetails.questionsAttempted
       : 0;
   let timePer =
-    "timePerQuestion" in subjectDetails ? subjectDetails.timePerQuestion : 0;
+    "timePerQuestion" in subjectDetails && subjectDetails.attempted
+      ? subjectDetails.timePerQuestion
+      : 0;
   let color = "#EA4335";
 
   if (subject === "reading") {
     color = "#FE7D35";
     questions =
-      "passagesRead" in subjectDetails ? subjectDetails.passagesRead : 0;
+      "passagesRead" in subjectDetails && subjectDetails.attempted
+        ? subjectDetails.passagesRead
+        : 0;
     timePer =
-      "timePerPassage" in subjectDetails ? subjectDetails.timePerPassage : 0;
+      "timePerPassage" in subjectDetails && subjectDetails.attempted
+        ? subjectDetails.timePerPassage
+        : 0;
   } else if (subject === "writing") {
     color = "#A066FF";
     questions =
-      "questionsAnswered" in subjectDetails
+      "questionsAnswered" in subjectDetails && subjectDetails.attempted
         ? subjectDetails.questionsAnswered
         : 0;
   } else if (subject === "trivia") {

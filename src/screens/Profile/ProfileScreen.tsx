@@ -27,7 +27,7 @@ function ProfileScreen({ navigation }: Props) {
   const panelRef = useRef<SlidingUpPanel>(null);
 
   const [name, setName] = useState("Johannes Qian");
-  const [dob, setDob] = useState("01-01-2024");
+  const [dob, setDob] = useState(new Date("2000-12-31T05:00:00.000Z"));
   const [areaCode, setAreaCode] = useState("+1");
   const [phoneNumber, setPhoneNumber] = useState("1231231234");
   const [email, setEmail] = useState("sample@bei.com");
@@ -37,7 +37,7 @@ function ProfileScreen({ navigation }: Props) {
 
   const [formData, setFormData] = useState({
     name: "Johannes Qian",
-    dob: "01-01-2024",
+    dob: "12312000",
     areaCode: "+1",
     phoneNumber: "1231231234",
     email: "sample@bei.com",
@@ -54,9 +54,9 @@ function ProfileScreen({ navigation }: Props) {
     }
 
     if (userInfo.birthDate) {
-      setDob(userInfo.birthDate);
+      setDob(new Date(userInfo.birthDate));
     } else {
-      setDob("01-01-2024");
+      setDob(new Date("2000-12-31T05:00:00.000Z"));
     }
 
     if (userInfo.phoneNumber) {
@@ -94,11 +94,16 @@ function ProfileScreen({ navigation }: Props) {
     }
   }, [userInfo]);
 
+  const formatDOB = (unformatteddob: Date) => {
+    return `${unformatteddob.getMonth() + 1} / ${
+      unformatteddob.getDate() + 1
+    } / ${unformatteddob.getFullYear()}`;
+  };
+
   function open() {
-    const formatteddob = dob.replace(/-/g, "");
     setFormData({
       name,
-      dob: formatteddob,
+      dob: formatDOB(dob).replace(/[ /]/g, ""),
       areaCode,
       phoneNumber,
       email,
@@ -140,7 +145,7 @@ function ProfileScreen({ navigation }: Props) {
     }
   };
 
-  const formatDOB = (input: string) => {
+  const formatDOBstring = (input: string) => {
     const digitsOnly = input.replace(/-/g, "");
     if (digitsOnly.length <= 2) {
       return digitsOnly;
@@ -161,8 +166,10 @@ function ProfileScreen({ navigation }: Props) {
         dob: newDob,
       }));
     };
+
     const cleanInput = input.replace(/[ ./]/g, "");
-    let digitsOnlyDOB = formData.dob.replace(/-/g, "");
+    let digitsOnlyDOB = formData.dob;
+
     if (cleanInput.length < digitsOnlyDOB.length) {
       // backspace
       digitsOnlyDOB = digitsOnlyDOB.slice(0, -1);
@@ -225,12 +232,12 @@ function ProfileScreen({ navigation }: Props) {
       return false;
     }
 
-    const formatteddob = `${formData.dob.substring(
+    const formatteddob = `${formData.dob.substring(4)}-${formData.dob.substring(
       0,
       2,
-    )}-${formData.dob.substring(2, 4)}-${formData.dob.substring(4)}`;
+    )}-${formData.dob.substring(2, 4)}`;
 
-    if (!/^\d{2}-\d{2}-\d{4}/.test(formatteddob)) {
+    if (!/^\d{4}-\d{2}-\d{2}/.test(formatteddob)) {
       setError("Please enter a valid date of birth");
       return false;
     }
@@ -264,18 +271,24 @@ function ProfileScreen({ navigation }: Props) {
       );
       const secondContactName = userInfo.patientDetails.secondaryContactName;
       const secondContactNumber = userInfo.patientDetails.secondaryContactPhone;
+      const newDob = new Date(
+        `${formData.dob.substring(4)}-${formData.dob.substring(
+          0,
+          2,
+        )}-${formData.dob.substring(2, 4)}`,
+      );
       try {
         const body: Record<string, string> = {
           email: formData.email,
           firstName,
           lastName,
           phoneNumber: formData.phoneNumber,
-          birthDate: formData.dob,
+          birthDate: newDob.toISOString(),
           secondaryContactName: secondContactName,
           secondaryContactPhone: secondContactNumber,
         };
         await internalRequest<UserAnalytics>({
-          url: "/api/patient/auth/signup",
+          url: "/api/patient/auth/signup", // replace with edit user endpoint
           body,
           method: HttpMethod.POST,
         });
@@ -284,12 +297,7 @@ function ProfileScreen({ navigation }: Props) {
         return;
       }
       setName(formData.name);
-      setDob(
-        `${formData.dob.substring(0, 2)}-${formData.dob.substring(
-          2,
-          4,
-        )}-${formData.dob.substring(4)}`,
-      );
+      setDob(newDob);
       setAreaCode(formData.areaCode);
       setPhoneNumber(formData.phoneNumber);
       setEmail(formData.email);
@@ -660,7 +668,7 @@ function ProfileScreen({ navigation }: Props) {
                 paddingHorizontal: "4%",
                 paddingVertical: "2%",
               }}
-              value={formatDOB(formData.dob)}
+              value={formatDOBstring(formData.dob)}
               onChangeText={(e) => handleChange(e, "dob")}
               placeholder="Enter Date of Birth"
               accessibilityHint='The text written in this input field will be saved as the user"s date of birth'
