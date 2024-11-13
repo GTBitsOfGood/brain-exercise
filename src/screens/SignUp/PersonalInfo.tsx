@@ -192,9 +192,20 @@ function PersonalInfoScreen() {
     }
 
     // Following check if the date matches number of days in a month
+    const [month, day, year] = dateofBirth.split("-");
+    const checkDate = new Date(
+      parseInt(year, 10),
+      parseInt(month, 10) - 1,
+      parseInt(day, 10),
+    );
 
-    const checkDate = new Date(dateofBirth);
-    if (checkDate.toString() === "Invalid Date") {
+    if (
+      !(
+        checkDate.getFullYear() === parseInt(year, 10) &&
+        checkDate.getMonth() === parseInt(month, 10) - 1 &&
+        checkDate.getDate() === parseInt(day, 10)
+      )
+    ) {
       return false;
     }
 
