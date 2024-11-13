@@ -26,6 +26,8 @@ function ProfileScreen({ navigation }: Props) {
   const userInfo = useSelector<RootState>((state) => state.auth) as AuthUser;
   const panelRef = useRef<SlidingUpPanel>(null);
 
+  console.log(userInfo);
+
   const [name, setName] = useState("Johannes Qian");
   const [dob, setDob] = useState(new Date("2000-12-31T05:00:00.000Z"));
   const [areaCode, setAreaCode] = useState("+1");

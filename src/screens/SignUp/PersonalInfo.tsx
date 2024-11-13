@@ -5,14 +5,13 @@ import {
   Platform,
   Dimensions,
   TextInput,
-  SafeAreaView,
-  ScrollView,
 } from "react-native";
 import { Button } from "react-native-elements";
 import { useDispatch } from "react-redux";
 import { getAuth } from "firebase/auth";
 import { Dropdown } from "react-native-element-dropdown";
 
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Text from "../../components/Text";
 import { UserAnalytics, HttpMethod } from "../../types";
 import { login } from "../../redux/reducers/authReducer";
@@ -266,167 +265,166 @@ function PersonalInfoScreen() {
 
   return (
     <View style={styles.root}>
-      <ScrollView>
-        <SafeAreaView>
-          <View style={{ paddingLeft: "3%", paddingTop: "15%" }}>
-            <Text
-              style={{ fontWeight: "bold", fontSize: 20, color: "#4A4B57" }}
-            >
-              Tell Us About Yourself!
-            </Text>
-            <Text style={{ fontSize: 16 }}>
-              {/* Reason on why they need to collect this information. Probably a
+      <KeyboardAwareScrollView>
+        <View style={{ paddingLeft: "3%", paddingTop: "15%" }}>
+          <Text style={{ fontWeight: "bold", fontSize: 20, color: "#4A4B57" }}>
+            Tell Us About Yourself!
+          </Text>
+          <Text style={{ fontSize: 16 }}>
+            {/* Reason on why they need to collect this information. Probably a
               sentence or two. */}
-            </Text>
-          </View>
-          <View
-            style={{
-              flex: 4,
-              paddingTop: "5%",
-              paddingHorizontal: "3%",
-              width: "100%",
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 4,
+            paddingTop: "5%",
+            paddingHorizontal: "3%",
+            width: "100%",
+          }}
+        >
+          <Text style={styles.textInputTitle}>First Name*</Text>
+          <TextInput
+            accessibilityRole="text"
+            placeholder="First Name"
+            placeholderTextColor="#888"
+            style={styles.textInput}
+            onChangeText={setFirstName}
+            value={firstName}
+          />
+
+          <Text style={styles.textInputTitle}>Last Name*</Text>
+          <TextInput
+            accessibilityRole="text"
+            placeholder="Last Name"
+            placeholderTextColor="#888"
+            style={styles.textInput}
+            onChangeText={setLastName}
+            value={lastName}
+          />
+
+          <Text style={styles.textInputTitle}>Phone Number*</Text>
+          <TextInput
+            accessibilityRole="text"
+            placeholder="(XXX) XXX-XXXX"
+            placeholderTextColor="#888"
+            onChangeText={(input) =>
+              handlePhoneNumberChange(input, setPhoneNumber, phoneNumber)
+            }
+            style={styles.textInput}
+            value={formatPhoneNumber(phoneNumber)}
+            textContentType="telephoneNumber"
+            keyboardType="number-pad"
+            returnKeyType={"done"}
+            maxLength={14}
+          />
+
+          <Text style={styles.textInputTitle}>Date of Birth*</Text>
+          <TextInput
+            accessibilityRole="text"
+            placeholder="MM-DD-YYYY"
+            placeholderTextColor="#888"
+            onChangeText={(input) => handleDOBChange(input)}
+            style={styles.textInput}
+            value={dateofBirth}
+            keyboardType="number-pad"
+            returnKeyType={"done"}
+            maxLength={10}
+          />
+
+          <Text style={styles.textInputTitle}>Choose Chapter</Text>
+          <Dropdown
+            style={[styles.textInput, { borderWidth: 1 }]}
+            data={CHAPTERS}
+            labelField="label"
+            valueField="value"
+            placeholder="Select Chapter"
+            placeholderStyle={{ color: "#888" }}
+            value={chapter}
+            onChange={(item) => {
+              // console.log("Chapter selected", item);
+              setChapter(item.value);
             }}
-          >
-            <Text style={styles.textInputTitle}>First Name*</Text>
-            <TextInput
-              accessibilityRole="text"
-              placeholder="First Name"
-              placeholderTextColor="#888"
-              style={styles.textInput}
-              onChangeText={setFirstName}
-              value={firstName}
-            />
+          />
 
-            <Text style={styles.textInputTitle}>Last Name*</Text>
-            <TextInput
-              accessibilityRole="text"
-              placeholder="Last Name"
-              placeholderTextColor="#888"
-              style={styles.textInput}
-              onChangeText={setLastName}
-              value={lastName}
-            />
+          <Text style={styles.textInputTitle}>Secondary Contact Name*</Text>
+          <TextInput
+            accessibilityRole="text"
+            placeholder="Full Name"
+            placeholderTextColor="#888"
+            onChangeText={setSecondContactName}
+            style={styles.textInput}
+            value={secondContactName}
+          />
 
-            <Text style={styles.textInputTitle}>Phone Number*</Text>
-            <TextInput
-              accessibilityRole="text"
-              placeholder="(XXX) XXX-XXXX"
-              placeholderTextColor="#888"
-              onChangeText={(input) =>
-                handlePhoneNumberChange(input, setPhoneNumber, phoneNumber)
-              }
-              style={styles.textInput}
-              value={formatPhoneNumber(phoneNumber)}
-              textContentType="telephoneNumber"
-              keyboardType="numeric"
-              maxLength={14}
-            />
+          <Text style={styles.textInputTitle}>Secondary Contact Phone*</Text>
+          <TextInput
+            accessibilityRole="text"
+            placeholder="(XXX) XXX-XXXX"
+            placeholderTextColor="#888"
+            onChangeText={(input) =>
+              handlePhoneNumberChange(
+                input,
+                setSecondContactNumber,
+                secondContactNumber,
+              )
+            }
+            style={styles.textInput}
+            textContentType="telephoneNumber"
+            value={formatPhoneNumber(secondContactNumber)}
+            keyboardType="number-pad"
+            returnKeyType={"done"}
+            maxLength={14}
+          />
+          <Text style={styles.errorTitle}>{error}</Text>
+        </View>
 
-            <Text style={styles.textInputTitle}>Date of Birth*</Text>
-            <TextInput
-              accessibilityRole="text"
-              placeholder="MM-DD-YYYY"
-              placeholderTextColor="#888"
-              onChangeText={(input) => handleDOBChange(input)}
-              style={styles.textInput}
-              value={dateofBirth}
-              keyboardType="numeric"
-              maxLength={10}
-            />
-
-            <Text style={styles.textInputTitle}>Choose Chapter</Text>
-            <Dropdown
-              style={[styles.textInput, { borderWidth: 1 }]}
-              data={CHAPTERS}
-              labelField="label"
-              valueField="value"
-              placeholder="Select Chapter"
-              placeholderStyle={{ color: "#888" }}
-              value={chapter}
-              onChange={(item) => {
-                console.log("Chapter selected", item);
-                setChapter(item.value);
-              }}
-            />
-
-            <Text style={styles.textInputTitle}>Secondary Contact Name*</Text>
-            <TextInput
-              accessibilityRole="text"
-              placeholder="Full Name"
-              placeholderTextColor="#888"
-              onChangeText={setSecondContactName}
-              style={styles.textInput}
-              value={secondContactName}
-            />
-
-            <Text style={styles.textInputTitle}>Secondary Contact Phone*</Text>
-            <TextInput
-              accessibilityRole="text"
-              placeholder="(XXX) XXX-XXXX"
-              placeholderTextColor="#888"
-              onChangeText={(input) =>
-                handlePhoneNumberChange(
-                  input,
-                  setSecondContactNumber,
-                  secondContactNumber,
-                )
-              }
-              style={styles.textInput}
-              textContentType="telephoneNumber"
-              value={formatPhoneNumber(secondContactNumber)}
-              keyboardType="numeric"
-              maxLength={14}
-            />
-            <Text style={styles.errorTitle}>{error}</Text>
-          </View>
-
-          <View
-            style={{
-              flex: 1,
-              alignSelf: "center",
-              paddingHorizontal: "3%",
-              margin: 0,
+        <View
+          style={{
+            flex: 1,
+            alignSelf: "center",
+            paddingHorizontal: "3%",
+            margin: 0,
+          }}
+        >
+          <Button
+            containerStyle={{
+              width: 0.85 * Dimensions.get("window").width,
+              padding: "1%",
             }}
-          >
-            <Button
-              containerStyle={{
-                width: 0.85 * Dimensions.get("window").width,
-                padding: "1%",
-              }}
-              buttonStyle={{
-                backgroundColor: "#008AFC",
-                borderRadius: 12,
-                height: 0.13 * Dimensions.get("window").width,
-              }}
-              titleStyle={styles.buttonTitle}
-              title="Start"
-              disabled={!isFormValid()}
-              onPress={async () => {
-                setError("");
-                try {
-                  const body: Record<string, string> = {
-                    email: userInfo.email,
-                    firstName,
-                    lastName,
-                    phoneNumber,
-                    birthDate: dateofBirth,
-                    secondaryContactName: secondContactName,
-                    secondaryContactPhone: secondContactNumber,
-                  };
-                  const res = await internalRequest<UserAnalytics>({
-                    url: "/api/patient/auth/signup",
-                    body,
-                    method: HttpMethod.POST,
-                  });
-                  dispatch(login(res));
-                } catch (e) {
-                  setError(`An error occured\n${e}`);
-                }
-              }}
-            />
-          </View>
-        </SafeAreaView>
-      </ScrollView>
+            buttonStyle={{
+              backgroundColor: "#008AFC",
+              borderRadius: 12,
+              height: 0.13 * Dimensions.get("window").width,
+            }}
+            titleStyle={styles.buttonTitle}
+            title="Start"
+            disabled={!isFormValid()}
+            onPress={async () => {
+              setError("");
+              try {
+                const body: Record<string, string> = {
+                  email: userInfo.email,
+                  firstName,
+                  lastName,
+                  phoneNumber,
+                  birthDate: dateofBirth,
+                  secondaryContactName: secondContactName,
+                  secondaryContactPhone: secondContactNumber,
+                };
+                const res = await internalRequest<UserAnalytics>({
+                  url: "/api/patient/auth/signup",
+                  body,
+                  method: HttpMethod.POST,
+                });
+                dispatch(login(res));
+              } catch (e) {
+                setError(`An error occured\n${e}`);
+              }
+            }}
+          />
+        </View>
+      </KeyboardAwareScrollView>
     </View>
   );
 }
