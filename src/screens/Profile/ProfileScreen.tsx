@@ -10,6 +10,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button } from "react-native-elements";
 import { useSelector } from "react-redux";
 import SlidingUpPanel from "rn-sliding-up-panel";
+import { getAuth } from "firebase/auth";
 import HomeIcon from "../../assets/HomeIcon";
 import ProfileIcon from "../../assets/ProfileIcon";
 import SettingsIcon from "../../assets/SettingsIcon";
@@ -23,8 +24,12 @@ import ContinueButton from "../../components/ContinueButton";
 type Props = NativeStackScreenProps<RootStackParamList, "ProfileScreen">;
 
 function ProfileScreen({ navigation }: Props) {
+  const auth = getAuth();
+  const user = auth.currentUser;
   const userInfo = useSelector<RootState>((state) => state.auth) as AuthUser;
   const panelRef = useRef<SlidingUpPanel>(null);
+
+  console.log(userInfo);
 
   const [name, setName] = useState("Johannes Qian");
   const [dob, setDob] = useState(new Date("2000-12-31T05:00:00.000Z"));
@@ -269,8 +274,6 @@ function ProfileScreen({ navigation }: Props) {
         formData.name.indexOf(" ") + 1,
         formData.name.length,
       );
-      const secondContactName = userInfo.patientDetails.secondaryContactName;
-      const secondContactNumber = userInfo.patientDetails.secondaryContactPhone;
       const newDob = new Date(
         `${formData.dob.substring(4)}-${formData.dob.substring(
           0,
@@ -279,16 +282,17 @@ function ProfileScreen({ navigation }: Props) {
       );
       try {
         const body: Record<string, string> = {
-          email: formData.email,
+          email: user.email,
           firstName,
           lastName,
           phoneNumber: formData.phoneNumber,
-          birthDate: newDob.toISOString(),
-          secondaryContactName: secondContactName,
-          secondaryContactPhone: secondContactNumber,
+          birthDate: `${formData.dob.substring(0, 2)}-${formData.dob.substring(
+            2,
+            4,
+          )}-${formData.dob.substring(4)}`,
         };
         await internalRequest<UserAnalytics>({
-          url: "/api/patient/auth/signup", // replace with edit user endpoint
+          url: "/api/patient/edit-patient",
           body,
           method: HttpMethod.POST,
         });
